@@ -23,9 +23,7 @@ import { useNavigate } from 'react-router-dom';
 const positions = [
   'Admin',
   'Operator',
-  
   'Read Only',
-  
 ];
 
 // const teams = [
@@ -39,18 +37,13 @@ const positions = [
 const Profile = () => {
 
   const navigate = useNavigate()
-
   const [staffId, setStaffId] = useState();
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [team, setTeam] = useState('');
-  const [nic, setNic] = useState('');
   const [position, setPosition] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  console.log(position, team);
+  console.log(position);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -128,7 +121,7 @@ const Profile = () => {
               name='staffId'
               label="User ID"
               variant="outlined"
-              type="number"
+              type="text"
               sx={{ mb: '1.5rem' }}
               required
               onChange={(e) => setStaffId(e.target.value)}
