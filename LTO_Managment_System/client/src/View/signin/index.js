@@ -52,7 +52,7 @@ const SignIn = () => {
     setOpen(false);
   };
 
-  const [username, setUsername] = useState('');
+  const [staffId, setstaffId] = useState('');
   const [password, setPassword] = useState('');
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -65,7 +65,7 @@ const SignIn = () => {
       // ctxDispatch({ type: 'SET_LOADING' });
 
       const { data } = await axios.post('/api/signroute/signin', {
-        username,
+        staffId,
         password,
       });
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
@@ -134,12 +134,12 @@ const SignIn = () => {
         <form onSubmit={submitHandler}>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <TextField
-              label="Username"
+              label="Staff ID"
               variant="outlined"
               type="text"
               sx={{ mb: '1.5rem' }}
               required
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setstaffId(e.target.value)}
             />
             <TextField
               label="Password"
@@ -204,7 +204,7 @@ const SignIn = () => {
                 margin="dense"
                 id="id"
                 label="Employee ID *"
-                type="email"
+                type="text"
                 sx={{ width: '47%' }}
                 variant="outlined"
               />
