@@ -56,37 +56,37 @@ const navItems = [
     op: 'Dashboard',
     icon: <DashboardIcon />,
   },
+  // {
+  //   text: 'ntInfoDash',
+  //   op: 'Towers Information',
+  //   path: '/ntInfoDash',
+  //   icon: <CellTowerIcon />,
+  // },
   {
-    text: 'ntInfoDash',
-    op: 'Towers Information',
-    path: '/ntInfoDash',
-    icon: <CellTowerIcon />,
-  },
-  {
-    text: 'Financial',
-    op: 'Finance Management',
+    text: 'LTO Management',
+    op: 'LTO Management',
     icon: <TimelineIcon />,
   },
   {
-    text: 'Contractors',
-    op: 'Contractors',
+    text: 'Locker Management',
+    op: 'Locker Management',
     icon: <EngineeringIcon />,
   },
   {
-    text: 'Contact',
-    op: 'Contacts Information',
+    text: 'LTO Transport',
+    op: 'LTO Transport',
     icon: <PermContactCalendarIcon />,
   },
-  {
-    text: 'Safety',
-    op: 'Environment health and safety',
-    icon: <HealthAndSafetyIcon />,
-  },
-  {
-    text: 'Transports',
-    op: 'Transports',
-    icon: <LocalShippingIcon />,
-  },
+  // {
+  //   text: 'Safety',
+  //   op: 'Environment health and safety',
+  //   icon: <HealthAndSafetyIcon />,
+  // },
+  // {
+  //   text: 'Transports',
+  //   op: 'Transports',
+  //   icon: <LocalShippingIcon />,
+  // },
   {
     text: 'Staff',
     op: 'Staff Management',
@@ -171,7 +171,7 @@ const Sidebar = ({
               <FlexBetween color={colorPalette.secondary[500]}>
                 <Box display="flex" alignItems="center" gap="0.5rem">
                   <Typography variant="h4" fontWeight="bold">
-                    Engenuity
+                    BOC LTO Management
                   </Typography>
                 </Box>
                 {!isDesktop && (

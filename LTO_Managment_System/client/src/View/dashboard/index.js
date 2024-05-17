@@ -20,9 +20,9 @@ import { Store } from '../../store';
 import { useContext } from 'react';
 
 import i1 from '../../assets/1.jpg';
-import i2 from '../../assets/2.jpg';
+import i2 from '../../assets/2.png';
 import i3 from '../../assets/3.jpg';
-import i4 from '../../assets/4.jpg';
+import i4 from '../../assets/4.jpeg';
 import i5 from '../../assets/5.jpg';
 import i6 from '../../assets/6.jpg';
 import i7 from '../../assets/7.jpg';
@@ -39,6 +39,18 @@ const Dashboard = () => {
 
   useEffect(() => {
     switch (userInfo.position) {
+      case 'Super super':
+        setPosition(true);
+        break;
+        case 'Admin':
+        setPosition(true);
+        break;
+        case 'Operator':
+        setPosition(true);
+        break;
+        case 'Read only':
+        setPosition(true);
+        break;
       case 'Finance Executive':
         setPosition(true);
         break;
@@ -65,60 +77,33 @@ const Dashboard = () => {
   const functionInfo = [
     {
       id: 1,
-      name: 'Tower Information',
-      para: 'From This function mange finance status in each site.',
+      name: 'LTO Management',
+      para: 'From This function mange LTO details.',
       link: '/ntInfoDash',
       img: i1,
     },
     position === true && {
       id: 2,
-      name: 'Finance Management',
-      para: 'From This function mange finance status in each site.',
+      name: 'Locker Management',
+      para: 'From This function mange LTO Storage.',
       link: '/financial',
       img: i2,
     },
     {
       id: 3,
-      name: 'Contractors',
-      para: 'From This function mange finance status in each site.',
+      name: 'LTO Transport',
+      para: 'From This function mange location changes of the LTO.',
       link: '/contractors',
       img: i3,
     },
     {
       id: 4,
-      name: 'Contact Information',
-      para: 'From This function mange finance status in each site.',
-      link: '/contact',
-      img: i4,
-    },
-    {
-      id: 5,
-      name: 'Environment health and safety',
-      para: 'From This function mange finance status in each site.',
-      link: '/safety',
-      img: i5,
-    },
-    {
-      id: 6,
-      name: 'Transports',
-      para: 'From This function mange finance status in each site.',
-      link: '/transports',
-      img: i6,
-    },
-    {
-      id: 7,
       name: 'Staff Management',
       para: 'From This function mange finance status in each site.',
       link: '/staff',
-      img: i7,
+      img: i4,
     },
-    {
-      id: 8,
-      name: 'Documentation',
-      para: 'From This function mange finance status in each site.',
-      link: '/documentation',
-      img: i8,
-    },
+    
   ];
 
   return loading ? (

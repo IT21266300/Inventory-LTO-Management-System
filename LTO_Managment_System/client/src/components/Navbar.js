@@ -70,7 +70,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
           )}
           <Box>
             <Button variant="text" sx={{ color: 'white' , fontSize: '1.5rem'}} onClick={() => navigate('/dashboard')}>
-              Engenuity
+              BOC LTO Management System
             </Button>
           </Box>
         </FlexBetween>
