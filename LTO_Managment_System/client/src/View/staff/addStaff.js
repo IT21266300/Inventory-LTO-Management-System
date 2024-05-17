@@ -22,21 +22,19 @@ import { useNavigate } from 'react-router-dom';
 
 const positions = [
   'Admin',
-  'Staff',
-  'Rollout Manager',
-  'CEO',
-  'Financial Manager',
-  'Finance Executive',
-  'Business Developer Manager',
+  'Operator',
+  
+  'Read Only',
+  
 ];
 
-const teams = [
-  'Project Team',
-  'Revanue & Commercial Team',
-  'Warehouse Operation Team',
-  'Rollout Team',
-  'Document Team',
-];
+// const teams = [
+//   'Project Team',
+//   'Revanue & Commercial Team',
+//   'Warehouse Operation Team',
+//   'Rollout Team',
+//   'Document Team',
+// ];
 
 const Profile = () => {
 
@@ -60,12 +58,8 @@ const Profile = () => {
       await axios.post('/api/staff/add', {
         staffId,
         name,
-        email,
         phone,
-        team,
-        nic,
         position,
-        username,
         password,
       });
       toast.success('New data has been created successfully!', {
@@ -132,30 +126,21 @@ const Profile = () => {
             />
             <TextField
               name='staffId'
-              label="Staff Id"
+              label="User ID"
               variant="outlined"
               type="number"
               sx={{ mb: '1.5rem' }}
               required
               onChange={(e) => setStaffId(e.target.value)}
             />
-            <TextField
-              name='username'
-              label="Username"
+             <TextField
+              name="phone"
+              label="Phone"
               variant="outlined"
               type="text"
-              sx={{ mb: '1.5rem' }}
               required
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <TextField
-              name='nic'
-              label="NIC Number"
-              variant="outlined"
-              type="text"
               sx={{ mb: '1.5rem' }}
-              required
-              onChange={(e) => setNic(e.target.value)}
+              onChange={(e) => setPhone(e.target.value)}
             />
             <TextField
               name='password'
@@ -166,32 +151,15 @@ const Profile = () => {
               required
               onChange={(e) => setPassword(e.target.value)}
             />
-            <TextField
-              name="phone"
-              label="Phone"
-              variant="outlined"
-              type="text"
-              required
-              sx={{ mb: '1.5rem' }}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-            <TextField
-              name='email'
-              label="Email"
-              variant="outlined"
-              type="email"
-              required
-              sx={{ mb: '1.5rem' }}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-
+            
+           
             <FlexBetween sx={{ mb: '1.5rem' }}>
               <FormControl sx={{width: '45%'}}>
                 <InputLabel id="demo-simple-select-label">Position</InputLabel>
                 <Select
                   name="position"
                   value={position}
-                  label="Position"
+                  label="User Type"
                   onChange={(e) => setPosition(e.target.value)}
                 >
                   {positions.map((position) => (
@@ -204,24 +172,7 @@ const Profile = () => {
                   ))}
                 </Select>
               </FormControl>
-              <FormControl sx={{width: '45%'}}>
-                <InputLabel id="demo-simple-select-label">Team</InputLabel>
-                <Select
-                  name='team'
-                  value={team}
-                  label="Team"
-                  onChange={(e) => setTeam(e.target.value)}
-                >
-                  {teams.map((team) => (
-                    <MenuItem
-                    key={team}
-                    value={team}
-                  >
-                    {team}
-                  </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              
 
             </FlexBetween>
             <FlexBetween>

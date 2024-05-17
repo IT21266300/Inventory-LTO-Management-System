@@ -16,21 +16,17 @@ import { toast } from 'react-toastify';
 
 const positions = [
   'Admin',
-  'Staff',
-  'Rollout Manager',
-  'CEO',
-  'Financial Manager',
-  'Finance Executive',
-  'Business Developer Manager',
+  'Operator',
+  'Read Only',
 ];
 
-const teams = [
-  'Project Team',
-  'Revanue & Commercial Team',
-  'Warehouse Operation Team',
-  'Rollout Team',
-  'Document Team',
-];
+// const teams = [
+//   'Project Team',
+//   'Revanue & Commercial Team',
+//   'Warehouse Operation Team',
+//   'Rollout Team',
+//   'Document Team',
+// ];
 
 
 const UpdateStaff = () => {
@@ -45,12 +41,8 @@ const UpdateStaff = () => {
     mongoId: '',
     staffId: 0,
     name: '',
-    email: '',
     phone: '',
-    team: '',
-    nic: '',
     position: '',
-    username: '',
     password: '',
   });
 
@@ -62,12 +54,9 @@ const UpdateStaff = () => {
         mongoId: data.mongoID,
         staffId: data.staffId,
         name: data.name,
-        email: data.email,
         phone: data.phone,
-        team: data.team,
-        nic: data.nic,
         position: data.position,
-        username: data.username,
+        
       }
     });
   }, [data]);
@@ -162,15 +151,16 @@ const UpdateStaff = () => {
               disabled
             />
             <TextField
-              name='username'
-              label="Username"
+              name="phone"
+              label="Phone"
               variant="outlined"
               type="text"
-              value={formData.username ? formData.username : ''}
-              sx={{ mb: '1.5rem' }}
+              value={formData.phone ? formData.phone : ''}
               required
+              sx={{ mb: '1.5rem' }}
               onChange={handleChange}
             />
+            
             <TextField
               name='password'
               label="Password"
@@ -181,36 +171,7 @@ const UpdateStaff = () => {
               required
               onChange={handleChange}
             />
-            <TextField
-              name="phone"
-              label="Phone"
-              variant="outlined"
-              type="text"
-              value={formData.phone ? formData.phone : ''}
-              required
-              sx={{ mb: '1.5rem' }}
-              onChange={handleChange}
-            />
-            <TextField
-              name='email'
-              label="Email"
-              variant="outlined"
-              type="email"
-              value={formData.email ? formData.email : ''}
-              required
-              sx={{ mb: '1.5rem' }}
-              onChange={handleChange}
-            />
-            <TextField
-              name='nic'
-              label="NIC Number"
-              variant="outlined"
-              type="text"
-              sx={{ mb: '1.5rem' }}
-              required
-              value={formData.nic ? formData.nic : ''}
-              onChange={handleChange}
-            />
+            
             <FlexBetween sx={{ mb: '1.5rem' }}>
               <FormControl sx={{width: '45%'}}>
                 <InputLabel id="demo-simple-select-label">Position</InputLabel>
@@ -230,24 +191,7 @@ const UpdateStaff = () => {
                   ))}
                 </Select>
               </FormControl>
-              <FormControl sx={{width: '45%'}}>
-                <InputLabel id="demo-simple-select-label">Team</InputLabel>
-                <Select
-                  name="team"
-                  value={formData.team}
-                  label="Team"
-                  onChange={handleChange}
-                >
-                  {teams.map((team) => (
-                    <MenuItem
-                    key={team}
-                    value={team}
-                  >
-                    {team}
-                  </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              
 
             </FlexBetween>
             <FlexBetween>
