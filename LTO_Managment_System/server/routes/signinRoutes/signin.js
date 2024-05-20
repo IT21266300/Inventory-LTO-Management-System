@@ -9,26 +9,22 @@ import { generateToken } from '../../utils.js';
 
 
 signRouter.post('/signin', expressAsyncHandler(async (req, res) => {
-    const member = await Staff.findOne({username: req.body.username});
+    const member = await Staff.findOne({staffId: req.body.staffId});
     if(member){
         if(bcrypt.compareSync(req.body.password, member.password)){
             res.send({
                 mongoID: member._id,
-                profileImage: member.profileImage,
                 name: member.name,
                 staffId: member.staffId,
-                username: member.username,
                 position: member.position,
                 phone: member.phone,
-                team: member.team,
-                email: member.email,
                 password: member.password,
                 token: generateToken(member)
             })
             return;
         }
     }
-    res.status(401).send({message: 'Invalid username or password'});
+    res.status(401).send({message: 'Invalid staffId or password'});
 }))
 
 export default signRouter;
