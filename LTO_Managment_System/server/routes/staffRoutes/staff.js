@@ -5,33 +5,17 @@ import multer from 'multer';
 
 const router = express.Router();
 
-const Storage = multer.diskStorage({
-  destination: 'uploads',
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-
-const upload = multer({
-  storage: Storage,
-}).single('testImage');
-
-
 router.route('/add').post(async (req, res) => {
   
-  const staffId = Number(req.body.staffId);
+  const staffId = req.body.staffId;
   const name = req.body.name;
   const phone = req.body.phone;
-  const email = req.body.email;
   const position = req.body.position;
-  const team = req.body.team;
-  const nic = req.body.nic;
-  const username = req.body.username;
   const password = bcrypt.hashSync(req.body.password);
 
 
   const existingUser = await Staff.findOne({
-    $or: [{ username }, { staffId }, { email }, {nic}],
+    $or: [{ staffId }],
   });
   if (existingUser) {
     return res
@@ -43,11 +27,7 @@ router.route('/add').post(async (req, res) => {
     staffId,
     name,
     phone,
-    email,
     position,
-    team,
-    nic,
-    username,
     password,
   });
 
@@ -74,12 +54,12 @@ router.route('/').get((req, res) => {
 
 router.route('/update/:staffId').put(async (req, res) => {
   let userId = req.params.staffId;
-  const { staffId, name, phone, email, position, team, nic, username } = req.body;
+  const { staffId, name, phone, position } = req.body;
 
   const password = bcrypt.hashSync(req.body.password);
 
   const existingUser = await Staff.findOne({
-    $or: [{ username }, { staffId }, {nic}],
+    $or: [{ staffId }],
   });
   if (existingUser && existingUser.staffId != userId) {
     return res
@@ -91,11 +71,7 @@ router.route('/update/:staffId').put(async (req, res) => {
     staffId,
     name,
     phone,
-    email,
     position,
-    team,
-    nic,
-    username,
     password,
   };
   const update = await Staff.findOneAndUpdate({ staffId: userId }, updateStaff)

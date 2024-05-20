@@ -1,12 +1,9 @@
 import mongoose, { Model } from "mongoose";
 
 const staffSchema = new mongoose.Schema({
-  profileImage: {
-    data: Buffer,
-    contentType: String,
-  },
-  staffId: {
-    type: Number,
+ 
+ staffId: {
+    type: String,
     required: true,
     unique: true, 
   },
@@ -19,28 +16,10 @@ const staffSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+
   position: {
     type: String,
     required: true,
-  },
-  team: {
-    type: String,
-    required: true,
-  },
-  nic:{
-    type: String,
-    required: true,
-    unique: true,
-  },
-  username: {
-    type: String,
-    required: true,
-    unique: true,
   },
   password: {
     type: String,

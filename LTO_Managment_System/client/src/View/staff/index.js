@@ -66,9 +66,9 @@ const Staff = () => {
   return (
     <Box m="1.5rem  2.5rem">
       <Helmet>
-        <title>Finance Dashboard</title>
+        <title>Staff Management</title>
       </Helmet>
-      <Header title="Staff Management" subtitle="Manage Staff & Teams" />
+      <Header title="Staff Management" subtitle="Manage Staff" />
 
       <Box sx={{ width: '100%', m: '1rem 0' }}>
         <Tabs

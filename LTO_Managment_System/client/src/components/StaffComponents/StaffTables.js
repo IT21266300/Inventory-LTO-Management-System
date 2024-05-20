@@ -113,35 +113,17 @@ const StaffTables = ({ result, loading, error }) => {
       headerName: 'Staff ID',
       flex: 0.3,
     },
-    {
-      field: 'email',
-      headerName: 'Email',
-      flex: 0.8,
-    },
+    
     {
       field: 'phone',
       headerName: 'Telephone Number',
       flex: 0.5,
     },
-    {
-      field: 'nic',
-      headerName: 'NIC Number',
-      flex: 0.5,
-    },
+    
     {
       field: 'position',
       headerName: 'Position',
       flex: 0.7,
-    },
-    {
-      field: 'team',
-      headerName: 'Team',
-      flex: 0.7,
-    },
-    {
-      field: 'username',
-      headerName: 'Username',
-      flex: 0.4,
     },
   ];
 
@@ -162,7 +144,7 @@ const StaffTables = ({ result, loading, error }) => {
   }
 
   let pdfColumn = [];
-  if (userInfo.position === 'Finance Executive') {
+  if (userInfo.position === 'Admin') {
     pdfColumn = columns.slice(1, -1);
   } else {
     pdfColumn = columns.slice(1);
@@ -175,12 +157,9 @@ const StaffTables = ({ result, loading, error }) => {
       mongoID: row._id,
       staffId: row.staffId,
       name: row.name,
-      email: row.email,
       phone: row.phone,
       position: row.position,
-      team: row.team,
-      nic: row.nic,
-      username: row.username,
+      
     }));
   }
   
