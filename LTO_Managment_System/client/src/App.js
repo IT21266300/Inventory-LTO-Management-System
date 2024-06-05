@@ -21,12 +21,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Store } from './store';
 
 // import views
-import Dashboard from 'View/dashboard';
-import Layout from 'View/layout';
-import FinanceDashboard from 'View/finance/';
-import AddFinance from 'View/finance/addFinance';
-import UpdateFinance from 'View/finance/updateFinance';
-import SignIn from 'View/signin';
+
 import { useContext } from 'react';
 import RouteProtector from 'components/RouteProtector';
 import routesConfig from 'components/Routers';
