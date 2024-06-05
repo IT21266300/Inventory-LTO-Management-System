@@ -15,11 +15,11 @@ export default function ActionButton({ handleClick, params, open }) {
         handleClick(event, params);
       }}
       sx={{
-        backgroundColor: colorPalette.primary[500],
-        color: 'white',
+        backgroundColor: colorPalette.yellow[500],
+        color: colorPalette.black1[500],
         '&:hover': {
-          backgroundColor: colorPalette.primary[400],
-          color: 'white',
+          backgroundColor: colorPalette.yellow[500],
+          color: colorPalette.black1[500],
         },
       }}
     >

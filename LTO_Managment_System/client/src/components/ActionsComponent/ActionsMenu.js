@@ -45,7 +45,7 @@ export default function ActionsMenu({
         <>
           <MenuItem
             onClick={handleUpdate}
-            sx={{ color: colorPalette.primary[500] }}
+            sx={{ color: colorPalette.primary[500]}}
           >
             {' '}
             <EditIcon sx={{ color: colorPalette.primary[500] }} /> Update

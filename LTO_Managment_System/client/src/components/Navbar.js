@@ -57,7 +57,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
     <AppBar
       sx={{
         position: 'static',
-        background: colorPalette.primary[500],
+        background: colorPalette.black1[500],
         width: '100%',
       }}
     >
@@ -87,7 +87,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
                 onClick={handleClick}
                 endIcon={<KeyboardArrowDownIcon />}
                 sx={{
-                  backgroundColor: colorPalette.secondary[100],
+                  backgroundColor: colorPalette.yellow[500],
                   color: colorPalette.primary[500],
                   '&:hover': {
                     backgroundColor: colorPalette.secondary[200],

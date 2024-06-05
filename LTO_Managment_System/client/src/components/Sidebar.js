@@ -159,7 +159,7 @@ const Sidebar = ({
             width: drawerWidth,
             '& .MuiDrawer-paper': {
               color: colorPalette.secondary[100],
-              backgroundColor: colorPalette.primary[500],
+              backgroundColor: colorPalette.black1[500],
               boxSizing: 'border-box',
               borderWidth: isDesktop ? 0 : '2px',
               width: drawerWidth,

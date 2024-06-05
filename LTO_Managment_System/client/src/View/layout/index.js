@@ -4,12 +4,13 @@ import { Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Navbar from '../../components/Navbar';
 import Sidebar from '../../components/Sidebar';
+import { colorPalette } from 'customTheme';
 
 const Layout = () => {
   const isDesktop = useMediaQuery('(min-width: 600px)');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
-    <Box minWidth="100%" height="100%" display={isDesktop ? 'flex' : 'block'}>
+    <Box minWidth="100%" minHeight="100%" display={isDesktop ? 'flex' : 'block'} sx={{background: colorPalette.black[500]}}>
       <Sidebar
         isDesktop={isDesktop}
         drawerWidth="320px"

@@ -185,13 +185,13 @@ const StaffTables = ({ result, loading, error }) => {
             navigate('/addStaff');
           }}
           sx={{
-            backgroundColor: colorPalette.primary[500],
-            color: colorPalette.secondary[100],
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[500],
             fontSize: '14px',
             fontWeight: 'bold',
             padding: '10px 20px',
             '&:hover': {
-              backgroundColor: colorPalette.primary[400],
+              backgroundColor: colorPalette.black[400],
               color: colorPalette.secondary[100],
             },
           }}
@@ -213,27 +213,31 @@ const StaffTables = ({ result, loading, error }) => {
         sx={{
           '& .MuiDataGrid-cell': {
             borderBottom: 'none',
+            color: '#fff',
           },
           '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: colorPalette.primary[500],
+            backgroundColor: colorPalette.black1[500],
             color: colorPalette.secondary[200],
             // borderBottom: 'none',
           },
 
           '& .MuiDataGrid-footerContainer': {
-            backgroundColor: colorPalette.indigo[100],
-            color: colorPalette.indigo[900],
+            backgroundColor: colorPalette.black1[500],
+            color: colorPalette.yellow[900],
+            color: 'green',
             borderTop: 'none',
           },
           '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
             color: `${colorPalette.primary[500]} !important`,
           },
           display: 'flex',
+          
         }}
       >
-        <Box width="100%">
+        <Box width="100%" sx={{color: '#fff'}}>
         <DataGrid
             rows={rows}
+            rowHeight={60}
             columns={columns}
             initialState={{
               columns: {
@@ -250,7 +254,7 @@ const StaffTables = ({ result, loading, error }) => {
                   <GridToolbarContainer
                     style={{ justifyContent: 'flex-start', padding: '0.4rem' }}
                   >
-                    <GridToolbarFilterButton />
+                    <GridToolbarFilterButton sx={{ color: 'purple' }}/>
                     <GridToolbarQuickFilter />
                   </GridToolbarContainer>
                 );

@@ -8,6 +8,7 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import logo from '../../assets/logo.png';
+import { colorPalette } from 'customTheme';
 
 const DownloadActions = ({ pdfColumn, rows, tabLabel, funcName ,siteName }) => {
   const [downloadMenu, setDownloadMenu] = useState(null);
@@ -67,8 +68,8 @@ const DownloadActions = ({ pdfColumn, rows, tabLabel, funcName ,siteName }) => {
         aria-expanded={downloadMenu ? 'true' : undefined}
         onClick={downloadClick}
         sx={{
-          backgroundColor: '#2196f3',
-          color: '#ffffff',
+          backgroundColor: colorPalette.yellow[500],
+          color: colorPalette.black[500],
           fontSize: '14px',
           fontWeight: 'bold',
           padding: '10px 20px',

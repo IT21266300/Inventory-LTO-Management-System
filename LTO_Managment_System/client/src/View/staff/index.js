@@ -70,40 +70,6 @@ const Staff = () => {
       </Helmet>
       <Header title="Staff Management" subtitle="Manage Staff" />
 
-      <Box sx={{ width: '100%', m: '1rem 0' }}>
-        <Tabs
-          value={value}
-          onChange={(e, val) => setValue(val)}
-          variant="scrollable"
-          scrollButtons
-          allowScrollButtonsMobile
-          textColor="primary"
-          indicatorColor="primary"
-          sx={{
-            [`& .${tabsClasses.scrollButtons}`]: {
-              '&.Mui-disabled': { opacity: 0.3 },
-            },
-          }}
-        >
-          {tabs.map((tab) => (
-            <Tab
-              label={tab.label}
-              onClick={(e, val) =>
-                setTabName({ label: tab.label, col: tab.col })
-              }
-              key={tab.id}
-            />
-          ))}
-        </Tabs>
-      </Box>
-
-      <Divider
-        sx={{
-          m: '1rem 0',
-          backgroundColor: colorPalette.primary[500],
-          height: '3px',
-        }}
-      />
 
       {tabName.col === 'staff' && <StaffTables result={staffData} loading={loading} error={error} />}
     </Box>

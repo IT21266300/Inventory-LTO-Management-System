@@ -113,23 +113,15 @@ const Dashboard = () => {
       <Helmet>
         <title>Dashboard</title>
       </Helmet>
-      <Box mb="2rem" width="350px">
-        <TextField
-          id="standard-basic"
-          label="Search..."
-          variant="filled"
-          fullWidth
-        />
-      </Box>
-      <Box sx={{ minWidth: '100%' }}>
-        <Grid container rowSpacing={3} columnSpacing={{ xs: 3 }}>
+      <Box sx={{ minWidth: '100%', paddingTop: '2rem',  }}>
+        <Grid container rowSpacing={3} columnSpacing={{ xs: 3 }} columns={{ xs: 1, sm: 2, md: 12 }}>
           {functionInfo.map((func) => (
-            <Grid key="func.id" item xs={3} sx={{ minHeight: '200px' }}>
+            <Grid key="func.id" item xs={1} md={3} sx={{ minHeight: '200px'}}>
               <Card
                 sx={{
                   width: '100%',
                   height: '100%',
-                  backgroundColor: colorPalette.secondary[100],
+                  background: colorPalette.black1[500] 
                 }}
               >
                 <CardMedia
@@ -141,7 +133,7 @@ const Dashboard = () => {
                 <CardContent>
                   <Typography
                     variant="h6"
-                    sx={{ color: colorPalette.primary[500] }}
+                    sx={{ color: colorPalette.black1[100] }}
                   >
                     {func.name}
                   </Typography>
@@ -149,7 +141,7 @@ const Dashboard = () => {
                 <CardActions sx={{ margin: 'auto', marginRight: 0 }}>
                   <Button
                     size="small"
-                    sx={{ color: colorPalette.secondary[500] }}
+                    sx={{ color: colorPalette.black[500], background: colorPalette.yellow[500] }}
                     onClick={() => {
                       navigate(func.link);
                     }}
