@@ -106,12 +106,12 @@ const StaffTables = ({ result, loading, error }) => {
     {
       field: 'name',
       headerName: 'Employee Name',
-      flex: 0.5,
+      flex: 0.7,
     },
     {
       field: 'staffId',
       headerName: 'Staff ID',
-      flex: 0.3,
+      flex: 0.4,
     },
     
     {
@@ -123,7 +123,7 @@ const StaffTables = ({ result, loading, error }) => {
     {
       field: 'position',
       headerName: 'Position',
-      flex: 0.7,
+      flex: 0.4,
     },
   ];
 
@@ -216,15 +216,15 @@ const StaffTables = ({ result, loading, error }) => {
             color: '#fff',
           },
           '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: colorPalette.black1[500],
+            backgroundColor: colorPalette.black1[400],
             color: colorPalette.secondary[200],
             // borderBottom: 'none',
           },
 
           '& .MuiDataGrid-footerContainer': {
             backgroundColor: colorPalette.black1[500],
-            color: colorPalette.yellow[900],
-            color: 'green',
+            color: colorPalette.yellow[500],
+            // color: 'green',
             borderTop: 'none',
           },
           '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
@@ -252,9 +252,9 @@ const StaffTables = ({ result, loading, error }) => {
               toolbar: () => {
                 return (
                   <GridToolbarContainer
-                    style={{ justifyContent: 'flex-start', padding: '0.4rem' }}
+                    style={{ justifyContent: 'flex-start', padding: '0.4rem', background: colorPalette.black[100] }}
                   >
-                    <GridToolbarFilterButton sx={{ color: 'purple' }}/>
+                    <GridToolbarFilterButton style={{ color: colorPalette.yellow[500]}}/>
                     <GridToolbarQuickFilter />
                   </GridToolbarContainer>
                 );

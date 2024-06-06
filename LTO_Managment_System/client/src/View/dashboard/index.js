@@ -42,13 +42,13 @@ const Dashboard = () => {
       case 'Super super':
         setPosition(true);
         break;
-        case 'Admin':
+      case 'Admin':
         setPosition(true);
         break;
-        case 'Operator':
+      case 'Operator':
         setPosition(true);
         break;
-        case 'Read only':
+      case 'Read only':
         setPosition(true);
         break;
       case 'Finance Executive':
@@ -103,7 +103,6 @@ const Dashboard = () => {
       link: '/staff',
       img: i4,
     },
-    
   ];
 
   return loading ? (
@@ -113,15 +112,20 @@ const Dashboard = () => {
       <Helmet>
         <title>Dashboard</title>
       </Helmet>
-      <Box sx={{ minWidth: '100%', paddingTop: '2rem',  }}>
-        <Grid container rowSpacing={3} columnSpacing={{ xs: 3 }} columns={{ xs: 1, sm: 2, md: 12 }}>
+      <Box sx={{ minWidth: '100%', paddingTop: '2rem' }}>
+        <Grid
+          container
+          rowSpacing={3}
+          columnSpacing={{ xs: 3 }}
+          columns={{ xs: 1, sm: 2, md: 12 }}
+        >
           {functionInfo.map((func) => (
-            <Grid key="func.id" item xs={1} md={3} sx={{ minHeight: '200px'}}>
+            <Grid key="func.id" item xs={1} md={3} sx={{ minHeight: '200px' }}>
               <Card
                 sx={{
                   width: '100%',
                   height: '100%',
-                  background: colorPalette.black1[500] 
+                  background: colorPalette.black1[500],
                 }}
               >
                 <CardMedia
@@ -141,7 +145,14 @@ const Dashboard = () => {
                 <CardActions sx={{ margin: 'auto', marginRight: 0 }}>
                   <Button
                     size="small"
-                    sx={{ color: colorPalette.black[500], background: colorPalette.yellow[500] }}
+                    sx={{
+                      color: colorPalette.black[500],
+                      background: colorPalette.yellow[500],
+                      '&:hover': {
+                        backgroundColor: colorPalette.yellow[400],
+                        color: colorPalette.black[500],
+                      },
+                    }}
                     onClick={() => {
                       navigate(func.link);
                     }}

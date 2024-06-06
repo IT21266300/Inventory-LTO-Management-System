@@ -75,12 +75,12 @@ const DownloadActions = ({ pdfColumn, rows, tabLabel, funcName ,siteName }) => {
           padding: '10px 20px',
           mr: '2rem',
           '&:hover': {
-            backgroundColor: '#2196f3',
-            color: '#ffffff',
+            backgroundColor: colorPalette.black[400],
+            color: colorPalette.secondary[100],
           },
         }}
       >
-        <DownloadIcon sx={{ mr: '10px' }} />
+        <DownloadIcon sx={{ mr: '10px'}} />
         <Typography fontSize="1rem">Export</Typography>
       </Button>
       <Menu
