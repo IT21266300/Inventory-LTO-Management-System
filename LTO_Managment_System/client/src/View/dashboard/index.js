@@ -51,18 +51,7 @@ const Dashboard = () => {
       case 'Read only':
         setPosition(true);
         break;
-      case 'Finance Executive':
-        setPosition(true);
-        break;
-      case 'Rollout Manager':
-        setPosition(true);
-        break;
-      case ' Business Dev Manager':
-        setPosition(true);
-        break;
-      case 'Project Manager':
-        setPosition(true);
-        break;
+     
       default:
         setPosition(false);
     }
@@ -79,7 +68,7 @@ const Dashboard = () => {
       id: 1,
       name: 'LTO Management',
       para: 'From This function mange LTO details.',
-      link: '/ntInfoDash',
+      link: '/tape',
       img: i1,
     },
     position === true && {

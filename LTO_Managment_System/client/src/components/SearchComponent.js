@@ -78,22 +78,7 @@ const SearchComponent = ({ tabLabel, tabCol, site, siteList }) => {
   return (
     <Box>
       <Box sx={{ display: 'flex', width: '100%', justifyContent: 'flex-end' }}>
-        {/* <Autocomplete
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-          inputValue={inputValue}
-          onInputChange={(event, newInputValue) => {
-            setInputValue(newInputValue);
-          }}
-          id="controllable-states-demo"
-          options={options}
-          sx={{ width: 300 }}
-          renderInput={(params) => (
-            <TextField {...params} label="Search Site" />
-          )}
-        /> */}
+ 
 
         <Autocomplete
           id="inputValue"

@@ -63,7 +63,7 @@ const navItems = [
   //   icon: <CellTowerIcon />,
   // },
   {
-    text: 'LTO Management',
+    text: 'tape',
     op: 'LTO Management',
     icon: <TimelineIcon />,
   },
@@ -209,17 +209,19 @@ const Sidebar = ({
                         }}
                       >
                         <ListItemIcon
-                          sx={{
+                          sx={(theme) => ({
                             ml: '1rem',
                             color:
                               active === simText
                                 ? colorPalette.primary[900]
                                 : colorPalette.yellow[500],
                             '&:hover': {
-                              active != simText
-                              && color: colorPalette.black[500]
+                              color:
+                                active !== simText
+                                  ? colorPalette.black[500]
+                                  : colorPalette.black[500],
                             },
-                          }}
+                          })}
                         >
                           {icon}
                         </ListItemIcon>

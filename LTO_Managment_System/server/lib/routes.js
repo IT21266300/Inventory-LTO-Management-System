@@ -23,4 +23,7 @@ app.use('/signroute', SignRouter);
 // staff
 app.use('/staff', StaffRouter);
 
+//tape
+app.use('/tape', StaffRouter);
+
 export default app;
