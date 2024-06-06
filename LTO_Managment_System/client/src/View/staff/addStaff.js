@@ -42,6 +42,21 @@ const Profile = () => {
   const [phone, setPhone] = useState('');
   const [position, setPosition] = useState('');
   const [password, setPassword] = useState('');
+  
+  const [phoneError, setPhoneError] = useState(false);
+
+  const handlePhoneChange = (e) => {
+    const value = e.target.value;
+    setPhone(value);
+
+    // Basic phone number validation (you can customize this regex)
+    const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im; 
+    if (!value || phoneRegex.test(value)) {
+      setPhoneError(false);
+    } else {
+      setPhoneError(true);
+    }
+  };
 
   console.log(position);
 
@@ -127,14 +142,17 @@ const Profile = () => {
               onChange={(e) => setStaffId(e.target.value)}
             />
              <TextField
-              name="phone"
-              label="Phone"
-              variant="outlined"
-              type="text"
-              required
-              sx={{ mb: '1.5rem' }}
-              onChange={(e) => setPhone(e.target.value)}
-            />
+        name="phone"
+        label="Phone"
+        variant="outlined"
+        type="text"
+        required
+        sx={{ mb: '1.5rem' }}
+        value={phone}
+        onChange={handlePhoneChange}
+        error={phoneError}
+        helperText={phoneError ? 'Invalid phone number' : ''}
+      />
             <TextField
               name='password'
               label="Password"
