@@ -107,17 +107,13 @@ const Profile = () => {
               width: '40px',
               height: '40px',
               borderRadius: '100px',
-              backgroundColor: colorPalette.primary[500],
-              color: colorPalette.secondary[100],
-              '&:hover': {
-                backgroundColor: colorPalette.primary[500],
-                color: colorPalette.secondary[100],
-              },
+              backgroundColor: colorPalette.yellow[500],
+              color: colorPalette.black[500],
             }}
           >
             <PersonAddIcon />
           </IconButton>
-          <Typography variant="h5" textAlign="center">
+          <Typography variant="h5" textAlign="center" sx={{color: '#fff', mt: '1rem'}}>
             Add New Staff Member
           </Typography>
         </Box>
@@ -128,7 +124,20 @@ const Profile = () => {
               label="Name"
               variant="outlined"
               type="text"
-              sx={{ mb: '1.5rem' }}
+              sx={{
+                mb: '1.5rem',
+                
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
+               
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+              }}
               onChange={(e) => setName(e.target.value)}
               required
             />
@@ -137,34 +146,83 @@ const Profile = () => {
               label="User ID"
               variant="outlined"
               type="text"
-              sx={{ mb: '1.5rem' }}
+              sx={{
+                mb: '1.5rem',
+                
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
+               
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+              }}
               required
               onChange={(e) => setStaffId(e.target.value)}
             />
              <TextField
-        name="phone"
-        label="Phone"
-        variant="outlined"
-        type="text"
-        required
-        sx={{ mb: '1.5rem' }}
-        value={phone}
-        onChange={handlePhoneChange}
-        error={phoneError}
-        helperText={phoneError ? 'Invalid phone number' : ''}
-      />
+              name="phone"
+              label="Phone"
+              variant="outlined"
+              type="text"
+              required
+              sx={{
+                mb: '1.5rem',
+                
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
+               
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+              }}
+              onChange={(e) => setPhone(e.target.value)}
+            />
             <TextField
               name='password'
               label="Password"
               variant="outlined"
               type="password"
-              sx={{ mb: '1.5rem' }}
+              sx={{
+                mb: '1.5rem',
+                
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
+               
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+              }}
               required
               onChange={(e) => setPassword(e.target.value)}
             />
             
            
-            <FlexBetween sx={{ mb: '1.5rem' }}>
+            <FlexBetween sx={{
+                mb: '1.5rem',
+                
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
+               
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+              }}>
               <FormControl sx={{width: '45%'}}>
                 <InputLabel id="demo-simple-select-label">Position</InputLabel>
                 <Select
@@ -192,11 +250,11 @@ const Profile = () => {
                 onClick={() => navigate('/staff')}
                 sx={{
                   width: '45%',
-                  backgroundColor: colorPalette.indigo[500],
+                  backgroundColor: colorPalette.black2[500],
                   color: colorPalette.secondary[200],
                   padding: '0.5rem 0',
                   '&:hover': {
-                    backgroundColor: colorPalette.indigo[700],
+                    backgroundColor: colorPalette.black2[400],
                     color: colorPalette.secondary[200],
                   },
                 }}
@@ -209,11 +267,11 @@ const Profile = () => {
                 type='submit'
                 sx={{
                   width: '45%',
-                  backgroundColor: colorPalette.primary[500],
-                  color: colorPalette.secondary[200],
+                  backgroundColor: colorPalette.yellow[500],
+                  color: colorPalette.black2[500],
                   padding: '0.5rem 0',
                   '&:hover': {
-                    backgroundColor: colorPalette.primary[700],
+                    backgroundColor: colorPalette.yellow[400],
                     color: colorPalette.secondary[200],
                   },
                 }}

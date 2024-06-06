@@ -1,8 +1,16 @@
-
-import React from 'react'
-import Header from 'components/Header'
+import React from 'react';
+import Header from 'components/Header';
 import Box from '@mui/material/Box';
-import { Button, FormControl, IconButton, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import {
+  Button,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { colorPalette } from 'customTheme';
 import HttpsIcon from '@mui/icons-material/Https';
 import FlexBetween from 'components/FlexBetween';
@@ -13,12 +21,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-
-const positions = [
-  'Admin',
-  'Operator',
-  'Read Only',
-];
+const positions = ['Admin', 'Operator', 'Read Only'];
 
 // const teams = [
 //   'Project Team',
@@ -28,9 +31,7 @@ const positions = [
 //   'Document Team',
 // ];
 
-
 const UpdateStaff = () => {
-
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -49,25 +50,21 @@ const UpdateStaff = () => {
   useEffect(() => {
     setFormData((prevState) => {
       let newData = { ...prevState };
-      return{
+      return {
         ...newData,
         mongoId: data.mongoID,
         staffId: data.staffId,
         name: data.name,
         phone: data.phone,
         position: data.position,
-        
-      }
+      };
     });
   }, [data]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(
-        `/api/staff/update/${formData.staffId}`,
-        formData
-      );
+      await axios.put(`/api/staff/update/${formData.staffId}`, formData);
       toast.success('Data has been updated successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -93,10 +90,9 @@ const UpdateStaff = () => {
       width="100%"
       minHeight="20vh"
       p="3rem 0"
-      
       sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
     >
-      <Box sx={{ width:450}}>
+      <Box sx={{ width: 450 }}>
         <Box
           width="100%"
           sx={{
@@ -107,45 +103,86 @@ const UpdateStaff = () => {
             mb: '1.5rem',
           }}
         >
-        <IconButton
+          <IconButton
             variant="solid"
             sx={{
               width: '40px',
               height: '40px',
               borderRadius: '100px',
-              backgroundColor: colorPalette.primary[500],
-              color: colorPalette.secondary[100],
-              '&:hover': {
-                backgroundColor: colorPalette.primary[500],
-                color: colorPalette.secondary[100],
-              },
+              backgroundColor: colorPalette.yellow[500],
+              color: colorPalette.black[500],
             }}
           >
             <PersonAddIcon />
           </IconButton>
-    <Typography variant="h5" textAlign="center">
-     Update Profile
-     </Typography> 
-   </Box>
-   <form onSubmit={handleFormSubmit}>
+          <Typography
+            variant="h5"
+            textAlign="center"
+            sx={{ color: '#fff', mt: '1rem' }}
+          >
+            Update Profile
+          </Typography>
+        </Box>
+        <form onSubmit={handleFormSubmit}>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <TextField
-              name='name'
+              name="name"
               label="Name"
               variant="outlined"
               value={formData.name ? formData.name : ''}
               type="text"
-              sx={{ mb: '1.5rem' }}
+              sx={{
+                mb: '1.5rem',
+                
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+                // "&.Mui-focused": {
+                //   "& .MuiOutlinedInput-notchedOutline": {
+                //     borderColor: "#ffe404",
+                //     borderWidth: "3px",
+                //   },
+                // },
+              }}
               onChange={handleChange}
               required
             />
             <TextField
-              name='staffId'
+              name="staffId"
               label="Staff Id"
               variant="outlined"
               type="number"
               value={formData.staffId ? formData.staffId : ''}
-              sx={{ mb: '1.5rem' }}
+              sx={{
+                mb: '1.5rem',
+                color: colorPalette.yellow[500],
+                
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
+               
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+                '& .MuiInputBase-root.Mui-disabled': {
+                  color: '#fff', // Change this to your desired text color
+                },
+                '& .MuiInputBase-input.Mui-disabled': {
+                  color: 'red', // Change this to your desired text color for the value
+                },
+                '& .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#ffe404', // Change this to your desired outline color
+                },
+              }}
               required
               onChange={handleChange}
               disabled
@@ -157,23 +194,82 @@ const UpdateStaff = () => {
               type="text"
               value={formData.phone ? formData.phone : ''}
               required
-              sx={{ mb: '1.5rem' }}
+              sx={{
+                mb: '1.5rem',
+                
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
+               
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+
+                // "&.Mui-focused": {
+                //   "& .MuiOutlinedInput-notchedOutline": {
+                //     borderColor: "#ffe404",
+                //     borderWidth: "3px",
+                //   },
+                // },
+              }}
               onChange={handleChange}
             />
-            
+
             <TextField
-              name='password'
+              name="password"
               label="Password"
               variant="outlined"
               type="password"
               value={formData.password ? formData.password : ''}
-              sx={{ mb: '1.5rem' }}
+              sx={{
+                mb: '1.5rem',
+                
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
+               
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+
+                // "&.Mui-focused": {
+                //   "& .MuiOutlinedInput-notchedOutline": {
+                //     borderColor: "#ffe404",
+                //     borderWidth: "3px",
+                //   },
+                // },
+              }}
               required
               onChange={handleChange}
             />
-            
-            <FlexBetween sx={{ mb: '1.5rem' }}>
-              <FormControl sx={{width: '45%'}}>
+
+            <FlexBetween sx={{
+                mb: '1.5rem',
+                
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
+               
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+                // "&.Mui-focused": {
+                //   "& .MuiOutlinedInput-notchedOutline": {
+                //     borderColor: "#ffe404",
+                //     borderWidth: "3px",
+                //   },
+                // },
+              }}>
+              <FormControl sx={{ width: '45%'}}>
                 <InputLabel id="demo-simple-select-label">Position</InputLabel>
                 <Select
                   name="position"
@@ -182,17 +278,12 @@ const UpdateStaff = () => {
                   onChange={handleChange}
                 >
                   {positions.map((position) => (
-                    <MenuItem
-                    key={position}
-                    value={position}
-                  >
-                    {position}
-                  </MenuItem>
+                    <MenuItem key={position} value={position}>
+                      {position}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
-              
-
             </FlexBetween>
             <FlexBetween>
               <Button
@@ -200,11 +291,11 @@ const UpdateStaff = () => {
                 onClick={() => navigate('/staff')}
                 sx={{
                   width: '45%',
-                  backgroundColor: colorPalette.indigo[500],
+                  backgroundColor: colorPalette.black2[500],
                   color: colorPalette.secondary[200],
                   padding: '0.5rem 0',
                   '&:hover': {
-                    backgroundColor: colorPalette.indigo[700],
+                    backgroundColor: colorPalette.black2[400],
                     color: colorPalette.secondary[200],
                   },
                 }}
@@ -214,15 +305,15 @@ const UpdateStaff = () => {
               <br />
               <Button
                 variant="filled"
-                type='submit'
+                type="submit"
                 sx={{
                   width: '45%',
-                  backgroundColor: colorPalette.primary[500],
-                  color: colorPalette.secondary[200],
+                  backgroundColor: colorPalette.yellow[500],
+                  color: colorPalette.black2[500],
                   padding: '0.5rem 0',
                   '&:hover': {
-                    backgroundColor: colorPalette.primary[700],
-                    color: colorPalette.secondary[200],
+                    backgroundColor: colorPalette.yellow[400],
+                    color: colorPalette.black[500],
                   },
                 }}
               >
@@ -231,10 +322,9 @@ const UpdateStaff = () => {
             </FlexBetween>
           </Box>
         </form>
-   </Box>
-   </Box>
-  
+      </Box>
+    </Box>
   );
-}
+};
 
-export default UpdateStaff
+export default UpdateStaff;
