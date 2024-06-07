@@ -40,6 +40,8 @@ import Diversity3Icon from '@mui/icons-material/Diversity3';
 import FolderIcon from '@mui/icons-material/Folder';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import Logo from './../assets/logo.svg';
+import Logo1 from './../assets/enLogo.png';
 
 import { useEffect, useSate } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -169,10 +171,17 @@ const Sidebar = ({
             <Box width="100%">
               <Box m="1.5rem 2rem 2rem 3rem">
                 <FlexBetween color={colorPalette.secondary[500]}>
-                  <Box display="flex" alignItems="center" gap="0.5rem">
-                    <Typography variant="h4" fontWeight="bold">
+                  <Box
+                    sx={{
+                      width: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {/* <Typography variant="h4" fontWeight="bold" >
                       BOC LTO Management
-                    </Typography>
+                    </Typography> */}
+                    <img src={Logo} width="150px" height="70px" />
                   </Box>
                   {!isDesktop && (
                     <IconButton
@@ -214,13 +223,7 @@ const Sidebar = ({
                             color:
                               active === simText
                                 ? colorPalette.primary[900]
-                                : colorPalette.yellow[500],
-                            '&:hover': {
-                              color:
-                                active !== simText
-                                  ? colorPalette.black[500]
-                                  : colorPalette.black[500],
-                            },
+                                : colorPalette.yellow[500]                            
                           })}
                         >
                           {icon}

@@ -7,8 +7,7 @@ import Dashboard from 'View/dashboard';
 import Layout from 'View/layout';
 import RouteProtector from 'components/RouteProtector';
 import SignIn from 'View/signin';
-
-
+import Test from 'View/test';
 
 //staff views
 import StaffDashboard from 'View/staff';
@@ -16,54 +15,78 @@ import AddStaff from 'View/staff/addStaff';
 import UpdateStaff from 'View/staff/updateStaff';
 import Profile from 'View/profile';
 
-
 //tape views
 import Tape from 'View/tapes';
-
 
 const routesConfig = [
   {
     path: '/',
     element: <Layout />,
     children: [
-
       {
         path: '/',
-        element: <Navigate to="/dashboard" replace />
+        element: <Navigate to="/dashboard" replace />,
       },
       {
         path: '/dashboard',
-        element: <RouteProtector><Dashboard /></RouteProtector>
+        element: (
+          <RouteProtector>
+            <Dashboard />
+          </RouteProtector>
+        ),
       },
       {
         path: '/signin',
-        element: <SignIn />
+        element: <SignIn />,
       },
 
       {
         path: '/profile',
-        element: <Profile />
+        element: <Profile />,
       },
-      
 
       {
         path: '/staff',
-        element: <RouteProtector><StaffDashboard /></RouteProtector>
+        element: (
+          <RouteProtector>
+            <StaffDashboard />
+          </RouteProtector>
+        ),
       },
       {
         path: '/addStaff',
-        element: <RouteProtector><AddStaff /></RouteProtector>
+        element: (
+          <RouteProtector>
+            <AddStaff />
+          </RouteProtector>
+        ),
       },
       {
         path: '/updateStaff',
-        element: <RouteProtector><UpdateStaff /></RouteProtector>
+        element: (
+          <RouteProtector>
+            <UpdateStaff />
+          </RouteProtector>
+        ),
       },
-        
-        {
-          path: '/tape',
-          element: <RouteProtector><Tape /></RouteProtector>
-        },
-    ]
+
+      {
+        path: '/tape',
+        element: (
+          <RouteProtector>
+            <Tape />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: '/test',
+        element: (
+          <RouteProtector>
+            <Test />
+          </RouteProtector>
+        ),
+      }
+    ],
   },
 ];
 
