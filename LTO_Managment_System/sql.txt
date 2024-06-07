@@ -1,0 +1,37 @@
+use lto_db; 
+
+CREATE TABLE IF NOT EXISTS Users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    date_of_birth DATE,
+    registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO Users (first_name, last_name, email, date_of_birth) VALUES
+('John', 'Doe', 'john.doe@example.com', '1985-02-15'),
+('Jane', 'Smith', 'jane.smith@example.com', '1990-07-23'),
+('Alice', 'Johnson', 'alice.johnson@example.com', '1982-11-05'),
+('Bob', 'Brown', 'bob.brown@example.com', '1978-03-29'),
+('Charlie', 'Davis', 'charlie.davis@example.com', '1995-12-17');
+
+select * from users;
+
+
+CREATE TABLE Staff (
+    staffId VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    phone VARCHAR(10) UNIQUE NOT NULL,
+    position VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+INSERT INTO Staff (staffId, name, phone, position, password) VALUES 
+('S001', 'John Doe', '0112123451', 'Manager', 'password123'),
+('S002', 'Jane Smith', '0981223451', 'Assistant', 'securePass!456'),
+('S003', 'Alice Johnson', '092345671', 'Developer', 'devPass789');
+
+select * from staff;
+
