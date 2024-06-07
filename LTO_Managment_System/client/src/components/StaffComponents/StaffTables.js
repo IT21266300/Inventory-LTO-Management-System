@@ -73,7 +73,7 @@ const StaffTables = ({ result, loading, error }) => {
     setAnchorEl(null);
     setOpenAlert(false);
     try {
-      axios.delete(`/api/staff/delete/${passValue.mongoID}`);
+      axios.delete(`/api/staffs/delete/${passValue.staffId}`);
       toast.success('Data successfully deleted!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -93,11 +93,6 @@ const StaffTables = ({ result, loading, error }) => {
   }, [buttonClickedValue]);
 
   const columns = [
-    {
-      field: 'mongoID',
-      headerName: 'ID',
-      flex: 0,
-    },
     {
       field: 'id',
       headerName: 'No',
@@ -154,7 +149,6 @@ const StaffTables = ({ result, loading, error }) => {
   if (result !== undefined) {
     rows = result.map((row, x) => ({
       id: x + 1,
-      mongoID: row._id,
       staffId: row.staffId,
       name: row.name,
       phone: row.phone,

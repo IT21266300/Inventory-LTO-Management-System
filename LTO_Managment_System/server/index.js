@@ -6,6 +6,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import mysql from 'mysql2';
 
 // import routes
 import routes from './lib/routes.js'
@@ -23,21 +24,46 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 // Database connection
-const PORT = process.env.PORT || 4000;
-mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+const PORT = process.env.PORT || 3308;
+// mongoose
+//   .connect(process.env.MONGODB_URI, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
+//   })
+//   .catch((err) => console.log(`connection error: ${err}`));
+
+const db = mysql.createConnection({
+  host: "localhost",
+  user: 'root',
+  password: '1234',
+  database: 'lto_db'
+})
+
+app.use(
+  express.urlencoded({
+    extended: true,
   })
-  .then(() => {
-    app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
+)
+
+app.get('/users', (req, res) => {
+  const sql = "SELECT * FROM Users";
+  db.query(sql, (err, data) => {
+    if(err) return res.json(err);
+    return res.json(data);
   })
-  .catch((err) => console.log(`connection error: ${err}`));
+})
+
+app.listen(PORT, ()=>{
+  console.log("running");
+})
 
 
 // Router calls
 app.use('/api', routes);
 
-app.use((err, req, res, next) => {
-  res.status(500).send({ message: err.message });
-});
+// app.use((err, req, res, next) => {
+//   res.status(500).send({ message: err.message });
+// });

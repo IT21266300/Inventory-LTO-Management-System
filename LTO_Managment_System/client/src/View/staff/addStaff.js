@@ -63,7 +63,7 @@ const Profile = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/staff/add', {
+      await axios.post('/api/staffs/addStaff', {
         staffId,
         name,
         phone,
