@@ -49,7 +49,7 @@ const Staff = () => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get('/api/staff/');
+        const result = await axios.get('/api/staffs/');
         dispatch({
           type: 'FETCH_SUCCESS',
           payload: result.data,

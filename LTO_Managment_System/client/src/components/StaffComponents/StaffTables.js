@@ -94,11 +94,6 @@ const StaffTables = ({ result, loading, error }) => {
 
   const columns = [
     {
-      field: 'mongoID',
-      headerName: 'ID',
-      flex: 0,
-    },
-    {
       field: 'id',
       headerName: 'No',
       flex: 0.1,
@@ -154,7 +149,6 @@ const StaffTables = ({ result, loading, error }) => {
   if (result !== undefined) {
     rows = result.map((row, x) => ({
       id: x + 1,
-      mongoID: row._id,
       staffId: row.staffId,
       name: row.name,
       phone: row.phone,

@@ -7,6 +7,7 @@ import SignRouter from '../routes/signinRoutes/signin.js';
 
 // import Staff routes
 import StaffRouter from '../routes/staffRoutes/staff.js'
+import StaffR from '../routes/staffRouteMysql/staffRoute.js';
 
 
 
@@ -21,8 +22,9 @@ app.use('/signroute', SignRouter);
 
 
 // staff
-app.use('/staff', StaffRouter);
-
+// app.use('/staff', StaffRouter);
+app.use('/staffs', StaffR);
+ 
 //tape
 app.use('/tape', StaffRouter);
 
