@@ -38,9 +38,10 @@ const UpdateStaff = () => {
 
   const { data } = location.state;
 
+  console.log(data);
+
   const [formData, setFormData] = useState({
-    mongoId: '',
-    staffId: 0,
+    staffId: '',
     name: '',
     phone: '',
     position: '',
@@ -52,7 +53,6 @@ const UpdateStaff = () => {
       let newData = { ...prevState };
       return {
         ...newData,
-        mongoId: data.mongoID,
         staffId: data.staffId,
         name: data.name,
         phone: data.phone,
@@ -64,7 +64,7 @@ const UpdateStaff = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/staff/update/${formData.staffId}`, formData);
+      await axios.put(`/api/staffs/updateStaff/${formData.staffId}`, formData);
       toast.success('Data has been updated successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });

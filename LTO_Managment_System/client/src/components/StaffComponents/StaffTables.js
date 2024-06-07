@@ -73,7 +73,7 @@ const StaffTables = ({ result, loading, error }) => {
     setAnchorEl(null);
     setOpenAlert(false);
     try {
-      axios.delete(`/api/staff/delete/${passValue.mongoID}`);
+      axios.delete(`/api/staffs/delete/${passValue.staffId}`);
       toast.success('Data successfully deleted!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
