@@ -92,6 +92,13 @@ const Dashboard = () => {
       link: '/staff',
       img: i4,
     },
+    {
+      id: 5,
+      name: 'System Management',
+      para: 'From This function mange finance status in each site.',
+      link: '/systems',
+      img: i5,
+    },
   ];
 
   return loading ? (
