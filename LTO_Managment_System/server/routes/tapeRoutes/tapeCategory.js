@@ -29,111 +29,229 @@ router.route('/addSystem').post(async (req, res) => {
   });
 });
 
-router.route('/').get((req, res) => {
-  const sql = 'SELECT * FROM System';
-  db.query(sql, (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data);
+// Get all systems
+router.route('/systems').get(async (req, res) => { 
+    try {
+      const sql = 'SELECT * FROM System';
+      const [data] = await db.query(sql); 
+      res.json(data); 
+    } catch (err) {
+      console.error('Error fetching systems:', err);
+      res.status(500).json({ message: 'Failed to fetch systems' }); 
+    }
   });
-});
-
-router.route('/:systemId').get(async (req, res) => {
-  const { systemId } = req.params; // Extract staffId from req.params
-  const sql = 'SELECT * FROM System WHERE systemId = ?';
-
-  db.query(sql, [systemId], (err, data) => {
-    if (err) return res.json(err);
-    return res.json(data);
-  });
-});
-
-
-router.route('/delete/:systemId').delete(async (req, res) => {
-  const { systemId } = req.params;
-
-  const sql = 'DELETE FROM System WHERE systemId = ?';
   
-  db.query(sql, [staffId], (err, result) => {
-    if (err) {
-      console.error(err.message);
-      return res.status(500).send({ status: 'Error with deleting system', error: err.message });
-    }
-
-    if (result.affectedRows === 0) {
-      return res.status(404).send({ status: 'System not found' });
-    }
-
-    return res.status(200).send({ status: 'System Deleted' });
-  });
-});
-
-
-
-router.route('/update/:systemId').put(async (req, res) => {
-  let userId = req.params.staffId;
-  const { sysId, sysName} = req.body;
-
-
-  const existingUser = await System.findOne({
-    $or: [{ systemId }],
-  });
-  if (existingSystem && existingSystem.systemId != systemId) {
-    return res
-      .status(409)
-      .json({ message: 'System name already in use by another system' });
-  }
-
-  const updateSystem = {
-    sysId,
-    sysName
-    
-  };
-  const update = await System.findOneAndUpdate({ systemId: systemId }, updateSystem)
-    .then(() => {
-      res.status(200).send({ status: 'System Updated' });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json({ message: err.message });
-    });
-});
-
-
-router.route('/updateStaff/:staffId').put(async (req, res) => {
-  const userId = req.params.staffId;
-  const { staffId, name, phone, position, password } = req.body;
-
-  // Check if the updated staffId already exists
-  const checkSql = 'SELECT * FROM Staff WHERE staffId = ? AND staffId != ?';
-  db.query(checkSql, [staffId, userId], (checkErr, checkResult) => {
-    if (checkErr) {
-      console.error(checkErr.message);
-      return res.status(500).json({ message: 'Error with checking user', error: checkErr.message });
-    }
-
-    if (checkResult.length > 0) {
-      return res.status(409).json({ message: 'Username or staffID already in use by another user' });
-    }
-
-    // Hash the password if provided
-    const hashedPassword = password ? bcrypt.hashSync(password, 10) : null;
-
-    // Update the staff member
-    const updateSql = 'UPDATE Staff SET staffId = ?, name = ?, phone = ?, position = ?, password = ? WHERE staffId = ?';
-    db.query(updateSql, [staffId, name, phone, position, hashedPassword, userId], (updateErr, updateResult) => {
-      if (updateErr) {
-        console.error(updateErr.message);
-        return res.status(400).json({ message: 'Error with updating user', error: updateErr.message });
+  // Get a specific system by systemId
+  router.route('/systems/:systemId').get(async (req, res) => {
+    const { systemId } = req.params;
+  
+    try {
+      const sql = 'SELECT * FROM System WHERE sysId = ?'; 
+      const [data] = await db.query(sql, [systemId]); 
+  
+      if (data.length === 0) { 
+        return res.status(404).json({ message: 'System not found' });
       }
+  
+      res.json(data[0]); 
+    } catch (err) {
+      console.error('Error fetching system:', err);
+      res.status(500).json({ message: 'Failed to fetch system' }); 
+    }
+  });
 
+
+
+// 1. Get all subsystems (from all systems)
+router.route('/subsystems').get(async (req, res) => {
+    try {
+      const sql = 'SELECT * FROM SubSystem';
+      const [data] = await db.query(sql);
+      res.json(data);
+    } catch (err) {
+      console.error('Error fetching subsystems:', err);
+      res.status(500).json({ message: 'Failed to fetch subsystems' });
+    }
+  });
+  
+  // 2. Get a specific subsystem by subSysId
+  router.route('/subsystems/:subSysId').get(async (req, res) => {
+    const { subSysId } = req.params;
+  
+    try {
+      const sql = 'SELECT * FROM SubSystem WHERE subSysId = ?';
+      const [data] = await db.query(sql, [subSysId]);
+  
+      if (data.length === 0) {
+        return res.status(404).json({ message: 'Subsystem not found' });
+      }
+  
+      res.json(data[0]);
+    } catch (err) {
+      console.error('Error fetching subsystem:', err);
+      res.status(500).json({ message: 'Failed to fetch subsystem' });
+    }
+  });
+  
+  // 3. Get all subsystems belonging to a specific system (using systemId) 
+  router.route('/systems/:systemId/subsystems').get(async (req, res) => {
+    const { systemId } = req.params;
+  
+    try {
+      const sql = 'SELECT * FROM SubSystem WHERE parentSystemId = ?';
+      const [data] = await db.query(sql, [systemId]);
+      res.json(data); 
+    } catch (err) {
+      console.error('Error fetching subsystems for system:', err);
+      res.status(500).json({ message: 'Failed to fetch subsystems for system' });
+    }
+  });
+
+
+
+//add new subsystem to the system
+
+router.route('/addSubSystem').post(async (req, res) => {
+    const { subSysName, parentSystemId } = req.body;
+  
+    try {
+      // 1. Validate Input: (Important! - Add more validation as needed)
+      if (!subSysName || !parentSystemId) {
+        return res.status(400).json({ message: 'Subsystem name and parent system ID are required' });
+      }
+  
+      // 2. Check if Subsystem Name Already Exists within the Parent System:
+      const [existingSubSystem] = await db.query(
+        'SELECT * FROM SubSystem WHERE subSysName = ? AND parentSystemId = ?', 
+        [subSysName, parentSystemId]
+      );
+      if (existingSubSystem.length > 0) {
+        return res.status(409).json({ message: 'Subsystem name already exists within this system' });
+      }
+  
+      // 3. Insert the New Subsystem:
+      const [result] = await db.query(
+        'INSERT INTO SubSystem (subSysName, parentSystemId) VALUES (?, ?)',
+        [subSysName, parentSystemId]
+      );
+  
+      res.json({ 
+        message: 'Subsystem added successfully',
+        insertedId: result.insertId 
+      });
+  
+    } catch (err) {
+      console.error('Error adding subsystem:', err);
+      res.status(500).json({ message: 'Failed to add subsystem' });
+    }
+  });
+
+// delete system
+
+  router.route('/delete/:systemId').delete(async (req, res) => {
+    const { systemId } = req.params;
+  
+    try {
+      const sql = 'DELETE FROM System WHERE sysId = ?'; // Use sysId 
+      const [result] = await db.query(sql, [systemId]); // Use systemId
+  
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: 'System not found' }); 
+      }
+  
+      res.json({ message: 'System deleted successfully' }); 
+    } catch (err) {
+      console.error('Error deleting system:', err);
+      res.status(500).json({ message: 'Failed to delete system' }); 
+    }
+  });
+  
+  // Route to delete a SubSystem
+  router.route('/deleteSubSystem/:subSysId').delete(async (req, res) => {
+    const { subSysId } = req.params;
+  
+    try {
+      const sql = 'DELETE FROM SubSystem WHERE subSysId = ?';
+      const [result] = await db.query(sql, [subSysId]);
+  
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: 'Subsystem not found' });
+      }
+  
+      res.json({ message: 'Subsystem deleted successfully' }); 
+    } catch (err) {
+      console.error('Error deleting subsystem:', err);
+      res.status(500).json({ message: 'Failed to delete subsystem' }); 
+    }
+  });
+
+
+
+//update system
+
+  router.route('/updateSystem/:systemId').put(async (req, res) => {
+    const systemId = req.params.systemId;
+    const { sysName } = req.body; 
+  
+    try {
+      // 1. Check if a system with the same name already exists
+      const [existingSystem] = await db.query(
+        'SELECT * FROM System WHERE sysName = ? AND sysId != ?',
+        [sysName, systemId]
+      );
+  
+      if (existingSystem.length > 0) {
+        return res.status(409).json({ message: 'System name already in use by another system' });
+      }
+  
+      // 2. Update the System 
+      const updateSql = 'UPDATE System SET sysName = ? WHERE sysId = ?';
+      const [updateResult] = await db.query(updateSql, [sysName, systemId]);
+  
       if (updateResult.affectedRows === 0) {
-        return res.status(404).json({ message: 'User not found' });
+        return res.status(404).json({ message: 'System not found' });
       }
-
-      return res.status(200).json({ message: 'User Updated' });
-    });
+  
+      res.json({ message: 'System updated successfully' }); 
+  
+    } catch (err) {
+      console.error('Error updating system:', err);
+      res.status(500).json({ message: 'Failed to update system' });
+    }
   });
-});
+
+  // update subsystem
+
+  router.route('/updateSubSystem/:subSysId').put(async (req, res) => {
+    const { subSysId } = req.params;
+    const { subSysName, parentSystemId } = req.body; 
+  
+    try {
+      // 1. Check for Existing Subsystem Name within the Same Parent System
+      const [existingSubSystem] = await db.query(
+        'SELECT * FROM SubSystem WHERE subSysName = ? AND subSysId != ? AND parentSystemId = ?',
+        [subSysName, subSysId, parentSystemId] // Prevent checking against itself
+      );
+  
+      if (existingSubSystem.length > 0) {
+        return res.status(409).json({ message: 'Subsystem name already exists within this parent system' });
+      }
+  
+      // 2. Update the Subsystem 
+      const updateSql = 'UPDATE SubSystem SET subSysName = ?, parentSystemId = ? WHERE subSysId = ?';
+      const [updateResult] = await db.query(updateSql, [subSysName, parentSystemId, subSysId]);
+  
+      if (updateResult.affectedRows === 0) {
+        return res.status(404).json({ message: 'Subsystem not found' });
+      }
+  
+      res.json({ message: 'Subsystem updated successfully' }); 
+  
+    } catch (err) {
+      console.error('Error updating subsystem:', err);
+      res.status(500).json({ message: 'Failed to update subsystem' }); 
+    }
+  });
 
 
 export default router;
