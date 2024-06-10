@@ -116,18 +116,18 @@ const SignIn = () => {
               width: '40px',
               height: '40px',
               borderRadius: '100px',
-              backgroundColor: colorPalette.primary[500],
-              color: colorPalette.secondary[100],
+              backgroundColor: colorPalette.yellow[500],
+              color: colorPalette.black[500],
               '&:hover': {
-                backgroundColor: colorPalette.primary[500],
-                color: colorPalette.secondary[100],
+                backgroundColor: colorPalette.yellow[500],
+                color: colorPalette.black[500],
               },
             }}
           >
             <HttpsIcon />
           </IconButton>
 
-          <Typography variant="h5" textAlign="center">
+          <Typography variant="h5" textAlign="center" sx={{ color: '#fff', mt: '1rem' }}>
             Sign In
           </Typography>
         </Box>
@@ -137,7 +137,27 @@ const SignIn = () => {
               label="Staff ID"
               variant="outlined"
               type="text"
-              sx={{ mb: '1.5rem' }}
+              sx={{
+                mb: '1.5rem',
+
+                width: '100%',
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
+                  },
+                },
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
+                },
+                // "&.Mui-focused": {
+                //   "& .MuiOutlinedInput-notchedOutline": {
+                //     borderColor: "#ffe404",
+                //     borderWidth: "3px",
+                //   },
+                // },
+              }}
               required
               onChange={(e) => setstaffId(e.target.value)}
             />
@@ -145,7 +165,27 @@ const SignIn = () => {
               label="Password"
               variant="outlined"
               type="password"
-              sx={{ mb: '1.5rem' }}
+              sx={{
+                mb: '1.5rem',
+
+                width: '100%',
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
+                  },
+                },
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
+                },
+                // "&.Mui-focused": {
+                //   "& .MuiOutlinedInput-notchedOutline": {
+                //     borderColor: "#ffe404",
+                //     borderWidth: "3px",
+                //   },
+                // },
+              }}
               required
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -153,12 +193,12 @@ const SignIn = () => {
               variant="filled"
               type="submit"
               sx={{
-                backgroundColor: colorPalette.primary[500],
-                color: colorPalette.secondary[200],
+                backgroundColor: colorPalette.yellow[500],
+                color: colorPalette.black2[500],
                 padding: '0.5rem 0',
                 '&:hover': {
-                  backgroundColor: colorPalette.primary[500],
-                  color: colorPalette.secondary[200],
+                  backgroundColor: colorPalette.yellow[400],
+                  color: colorPalette.black[500],
                 },
               }}
             >
@@ -171,7 +211,7 @@ const SignIn = () => {
         <Box mt="1rem">
           <Link
             to="#"
-            sx={{ textAlign: 'center', fontSize: '0.9rem' }}
+            sx={{ textAlign: 'center', fontSize: '0.9rem', color: colorPalette.yellow[500] }}
             onClick={handleClickOpen}
           >
             Forget Password?
