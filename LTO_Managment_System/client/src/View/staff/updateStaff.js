@@ -38,9 +38,10 @@ const UpdateStaff = () => {
 
   const { data } = location.state;
 
+  console.log(data);
+
   const [formData, setFormData] = useState({
-    mongoId: '',
-    staffId: 0,
+    staffId: '',
     name: '',
     phone: '',
     position: '',
@@ -52,7 +53,6 @@ const UpdateStaff = () => {
       let newData = { ...prevState };
       return {
         ...newData,
-        mongoId: data.mongoID,
         staffId: data.staffId,
         name: data.name,
         phone: data.phone,
@@ -64,7 +64,7 @@ const UpdateStaff = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/staff/update/${formData.staffId}`, formData);
+      await axios.put(`/api/staffs/updateStaff/${formData.staffId}`, formData);
       toast.success('Data has been updated successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -92,7 +92,7 @@ const UpdateStaff = () => {
       p="3rem 0"
       sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
     >
-      <Box sx={{ width: 450 }}>
+      <Box>
         <Box
           width="100%"
           sx={{
@@ -124,7 +124,7 @@ const UpdateStaff = () => {
           </Typography>
         </Box>
         <form onSubmit={handleFormSubmit}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
             <TextField
               name="name"
               label="Name"
@@ -133,15 +133,17 @@ const UpdateStaff = () => {
               type="text"
               sx={{
                 mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
+
+                width: '100%',
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
                   },
                 },
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
                 },
                 // "&.Mui-focused": {
                 //   "& .MuiOutlinedInput-notchedOutline": {
@@ -157,21 +159,21 @@ const UpdateStaff = () => {
               name="staffId"
               label="Staff Id"
               variant="outlined"
-              type="number"
+              type="text"
               value={formData.staffId ? formData.staffId : ''}
               sx={{
                 mb: '1.5rem',
                 color: colorPalette.yellow[500],
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
                   },
                 },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
+
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
                 },
                 '& .MuiInputBase-root.Mui-disabled': {
                   color: '#fff', // Change this to your desired text color
@@ -179,9 +181,10 @@ const UpdateStaff = () => {
                 '& .MuiInputBase-input.Mui-disabled': {
                   color: 'red', // Change this to your desired text color for the value
                 },
-                '& .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#ffe404', // Change this to your desired outline color
-                },
+                '& .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline':
+                  {
+                    borderColor: '#ffe404', // Change this to your desired outline color
+                  },
               }}
               required
               onChange={handleChange}
@@ -196,16 +199,16 @@ const UpdateStaff = () => {
               required
               sx={{
                 mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
                   },
                 },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
+
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
                 },
 
                 // "&.Mui-focused": {
@@ -226,16 +229,16 @@ const UpdateStaff = () => {
               value={formData.password ? formData.password : ''}
               sx={{
                 mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
                   },
                 },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
+
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
                 },
 
                 // "&.Mui-focused": {
@@ -249,18 +252,19 @@ const UpdateStaff = () => {
               onChange={handleChange}
             />
 
-            <FlexBetween sx={{
+            <FlexBetween
+              sx={{
                 mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
                   },
                 },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
+
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
                 },
                 // "&.Mui-focused": {
                 //   "& .MuiOutlinedInput-notchedOutline": {
@@ -268,12 +272,14 @@ const UpdateStaff = () => {
                 //     borderWidth: "3px",
                 //   },
                 // },
-              }}>
-              <FormControl sx={{ width: '45%'}}>
-                <InputLabel id="demo-simple-select-label">Position</InputLabel>
+              }}
+            >
+              <FormControl sx={{ width: '45%' }}>
+                <InputLabel id="position-label">Position</InputLabel>
                 <Select
+                  labelId="position-label"
                   name="position"
-                  value={formData.position}
+                  value={formData.position ? formData.position : ''}
                   label="Position"
                   onChange={handleChange}
                 >
