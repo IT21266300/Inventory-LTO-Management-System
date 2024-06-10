@@ -8,6 +8,7 @@ import Layout from 'View/layout';
 import RouteProtector from 'components/RouteProtector';
 import SignIn from 'View/signin';
 import Test from 'View/test';
+import Systems from 'View/systems'
 
 //staff views
 import StaffDashboard from 'View/staff';
@@ -83,6 +84,14 @@ const routesConfig = [
         element: (
           <RouteProtector>
             <Test />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: '/systems',
+        element: (
+          <RouteProtector>
+            <Systems />
           </RouteProtector>
         ),
       }

@@ -2,7 +2,8 @@ import React, { useReducer, useEffect } from 'react';
 import Header from 'components/Header';
 import axios from 'axios';
 import { Tabs, Tab, Box, tabsClasses, Divider } from '@mui/material';
-import TapeCategoryComponent from 'components/TapeCategoryComponent/TapeCategoryTable';
+import StaffTables from 'components/StaffComponents/StaffTables';
+import CategoryTable from 'components/TapeCategoryComponent/TapeCategoryTable'
 import { Helmet } from 'react-helmet-async';
 import { colorPalette } from 'customTheme';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -20,8 +21,19 @@ const reducer = (state, action) => {
   }
 };
 
-const Tape = () => {
-  
+const Staff = () => {
+  const tabs = [
+    {
+      id: '1',
+      label: 'Staff',
+      col: 'staff',
+    },
+    // {
+    //   id: '2',
+    //   label: '',
+    //   col: 'teams',
+    // },
+  ];
   const [value, setValue] = React.useState(0);
   const [site, setSite] = React.useState(null);
   const [tabName, setTabName] = React.useState({
@@ -38,7 +50,7 @@ const Tape = () => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get('/api/staff/');
+        const result = await axios.get('/api/staffs/');
         dispatch({
           type: 'FETCH_SUCCESS',
           payload: result.data,
@@ -55,14 +67,14 @@ const Tape = () => {
   return (
     <Box m="1.5rem  2.5rem">
       <Helmet>
-        <title>Tape Management</title>
+        <title>System Management</title>
       </Helmet>
       <Header title="System Management" subtitle="Manage Systems" />
 
 
-      {<TapeCategoryComponent result={staffData} loading={loading} error={error} />}
+      {tabName.col === 'staff' && <CategoryTable result={staffData} loading={loading} error={error} />}
     </Box>
   );
 };
 
-export default Tape;
+export default Staff;
