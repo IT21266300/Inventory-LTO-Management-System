@@ -7,57 +7,42 @@ const router = express.Router();
 
 
 router.route('/addSystem').post(async (req, res) => {
-  const { sysId, sysName } = req.body;
+  const { sysName } = req.body;
 
- 
-
-  // Check if the systemName already exists
-  const checkSql = 'SELECT * FROM System WHERE sysName = ?';
+  // Check if the staffId already exists
+  const checkSql = 'SELECT * FROM Systems WHERE sysName = ?';
   db.query(checkSql, [sysName], (err, results) => {
     if (err) return res.status(500).json({ message: err.message });
     
     if (results.length > 0) {
-      return res.status(409).json({ message: 'System Name already in use' });
+      return res.status(409).json({ message: 'System name already in use' });
     }
 
-    // Insert the new system
-    const insertSql = 'INSERT INTO System (sysId, sysName) VALUES (?, ?, ?, ?, ?)';
-    db.query(insertSql, [sysId, sysName], (err, result) => {
+    // Insert the new staff member
+    const insertSql = 'INSERT INTO Systems (sysName) VALUES (?)';
+    db.query(insertSql, [sysName], (err, result) => {
       if (err) return res.status(400).json({ message: err.message });
-      return res.json({ message: 'System Added Successfully' });
+      return res.json({ message: 'Staff Added' });
     });
   });
 });
 
-// Get all systems
-router.route('/systems').get(async (req, res) => { 
-    try {
-      const sql = 'SELECT * FROM System';
-      const [data] = await db.query(sql); 
-      res.json(data); 
-    } catch (err) {
-      console.error('Error fetching systems:', err);
-      res.status(500).json({ message: 'Failed to fetch systems' }); 
-    }
+  router.route('/').get((req, res) => {
+    const sql = 'SELECT * FROM Systems';
+    db.query(sql, (err, data) => {
+      if (err) return res.json(err);
+      return res.json(data);
+    });
   });
   
-  // Get a specific system by systemId
-  router.route('/systems/:systemId').get(async (req, res) => {
+  router.route('/:systemId').get(async (req, res) => {
     const { systemId } = req.params;
+    const sql = 'SELECT * FROM Systems WHERE sysId = ?';
   
-    try {
-      const sql = 'SELECT * FROM System WHERE sysId = ?'; 
-      const [data] = await db.query(sql, [systemId]); 
-  
-      if (data.length === 0) { 
-        return res.status(404).json({ message: 'System not found' });
-      }
-  
-      res.json(data[0]); 
-    } catch (err) {
-      console.error('Error fetching system:', err);
-      res.status(500).json({ message: 'Failed to fetch system' }); 
-    }
+    db.query(sql, [systemId], (err, data) => {
+      if (err) return res.json(err);
+      return res.json(data);
+    });
   });
 
 

@@ -35,3 +35,16 @@ INSERT INTO Staff (staffId, name, phone, position, password) VALUES
 
 select * from staff;
 
+CREATE TABLE Systems (
+    sysId INT AUTO_INCREMENT PRIMARY KEY,
+    sysName VARCHAR(255) NOT NULL UNIQUE
+);
+
+-- New SubSystem table
+CREATE TABLE SubSystems (
+    subSysId INT AUTO_INCREMENT PRIMARY KEY,
+    subSysName VARCHAR(255) NOT NULL, 
+    parentSystemId INT,            -- Link to the parent system
+    
+    FOREIGN KEY (parentSystemId) REFERENCES System(sysId) 
+);
