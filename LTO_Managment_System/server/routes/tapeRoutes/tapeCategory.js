@@ -176,40 +176,6 @@ router.route('/deleteSubSystem/:subSysId').delete(async (req, res) => {
 
 //update system
 
-// router.route('/updateSystem/:systemId').put(async (req, res) => {
-//   const systemId = req.params.systemId;
-//   const { sysName } = req.body;
-
-//   try {
-//     // 1. Check if a system with the same name already exists
-//     const [existingSystem] = await db.query(
-//       'SELECT * FROM System WHERE sysName = ? AND sysId != ?',
-//       [sysName, systemId]
-//     );
-
-//     if (existingSystem.length > 0) {
-//       return res
-//         .status(409)
-//         .json({ message: 'System name already in use by another system' });
-//     }
-
-//     // 2. Update the System
-//     const updateSql = 'UPDATE System SET sysName = ? WHERE sysId = ?';
-//     const [updateResult] = await db.query(updateSql, [sysName, systemId]);
-
-//     if (updateResult.affectedRows === 0) {
-//       return res.status(404).json({ message: 'System not found' });
-//     }
-
-//     res.json({ message: 'System updated successfully' });
-//   } catch (err) {
-//     console.error('Error updating system:', err);
-//     res.status(500).json({ message: 'Failed to update system' });
-//   }
-// });
-
-
-
 router.route('/updateSystem/:systemId').put(async (req, res) => {
   const sysId = req.params.systemId;
   const { sysName } = req.body;
