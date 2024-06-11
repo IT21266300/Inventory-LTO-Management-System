@@ -71,7 +71,10 @@ const Systems = () => {
       <Header title="System Management" subtitle="Manage Systems" />
 
 
-      { <StaffTables result={systemData} loading={loading} error={error} />}
+
+      <CategoryTable result={systemData} loading={loading} error={error} />
+      
+
     </Box>
   );
 };

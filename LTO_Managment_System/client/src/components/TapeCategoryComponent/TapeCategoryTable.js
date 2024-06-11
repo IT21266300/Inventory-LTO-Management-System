@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { DataGrid, GridToolbar, GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import {
   Alert,
@@ -10,26 +10,25 @@ import { colorPalette } from 'customTheme';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+
 import { useContext } from 'react';
+
 import { Store } from 'store';
 import ActionButton from 'components/ActionsComponent/ActionButton';
 import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTwo';
 import DownloadActions from 'components/DownloadComponent/DownloadActions';
 import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const StaffTables = ({ result, loading, error }) => {
-
   const navigate = useNavigate();
-
-  console.log('ResultData', result);
 
 
   const { state} = useContext(Store);
+
   const { userInfo } = state;
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const [openAlert, setOpenAlert] = useState(false);
@@ -79,10 +78,16 @@ const StaffTables = ({ result, loading, error }) => {
     setPassValue(buttonClickedValue);
   }, [buttonClickedValue]);
 
+  const handleView = (params) => {
+    navigate(`/viewSubSystem/${params.row.sysId}`);
+  };
+
   const columns = [
     {
       field: 'id',
+
       headerName: 'ID',
+
       flex: 0.1,
     },
     {
@@ -95,10 +100,37 @@ const StaffTables = ({ result, loading, error }) => {
       headerName: 'System Name',
       flex: 0.7,
     },
-    
+
+    {
+      field: 'view',
+      headerName: 'View',
+      flex: 0.2,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => (
+        <Button
+        onClick={() => {
+          navigate('/TapeSubCategoryTable');
+        }}
+        sx={{
+          backgroundColor: colorPalette.yellow[500],
+          color: colorPalette.black[500],
+          fontSize: '14px',
+          fontWeight: 'bold',
+          padding: '10px 20px',
+          '&:hover': {
+            backgroundColor: colorPalette.black[400],
+            color: colorPalette.secondary[100],
+          },
+        }}
+        >
+          View
+        </Button>
+      ),
+    },
+
   ];
 
-  // console.log("info", userInfo);
   if (userInfo.position === 'Admin') {
     columns.push({
       field: 'action',
@@ -116,26 +148,26 @@ const StaffTables = ({ result, loading, error }) => {
 
   let pdfColumn = [];
   if (userInfo.position === 'Admin') {
-    pdfColumn = columns.slice(1, -1);
+    pdfColumn = columns.slice(1, -2);
   } else {
-    pdfColumn = columns.slice(1);
+    pdfColumn = columns.slice(1, -1);
   }
 
   let rows = {};
   if (result !== undefined) {
     rows = result.map((row, x) => ({
+
       id: x + 1,
       sysId: row.sysId,
       sysName: row.sysName,
      
-      
+
     }));
   }
-  
-
+console.log(result)
   return loading ? (
     <Box width="100%">
-      <LoadingAnimation/>
+      <LoadingAnimation />
     </Box>
   ) : error ? (
     <Alert severity="error">{error}</Alert>
@@ -168,7 +200,7 @@ const StaffTables = ({ result, loading, error }) => {
           <AddCircleIcon sx={{ mr: '10px' }} />
           <Typography fontSize="0.9rem">Add New System</Typography>
         </Button>
-        <Box sx={{ml: '1.5rem'}}>
+        <Box sx={{ ml: '1.5rem' }}>
           <DownloadActions
             pdfColumn={pdfColumn}
             rows={rows}
@@ -200,11 +232,10 @@ const StaffTables = ({ result, loading, error }) => {
             color: `${colorPalette.primary[500]} !important`,
           },
           display: 'flex',
-          
         }}
       >
-        <Box width="100%" sx={{color: '#fff'}}>
-        <DataGrid
+        <Box width="50%" sx={{ color: '#fff' }}>
+          <DataGrid
             rows={rows}
             rowHeight={60}
             columns={columns}
@@ -221,9 +252,15 @@ const StaffTables = ({ result, loading, error }) => {
               toolbar: () => {
                 return (
                   <GridToolbarContainer
-                    style={{ justifyContent: 'flex-start', padding: '0.4rem', background: colorPalette.black[100] }}
+                    style={{
+                      justifyContent: 'flex-start',
+                      padding: '0.4rem',
+                      background: colorPalette.black[100],
+                    }}
                   >
-                    <GridToolbarFilterButton style={{ color: colorPalette.yellow[500]}}/>
+                    <GridToolbarFilterButton
+                      style={{ color: colorPalette.yellow[500] }}
+                    />
                     <GridToolbarQuickFilter />
                   </GridToolbarContainer>
                 );
@@ -231,22 +268,21 @@ const StaffTables = ({ result, loading, error }) => {
             }}
           />
         </Box>
-        
+
         <ActionsMenu
-        anchorEl={anchorEl}
-        open={open}
-        handleClose={handleClose}
-        handleUpdate={handleUpdate}
-        handleClickOpenAlert={handleClickOpenAlert}
-        position={userInfo.position}
-      />
+          anchorEl={anchorEl}
+          open={open}
+          handleClose={handleClose}
+          handleUpdate={handleUpdate}
+          handleClickOpenAlert={handleClickOpenAlert}
+          position={userInfo.position}
+        />
 
-      <DeleteAlertBox
-        openAlert={openAlert}
-        handleCloseAlert={handleCloseAlert}
-        handleDelete={handleDelete}
-      />
-
+        <DeleteAlertBox
+          openAlert={openAlert}
+          handleCloseAlert={handleCloseAlert}
+          handleDelete={handleDelete}
+        />
       </Box>
     </Box>
   );
