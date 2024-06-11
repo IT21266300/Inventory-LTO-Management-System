@@ -103,6 +103,22 @@ const routesConfig = [
             <AddSystem />
           </RouteProtector>
         ),
+      },
+      {
+        path: '/subsystems',
+        element: (
+          <RouteProtector>
+            <Systems />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: '/addSubSystem',
+        element: (
+          <RouteProtector>
+            <AddSystem />
+          </RouteProtector>
+        ),
       }
     ],
   },

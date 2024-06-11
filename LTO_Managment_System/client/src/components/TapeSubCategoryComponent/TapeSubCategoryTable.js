@@ -34,7 +34,7 @@ import DownloadActions from 'components/DownloadComponent/DownloadActions';
 import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 
-const StaffTables = ({ result, loading, error }) => {
+const TapeSubCategoryTable = ({ result, loading, error }) => {
   const navigate = useNavigate();
   const { state } = useContext(Store);
   const { userInfo } = state;
@@ -63,14 +63,14 @@ const StaffTables = ({ result, loading, error }) => {
   };
 
   const handleUpdate = () => {
-    navigate('/updateSystem', { state: { data: passValue } });
+    navigate('/updateSubSystem', { state: { data: passValue } });
   };
 
   const handleDelete = async () => {
     setAnchorEl(null);
     setOpenAlert(false);
     try {
-      axios.delete(`/api/systems/delete/${passValue.sysId}`);
+      axios.delete(`/api/subsystems/delete/${passValue.sysId}`);
       toast.success('Data successfully deleted!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -89,53 +89,37 @@ const StaffTables = ({ result, loading, error }) => {
     setPassValue(buttonClickedValue);
   }, [buttonClickedValue]);
 
-  const handleView = (params) => {
-    navigate(`/viewSubSystem/${params.row.sysId}`);
-  };
+//   const handleView = (params) => {
+//     navigate(`/viewSubSystem/${params.row.sysId}`);
+//   };
 
   const columns = [
     {
-      field: 'id',
-      headerName: 'No',
+      field: 'subsysId',
+      headerName: 'Sub System ID',
       flex: 0.1,
     },
     {
-      field: 'sysId',
-      headerName: 'System ID',
-      flex: 0.1,
-    },
-    {
-      field: 'sysName',
-      headerName: 'System Name',
+      field: 'subsysName',
+      headerName: 'Sub System Name',
       flex: 0.7,
     },
-    {
-      field: 'view',
-      headerName: 'View',
-      flex: 0.2,
-      sortable: false,
-      filterable: false,
-      renderCell: (params) => (
-        <Button
-        onClick={() => {
-          navigate('/TapeSubCategoryTable');
-        }}
-        sx={{
-          backgroundColor: colorPalette.yellow[500],
-          color: colorPalette.black[500],
-          fontSize: '14px',
-          fontWeight: 'bold',
-          padding: '10px 20px',
-          '&:hover': {
-            backgroundColor: colorPalette.black[400],
-            color: colorPalette.secondary[100],
-          },
-        }}
-        >
-          View
-        </Button>
-      ),
-    },
+    // {
+    //   field: 'view',
+    //   headerName: 'View',
+    //   flex: 0.2,
+    //   sortable: false,
+    //   filterable: false,
+    //   renderCell: (params) => (
+    //     <Button
+    //       variant="contained"
+    //       color="primary"
+    //       onClick={() => handleView(params)}
+    //     >
+    //       View
+    //     </Button>
+    //   ),
+    // },
   ];
 
   if (userInfo.position === 'Admin') {
@@ -163,12 +147,11 @@ const StaffTables = ({ result, loading, error }) => {
   let rows = {};
   if (result !== undefined) {
     rows = result.map((row, x) => ({
-      id: x+1,
-      sysId: row.sysId,
-      sysName: row.sysName,
+      subsysId: x + 1,
+      subsysName: row.subsysName,
     }));
   }
-console.log(result)
+
   return loading ? (
     <Box width="100%">
       <LoadingAnimation />
@@ -187,7 +170,7 @@ console.log(result)
       >
         <Button
           onClick={() => {
-            navigate('/addSystem');
+            navigate('/addSubSystem');
           }}
           sx={{
             backgroundColor: colorPalette.yellow[500],
@@ -208,7 +191,7 @@ console.log(result)
           <DownloadActions
             pdfColumn={pdfColumn}
             rows={rows}
-            funcName={'System Management'}
+            funcName={'Sub-System Management'}
           />
         </Box>
       </Box>
@@ -238,7 +221,7 @@ console.log(result)
           display: 'flex',
         }}
       >
-        <Box width="50%" sx={{ color: '#fff' }}>
+        <Box width="100%" sx={{ color: '#fff' }}>
           <DataGrid
             rows={rows}
             rowHeight={60}
@@ -292,4 +275,4 @@ console.log(result)
   );
 };
 
-export default StaffTables;
+export default TapeSubCategoryTable;

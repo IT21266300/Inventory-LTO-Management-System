@@ -13,7 +13,7 @@ const reducer = (state, action) => {
     case 'FETCH_REQUEST':
       return { ...state, loading: true };
     case 'FETCH_SUCCESS':
-      return { ...state, systemData: action.payload, loading: false };
+      return { ...state, staffData: action.payload, loading: false };
     case 'FETCH_ERROR':
       return { ...state, loading: false, error: action.payload };
     default:
@@ -21,13 +21,13 @@ const reducer = (state, action) => {
   }
 };
 
-const System = () => {
+const SubSystem = () => {
  
   const [value, setValue] = React.useState(0);
   const [site, setSite] = React.useState(null);
   const [tabName, setTabName] = React.useState({
-    label: 'System',
-    col: 'system',
+    label: 'Sub System',
+    col: 'subsystem',
   });
 
   const [{ systemData, loading, error }, dispatch] = useReducer(reducer, {
@@ -39,7 +39,7 @@ const System = () => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get('/api/systems/');
+        const result = await axios.get('/api/subsystems/');
         dispatch({
           type: 'FETCH_SUCCESS',
           payload: result.data,
@@ -52,19 +52,18 @@ const System = () => {
     fetchData();
   }, [tabName, site]);
 
-  console.log('SystemData', systemData);
+  console.log('SubSystemData', systemData);
   return (
     <Box m="1.5rem  2.5rem">
       <Helmet>
         <title>System Management</title>
       </Helmet>
-      <Header title="System Management" subtitle="Manage Systems" />
+      <Header title="Sub System Management" subtitle="Manage Sub Systems" />
 
 
       <CategoryTable result={systemData} loading={loading} error={error} />
-      
     </Box>
   );
 };
 
-export default System;
+export default SubSystem;
