@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddSubsystemPopup from '../TapeCategoryComponent/AddSubsystem'; 
 
 import { Store } from 'store';
 import ActionButton from 'components/ActionsComponent/ActionButton';
@@ -23,7 +24,7 @@ import DownloadActions from 'components/DownloadComponent/DownloadActions';
 import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 
-const StaffTables = ({ result, loading, error }) => {
+const SystemTable = ({ result, loading, error }) => {
   const navigate = useNavigate();
 
   const { state } = useContext(Store);
@@ -76,6 +77,26 @@ const StaffTables = ({ result, loading, error }) => {
     }
   };
 
+  const [isAddSubsystemPopupOpen, setIsAddSubsystemPopupOpen] = useState(false);
+  const [selectedSystemForSubsystem, setSelectedSystemForSubsystem] = useState(null);
+
+  const handleOpenAddSubsystemPopup = (system) => {
+    setSelectedSystemForSubsystem(system); 
+    setIsAddSubsystemPopupOpen(true);
+  };
+
+  const handleCloseAddSubsystemPopup = () => {
+    setIsAddSubsystemPopupOpen(false);
+    setSelectedSystemForSubsystem(null);
+  };
+
+  const handleSubsystemAdded = () => {
+    // You might want to refresh the data to show the new subsystem
+    // For simplicity, we'll just log a message here
+    console.log('New subsystem added!'); 
+    handleCloseAddSubsystemPopup();
+  };
+
   const [passValue, setPassValue] = useState({});
 
   useEffect(() => {
@@ -125,6 +146,37 @@ const StaffTables = ({ result, loading, error }) => {
         >
           View
         </Button>
+        
+      ),
+    },
+
+    {
+      field: 'actions', 
+      headerName: 'Add Subsystem',
+      flex: 0.3,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => (
+        <Box>
+          <Button
+            onClick={() => handleOpenAddSubsystemPopup(params.row)}
+            sx={{
+              backgroundColor: colorPalette.yellow[500],
+              color: colorPalette.black[500],
+              fontSize: '12px', // Adjust font size as needed
+              fontWeight: 'bold',
+              padding: '6px 12px', // Adjust padding as needed
+              '&:hover': {
+                backgroundColor: colorPalette.black[400],
+                color: colorPalette.secondary[100],
+              },
+            }}
+          >
+            Add Subsystem
+          </Button>
+          {/* Add ActionButton here if needed */}
+          {/* <ActionButton handleClick={handleClick} params={params} open={open} /> */}
+        </Box>
       ),
     },
   ];
@@ -263,6 +315,13 @@ const StaffTables = ({ result, loading, error }) => {
             }}
           />
         </Box>
+        <AddSubsystemPopup
+      open={isAddSubsystemPopupOpen}
+      onClose={handleCloseAddSubsystemPopup}
+      systems={result} // Pass your systems data to the popup
+      onSubsystemAdded={handleSubsystemAdded}
+      parentSystemId={selectedSystemForSubsystem ? selectedSystemForSubsystem.sysId : null} // Pass the selected system ID 
+    />
 
         <ActionsMenu
           anchorEl={anchorEl}
@@ -278,9 +337,32 @@ const StaffTables = ({ result, loading, error }) => {
           handleCloseAlert={handleCloseAlert}
           handleDelete={handleDelete}
         />
+
+        
       </Box>
     </Box>
   );
 };
 
-export default StaffTables;
+
+
+export default SystemTable;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
