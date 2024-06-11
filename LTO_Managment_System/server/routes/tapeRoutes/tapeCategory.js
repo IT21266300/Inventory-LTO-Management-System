@@ -176,7 +176,7 @@ router.route('/updateSystem/:systemId').put(async (req, res) => {
     db.query(updateSql, [sysName, sysId], (updateErr, updateResult) => {
       if (updateErr) {
         console.error(updateErr.message);
-        return res.status(400).json({ message: 'Error with updating user', error: updateErr.message });
+        return res.status(400).json({ message: 'Error with updating system', error: updateErr.message });
       }
 
       if (updateResult.affectedRows === 0) {
