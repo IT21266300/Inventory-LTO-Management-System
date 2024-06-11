@@ -9,6 +9,7 @@ import RouteProtector from 'components/RouteProtector';
 import SignIn from 'View/signin';
 import Test from 'View/test';
 import Systems from 'View/systems'
+import AddSystem from 'View/systems/addSystem'
 
 //staff views
 import StaffDashboard from 'View/staff';
@@ -92,6 +93,14 @@ const routesConfig = [
         element: (
           <RouteProtector>
             <Systems />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: '/addSystem',
+        element: (
+          <RouteProtector>
+            <AddSystem />
           </RouteProtector>
         ),
       }
