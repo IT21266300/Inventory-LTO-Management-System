@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import UpdateSystemPopup from '../TapeCategoryComponent/SystemUpdate';
 
 
 import { Store } from 'store';
@@ -20,7 +21,9 @@ import DownloadActions from 'components/DownloadComponent/DownloadActions';
 import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 
-const StaffTables = ({ result, loading, error }) => {
+
+
+const SystemTables = ({ result, loading, error }) => {
   const navigate = useNavigate();
 
 
@@ -35,6 +38,8 @@ const StaffTables = ({ result, loading, error }) => {
   const handleClickOpenAlert = () => {
     setOpenAlert(true);
     setAnchorEl(null);
+
+    
   };
 
   const handleCloseAlert = () => {
@@ -42,6 +47,25 @@ const StaffTables = ({ result, loading, error }) => {
   };
 
   const [buttonClickedValue, setButtonClickedValue] = useState({});
+  const [isUpdatePopupOpen, setIsUpdatePopupOpen] = useState(false);
+const [systemToUpdate, setSystemToUpdate] = useState(null);
+
+const handleUpdate = (system) => {
+  setSystemToUpdate(system);
+  setIsUpdatePopupOpen(true);
+};
+
+const handleCloseUpdatePopup = () => {
+  setIsUpdatePopupOpen(false);
+  setSystemToUpdate(null); 
+};
+
+const handleUpdateSuccess = () => {
+  // Data has been updated successfully! 
+  // You might want to refresh your systems list here (e.g., make an API call to get updated data)
+  // ... your logic to refresh the systems list
+  handleCloseUpdatePopup(); 
+};
 
   const handleClick = (event, params) => {
     setAnchorEl(event.currentTarget);
@@ -51,9 +75,7 @@ const StaffTables = ({ result, loading, error }) => {
     setAnchorEl(null);
   };
 
-  const handleUpdate = () => {
-    navigate('/updateStaff', { state: { data: passValue } });
-  };
+ 
 
   const handleDelete = async () => {
     setAnchorEl(null);
@@ -140,7 +162,14 @@ const StaffTables = ({ result, loading, error }) => {
       filterable: false,
       renderCell: (params) => (
         <Box>
+          <UpdateSystemPopup
+  systemData={systemToUpdate}
+  open={isUpdatePopupOpen} 
+  onClose={handleCloseUpdatePopup} 
+  onUpdateSuccess={handleUpdateSuccess} 
+/>
           <ActionButton handleClick={handleClick} params={params} open={open} />
+          
         </Box>
       ),
     });
@@ -288,7 +317,7 @@ console.log(result)
   );
 };
 
-export default StaffTables;
+export default SystemTables;
 
 
 
