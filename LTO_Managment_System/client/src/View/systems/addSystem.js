@@ -33,9 +33,7 @@ const System = () => {
     e.preventDefault();
     try {
       await axios.post('/api/systems/addSystem', {
-        
         sysName,
-        
       });
       toast.success('New data has been created successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,

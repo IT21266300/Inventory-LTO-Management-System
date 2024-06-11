@@ -185,7 +185,7 @@ const TapeSubCategoryTable = ({ result, loading, error }) => {
           }}
         >
           <AddCircleIcon sx={{ mr: '10px' }} />
-          <Typography fontSize="0.9rem">Add New System</Typography>
+          <Typography fontSize="0.9rem">Add New Sub System</Typography>
         </Button>
         <Box sx={{ ml: '1.5rem' }}>
           <DownloadActions
