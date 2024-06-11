@@ -15,10 +15,13 @@ export default function ActionsMenu({
   handleUpdate,
   handleClickOpenAlert,
   funcs,
+  selectedValue,
   handleStatus,
 }) {
   const { state } = useContext(Store);
   const { userInfo } = state;
+
+  console.log(selectedValue);
 
   return (
     <Menu
