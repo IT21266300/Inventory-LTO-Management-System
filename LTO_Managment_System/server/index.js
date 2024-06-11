@@ -35,26 +35,12 @@ const PORT = process.env.PORT || 3308;
 //   })
 //   .catch((err) => console.log(`connection error: ${err}`));
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: 'root',
-  password: '1234',
-  database: 'lto_db'
-})
 
 app.use(
   express.urlencoded({
     extended: true,
   })
 )
-
-app.get('/users', (req, res) => {
-  const sql = "SELECT * FROM Users";
-  db.query(sql, (err, data) => {
-    if(err) return res.json(err);
-    return res.json(data);
-  })
-})
 
 app.listen(PORT, ()=>{
   console.log("running");
