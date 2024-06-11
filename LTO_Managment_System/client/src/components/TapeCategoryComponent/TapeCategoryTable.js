@@ -12,6 +12,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AddSubsystemPopup from '../TapeCategoryComponent/AddSubsystem'; 
+import UpdateSystemPopup from '../TapeCategoryComponent/SystemUpdate';
 
 
 import { Store } from 'store';
@@ -43,6 +44,25 @@ const SystemTable = ({ result, loading, error }) => {
   };
 
   const [buttonClickedValue, setButtonClickedValue] = useState({});
+  const [isUpdatePopupOpen, setIsUpdatePopupOpen] = useState(false);
+  const [systemToUpdate, setSystemToUpdate] = useState(null);
+
+  const handleUpdate = (system) => {
+    setSystemToUpdate(system);
+    setIsUpdatePopupOpen(true);
+  };
+  
+  const handleCloseUpdatePopup = () => {
+    setIsUpdatePopupOpen(false);
+    setSystemToUpdate(null); 
+  };
+  
+  const handleUpdateSuccess = () => {
+    // Data has been updated successfully! 
+    // You might want to refresh your systems list here (e.g., make an API call to get updated data)
+    // ... your logic to refresh the systems list
+    handleCloseUpdatePopup(); 
+  };
 
   const handleClick = (event, params) => {
     setAnchorEl(event.currentTarget);
@@ -52,9 +72,7 @@ const SystemTable = ({ result, loading, error }) => {
     setAnchorEl(null);
   };
 
-  const handleUpdate = () => {
-    navigate('/updateStaff', { state: { data: passValue } });
-  };
+  
 
   const handleDelete = async () => {
     setAnchorEl(null);
@@ -102,6 +120,7 @@ const SystemTable = ({ result, loading, error }) => {
   const handleView = (params) => {
     navigate(`/viewSubSystem/${params.row.sysId}`);
   };
+
 
   const columns = [
     {
@@ -192,8 +211,15 @@ const SystemTable = ({ result, loading, error }) => {
       filterable: false,
       renderCell: (params) => (
         <Box>
-          <ActionButton handleClick={handleClick} params={params} open={open} />
-        </Box>
+        <UpdateSystemPopup
+systemData={systemToUpdate}
+open={isUpdatePopupOpen} 
+onClose={handleCloseUpdatePopup} 
+onUpdateSuccess={handleUpdateSuccess} 
+/>
+        <ActionButton handleClick={handleClick} params={params} open={open} />
+        
+      </Box>
       ),
     });
   }
@@ -336,6 +362,7 @@ console.log(result)
           handleClickOpenAlert={handleClickOpenAlert}
           position={userInfo.position}
         />
+        
 
         <DeleteAlertBox
           openAlert={openAlert}
