@@ -21,28 +21,17 @@ const reducer = (state, action) => {
   }
 };
 
-const Staff = () => {
-  const tabs = [
-    {
-      id: '1',
-      label: 'Staff',
-      col: 'staff',
-    },
-    // {
-    //   id: '2',
-    //   label: '',
-    //   col: 'teams',
-    // },
-  ];
+const System = () => {
+ 
   const [value, setValue] = React.useState(0);
   const [site, setSite] = React.useState(null);
   const [tabName, setTabName] = React.useState({
-    label: 'Staff',
-    col: 'staff',
+    label: 'System',
+    col: 'system',
   });
 
-  const [{ staffData, loading, error }, dispatch] = useReducer(reducer, {
-    staffData: [],
+  const [{ systemData, loading, error }, dispatch] = useReducer(reducer, {
+    systemData: [],
     loading: true,
     error: '',
   });
@@ -50,7 +39,7 @@ const Staff = () => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get('/api/staffs/');
+        const result = await axios.get('/api/systems/');
         dispatch({
           type: 'FETCH_SUCCESS',
           payload: result.data,
@@ -63,7 +52,7 @@ const Staff = () => {
     fetchData();
   }, [tabName, site]);
 
-  console.log('StaffData', staffData);
+  console.log('SystemData', systemData);
   return (
     <Box m="1.5rem  2.5rem">
       <Helmet>
@@ -72,9 +61,9 @@ const Staff = () => {
       <Header title="System Management" subtitle="Manage Systems" />
 
 
-      {tabName.col === 'staff' && <CategoryTable result={staffData} loading={loading} error={error} />}
+      <CategoryTable result={systemData} loading={loading} error={error} />
     </Box>
   );
 };
 
-export default Staff;
+export default System;

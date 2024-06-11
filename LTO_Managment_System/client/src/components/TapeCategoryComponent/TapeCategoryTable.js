@@ -66,14 +66,14 @@ const StaffTables = ({ result, loading, error }) => {
   };
 
   const handleUpdate = () => {
-    navigate('/updateStaff', { state: { data: passValue } });
+    navigate('/updateSystem', { state: { data: passValue } });
   };
 
   const handleDelete = async () => {
     setAnchorEl(null);
     setOpenAlert(false);
     try {
-      axios.delete(`/api/staffs/delete/${passValue.staffId}`);
+      axios.delete(`/api/systems/delete/${passValue.sysId}`);
       toast.success('Data successfully deleted!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -131,11 +131,8 @@ const StaffTables = ({ result, loading, error }) => {
   let rows = {};
   if (result !== undefined) {
     rows = result.map((row, x) => ({
-      id: x + 1,
-      staffId: row.staffId,
-      name: row.name,
-      phone: row.phone,
-      position: row.position,
+      sysId: x + 1,
+      sysName: row.sysName,
       
     }));
   }
@@ -159,7 +156,7 @@ const StaffTables = ({ result, loading, error }) => {
       >
         <Button
           onClick={() => {
-            navigate('/addStaff');
+            navigate('/addSystem');
           }}
           sx={{
             backgroundColor: colorPalette.yellow[500],
@@ -174,13 +171,13 @@ const StaffTables = ({ result, loading, error }) => {
           }}
         >
           <AddCircleIcon sx={{ mr: '10px' }} />
-          <Typography fontSize="0.9rem">Add New Staff Member</Typography>
+          <Typography fontSize="0.9rem">Add New System</Typography>
         </Button>
         <Box sx={{ml: '1.5rem'}}>
           <DownloadActions
             pdfColumn={pdfColumn}
             rows={rows}
-            funcName={'Staff Management'}
+            funcName={'System Management'}
           />
         </Box>
       </Box>
