@@ -23,7 +23,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const SubSystem = () => {
+const AddSubSystem = () => {
 
   const navigate = useNavigate()
   
@@ -33,9 +33,7 @@ const SubSystem = () => {
     e.preventDefault();
     try {
       await axios.post('/api/subsystems/addSubSystem', {
-        
-        sysName,
-        
+        subsysName,
       });
       toast.success('New data has been created successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -151,4 +149,4 @@ const SubSystem = () => {
   );
 };
 
-export default SubSystem;
+export default AddSubSystem;

@@ -20,6 +20,10 @@ import Profile from 'View/profile';
 //tape views
 import Tape from 'View/tapes';
 
+import TapeSubCategoryTable from './TapeSubCategoryComponent/TapeSubCategoryTable';
+import System from 'View/systems/addSystem';
+import AddSubSystem from 'View/subsystems/addSubSystem';
+
 const routesConfig = [
   {
     path: '/',
@@ -71,7 +75,14 @@ const routesConfig = [
           </RouteProtector>
         ),
       },
-
+      {
+        path: '/TapeSubCategoryTable',
+        element: (
+          <RouteProtector>
+            <TapeSubCategoryTable />
+          </RouteProtector>
+        ),
+      },
       {
         path: '/tape',
         element: (
@@ -100,7 +111,7 @@ const routesConfig = [
         path: '/addSystem',
         element: (
           <RouteProtector>
-            <AddSystem />
+            <System />
           </RouteProtector>
         ),
       },
@@ -116,10 +127,10 @@ const routesConfig = [
         path: '/addSubSystem',
         element: (
           <RouteProtector>
-            <AddSystem />
+            <AddSubSystem />
           </RouteProtector>
         ),
-      }
+      },
     ],
   },
 ];

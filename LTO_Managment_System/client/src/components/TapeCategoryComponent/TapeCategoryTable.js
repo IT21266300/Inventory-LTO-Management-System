@@ -1,9 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { DataGrid, GridToolbar, GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import {
   Alert,
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Typography,
 } from '@mui/material';
 import { colorPalette } from 'customTheme';
@@ -13,7 +17,6 @@ import { toast } from 'react-toastify';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AddSubsystemPopup from '../TapeCategoryComponent/AddSubsystem'; 
 import UpdateSystemPopup from '../TapeCategoryComponent/SystemUpdate';
-
 
 import { Store } from 'store';
 import ActionButton from 'components/ActionsComponent/ActionButton';
@@ -25,9 +28,7 @@ import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 const SystemTable = ({ result, loading, error }) => {
   const navigate = useNavigate();
 
-
-  const { state} = useContext(Store);
-
+  const { state } = useContext(Store);
   const { userInfo } = state;
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -44,6 +45,7 @@ const SystemTable = ({ result, loading, error }) => {
   };
 
   const [buttonClickedValue, setButtonClickedValue] = useState({});
+
   const [isUpdatePopupOpen, setIsUpdatePopupOpen] = useState(false);
   const [systemToUpdate, setSystemToUpdate] = useState(null);
 
@@ -64,10 +66,15 @@ const SystemTable = ({ result, loading, error }) => {
     handleCloseUpdatePopup(); 
   };
 
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogContent, setDialogContent] = useState({});
+
+
   const handleClick = (event, params) => {
     setAnchorEl(event.currentTarget);
     setButtonClickedValue(params.row);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -117,17 +124,15 @@ const SystemTable = ({ result, loading, error }) => {
     setPassValue(buttonClickedValue);
   }, [buttonClickedValue]);
 
-  const handleView = (params) => {
-    navigate(`/viewSubSystem/${params.row.sysId}`);
+  const handleView = () => {
+    navigate('/TapeSubCategoryTable', { state: { data: passValue } });
   };
 
 
   const columns = [
     {
       field: 'id',
-
       headerName: 'ID',
-
       flex: 0.1,
     },
     {
@@ -140,7 +145,6 @@ const SystemTable = ({ result, loading, error }) => {
       headerName: 'System Name',
       flex: 0.7,
     },
-
     {
       field: 'view',
       headerName: 'View',
@@ -149,20 +153,18 @@ const SystemTable = ({ result, loading, error }) => {
       filterable: false,
       renderCell: (params) => (
         <Button
-        onClick={() => {
-          navigate('/TapeSubCategoryTable');
-        }}
-        sx={{
-          backgroundColor: colorPalette.yellow[500],
-          color: colorPalette.black[500],
-          fontSize: '14px',
-          fontWeight: 'bold',
-          padding: '10px 20px',
-          '&:hover': {
-            backgroundColor: colorPalette.black[400],
-            color: colorPalette.secondary[100],
-          },
-        }}
+          onClick={() => handleView(params)}
+          sx={{
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[500],
+            fontSize: '14px',
+            fontWeight: 'bold',
+            padding: '10px 20px',
+            '&:hover': {
+              backgroundColor: colorPalette.black[400],
+              color: colorPalette.secondary[100],
+            },
+          }}
         >
           View
         </Button>
@@ -199,7 +201,6 @@ const SystemTable = ({ result, loading, error }) => {
         </Box>
       ),
     },
-
   ];
 
   if (userInfo.position === 'Admin') {
@@ -207,6 +208,7 @@ const SystemTable = ({ result, loading, error }) => {
       field: 'action',
       headerName: 'Actions',
       flex: 0.5,
+      fontWeight: 'bold',
       sortable: false,
       filterable: false,
       renderCell: (params) => (
@@ -234,15 +236,12 @@ onUpdateSuccess={handleUpdateSuccess}
   let rows = {};
   if (result !== undefined) {
     rows = result.map((row, x) => ({
-
       id: x + 1,
       sysId: row.sysId,
       sysName: row.sysName,
-     
-
     }));
   }
-console.log(result)
+
   return loading ? (
     <Box width="100%">
       <LoadingAnimation />
@@ -299,7 +298,6 @@ console.log(result)
             color: colorPalette.secondary[200],
             // borderBottom: 'none',
           },
-
           '& .MuiDataGrid-footerContainer': {
             backgroundColor: colorPalette.black1[500],
             color: colorPalette.yellow[500],
@@ -375,6 +373,8 @@ console.log(result)
     </Box>
   );
 };
+
+
 
 export default SystemTable;
 
