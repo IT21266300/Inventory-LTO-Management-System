@@ -23,17 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
-// Database connection
 const PORT = process.env.PORT || 3308;
-// mongoose
-//   .connect(process.env.MONGODB_URI, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() => {
-//     app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
-//   })
-//   .catch((err) => console.log(`connection error: ${err}`));
 
 
 app.use(
@@ -50,6 +40,6 @@ app.listen(PORT, ()=>{
 // Router calls
 app.use('/api', routes);
 
-// app.use((err, req, res, next) => {
-//   res.status(500).send({ message: err.message });
-// });
+app.use((err, req, res, next) => {
+  res.status(500).send({ message: err.message });
+});
