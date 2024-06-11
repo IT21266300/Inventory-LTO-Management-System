@@ -205,7 +205,7 @@ console.log(result)
       <Box
         sx={{
           display: 'flex',
-          width: '100%',
+          width: '50%',
           justifyContent: 'flex-end',
           m: '2rem 0',
         }}
