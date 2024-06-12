@@ -41,8 +41,8 @@ const AddNewSystemPopup = ({ open, onClose }) => {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Add New System</DialogTitle>
-      <DialogContent>
+      <DialogTitle sx={{ bgcolor: colorPalette.black1[400], color: '#fff' }}>Add New System</DialogTitle>
+      <DialogContent sx={{ bgcolor: colorPalette.black1[400] }}>
         <Box
           width="450px" // Adjust width as needed
           sx={{
