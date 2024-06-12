@@ -25,7 +25,7 @@ const AddSubsystemPopup = ({ open, onClose, systems, onSubsystemAdded }) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/subsystems', formData); // Adjust the API endpoint if needed
+      const response = await axios.post('/api/systems/addSubSystem', formData); // Adjust the API endpoint if needed
 
       if (response.status === 200) {
         toast.success('Subsystem added successfully!', {

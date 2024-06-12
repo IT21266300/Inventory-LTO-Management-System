@@ -105,7 +105,7 @@ router.route('/addSubSystem').post(async (req, res) => {
       return res.status(409).json({ message: 'System name already in use' });
     }
 
-    // Insert the new staff member
+    // Insert the new sub system
     const insertSql = 'INSERT INTO SubSystem (subSysName, parentSystemId) VALUES (?, ?)';
     db.query(insertSql, [subSysName, parentSystemId], (err, result) => {
       if (err) return res.status(400).json({ message: err.message });
