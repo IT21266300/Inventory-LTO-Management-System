@@ -26,6 +26,7 @@ import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTw
 import DownloadActions from 'components/DownloadComponent/DownloadActions';
 import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
+import AddNewSystemPopup from './AddSystem';
 
 
 const SystemTable = ({ result, loading, error }) => {
@@ -69,6 +70,16 @@ const SystemTable = ({ result, loading, error }) => {
     // You might want to refresh your systems list here (e.g., make an API call to get updated data)
     // ... your logic to refresh the systems list
     handleCloseUpdatePopup();
+  };
+
+  const [isAddSystemPopupOpen, setIsAddSystemPopupOpen] = useState(false);
+
+  const handleOpenAddSystemPopup = () => {
+    setIsAddSystemPopupOpen(true);
+  };
+
+  const handleCloseAddSystemPopup = () => {
+    setIsAddSystemPopupOpen(false);
   };
 
 
@@ -267,10 +278,7 @@ const SystemTable = ({ result, loading, error }) => {
           m: '2rem 0',
         }}
       >
-        <Button
-          onClick={() => {
-            navigate('/addSystem');
-          }}
+       <Button onClick={handleOpenAddSystemPopup} // Open popup on button click
           sx={{
             backgroundColor: colorPalette.yellow[500],
             color: colorPalette.black[500],
@@ -286,6 +294,10 @@ const SystemTable = ({ result, loading, error }) => {
           <AddCircleIcon sx={{ mr: '10px' }} />
           <Typography fontSize="0.9rem">Add New System</Typography>
         </Button>
+        <AddNewSystemPopup 
+          open={isAddSystemPopupOpen} 
+          onClose={handleCloseAddSystemPopup} 
+        />
         <Box sx={{ ml: '1.5rem' }}>
           <DownloadActions
             pdfColumn={pdfColumn}
