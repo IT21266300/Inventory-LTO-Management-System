@@ -17,7 +17,7 @@ router.route('/addSystem').post(async (req, res) => {
       return res.status(409).json({ message: 'System name already in use' });
     }
 
-    // Insert the new staff member
+    // Insert the new system
     const insertSql = 'INSERT INTO Systems (sysName) VALUES (?)';
     db.query(insertSql, [sysName], (err, result) => {
       if (err) return res.status(400).json({ message: err.message });
