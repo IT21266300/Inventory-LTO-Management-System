@@ -480,7 +480,7 @@ const SystemTable = ({ result, loading, error }) => {
             </Box>
           </Box>
           <Box
-            height="100vh"
+            minHeight="100vh"
             width="100%"
             sx={{
               "& .MuiDataGrid-cell": {
@@ -504,7 +504,7 @@ const SystemTable = ({ result, loading, error }) => {
               display: "flex",
             }}
           >
-            <Box width="100%" sx={{ color: "#fff" }}>
+            <Box width="100%" sx={{ color: "#fff", minHeight: '50vh' }}>
               <DataGrid
                 rows={rows}
                 rowHeight={60}
