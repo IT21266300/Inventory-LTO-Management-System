@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { DataGrid, GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
+
+import { DataGrid, GridToolbar, GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import {
   Alert,
   Box,
@@ -10,12 +11,14 @@ import {
   DialogTitle,
   Typography,
 } from '@mui/material';
+
 import { colorPalette } from 'customTheme';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AddSubsystemPopup from '../TapeCategoryComponent/AddSubsystem'; 
+import UpdateSystemPopup from '../TapeCategoryComponent/SystemUpdate';
 
 import { Store } from 'store';
 import ActionButton from 'components/ActionsComponent/ActionButton';
@@ -24,10 +27,12 @@ import DownloadActions from 'components/DownloadComponent/DownloadActions';
 import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 
+
 const SystemTable = ({ result, loading, error }) => {
   const navigate = useNavigate();
 
   const { state } = useContext(Store);
+
   const { userInfo } = state;
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -44,8 +49,28 @@ const SystemTable = ({ result, loading, error }) => {
   };
 
   const [buttonClickedValue, setButtonClickedValue] = useState({});
-  const [openDialog, setOpenDialog] = useState(false);
-  const [dialogContent, setDialogContent] = useState({});
+
+  const [isUpdatePopupOpen, setIsUpdatePopupOpen] = useState(false);
+  const [systemToUpdate, setSystemToUpdate] = useState(null);
+
+  const handleUpdate = (system) => {
+    setSystemToUpdate(system);
+    setIsUpdatePopupOpen(true);
+  };
+
+
+  const handleCloseUpdatePopup = () => {
+    setIsUpdatePopupOpen(false);
+    setSystemToUpdate(null);
+  };
+
+  const handleUpdateSuccess = () => {
+    // Data has been updated successfully!
+    // You might want to refresh your systems list here (e.g., make an API call to get updated data)
+    // ... your logic to refresh the systems list
+    handleCloseUpdatePopup();
+  };
+
 
   const handleClick = (event, params) => {
     setAnchorEl(event.currentTarget);
@@ -54,10 +79,6 @@ const SystemTable = ({ result, loading, error }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleUpdate = () => {
-    navigate('/updateStaff', { state: { data: passValue } });
   };
 
   const handleDelete = async () => {
@@ -107,6 +128,7 @@ const SystemTable = ({ result, loading, error }) => {
     navigate('/TapeSubCategoryTable', { state: { data: passValue } });
   };
 
+
   const columns = [
     {
       field: 'id',
@@ -131,7 +153,11 @@ const SystemTable = ({ result, loading, error }) => {
       filterable: false,
       renderCell: (params) => (
         <Button
-          onClick={() => handleView(params)}
+
+          onClick={() => {
+            navigate('/TapeSubCategoryTable');
+          }}
+
           sx={{
             backgroundColor: colorPalette.yellow[500],
             color: colorPalette.black[500],
@@ -179,6 +205,7 @@ const SystemTable = ({ result, loading, error }) => {
         </Box>
       ),
     },
+
   ];
 
   if (userInfo.position === 'Admin') {
@@ -191,8 +218,16 @@ const SystemTable = ({ result, loading, error }) => {
       filterable: false,
       renderCell: (params) => (
         <Box>
+
+          <UpdateSystemPopup
+            systemData={systemToUpdate}
+            open={isUpdatePopupOpen}
+            onClose={handleCloseUpdatePopup}
+            onUpdateSuccess={handleUpdateSuccess}
+          />
           <ActionButton handleClick={handleClick} params={params} open={open} />
         </Box>
+
       ),
     });
   }
@@ -212,6 +247,9 @@ const SystemTable = ({ result, loading, error }) => {
       sysName: row.sysName,
     }));
   }
+
+  console.log(result);
+
 
   return loading ? (
     <Box width="100%">
@@ -327,10 +365,13 @@ const SystemTable = ({ result, loading, error }) => {
           anchorEl={anchorEl}
           open={open}
           handleClose={handleClose}
-          handleUpdate={handleUpdate}
+          // handleUpdate={handleUpdate(result)}
+          handleUpdate={() => handleUpdate(buttonClickedValue)}
+          selectedValue={buttonClickedValue}
           handleClickOpenAlert={handleClickOpenAlert}
           position={userInfo.position}
         />
+        
 
         <DeleteAlertBox
           openAlert={openAlert}
@@ -346,23 +387,8 @@ const SystemTable = ({ result, loading, error }) => {
 
 
 
+
 export default SystemTable;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

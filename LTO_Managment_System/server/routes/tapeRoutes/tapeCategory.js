@@ -51,14 +51,11 @@ router.route('/:systemId').get(async (req, res) => {
 
 // 1. Get all subsystems (from all systems)
 router.route('/subsystems').get(async (req, res) => {
-  try {
-    const sql = 'SELECT * FROM SubSystem';
-    const [data] = await db.query(sql);
-    res.json(data);
-  } catch (err) {
-    console.error('Error fetching subsystems:', err);
-    res.status(500).json({ message: 'Failed to fetch subsystems' });
-  }
+  const sql = 'SELECT * FROM subSystem';
+  db.query(sql, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
 });
 
 // 2. Get a specific subsystem by subSysId
@@ -99,39 +96,22 @@ router.route('/systems/:systemId/subsystems').get(async (req, res) => {
 router.route('/addSubSystem').post(async (req, res) => {
   const { subSysName, parentSystemId } = req.body;
 
-  try {
-    // 1. Validate Input: (Important! - Add more validation as needed)
-    if (!subSysName || !parentSystemId) {
-      return res
-        .status(400)
-        .json({ message: 'Subsystem name and parent system ID are required' });
+  // Check if the staffId already exists
+  const checkSql = 'SELECT * FROM SubSystem WHERE subSysName = ? AND parentSystemId = ?';
+  db.query(checkSql, [subSysName, parentSystemId], (err, results) => {
+    if (err) return res.status(500).json({ message: err.message });
+
+    if (results.length > 0) {
+      return res.status(409).json({ message: 'System name already in use' });
     }
 
-    // 2. Check if Subsystem Name Already Exists within the Parent System:
-    const [existingSubSystem] = await db.query(
-      'SELECT * FROM SubSystem WHERE subSysName = ? AND parentSystemId = ?',
-      [subSysName, parentSystemId]
-    );
-    if (existingSubSystem.length > 0) {
-      return res
-        .status(409)
-        .json({ message: 'Subsystem name already exists within this system' });
-    }
-
-    // 3. Insert the New Subsystem:
-    const [result] = await db.query(
-      'INSERT INTO SubSystem (subSysName, parentSystemId) VALUES (?, ?)',
-      [subSysName, parentSystemId]
-    );
-
-    res.json({
-      message: 'Subsystem added successfully',
-      insertedId: result.insertId,
+    // Insert the new staff member
+    const insertSql = 'INSERT INTO SubSystem (subSysName, parentSystemId) VALUES (?, ?)';
+    db.query(insertSql, [subSysName, parentSystemId], (err, result) => {
+      if (err) return res.status(400).json({ message: err.message });
+      return res.json({ message: 'Staff Added' });
     });
-  } catch (err) {
-    console.error('Error adding subsystem:', err);
-    res.status(500).json({ message: 'Failed to add subsystem' });
-  }
+  });
 });
 
 // delete system
