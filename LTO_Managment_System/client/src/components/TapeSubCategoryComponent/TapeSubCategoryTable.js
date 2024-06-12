@@ -168,7 +168,7 @@ const TapeSubCategoryTable = ({ result, loading, error }) => {
           m: '2rem 0',
         }}
       >
-        <Button
+        {/* <Button
           onClick={() => {
             navigate('/addSubSystem');
           }}
@@ -186,7 +186,7 @@ const TapeSubCategoryTable = ({ result, loading, error }) => {
         >
           <AddCircleIcon sx={{ mr: '10px' }} />
           <Typography fontSize="0.9rem">Add New Sub System</Typography>
-        </Button>
+        </Button> */}
         <Box sx={{ ml: '1.5rem' }}>
           <DownloadActions
             pdfColumn={pdfColumn}

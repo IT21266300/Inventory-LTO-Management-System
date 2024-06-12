@@ -27,6 +27,7 @@ import DownloadActions from 'components/DownloadComponent/DownloadActions';
 import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 import AddNewSystemPopup from './AddSystem';
+import TapeSubCategoryTable from 'components/TapeSubCategoryComponent/TapeSubCategoryTable';
 
 
 const SystemTable = ({ result, loading, error }) => {
@@ -53,6 +54,8 @@ const SystemTable = ({ result, loading, error }) => {
 
   const [isUpdatePopupOpen, setIsUpdatePopupOpen] = useState(false);
   const [systemToUpdate, setSystemToUpdate] = useState(null);
+
+  const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
 
   const handleUpdate = (system) => {
     setSystemToUpdate(system);
@@ -135,8 +138,16 @@ const SystemTable = ({ result, loading, error }) => {
     setPassValue(buttonClickedValue);
   }, [buttonClickedValue]);
 
-  const handleView = () => {
-    navigate('/TapeSubCategoryTable', { state: { data: passValue } });
+  // const handleView = () => {
+  //   navigate('/TapeSubCategoryTable', { state: { data: passValue } });
+  // };
+  const handleView = (params) => {
+    setButtonClickedValue(params.row);
+    setIsViewDialogOpen(true); // Corrected the variable name
+  };
+  
+  const handleCloseViewDialog = () => {
+    setIsViewDialogOpen(false); // Corrected the variable name
   };
 
 
@@ -164,11 +175,7 @@ const SystemTable = ({ result, loading, error }) => {
       filterable: false,
       renderCell: (params) => (
         <Button
-
-          onClick={() => {
-            navigate('/TapeSubCategoryTable');
-          }}
-
+        onClick={() => handleView(params)} // Pass params to handleView
           sx={{
             backgroundColor: colorPalette.yellow[500],
             color: colorPalette.black[500],
@@ -270,129 +277,146 @@ const SystemTable = ({ result, loading, error }) => {
     <Alert severity="error">{error}</Alert>
   ) : (
     <Box>
-      <Box
-        sx={{
-          display: 'flex',
-          width: '50%',
-          justifyContent: 'flex-end',
-          m: '2rem 0',
-        }}
-      >
-       <Button onClick={handleOpenAddSystemPopup} // Open popup on button click
+      {/* system table */}
+      <Box>
+        <Box
           sx={{
-            backgroundColor: colorPalette.yellow[500],
-            color: colorPalette.black[500],
-            fontSize: '14px',
-            fontWeight: 'bold',
-            padding: '10px 20px',
-            '&:hover': {
-              backgroundColor: colorPalette.black[400],
-              color: colorPalette.secondary[100],
-            },
+            display: 'flex',
+            width: '50%',
+            justifyContent: 'flex-end',
+            m: '2rem 0',
           }}
         >
-          <AddCircleIcon sx={{ mr: '10px' }} />
-          <Typography fontSize="0.9rem">Add New System</Typography>
-        </Button>
-        <AddNewSystemPopup 
-          open={isAddSystemPopupOpen} 
-          onClose={handleCloseAddSystemPopup} 
-        />
-        <Box sx={{ ml: '1.5rem' }}>
-          <DownloadActions
-            pdfColumn={pdfColumn}
-            rows={rows}
-            funcName={'System Management'}
+        <Button onClick={handleOpenAddSystemPopup} // Open popup on button click
+            sx={{
+              backgroundColor: colorPalette.yellow[500],
+              color: colorPalette.black[500],
+              fontSize: '14px',
+              fontWeight: 'bold',
+              padding: '10px 20px',
+              '&:hover': {
+                backgroundColor: colorPalette.black[400],
+                color: colorPalette.secondary[100],
+              },
+            }}
+          >
+            <AddCircleIcon sx={{ mr: '10px' }} />
+            <Typography fontSize="0.9rem">Add New System</Typography>
+          </Button>
+          <AddNewSystemPopup 
+            open={isAddSystemPopupOpen} 
+            onClose={handleCloseAddSystemPopup} 
           />
+          <Box sx={{ ml: '1.5rem' }}>
+            <DownloadActions
+              pdfColumn={pdfColumn}
+              rows={rows}
+              funcName={'System Management'}
+            />
+          </Box>
         </Box>
-      </Box>
-      <Box
-        height="100vh"
-        width="100%"
-        sx={{
-          '& .MuiDataGrid-cell': {
-            borderBottom: 'none',
-            color: '#fff',
-          },
-          '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: colorPalette.black1[400],
-            color: colorPalette.secondary[200],
-            // borderBottom: 'none',
-          },
-          '& .MuiDataGrid-footerContainer': {
-            backgroundColor: colorPalette.black1[500],
-            color: colorPalette.yellow[500],
-            // color: 'green',
-            borderTop: 'none',
-          },
-          '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
-            color: `${colorPalette.primary[500]} !important`,
-          },
-          display: 'flex',
-        }}
-      >
-        <Box width="50%" sx={{ color: '#fff' }}>
-          <DataGrid
-            rows={rows}
-            rowHeight={60}
-            columns={columns}
-            initialState={{
-              columns: {
-                columnVisibilityModel: {
-                  mongoID: false,
+        <Box
+          height="100vh"
+          width="100%"
+          sx={{
+            '& .MuiDataGrid-cell': {
+              borderBottom: 'none',
+              color: '#fff',
+            },
+            '& .MuiDataGrid-columnHeaders': {
+              backgroundColor: colorPalette.black1[400],
+              color: colorPalette.secondary[200],
+              // borderBottom: 'none',
+            },
+            '& .MuiDataGrid-footerContainer': {
+              backgroundColor: colorPalette.black1[500],
+              color: colorPalette.yellow[500],
+              // color: 'green',
+              borderTop: 'none',
+            },
+            '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
+              color: `${colorPalette.primary[500]} !important`,
+            },
+            display: 'flex',
+          }}
+        >
+          <Box width="50%" sx={{ color: '#fff' }}>
+            <DataGrid
+              rows={rows}
+              rowHeight={60}
+              columns={columns}
+              initialState={{
+                columns: {
+                  columnVisibilityModel: {
+                    mongoID: false,
+                  },
                 },
-              },
-              // sorting: { sortModel: [{field: 'date', sort: 'asc'}]}
-            }}
-            pageSize={10}
-            components={{
-              toolbar: () => {
-                return (
-                  <GridToolbarContainer
-                    style={{
-                      justifyContent: 'flex-start',
-                      padding: '0.4rem',
-                      background: colorPalette.black[100],
-                    }}
-                  >
-                    <GridToolbarFilterButton
-                      style={{ color: colorPalette.yellow[500] }}
-                    />
-                    <GridToolbarQuickFilter />
-                  </GridToolbarContainer>
-                );
-              },
-            }}
+                // sorting: { sortModel: [{field: 'date', sort: 'asc'}]}
+              }}
+              pageSize={10}
+              components={{
+                toolbar: () => {
+                  return (
+                    <GridToolbarContainer
+                      style={{
+                        justifyContent: 'flex-start',
+                        padding: '0.4rem',
+                        background: colorPalette.black[100],
+                      }}
+                    >
+                      <GridToolbarFilterButton
+                        style={{ color: colorPalette.yellow[500] }}
+                      />
+                      <GridToolbarQuickFilter />
+                    </GridToolbarContainer>
+                  );
+                },
+              }}
+            />
+          </Box>
+          <AddSubsystemPopup
+        open={isAddSubsystemPopupOpen}
+        onClose={handleCloseAddSubsystemPopup}
+        systems={result} // Pass your systems data to the popup
+        onSubsystemAdded={handleSubsystemAdded}
+        parentSystemId={selectedSystemForSubsystem ? selectedSystemForSubsystem.sysId : null} // Pass the selected system ID 
+      />
+
+          <ActionsMenu
+            anchorEl={anchorEl}
+            open={open}
+            handleClose={handleClose}
+            // handleUpdate={handleUpdate(result)}
+            handleUpdate={() => handleUpdate(buttonClickedValue)}
+            selectedValue={buttonClickedValue}
+            handleClickOpenAlert={handleClickOpenAlert}
+            position={userInfo.position}
           />
+          
+
+          <DeleteAlertBox
+            openAlert={openAlert}
+            handleCloseAlert={handleCloseAlert}
+            handleDelete={handleDelete}
+          />
+          
         </Box>
-        <AddSubsystemPopup
-      open={isAddSubsystemPopupOpen}
-      onClose={handleCloseAddSubsystemPopup}
-      systems={result} // Pass your systems data to the popup
-      onSubsystemAdded={handleSubsystemAdded}
-      parentSystemId={selectedSystemForSubsystem ? selectedSystemForSubsystem.sysId : null} // Pass the selected system ID 
-    />
-
-        <ActionsMenu
-          anchorEl={anchorEl}
-          open={open}
-          handleClose={handleClose}
-          // handleUpdate={handleUpdate(result)}
-          handleUpdate={() => handleUpdate(buttonClickedValue)}
-          selectedValue={buttonClickedValue}
-          handleClickOpenAlert={handleClickOpenAlert}
-          position={userInfo.position}
-        />
-        
-
-        <DeleteAlertBox
-          openAlert={openAlert}
-          handleCloseAlert={handleCloseAlert}
-          handleDelete={handleDelete}
-        />
-
-        
       </Box>
+      {/* sub category table */}
+      <div style={{ position: 'absolute', top: 0, left: 0 }}>
+  <Box sx={{ display: isViewDialogOpen ? 'block': 'none' }}>
+    <TapeSubCategoryTable data={buttonClickedValue} />
+  </Box>
+</div>
+
+      {/* <Box sx={{display: isViewDialogOpen ? 'block': 'none',
+        position: 'fixed',
+        top: '10px', // Adjust as needed
+        right: '10px', // Adjust as needed
+        zIndex: 9999,
+      }}>
+        <TapeSubCategoryTable data={buttonClickedValue} />
+        </Box> */}
     </Box>
   );
 };
