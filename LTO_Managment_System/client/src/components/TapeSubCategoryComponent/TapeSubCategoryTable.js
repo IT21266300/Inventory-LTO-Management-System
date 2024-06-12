@@ -34,10 +34,11 @@ import DownloadActions from 'components/DownloadComponent/DownloadActions';
 import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 
-const TapeSubCategoryTable = ({ result, loading, error }) => {
+const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
   const navigate = useNavigate();
   const { state } = useContext(Store);
   const { userInfo } = state;
+  console.log(subsystemsdata)
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -145,10 +146,11 @@ const TapeSubCategoryTable = ({ result, loading, error }) => {
   }
 
   let rows = {};
-  if (result !== undefined) {
-    rows = result.map((row, x) => ({
-      subsysId: x + 1,
-      subsysName: row.subsysName,
+  if (subsystemsdata !== undefined) {
+    rows = subsystemsdata.map((row, x) => ({
+      id : x + 1,
+      subsysId : row.subSysId,
+      subsysName: row.subSysName,
     }));
   }
 
@@ -165,10 +167,10 @@ const TapeSubCategoryTable = ({ result, loading, error }) => {
           display: 'flex',
           width: '100%',
           justifyContent: 'flex-end',
-          m: '2rem 0',
+          marginBottom: '1rem'
         }}
       >
-        <Button
+        {/* <Button
           onClick={() => {
             navigate('/addSubSystem');
           }}
@@ -186,7 +188,7 @@ const TapeSubCategoryTable = ({ result, loading, error }) => {
         >
           <AddCircleIcon sx={{ mr: '10px' }} />
           <Typography fontSize="0.9rem">Add New Sub System</Typography>
-        </Button>
+        </Button> */}
         <Box sx={{ ml: '1.5rem' }}>
           <DownloadActions
             pdfColumn={pdfColumn}
@@ -222,7 +224,7 @@ const TapeSubCategoryTable = ({ result, loading, error }) => {
         }}
       >
         <Box width="100%" sx={{ color: '#fff' }}>
-          <DataGrid
+          <DataGrid sx={{backgroundColor:  colorPalette.black[500]}}
             rows={rows}
             rowHeight={60}
             columns={columns}
@@ -230,6 +232,7 @@ const TapeSubCategoryTable = ({ result, loading, error }) => {
               columns: {
                 columnVisibilityModel: {
                   mongoID: false,
+                  
                 },
               },
               // sorting: { sortModel: [{field: 'date', sort: 'asc'}]}
