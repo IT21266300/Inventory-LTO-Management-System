@@ -75,6 +75,8 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
     setAnchorEl(null);
   };
 
+  console.log(subsystemsdata.length);
+
   const handleUpdate = (system) => {
     setSystemToUpdate(system);
     setIsUpdatePopupOpen(true);
@@ -194,6 +196,8 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
   ) : error ? (
     <Alert severity="error">{error}</Alert>
   ) : (
+    subsystemsdata.length > 0 ? (
+
     <Box>
       <Box
         sx={{
@@ -308,6 +312,10 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
         />
       </Box>
     </Box>
+    ) : (
+      <h1>Empty</h1>
+    )
+
   );
 };
 
