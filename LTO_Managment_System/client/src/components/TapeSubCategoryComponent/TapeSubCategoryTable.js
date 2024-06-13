@@ -33,6 +33,7 @@ import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTw
 import DownloadActions from 'components/DownloadComponent/DownloadActions';
 import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
+import UpdateSystemPopup from './UpdateSubCategory';
 
 const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
   const navigate = useNavigate();
@@ -54,6 +55,9 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
   };
 
   const [buttonClickedValue, setButtonClickedValue] = useState({});
+  const [systemToUpdate, setSystemToUpdate] = useState(null);
+  const [isUpdatePopupOpen, setIsUpdatePopupOpen] = useState(false);
+
 
   const handleClick = (event, params) => {
     setAnchorEl(event.currentTarget);
@@ -63,8 +67,18 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
     setAnchorEl(null);
   };
 
-  const handleUpdate = () => {
-    navigate('/updateSubSystem', { state: { data: passValue } });
+  const handleUpdate = (system) => {
+    setSystemToUpdate(system);
+    setIsUpdatePopupOpen(true);
+  };
+
+  const handleCloseUpdatePopup = () => {
+    setIsUpdatePopupOpen(false);
+    setSystemToUpdate(null);
+  };
+
+  const handleUpdateSuccess = () => {
+    handleCloseUpdatePopup();
   };
 
   const handleDelete = async () => {
@@ -105,22 +119,6 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
       headerName: 'Sub System Name',
       flex: 0.7,
     },
-    // {
-    //   field: 'view',
-    //   headerName: 'View',
-    //   flex: 0.2,
-    //   sortable: false,
-    //   filterable: false,
-    //   renderCell: (params) => (
-    //     <Button
-    //       variant="contained"
-    //       color="primary"
-    //       onClick={() => handleView(params)}
-    //     >
-    //       View
-    //     </Button>
-    //   ),
-    // },
   ];
 
   if (userInfo.position === 'Admin') {
@@ -132,6 +130,12 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
       filterable: false,
       renderCell: (params) => (
         <Box>
+          <UpdateSystemPopup
+            systemData={systemToUpdate}
+            open={isUpdatePopupOpen}
+            onClose={handleCloseUpdatePopup}
+            onUpdateSuccess={handleUpdateSuccess}
+          />
           <ActionButton handleClick={handleClick} params={params} open={open} />
         </Box>
       ),
