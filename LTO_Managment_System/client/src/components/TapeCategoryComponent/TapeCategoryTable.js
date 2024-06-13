@@ -66,6 +66,12 @@ const SystemTable = ({ result, loading, error }) => {
     try {
       const response = await axios.get(`/api/systems/subsystems/${systemId}`); // Adjust the API endpoint
       setSubsystems(response.data);
+      if (response.status >= 200 && response.status < 300) {
+        setSubsystems(response.data);
+      } else {
+        // Handle non-2xx status codes here
+        throw new Error(`Request failed with status code ${response.status}`);
+      }
     } catch (err) {
       setSubsystemsError(err.message);
     } finally {
@@ -163,6 +169,7 @@ const SystemTable = ({ result, loading, error }) => {
     setIsViewDialogOpen(true); // Corrected the variable name
     setSelectedSystem(params.row);
     fetchSubsystems(params.row.sysId);
+   
   };
 
   const handleCloseViewDialog = () => {
@@ -176,14 +183,14 @@ const SystemTable = ({ result, loading, error }) => {
   const columns = [
     {
       field: "id",
-      headerName: "ID",
+      headerName: "No",
       flex: 0.1,
     },
-    {
-      field: "sysId",
-      headerName: "System ID",
-      flex: 0.1,
-    },
+    // {
+    //   field: "sysId",
+    //   headerName: "System ID",
+    //   flex: 0.1,
+    // },
     {
       field: "sysName",
       headerName: "System Name",
@@ -218,7 +225,7 @@ const SystemTable = ({ result, loading, error }) => {
     {
       field: "actions",
       headerName: "Add Subsystem",
-      flex: 0.3,
+      flex: 0.4,
       sortable: false,
       filterable: false,
       renderCell: (params) => (
@@ -230,7 +237,7 @@ const SystemTable = ({ result, loading, error }) => {
               color: colorPalette.black[500],
               fontSize: "12px", // Adjust font size as needed
               fontWeight: "bold",
-              padding: "6px 12px", // Adjust padding as needed
+              padding: "10px 12px", // Adjust padding as needed
               "&:hover": {
                 backgroundColor: colorPalette.black[400],
                 color: colorPalette.secondary[100],
@@ -293,6 +300,7 @@ const SystemTable = ({ result, loading, error }) => {
   ) : error ? (
     <Alert severity="error">{error}</Alert>
   ) : (
+ 
     <Grid container spacing={{ xs: 8, md: 3 }}>
       <Grid item xs={12} md={6}>
         <Box>
@@ -398,6 +406,7 @@ const SystemTable = ({ result, loading, error }) => {
               onClose={handleCloseAddSubsystemPopup}
               systems={result} // Pass your systems data to the popup
               onSubsystemAdded={handleSubsystemAdded}
+              system={selectedSystemForSubsystem}
               parentSystemId={
                 selectedSystemForSubsystem
                   ? selectedSystemForSubsystem.sysId
@@ -426,10 +435,20 @@ const SystemTable = ({ result, loading, error }) => {
       </Grid>
       <Grid item xs={12} md={6}>
         <Box sx={{ display: isViewDialogOpen ? "block" : "none" }}>
-          <TapeSubCategoryTable
-            data={buttonClickedValue}
-            subsystemsdata={subsystems}
-          />
+          {isSubsystemsLoading ? ( 
+            <LoadingAnimation /> 
+          ) : subsystemsError ? ( // Display error message if it exists
+            <Alert severity="error">{subsystemsError}</Alert>
+          ) : subsystems.length > 0 ? ( 
+            <TapeSubCategoryTable
+              data={buttonClickedValue}
+              subsystemsdata={subsystems}
+            />
+          ) : ( 
+            <Typography variant="body1" color="textSecondary">
+              No subsystems found for this system.
+            </Typography>
+          )} 
         </Box>
       </Grid>
     </Grid>
