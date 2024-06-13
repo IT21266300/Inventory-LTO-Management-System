@@ -44,6 +44,7 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
   const open = Boolean(anchorEl);
 
   const [openAlert, setOpenAlert] = useState(false);
+  const [selectedSubSystemId, setSelectedSubSystemId] = useState(null); 
   const handleClickOpenAlert = () => {
     setOpenAlert(true);
     setAnchorEl(null);
@@ -58,6 +59,7 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
   const handleClick = (event, params) => {
     setAnchorEl(event.currentTarget);
     setButtonClickedValue(params.row);
+    setSelectedSubSystemId(params.row.subsysId);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -66,21 +68,28 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
   const handleUpdate = () => {
     navigate('/updateSubSystem', { state: { data: passValue } });
   };
+  
 
   const handleDelete = async () => {
     setAnchorEl(null);
     setOpenAlert(false);
-    try {
-      axios.delete(`/api/subsystems/delete/${passValue.sysId}`);
-      toast.success('Data successfully deleted!', {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-      window.location.reload();
-    } catch (err) {
-      toast.error(err.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-      console.log(err);
+
+    if (selectedSubSystemId) { // Check if a subsystem ID is selected
+      try {
+        await axios.delete(`/api/systems/deleteSubSystem/${selectedSubSystemId}`);
+        toast.success('Data successfully deleted!', {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+        window.location.reload(); 
+      } catch (err) {
+        toast.error(err.message, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+        console.log(err);
+      }
+    } else {
+      // Handle case where no subsystem is selected (e.g., show an error message)
+      console.error("No subsystem selected for deletion.");
     }
   };
 
@@ -137,6 +146,7 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
       ),
     });
   }
+  // console.log(passValue);
 
   let pdfColumn = [];
   if (userInfo.position === 'Admin') {
