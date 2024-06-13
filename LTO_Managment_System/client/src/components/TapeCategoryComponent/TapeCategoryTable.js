@@ -73,6 +73,7 @@ const SystemTable = ({ result, loading, error }) => {
     }
   };
 
+
   const handleUpdate = (system) => {
     setSystemToUpdate(system);
     setIsUpdatePopupOpen(true);

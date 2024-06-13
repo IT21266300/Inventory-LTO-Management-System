@@ -14,16 +14,18 @@ import { toast } from 'react-toastify';
 
 const UpdateSystemPopup = ({ systemData, open, onClose, onUpdateSuccess }) => { // Accept props for data and control
   const [formData, setFormData] = useState({
-    sysId: '',
-    sysName: '', 
+    subSysName: '', 
+    parentSystemId: '',
   });
+
+  console.log(systemData);
 
   useEffect(() => {
     // Update form data when systemData changes (e.g., popup is opened with new data)
     if (systemData) {
       setFormData({
-        sysId: systemData.sysId,
-        sysName: systemData.sysName, 
+        subSysName: systemData.subsysName, 
+        parentSystemId: systemData.parentID,
       });
     }
   }, [systemData]); 
@@ -31,12 +33,13 @@ const UpdateSystemPopup = ({ systemData, open, onClose, onUpdateSuccess }) => { 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/systems/updateSystem/${formData.sysId}`, formData);
+      await axios.put(`/api/systems/updateSubSystem/${systemData.subsysId}`, formData);
       toast.success('Data has been updated successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       onUpdateSuccess(); // Notify the parent component of successful update
-      onClose(); 
+      onClose();
+      window.location.reload();
     } catch (err) {
       toast.error(err.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -62,10 +65,10 @@ const UpdateSystemPopup = ({ systemData, open, onClose, onUpdateSuccess }) => { 
       <DialogContent sx={{ bgcolor: colorPalette.black1[400]}}>
         <form onSubmit={handleFormSubmit}>
           <TextField
-            name="sysName"
+            name="subSysName"
             label="Sub System Name"
             variant="outlined"
-            value={formData.sysName} 
+            value={formData.subSysName} 
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -77,10 +80,10 @@ const UpdateSystemPopup = ({ systemData, open, onClose, onUpdateSuccess }) => { 
           />
           {/* Assuming sysId should not be editable */}
           <TextField
-            name="sysId"
+            name="parentId"
             label="Parent System ID"
             variant="outlined"
-            value={formData.sysId}
+            value={formData.parentSystemId}
             fullWidth
             margin="normal"
             disabled 
