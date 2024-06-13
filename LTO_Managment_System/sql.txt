@@ -48,3 +48,18 @@ CREATE TABLE SubSystems (
     
     FOREIGN KEY (parentSystemId) REFERENCES System(sysId) 
 );
+
+
+--New Tape table
+
+CREATE TABLE Tape (
+    tapeId INT AUTO_INCREMENT PRIMARY KEY,
+    sysName VARCHAR(255) NOT NULL,
+    subSysName VARCHAR(255),
+    bStatus VARCHAR(50),
+    mType VARCHAR(50),
+    tStatus VARCHAR(50),
+    sDate DATE,
+    eDate DATE,
+    lStatus VARCHAR(50)
+);

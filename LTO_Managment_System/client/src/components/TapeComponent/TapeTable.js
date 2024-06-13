@@ -73,7 +73,7 @@ const TapeTable = ({ result, loading, error }) => {
     setAnchorEl(null);
     setOpenAlert(false);
     try {
-      axios.delete(`/api/staff/delete/${passValue.mongoID}`);
+      axios.delete(`/api/staffs/delete/${passValue.staffId}`);
       toast.success('Data successfully deleted!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -94,35 +94,55 @@ const TapeTable = ({ result, loading, error }) => {
 
   const columns = [
     {
-      field: 'mongoID',
-      headerName: 'ID',
-      flex: 0,
-    },
-    {
       field: 'id',
       headerName: 'No',
       flex: 0.1,
     },
     {
-      field: 'name',
-      headerName: 'Employee Name',
-      flex: 0.7,
+      field: 'tapeId',
+      headerName: 'Tape ID',
+      flex: 0.4,
     },
     {
-      field: 'staffId',
-      headerName: 'Staff ID',
+      field: 'sysName',
+      headerName: 'System Name',
       flex: 0.4,
     },
     
     {
-      field: 'phone',
-      headerName: 'Telephone Number',
+      field: 'subSysName',
+      headerName: 'Application Name',
       flex: 0.5,
     },
     
     {
-      field: 'position',
-      headerName: 'Position',
+      field: 'bStatus',
+      headerName: 'Backup Status',
+      flex: 0.4,
+    },
+    {
+      field: 'mType',
+      headerName: 'Media Type',
+      flex: 0.4,
+    },
+    {
+      field: 'tStatus',
+      headerName: 'Tape Status',
+      flex: 0.4,
+    },
+    {
+      field: 'sDate',
+      headerName: 'Start Date',
+      flex: 0.4,
+    },
+    {
+      field: 'eDate',
+      headerName: 'End Date',
+      flex: 0.4,
+    },
+    {
+      field: 'lStatus',
+      headerName: 'Location Status',
       flex: 0.4,
     },
   ];
@@ -154,7 +174,6 @@ const TapeTable = ({ result, loading, error }) => {
   if (result !== undefined) {
     rows = result.map((row, x) => ({
       id: x + 1,
-      mongoID: row._id,
       staffId: row.staffId,
       name: row.name,
       phone: row.phone,
@@ -182,7 +201,7 @@ const TapeTable = ({ result, loading, error }) => {
       >
         <Button
           onClick={() => {
-            navigate('/addStaff');
+            navigate('/newTape');
           }}
           sx={{
             backgroundColor: colorPalette.yellow[500],
@@ -197,13 +216,13 @@ const TapeTable = ({ result, loading, error }) => {
           }}
         >
           <AddCircleIcon sx={{ mr: '10px' }} />
-          <Typography fontSize="0.9rem">Add New Staff Member</Typography>
+          <Typography fontSize="0.9rem">Add New Tape</Typography>
         </Button>
         <Box sx={{ml: '1.5rem'}}>
           <DownloadActions
             pdfColumn={pdfColumn}
             rows={rows}
-            funcName={'Staff Management'}
+            funcName={'Tape Management'}
           />
         </Box>
       </Box>

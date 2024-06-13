@@ -12,6 +12,9 @@ import StaffR from '../routes/staffRouteMysql/staffRoute.js';
 // system routes
 import SystemRouter from '../routes/tapeRoutes/tapeCategory.js'
 
+//tape routes
+import TapeRouter from '../routes/tapeRoutes/tape.js'
+
 
 
 const app = express.Router();
@@ -29,7 +32,7 @@ app.use('/signroute', SignRouter);
 app.use('/staffs', StaffR);
  
 //tape
-app.use('/tape', StaffRouter);
+app.use('/tape', TapeRouter);
 
 app.use('/systems', SystemRouter);
 

@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import Header from 'components/Header';
 import axios from 'axios';
 import { Tabs, Tab, Box, tabsClasses, Divider } from '@mui/material';
-import TapeTable from 'components/TapeComponent/TapeTable';
+import TapeTables from 'components/TapeComponent/TapeTable';
 import { Helmet } from 'react-helmet-async';
 import { colorPalette } from 'customTheme';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -12,7 +12,7 @@ const reducer = (state, action) => {
     case 'FETCH_REQUEST':
       return { ...state, loading: true };
     case 'FETCH_SUCCESS':
-      return { ...state, staffData: action.payload, loading: false };
+      return { ...state, tapeData: action.payload, loading: false };
     case 'FETCH_ERROR':
       return { ...state, loading: false, error: action.payload };
     default:
@@ -20,28 +20,14 @@ const reducer = (state, action) => {
   }
 };
 
-const Tape = () => {
-  const tabs = [
-    {
-      id: '1',
-      label: 'Staff',
-      col: 'staff',
-    },
-    // {
-    //   id: '2',
-    //   label: '',
-    //   col: 'teams',
-    // },
-  ];
+const Tapes = () => {
+  
   const [value, setValue] = React.useState(0);
-  const [site, setSite] = React.useState(null);
-  const [tabName, setTabName] = React.useState({
-    label: 'Staff',
-    col: 'staff',
-  });
+  
+ 
 
-  const [{ staffData, loading, error }, dispatch] = useReducer(reducer, {
-    staffData: [],
+  const [{ tapeData, loading, error }, dispatch] = useReducer(reducer, {
+    tapeData: [],
     loading: true,
     error: '',
   });
@@ -49,7 +35,7 @@ const Tape = () => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get('/api/staff/');
+        const result = await axios.get('/api/tape/');
         dispatch({
           type: 'FETCH_SUCCESS',
           payload: result.data,
@@ -60,20 +46,20 @@ const Tape = () => {
       }
     };
     fetchData();
-  }, [tabName, site]);
+  }, [ ]);
 
-  console.log('StaffData', staffData);
+  console.log('tapeData', tapeData);
   return (
     <Box m="1.5rem  2.5rem">
       <Helmet>
         <title>Tape Management</title>
       </Helmet>
-      <Header title="Tape Management" subtitle="Manage Tape" />
+      <Header title="Tape Management" subtitle="Manage Tapes" />
 
 
-      {tabName.col === 'staff' && <TapeTable result={staffData} loading={loading} error={error} />}
+      <TapeTables result={tapeData} loading={loading} error={error} />
     </Box>
   );
 };
 
-export default Tape;
+export default Tapes;
