@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from 'react';
 
 import {
   DataGrid,
@@ -6,25 +6,25 @@ import {
   GridToolbarContainer,
   GridToolbarFilterButton,
   GridToolbarQuickFilter,
-} from "@mui/x-data-grid";
-import { Alert, Box, Button, Grid, Typography } from "@mui/material";
+} from '@mui/x-data-grid';
+import { Alert, Box, Button, Grid, Typography } from '@mui/material';
 
-import { colorPalette } from "customTheme";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import AddSubsystemPopup from "../TapeCategoryComponent/AddSubsystem";
-import UpdateSystemPopup from "../TapeCategoryComponent/SystemUpdate";
+import { colorPalette } from 'customTheme';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddSubsystemPopup from '../TapeCategoryComponent/AddSubsystem';
+import UpdateSystemPopup from '../TapeCategoryComponent/SystemUpdate';
 
-import { Store } from "store";
-import ActionButton from "components/ActionsComponent/ActionButton";
-import { LoadingAnimation } from "components/LoadingComponent/LoadingAnimationTwo";
-import DownloadActions from "components/DownloadComponent/DownloadActions";
-import ActionsMenu from "components/ActionsComponent/ActionsMenu";
-import DeleteAlertBox from "components/ActionsComponent/DeleteAlertBox";
-import AddNewSystemPopup from "./AddSystem";
-import TapeSubCategoryTable from "components/TapeSubCategoryComponent/TapeSubCategoryTable";
+import { Store } from 'store';
+import ActionButton from 'components/ActionsComponent/ActionButton';
+import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTwo';
+import DownloadActions from 'components/DownloadComponent/DownloadActions';
+import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
+import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
+import AddNewSystemPopup from './AddSystem';
+import TapeSubCategoryTable from 'components/TapeSubCategoryComponent/TapeSubCategoryTable';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 const SystemTable = ({ result, loading, error }) => {
@@ -79,7 +79,6 @@ const SystemTable = ({ result, loading, error }) => {
     }
   };
 
-
   const handleUpdate = (system) => {
     setSystemToUpdate(system);
     setIsUpdatePopupOpen(true);
@@ -122,7 +121,7 @@ const SystemTable = ({ result, loading, error }) => {
     setOpenAlert(false);
     try {
       axios.delete(`/api/systems/delete/${passValue.sysId}`);
-      toast.success("Data successfully deleted!", {
+      toast.success('Data successfully deleted!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       window.location.reload();
@@ -151,7 +150,7 @@ const SystemTable = ({ result, loading, error }) => {
   const handleSubsystemAdded = () => {
     // You might want to refresh the data to show the new subsystem
     // For simplicity, we'll just log a message here
-    console.log("New subsystem added!");
+    console.log('New subsystem added!');
     handleCloseAddSubsystemPopup();
   };
 
@@ -169,7 +168,6 @@ const SystemTable = ({ result, loading, error }) => {
     setIsViewDialogOpen(true); // Corrected the variable name
     setSelectedSystem(params.row);
     fetchSubsystems(params.row.sysId);
-   
   };
 
   const handleCloseViewDialog = () => {
@@ -182,8 +180,8 @@ const SystemTable = ({ result, loading, error }) => {
 
   const columns = [
     {
-      field: "id",
-      headerName: "No",
+      field: 'id',
+      headerName: 'No',
       flex: 0.1,
     },
     // {
@@ -192,14 +190,14 @@ const SystemTable = ({ result, loading, error }) => {
     //   flex: 0.1,
     // },
     {
-      field: "sysName",
-      headerName: "System Name",
+      field: 'sysName',
+      headerName: 'System Name',
       flex: 0.7,
     },
     {
-      field: "view",
-      headerName: "View",
-      flex: 0.2,
+      field: 'view',
+      headerName: 'View',
+      flex: 0.3,
       sortable: false,
       filterable: false,
       renderCell: (params) => (
@@ -208,24 +206,24 @@ const SystemTable = ({ result, loading, error }) => {
           sx={{
             backgroundColor: colorPalette.yellow[500],
             color: colorPalette.black[500],
-            fontSize: "14px",
-            fontWeight: "bold",
-            padding: "10px 20px",
-            "&:hover": {
+            fontSize: '14px',
+            fontWeight: 'bold',
+            padding: '10px 20px',
+            '&:hover': {
               backgroundColor: colorPalette.black[400],
               color: colorPalette.secondary[100],
             },
           }}
         >
-          <RemoveRedEyeIcon/>
+          <RemoveRedEyeIcon />
         </Button>
       ),
     },
 
     {
-      field: "actions",
-      headerName: "Add Subsystem",
-      flex: 0.4,
+      field: 'actions',
+      headerName: 'Add Subsystem',
+      flex: 0.5,
       sortable: false,
       filterable: false,
       renderCell: (params) => (
@@ -235,10 +233,10 @@ const SystemTable = ({ result, loading, error }) => {
             sx={{
               backgroundColor: colorPalette.yellow[500],
               color: colorPalette.black[500],
-              fontSize: "12px", // Adjust font size as needed
-              fontWeight: "bold",
-              padding: "10px 12px", // Adjust padding as needed
-              "&:hover": {
+              fontSize: '12px',
+              fontWeight: 'bold',
+              padding: '10px 12px',
+              '&:hover': {
                 backgroundColor: colorPalette.black[400],
                 color: colorPalette.secondary[100],
               },
@@ -253,12 +251,12 @@ const SystemTable = ({ result, loading, error }) => {
     },
   ];
 
-  if (userInfo.position === "Admin") {
+  if (userInfo.position === 'Admin') {
     columns.push({
-      field: "action",
-      headerName: "Actions",
+      field: 'action',
+      headerName: 'Actions',
       flex: 0.5,
-      fontWeight: "bold",
+      fontWeight: 'bold',
       sortable: false,
       filterable: false,
       renderCell: (params) => (
@@ -276,7 +274,7 @@ const SystemTable = ({ result, loading, error }) => {
   }
 
   let pdfColumn = [];
-  if (userInfo.position === "Admin") {
+  if (userInfo.position === 'Admin') {
     pdfColumn = columns.slice(1, -2);
   } else {
     pdfColumn = columns.slice(1, -1);
@@ -300,17 +298,16 @@ const SystemTable = ({ result, loading, error }) => {
   ) : error ? (
     <Alert severity="error">{error}</Alert>
   ) : (
- 
     <Grid container spacing={{ xs: 8, md: 3 }}>
       <Grid item xs={12} md={6}>
         <Box>
           <Box
             sx={{
-              display: "flex",
-              width: "100%",
-              justifyContent: "flex-end",
-              gap: "1rem",
-              marginBottom: "1rem",
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'flex-end',
+              gap: '1rem',
+              marginBottom: '1rem',
             }}
           >
             <Button
@@ -318,27 +315,27 @@ const SystemTable = ({ result, loading, error }) => {
               sx={{
                 backgroundColor: colorPalette.yellow[500],
                 color: colorPalette.black[500],
-                fontSize: "14px",
-                fontWeight: "bold",
-                padding: "10px 20px",
-                "&:hover": {
+                fontSize: '14px',
+                fontWeight: 'bold',
+                padding: '10px 20px',
+                '&:hover': {
                   backgroundColor: colorPalette.black[400],
                   color: colorPalette.secondary[100],
                 },
               }}
             >
-              <AddCircleIcon sx={{ mr: "10px" }} />
+              <AddCircleIcon sx={{ mr: '10px' }} />
               <Typography fontSize="0.9rem">Add New System</Typography>
             </Button>
             <AddNewSystemPopup
               open={isAddSystemPopupOpen}
               onClose={handleCloseAddSystemPopup}
             />
-            <Box sx={{ ml: "1.5rem" }}>
+            <Box sx={{ ml: '1.5rem' }}>
               <DownloadActions
                 pdfColumn={pdfColumn}
                 rows={rows}
-                funcName={"System Management"}
+                funcName={'System Management'}
               />
             </Box>
           </Box>
@@ -346,28 +343,28 @@ const SystemTable = ({ result, loading, error }) => {
             minHeight="100vh"
             width="100%"
             sx={{
-              "& .MuiDataGrid-cell": {
-                borderBottom: "none",
-                color: "#fff",
+              '& .MuiDataGrid-cell': {
+                borderBottom: 'none',
+                color: '#fff',
               },
-              "& .MuiDataGrid-columnHeaders": {
+              '& .MuiDataGrid-columnHeaders': {
                 backgroundColor: colorPalette.black1[400],
                 color: colorPalette.secondary[200],
                 // borderBottom: 'none',
               },
-              "& .MuiDataGrid-footerContainer": {
+              '& .MuiDataGrid-footerContainer': {
                 backgroundColor: colorPalette.black1[500],
                 color: colorPalette.yellow[500],
                 // color: 'green',
-                borderTop: "none",
+                borderTop: 'none',
               },
-              "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+              '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
                 color: `${colorPalette.primary[500]} !important`,
               },
-              display: "flex",
+              display: 'flex',
             }}
           >
-            <Box width="100%" sx={{ color: "#fff", minHeight: '50vh' }}>
+            <Box width="100%" sx={{ color: '#fff', minHeight: '50vh' }}>
               <DataGrid
                 rows={rows}
                 rowHeight={60}
@@ -386,8 +383,8 @@ const SystemTable = ({ result, loading, error }) => {
                     return (
                       <GridToolbarContainer
                         style={{
-                          justifyContent: "flex-start",
-                          padding: "0.4rem",
+                          justifyContent: 'flex-start',
+                          padding: '0.4rem',
                           background: colorPalette.black[100],
                         }}
                       >
@@ -434,21 +431,21 @@ const SystemTable = ({ result, loading, error }) => {
         </Box>
       </Grid>
       <Grid item xs={12} md={6}>
-        <Box sx={{ display: isViewDialogOpen ? "block" : "none" }}>
-          {isSubsystemsLoading ? ( 
-            <LoadingAnimation /> 
+        <Box sx={{ display: isViewDialogOpen ? 'block' : 'none' }}>
+          {isSubsystemsLoading ? (
+            <LoadingAnimation />
           ) : subsystemsError ? ( // Display error message if it exists
             <Alert severity="error">{subsystemsError}</Alert>
-          ) : subsystems.length > 0 ? ( 
+          ) : subsystems.length > 0 ? (
             <TapeSubCategoryTable
               data={buttonClickedValue}
               subsystemsdata={subsystems}
             />
-          ) : ( 
+          ) : (
             <Typography variant="body1" color="textSecondary">
               No subsystems found for this system.
             </Typography>
-          )} 
+          )}
         </Box>
       </Grid>
     </Grid>
