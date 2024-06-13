@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import Header from 'components/Header';
 import axios from 'axios';
 import { Tabs, Tab, Box, tabsClasses, Divider } from '@mui/material';
-import StaffTables from 'components/TapeComponent/TapeTable';
+import TapeTables from 'components/TapeComponent/TapeTable';
 import { Helmet } from 'react-helmet-async';
 import { colorPalette } from 'customTheme';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -12,7 +12,7 @@ const reducer = (state, action) => {
     case 'FETCH_REQUEST':
       return { ...state, loading: true };
     case 'FETCH_SUCCESS':
-      return { ...state, staffData: action.payload, loading: false };
+      return { ...state, tapeData: action.payload, loading: false };
     case 'FETCH_ERROR':
       return { ...state, loading: false, error: action.payload };
     default:
@@ -26,8 +26,8 @@ const Tapes = () => {
   
  
 
-  const [{ staffData, loading, error }, dispatch] = useReducer(reducer, {
-    staffData: [],
+  const [{ tapeData, loading, error }, dispatch] = useReducer(reducer, {
+    tapeData: [],
     loading: true,
     error: '',
   });
@@ -35,7 +35,7 @@ const Tapes = () => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get('/api/staffs/');
+        const result = await axios.get('/api/tape/');
         dispatch({
           type: 'FETCH_SUCCESS',
           payload: result.data,
@@ -48,7 +48,7 @@ const Tapes = () => {
     fetchData();
   }, [ ]);
 
-  console.log('StaffData', staffData);
+  console.log('tapeData', tapeData);
   return (
     <Box m="1.5rem  2.5rem">
       <Helmet>
@@ -57,7 +57,7 @@ const Tapes = () => {
       <Header title="Tape Management" subtitle="Manage Tapes" />
 
 
-      <StaffTables result={staffData} loading={loading} error={error} />
+      <TapeTables result={tapeData} loading={loading} error={error} />
     </Box>
   );
 };
