@@ -301,8 +301,7 @@ const SystemTable = ({ result, loading, error }) => {
   ) : error ? (
     <Alert severity="error">{error}</Alert>
   ) : (
-   
-
+ 
     <Grid container spacing={{ xs: 8, md: 3 }}>
       <Grid item xs={12} md={6}>
         <Box>
