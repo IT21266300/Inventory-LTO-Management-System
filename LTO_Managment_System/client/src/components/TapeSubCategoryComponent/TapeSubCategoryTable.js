@@ -51,7 +51,7 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
   const open = Boolean(anchorEl);
 
   const [openAlert, setOpenAlert] = useState(false);
-  const [selectedSubSystemId, setSelectedSubSystemId] = useState(null); 
+  const [selectedSubSystemId, setSelectedSubSystemId] = useState(null);
   const handleClickOpenAlert = () => {
     setOpenAlert(true);
     setAnchorEl(null);
@@ -88,19 +88,21 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
   const handleUpdateSuccess = () => {
     handleCloseUpdatePopup();
   };
-  
 
   const handleDelete = async () => {
     setAnchorEl(null);
     setOpenAlert(false);
 
-    if (selectedSubSystemId) { // Check if a subsystem ID is selected
+    if (selectedSubSystemId) {
+      // Check if a subsystem ID is selected
       try {
-        await axios.delete(`/api/systems/deleteSubSystem/${selectedSubSystemId}`);
+        await axios.delete(
+          `/api/systems/deleteSubSystem/${selectedSubSystemId}`
+        );
         toast.success('Data successfully deleted!', {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
-        window.location.reload(); 
+        window.location.reload();
       } catch (err) {
         toast.error(err.message, {
           position: toast.POSITION.BOTTOM_RIGHT,
@@ -109,7 +111,7 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
       }
     } else {
       // Handle case where no subsystem is selected (e.g., show an error message)
-      console.error("No subsystem selected for deletion.");
+      console.error('No subsystem selected for deletion.');
     }
   };
 
@@ -125,8 +127,8 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
 
   const columns = [
     {
-      field: "id",
-      headerName: "No",
+      field: 'id',
+      headerName: 'No',
       flex: 0.1,
     },
     // {
@@ -263,7 +265,7 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
             initialState={{
               columns: {
                 columnVisibilityModel: {
-                  mongoID: false,
+                  parentID: false,
                 },
               },
               // sorting: { sortModel: [{field: 'date', sort: 'asc'}]}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Dialog,
@@ -12,11 +12,17 @@ import {
   InputLabel,
   FormControl,
 } from '@mui/material';
-import { colorPalette } from 'customTheme'; 
+import { colorPalette } from 'customTheme';
 import axios from 'axios';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
 
-const AddSubsystemPopup = ({ open, onClose, systems, onSubsystemAdded }) => { 
+const AddSubsystemPopup = ({
+  open,
+  onClose,
+  systems,
+  onSubsystemAdded,
+  system,
+}) => {
   const [formData, setFormData] = useState({
     subSysName: '',
     parentSystemId: '', // You might need to initialize this based on how your systems array is structured
@@ -31,9 +37,9 @@ const AddSubsystemPopup = ({ open, onClose, systems, onSubsystemAdded }) => {
         toast.success('Subsystem added successfully!', {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
-        setFormData({ subSysName: '', parentSystemId: '' }); 
-        onSubsystemAdded(response.data.insertedId);  // Notify parent about the new subsystem
-        onClose(); 
+        setFormData({ subSysName: '', parentSystemId: '' });
+        onSubsystemAdded(response.data.insertedId); // Notify parent about the new subsystem
+        onClose();
       } else {
         toast.error(response.data.message || 'Failed to add subsystem', {
           position: toast.POSITION.BOTTOM_RIGHT,
@@ -43,7 +49,7 @@ const AddSubsystemPopup = ({ open, onClose, systems, onSubsystemAdded }) => {
       toast.error(err.message || 'Failed to add subsystem', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-      console.error('Error adding subsystem:', err); 
+      console.error('Error adding subsystem:', err);
     }
   };
 
@@ -52,6 +58,7 @@ const AddSubsystemPopup = ({ open, onClose, systems, onSubsystemAdded }) => {
     setFormData({
       ...formData,
       [name]: value,
+      parentSystemId: system.sysId,
     });
   };
 
@@ -62,7 +69,7 @@ const AddSubsystemPopup = ({ open, onClose, systems, onSubsystemAdded }) => {
       </DialogTitle>
       <DialogContent sx={{ bgcolor: colorPalette.black1[400] }}>
         <form onSubmit={handleFormSubmit}>
-          <TextField 
+          <TextField
             label="Subsystem Name"
             name="subSysName"
             value={formData.subSysName}
@@ -70,63 +77,63 @@ const AddSubsystemPopup = ({ open, onClose, systems, onSubsystemAdded }) => {
             fullWidth
             margin="normal"
             required
-            sx={{ 
-              input: { color: '#fff' }, 
-              label: { color: '#fff' }, 
-              '& .MuiOutlinedInput-root': { 
-                '& fieldset': { 
+            sx={{
+              input: { color: '#fff' },
+              label: { color: '#fff' },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
                   borderColor: colorPalette.yellow[500],
                 },
                 '&:hover fieldset': {
-                  borderColor: colorPalette.yellow[600], 
+                  borderColor: colorPalette.yellow[600],
                 },
-                '&.Mui-focused fieldset': { 
-                  borderColor: colorPalette.yellow[700], 
+                '&.Mui-focused fieldset': {
+                  borderColor: colorPalette.yellow[700],
                 },
               },
             }}
           />
 
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel 
-              id="parentSystemId-label" 
-              sx={{ color: '#fff' }} 
-            >
-              Parent System
-            </InputLabel>
-            <Select
-              labelId="parentSystemId-label"
-              id="parentSystemId"
-              name="parentSystemId"
-              value={formData.parentSystemId}
-              onChange={handleChange}
-              label="Parent System" 
-              sx={{ 
-                input: { color: '#fff' }, 
-                '.MuiOutlinedInput-notchedOutline': { 
-                  borderColor: colorPalette.yellow[500], 
+          <TextField
+            label="Parent System"
+            name="parentSystem"
+            value={system && system.sysName}
+            fullWidth
+            margin="normal"
+            required
+            sx={{
+              input: { color: '#fff' },
+              label: { color: '#fff' },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: colorPalette.yellow[500],
                 },
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: colorPalette.yellow[600], 
+                '&:hover fieldset': {
+                  borderColor: colorPalette.yellow[600],
                 },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': { 
+                '&.Mui-focused fieldset': {
                   borderColor: colorPalette.yellow[700],
                 },
-              }}
-            >
-              {systems.map((system) => ( 
-                <MenuItem key={system.sysId} value={system.sysId}>
-                  {system.sysName} 
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+              },
+            }}
+          />
 
           <DialogActions sx={{ bgcolor: colorPalette.black1[400], mt: 2 }}>
-            <Button onClick={onClose} variant="outlined" sx={{ color: '#fff', borderColor: '#fff' }}>
+            <Button
+              onClick={onClose}
+              variant="outlined"
+              sx={{ color: '#fff', borderColor: '#fff' }}
+            >
               Cancel
             </Button>
-            <Button type="submit" variant="contained" sx={{ bgcolor: colorPalette.yellow[500], '&:hover': { bgcolor: colorPalette.yellow[600] } }}>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                bgcolor: colorPalette.yellow[500],
+                '&:hover': { bgcolor: colorPalette.yellow[600] },
+              }}
+            >
               Add Subsystem
             </Button>
           </DialogActions>
