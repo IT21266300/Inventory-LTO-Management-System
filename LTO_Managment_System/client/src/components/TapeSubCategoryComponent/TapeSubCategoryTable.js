@@ -105,10 +105,15 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
 
   const columns = [
     {
-      field: 'subsysId',
-      headerName: 'Sub System ID',
+      field: "id",
+      headerName: "No",
       flex: 0.1,
     },
+    // {
+    //   field: 'subsysId',
+    //   headerName: 'Sub System ID',
+    //   flex: 0.1,
+    // },
     {
       field: 'subsysName',
       headerName: 'Sub System Name',

@@ -17,6 +17,10 @@ export default function ActionButton({ handleClick, params, open }) {
       sx={{
         backgroundColor: colorPalette.yellow[500],
         color: colorPalette.black1[500],
+        
+              fontSize: "12px", // Adjust font size as needed
+              fontWeight: "bold",
+        padding: "9px 12px",
         '&:hover': {
           backgroundColor: colorPalette.yellow[500],
           color: colorPalette.black1[500],

@@ -184,14 +184,14 @@ const SystemTable = ({ result, loading, error }) => {
   const columns = [
     {
       field: "id",
-      headerName: "ID",
+      headerName: "No",
       flex: 0.1,
     },
-    {
-      field: "sysId",
-      headerName: "System ID",
-      flex: 0.1,
-    },
+    // {
+    //   field: "sysId",
+    //   headerName: "System ID",
+    //   flex: 0.1,
+    // },
     {
       field: "sysName",
       headerName: "System Name",
@@ -226,7 +226,7 @@ const SystemTable = ({ result, loading, error }) => {
     {
       field: "actions",
       headerName: "Add Subsystem",
-      flex: 0.3,
+      flex: 0.4,
       sortable: false,
       filterable: false,
       renderCell: (params) => (
@@ -238,7 +238,7 @@ const SystemTable = ({ result, loading, error }) => {
               color: colorPalette.black[500],
               fontSize: "12px", // Adjust font size as needed
               fontWeight: "bold",
-              padding: "6px 12px", // Adjust padding as needed
+              padding: "10px 12px", // Adjust padding as needed
               "&:hover": {
                 backgroundColor: colorPalette.black[400],
                 color: colorPalette.secondary[100],
@@ -407,6 +407,7 @@ const SystemTable = ({ result, loading, error }) => {
               onClose={handleCloseAddSubsystemPopup}
               systems={result} // Pass your systems data to the popup
               onSubsystemAdded={handleSubsystemAdded}
+              system={selectedSystemForSubsystem}
               parentSystemId={
                 selectedSystemForSubsystem
                   ? selectedSystemForSubsystem.sysId
