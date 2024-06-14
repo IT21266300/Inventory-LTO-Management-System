@@ -323,6 +323,8 @@ const Tape = () => {
                 <MenuItem value={"Complete"}>Completed</MenuItem>
                 <MenuItem value={"Failed"}>Failed</MenuItem>
                 <MenuItem value={"In Progress"}>In Progress</MenuItem>
+                <MenuItem value={"NOt Taken"}>Not Taken</MenuItem>
+
               </Select>
             </FormControl>
 
