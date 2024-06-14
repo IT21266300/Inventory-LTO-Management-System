@@ -228,7 +228,6 @@ const Profile = () => {
                 <Select
                   name="position"
                   value={position}
-                  label="User Type"
                   onChange={(e) => setPosition(e.target.value)}
                 >
                   {positions.map((position) => (
