@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { DataGrid, GridToolbar, GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridToolbar,
+  GridToolbarContainer,
+  GridToolbarFilterButton,
+  GridToolbarQuickFilter,
+} from '@mui/x-data-grid';
 import {
   Alert,
   Box,
@@ -35,11 +41,9 @@ import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const TapeTable = ({ result, loading, error }) => {
-
   const navigate = useNavigate();
 
-
-  const { state} = useContext(Store);
+  const { state } = useContext(Store);
   const { userInfo } = state;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -50,7 +54,7 @@ const TapeTable = ({ result, loading, error }) => {
     setOpenAlert(true);
     setAnchorEl(null);
   };
-  console.log(result)
+  console.log(result);
 
   const handleCloseAlert = () => {
     setOpenAlert(false);
@@ -109,17 +113,39 @@ const TapeTable = ({ result, loading, error }) => {
       headerName: 'System Name',
       flex: 0.4,
     },
-    
+
     {
       field: 'subSysName',
       headerName: 'Application Name',
       flex: 0.5,
     },
-    
+
     {
       field: 'bStatus',
       headerName: 'Backup Status',
       flex: 0.4,
+      renderCell: (params) => {
+        const status = params.value;
+        return (
+          <Box
+            sx={{
+              backgroundColor:
+                status === 'Complete'
+                  ? '#017816'
+                  : status === 'In Progress'
+                  ? '#0366fc'
+                  : '#fc0303',
+              color: 'white',
+              padding: '4px 8px',
+              borderRadius: '4px',
+              textAlign: 'center',
+              width: '100%'
+            }}
+          >
+            {status}
+          </Box>
+        );
+      },
     },
     {
       field: 'mType',
@@ -135,14 +161,15 @@ const TapeTable = ({ result, loading, error }) => {
         return (
           <Box
             sx={{
-              backgroundColor: status === 'Completed' ? 'green' : 'red',
+              backgroundColor: status === 'Completed' ? '#017816' : '#0366fc',
               color: 'white',
               padding: '4px 8px',
               borderRadius: '4px',
               textAlign: 'center',
+              width: '100%'
             }}
           >
-            {status} 
+            {status}
           </Box>
         );
       },
@@ -200,14 +227,12 @@ const TapeTable = ({ result, loading, error }) => {
       sDate: row.sDate,
       eDate: row.eDate,
       lStatus: row.lStatus,
-      
     }));
   }
-  
 
   return loading ? (
     <Box width="100%">
-      <LoadingAnimation/>
+      <LoadingAnimation />
     </Box>
   ) : error ? (
     <Alert severity="error">{error}</Alert>
@@ -240,7 +265,7 @@ const TapeTable = ({ result, loading, error }) => {
           <AddCircleIcon sx={{ mr: '10px' }} />
           <Typography fontSize="0.9rem">Add New Tape</Typography>
         </Button>
-        <Box sx={{ml: '1.5rem'}}>
+        <Box sx={{ ml: '1.5rem' }}>
           <DownloadActions
             pdfColumn={pdfColumn}
             rows={rows}
@@ -272,11 +297,10 @@ const TapeTable = ({ result, loading, error }) => {
             color: `${colorPalette.primary[500]} !important`,
           },
           display: 'flex',
-          
         }}
       >
-        <Box width="100%" sx={{color: '#fff'}}>
-        <DataGrid
+        <Box width="100%" sx={{ color: '#fff' }}>
+          <DataGrid
             rows={rows}
             rowHeight={60}
             columns={columns}
@@ -293,9 +317,15 @@ const TapeTable = ({ result, loading, error }) => {
               toolbar: () => {
                 return (
                   <GridToolbarContainer
-                    style={{ justifyContent: 'flex-start', padding: '0.4rem', background: colorPalette.black[100] }}
+                    style={{
+                      justifyContent: 'flex-start',
+                      padding: '0.4rem',
+                      background: colorPalette.black[100],
+                    }}
                   >
-                    <GridToolbarFilterButton style={{ color: colorPalette.yellow[500]}}/>
+                    <GridToolbarFilterButton
+                      style={{ color: colorPalette.yellow[500] }}
+                    />
                     <GridToolbarQuickFilter />
                   </GridToolbarContainer>
                 );
@@ -303,22 +333,21 @@ const TapeTable = ({ result, loading, error }) => {
             }}
           />
         </Box>
-        
+
         <ActionsMenu
-        anchorEl={anchorEl}
-        open={open}
-        handleClose={handleClose}
-        handleUpdate={handleUpdate}
-        handleClickOpenAlert={handleClickOpenAlert}
-        position={userInfo.position}
-      />
+          anchorEl={anchorEl}
+          open={open}
+          handleClose={handleClose}
+          handleUpdate={handleUpdate}
+          handleClickOpenAlert={handleClickOpenAlert}
+          position={userInfo.position}
+        />
 
-      <DeleteAlertBox
-        openAlert={openAlert}
-        handleCloseAlert={handleCloseAlert}
-        handleDelete={handleDelete}
-      />
-
+        <DeleteAlertBox
+          openAlert={openAlert}
+          handleCloseAlert={handleCloseAlert}
+          handleDelete={handleDelete}
+        />
       </Box>
     </Box>
   );
