@@ -130,6 +130,22 @@ const TapeTable = ({ result, loading, error }) => {
       field: 'tStatus',
       headerName: 'Tape Status',
       flex: 0.4,
+      renderCell: (params) => {
+        const status = params.value;
+        return (
+          <Box
+            sx={{
+              backgroundColor: status === 'Completed' ? 'green' : 'red',
+              color: 'white',
+              padding: '4px 8px',
+              borderRadius: '4px',
+              textAlign: 'center',
+            }}
+          >
+            {status} 
+          </Box>
+        );
+      },
     },
     {
       field: 'sDate',
