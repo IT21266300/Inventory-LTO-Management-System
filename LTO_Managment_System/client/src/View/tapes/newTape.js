@@ -21,11 +21,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useReducer } from 'react';
 
-const positions = [
-  'Admin',
-  'Operator',
-  'Read Only',
-];
+const positions = ['Admin', 'Operator', 'Read Only'];
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -40,16 +36,26 @@ const reducer = (state, action) => {
   }
 };
 
-
-
 const Tape = () => {
-
-
+  const navigate = useNavigate();
+  const [tapeId, setTapeId] = useState(''); // Add state for tape ID
   const [{ systemData, loading, error }, dispatch] = useReducer(reducer, {
     systemData: [],
     loading: true,
     error: '',
   });
+  const [subSystems, setSubSystems] = useState([]);
+  const [parentSystem, setParentSystem] = useState({
+    sysName: '',
+    sysId: '',
+  });
+  const [subSysName, setSubSysName] = useState(''); // Add state for subsystem name
+  const [bStatus, setBStatus] = useState(''); // Add state for backup status
+  const [mType, setMType] = useState(''); // Add state for media type
+  const [tStatus, setTStatus] = useState(''); // Add state for tape status
+  const [sDate, setSDate] = useState(''); // Add state for start date
+  const [eDate, setEDate] = useState(''); // Add state for end date
+  const [lStatus, setLStatus] = useState(''); // Add state for label status
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,36 +74,40 @@ const Tape = () => {
     fetchData();
   }, []);
 
-  console.log("new data", systemData);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get(
+          `/api/systems/subsystems/${parentSystem.sysId}`
+        );
+        console.log('result:', result);
+        setSubSystems(result.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-  
-  const navigate = useNavigate()
-  const [tapeId, setTapeId] = useState(''); // Add state for tape ID
-  const [sysName, setSysName] = useState(''); // Add state for system name
-  const [subSysName, setSubSysName] = useState(''); // Add state for subsystem name
-  const [bStatus, setBStatus] = useState(''); // Add state for backup status
-  const [mType, setMType] = useState(''); // Add state for media type
-  const [tStatus, setTStatus] = useState(''); // Add state for tape status
-  const [sDate, setSDate] = useState(''); // Add state for start date
-  const [eDate, setEDate] = useState(''); // Add state for end date
-  const [lStatus, setLStatus] = useState(''); // Add state for label status
-
+    if (parentSystem && parentSystem.sysId) {
+      // Add a check for parentSystem
+      fetchData();
+    }
+  }, [parentSystem && parentSystem.sysId]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-        await axios.post('/api/tape/addTape', {
-            tapeId,
-            sysName,
-            subSysName,
-            bStatus,
-            mType,
-            tStatus,
-            sDate,
-            eDate,
-            lStatus,
+      await axios.post('/api/tape/addTape', {
+        tapeId,
+        sysName: parentSystem.sysName,
+        subSysName,
+        bStatus,
+        mType,
+        tStatus,
+        sDate,
+        eDate,
+        lStatus,
       });
-      toast.success('New data has been created successfully!', {
+      toast.success('New Tape has been created successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       navigate('/tape');
@@ -140,29 +150,33 @@ const Tape = () => {
           >
             <PersonAddIcon />
           </IconButton>
-          <Typography variant="h5" textAlign="center" sx={{color: '#fff', mt: '1rem'}}>
+          <Typography
+            variant="h5"
+            textAlign="center"
+            sx={{ color: '#fff', mt: '1rem' }}
+          >
             Add New Tape
           </Typography>
         </Box>
         <form onSubmit={submitHandler}>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <TextField
-              name='tapeId'
+            <TextField
+              name="tapeId"
               label="Tape ID"
               variant="outlined"
               type="text"
               sx={{
                 mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
                   },
                 },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
+
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
                 },
               }}
               onChange={(e) => setTapeId(e.target.value)}
@@ -190,182 +204,201 @@ const Tape = () => {
               onChange={(e) => setSysName(e.target.value)}
               required
             /> */}
-            
-            <FormControl sx={{
-                mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
-                  },
-                },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
-                },
-              }}>
-                <InputLabel id="demo-simple-select-label">Position</InputLabel>
-                <Select
-                  name="position"
-                  value={sysName}
-                  label="User Type"
-                  onChange={(e) => setSysName(e.target.value)}
-                >
-                  {systemData.map((system) => (
-                    <MenuItem
-                    key={system.sysId}
-                    value={system.sysName}
-                  >
-                    {system.sysName}
-                  </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
 
-            <TextField
-              name='subSysName'
-              label="Subsystem Name"
-              variant="outlined"
-              type="text"
+            <FormControl
               sx={{
                 mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
                   },
                 },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
                 },
               }}
-              onChange={(e) => setSubSysName(e.target.value)}
-            />
+            >
+              <InputLabel id="system-select-label">System</InputLabel>
+              <Select
+                labelId="system-select-label"
+                value={parentSystem.sysName}
+                label="System"
+                onChange={(e) => {
+                  const selectedSystem = systemData.find(
+                    (system) => system.sysName === e.target.value
+                  );
+                  setParentSystem({
+                    sysName: selectedSystem.sysName,
+                    sysId: selectedSystem.sysId,
+                  });
+                }}
+              >
+                {systemData.map((system) => (
+                  <MenuItem key={system.sysId} value={system.sysName}>
+                    {system.sysName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl
+              sx={{
+                mb: '1.5rem',
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
+                  },
+                },
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
+                },
+              }}
+            >
+              <InputLabel id="system-select-label">Sub System</InputLabel>
+              <Select
+                name="subSysName"
+                value={subSysName}
+                label="subSysName"
+                onChange={(e) => setSubSysName(e.target.value)}
+              >
+                {subSystems ? (
+                  subSystems.map((system) => (
+                    <MenuItem key={system.subSysId} value={system.subSysName}>
+                      {system.subSysName}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <MenuItem disabled value="">
+                    No sub systems available
+                  </MenuItem>
+                )}
+              </Select>
+            </FormControl>
+
             <TextField
-              name='bStatus'
+              name="bStatus"
               label="Backup Status"
               variant="outlined"
               type="text"
               sx={{
                 mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
                   },
                 },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
+
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
                 },
               }}
               onChange={(e) => setBStatus(e.target.value)}
             />
             <TextField
-              name='mType'
+              name="mType"
               label="Media Type"
               variant="outlined"
               type="text"
               sx={{
                 mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
                   },
                 },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
+
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
                 },
               }}
               onChange={(e) => setMType(e.target.value)}
             />
             <TextField
-              name='tStatus'
+              name="tStatus"
               label="Tape Status"
               variant="outlined"
               type="text"
               sx={{
                 mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
                   },
                 },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
+
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
                 },
               }}
               onChange={(e) => setTStatus(e.target.value)}
             />
             <TextField
-              name='sDate'
+              name="sDate"
               label="Start Date"
               variant="outlined"
               type="date"
               sx={{
                 mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
                   },
                 },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
+
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
                 },
               }}
               onChange={(e) => setSDate(e.target.value)}
             />
             <TextField
-              name='eDate'
+              name="eDate"
               label="End Date"
               variant="outlined"
               type="date"
               sx={{
                 mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
                   },
                 },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
+
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
                 },
               }}
               onChange={(e) => setEDate(e.target.value)}
             />
             <TextField
-              name='lStatus'
+              name="lStatus"
               label="Location Status"
               variant="outlined"
               type="text"
               sx={{
                 mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
                   },
                 },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
+
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
                 },
               }}
               onChange={(e) => setLStatus(e.target.value)}
@@ -391,7 +424,7 @@ const Tape = () => {
               <br />
               <Button
                 variant="filled"
-                type='submit'
+                type="submit"
                 sx={{
                   width: '45%',
                   backgroundColor: colorPalette.yellow[500],
