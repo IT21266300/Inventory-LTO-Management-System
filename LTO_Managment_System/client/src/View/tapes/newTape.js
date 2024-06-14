@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from 'components/Header';
 import Box from '@mui/material/Box';
 import {
@@ -19,6 +19,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { useReducer } from 'react';
 
 const positions = [
   'Admin',
@@ -26,17 +27,51 @@ const positions = [
   'Read Only',
 ];
 
-// const teams = [
-//   'Project Team',
-//   'Revanue & Commercial Team',
-//   'Warehouse Operation Team',
-//   'Rollout Team',
-//   'Document Team',
-// ];
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true };
+    case 'FETCH_SUCCESS':
+      return { ...state, systemData: action.payload, loading: false };
+    case 'FETCH_ERROR':
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+
 
 const Tape = () => {
 
-    const navigate = useNavigate()
+
+  const [{ systemData, loading, error }, dispatch] = useReducer(reducer, {
+    systemData: [],
+    loading: true,
+    error: '',
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: 'FETCH_REQUEST' });
+      try {
+        const result = await axios.get('/api/systems/');
+        dispatch({
+          type: 'FETCH_SUCCESS',
+          payload: result.data,
+        });
+        dispatch({ type: 'FETCH_SITES', payload: result.data });
+      } catch (err) {
+        dispatch({ type: 'FETCH_ERROR', payload: err.message });
+      }
+    };
+    fetchData();
+  }, []);
+
+  console.log("new data", systemData);
+
+  
+  const navigate = useNavigate()
   const [tapeId, setTapeId] = useState(''); // Add state for tape ID
   const [sysName, setSysName] = useState(''); // Add state for system name
   const [subSysName, setSubSysName] = useState(''); // Add state for subsystem name
@@ -46,8 +81,6 @@ const Tape = () => {
   const [sDate, setSDate] = useState(''); // Add state for start date
   const [eDate, setEDate] = useState(''); // Add state for end date
   const [lStatus, setLStatus] = useState(''); // Add state for label status
-  
-
 
 
   const submitHandler = async (e) => {
@@ -135,7 +168,7 @@ const Tape = () => {
               onChange={(e) => setTapeId(e.target.value)}
               required
             />
-            <TextField
+            {/* <TextField
               name='sysName'
               label="System Name"
               variant="outlined"
@@ -156,7 +189,40 @@ const Tape = () => {
               }}
               onChange={(e) => setSysName(e.target.value)}
               required
-            />
+            /> */}
+            
+            <FormControl sx={{
+                mb: '1.5rem',
+                
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
+               
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+              }}>
+                <InputLabel id="demo-simple-select-label">Position</InputLabel>
+                <Select
+                  name="position"
+                  value={sysName}
+                  label="User Type"
+                  onChange={(e) => setSysName(e.target.value)}
+                >
+                  {systemData.map((system) => (
+                    <MenuItem
+                    key={system.sysId}
+                    value={system.sysName}
+                  >
+                    {system.sysName}
+                  </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
             <TextField
               name='subSysName'
               label="Subsystem Name"
