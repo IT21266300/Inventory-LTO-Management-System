@@ -184,48 +184,20 @@ const Tape = () => {
               onChange={(e) => setTapeId(e.target.value)}
               required
             />
-            
-            <FormControl
+
+            <Box
               sx={{
-                mb: '1.5rem',
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: '1.5rem',
+                marginBottom: '1.5rem',
+                flexDirection: {xs: 'column', md: 'row'}
               }}
             >
-              <InputLabel id="system-select-label">System</InputLabel>
-              <Select
-                labelId="system-select-label"
-                value={parentSystem.sysName}
-                label="System"
-                onChange={(e) => {
-                  const selectedSystem = systemData.find(
-                    (system) => system.sysName === e.target.value
-                  );
-                  setParentSystem({
-                    sysName: selectedSystem.sysName,
-                    sysId: selectedSystem.sysId,
-                  });
-                }}
-              >
-                {systemData.map((system) => (
-                  <MenuItem key={system.sysId} value={system.sysName}>
-                    {system.sysName}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            {subSystems.length > 0 && (
               <FormControl
                 sx={{
-                  mb: '1.5rem',
+                  width: '100%',
                   '& .MuiOutlinedInput-root': {
                     color: '#fff',
                     '& .MuiOutlinedInput-notchedOutline': {
@@ -237,90 +209,141 @@ const Tape = () => {
                   },
                 }}
               >
-                <InputLabel id="system-select-label">Sub System</InputLabel>
+                <InputLabel id="system-select-label">System</InputLabel>
                 <Select
-                  name="subSysName"
-                  value={subSysName}
-                  label="subSysName"
-                  onChange={(e) => setSubSysName(e.target.value)}
+                  labelId="system-select-label"
+                  value={parentSystem.sysName}
+                  label="System"
+                  onChange={(e) => {
+                    const selectedSystem = systemData.find(
+                      (system) => system.sysName === e.target.value
+                    );
+                    setParentSystem({
+                      sysName: selectedSystem.sysName,
+                      sysId: selectedSystem.sysId,
+                    });
+                  }}
                 >
-                  {subSystems ? (
-                    subSystems.map((system) => (
-                      <MenuItem key={system.subSysId} value={system.subSysName}>
-                        {system.subSysName}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    <MenuItem disabled value="">
-                      No sub systems available
+                  {systemData.map((system) => (
+                    <MenuItem key={system.sysId} value={system.sysName}>
+                      {system.sysName}
                     </MenuItem>
-                  )}
+                  ))}
                 </Select>
               </FormControl>
-            )}
 
-            <FormControl
+              {subSystems.length > 0 && (
+                <FormControl
+                  sx={{
+                    mb: '1.5rem',
+                    width: '100%',
+                    '& .MuiOutlinedInput-root': {
+                      color: '#fff',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#ffe404',
+                      },
+                    },
+                    '& .MuiInputLabel-outlined': {
+                      color: '#fff',
+                    },
+                  }}
+                >
+                  <InputLabel id="system-select-label">Sub System</InputLabel>
+                  <Select
+                    name="subSysName"
+                    value={subSysName}
+                    label="subSysName"
+                    onChange={(e) => setSubSysName(e.target.value)}
+                  >
+                    {subSystems ? (
+                      subSystems.map((system) => (
+                        <MenuItem
+                          key={system.subSysId}
+                          value={system.subSysName}
+                        >
+                          {system.subSysName}
+                        </MenuItem>
+                      ))
+                    ) : (
+                      <MenuItem disabled value="">
+                        No sub systems available
+                      </MenuItem>
+                    )}
+                  </Select>
+                </FormControl>
+              )}
+            </Box>
+
+            <Box
               sx={{
-                mb: '1.5rem',
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: '1.5rem',
+                marginBottom: '1.5rem',
+                flexDirection: {xs: 'column', md: 'row'}
               }}
             >
-              <InputLabel id="demo-simple-select-label">
-                Backup Status
-              </InputLabel>
-              <Select
-                name="bStatus"
-                value={bStatus}
-                label="Backup Status"
-                id="bStatus" // Added id
-                onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
-              >
-
-                <MenuItem value={"Complete"}>Completed</MenuItem>
-                <MenuItem value={"Failed"}>Failed</MenuItem>
-                <MenuItem value={"In Progress"}>In Progress</MenuItem>
-                <MenuItem value={"NOt Taken"}>Not Taken</MenuItem>
-
-
-              </Select>
-            </FormControl>
-
-            <FormControl
-              sx={{
-                mb: '1.5rem',
-
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
+              <FormControl
+                sx={{
+                  width: '100%',
+                  '& .MuiOutlinedInput-root': {
+                    color: '#fff',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#ffe404',
+                    },
                   },
-                },
-
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
-              }}
-            >
-              <InputLabel id="demo-simple-select-label">Media Type</InputLabel>
-              <Select
-                name="mType"
-                value={mType}
-                label="Media Type"
-                onChange={(e) => setMType(e.target.value)}
+                  '& .MuiInputLabel-outlined': {
+                    color: '#fff',
+                  },
+                }}
               >
-                <MenuItem value={'LTO6'}>LTO6</MenuItem>
-                <MenuItem value={'LTO7'}>LTO7</MenuItem>
-                <MenuItem value={'LTO8'}>LTO8</MenuItem>
-              </Select>
-            </FormControl>
+                <InputLabel id="demo-simple-select-label">
+                  Backup Status
+                </InputLabel>
+                <Select
+                  name="bStatus"
+                  value={bStatus}
+                  label="Backup Status"
+                  id="bStatus" // Added id
+                  onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
+                >
+                  <MenuItem value={'Complete'}>Completed</MenuItem>
+                  <MenuItem value={'Failed'}>Failed</MenuItem>
+                  <MenuItem value={'In Progress'}>In Progress</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl
+                sx={{
+                  width: '100%',
+                  '& .MuiOutlinedInput-root': {
+                    color: '#fff',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#ffe404',
+                    },
+                  },
+
+                  '& .MuiInputLabel-outlined': {
+                    color: '#fff',
+                  },
+                }}
+              >
+                <InputLabel id="demo-simple-select-label">
+                  Media Type
+                </InputLabel>
+                <Select
+                  name="mType"
+                  value={mType}
+                  label="Media Type"
+                  onChange={(e) => setMType(e.target.value)}
+                >
+                  <MenuItem value={'LTO6'}>LTO6</MenuItem>
+                  <MenuItem value={'LTO7'}>LTO7</MenuItem>
+                  <MenuItem value={'LTO8'}>LTO8</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
 
             <FormControl
               sx={{
@@ -349,7 +372,16 @@ const Tape = () => {
               </Select>
             </FormControl>
 
-            <Box>
+            <Box
+              sx={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: '1.5rem',
+                marginBottom: '1.5rem',
+                flexDirection: {xs: 'column', md: 'row'}
+              }}
+            >
               <TextField
                 name="sDate"
                 label="Start Date & Time" // Updated label
@@ -359,7 +391,7 @@ const Tape = () => {
                   shrink: true,
                 }}
                 sx={{
-                  mb: '1.5rem',
+                  width: '100%',
                   '& .MuiOutlinedInput-root': {
                     color: '#fff',
                     '& .MuiOutlinedInput-notchedOutline': {
@@ -388,7 +420,7 @@ const Tape = () => {
                   shrink: true,
                 }}
                 sx={{
-                  mb: '1.5rem',
+                  width: '100%',
                   '& .MuiOutlinedInput-root': {
                     color: '#fff',
                     '& .MuiOutlinedInput-notchedOutline': {
