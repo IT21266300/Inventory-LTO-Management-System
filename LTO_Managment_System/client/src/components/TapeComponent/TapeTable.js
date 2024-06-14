@@ -139,7 +139,7 @@ const TapeTable = ({ result, loading, error }) => {
               padding: '4px 8px',
               borderRadius: '4px',
               textAlign: 'center',
-              width: '100%'
+              width: '100%',
             }}
           >
             {status}
@@ -166,7 +166,7 @@ const TapeTable = ({ result, loading, error }) => {
               padding: '4px 8px',
               borderRadius: '4px',
               textAlign: 'center',
-              width: '100%'
+              width: '100%',
             }}
           >
             {status}
