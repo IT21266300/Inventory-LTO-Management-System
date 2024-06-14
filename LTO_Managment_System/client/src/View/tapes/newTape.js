@@ -1,68 +1,60 @@
-import React, { useEffect } from 'react';
-import Header from 'components/Header';
-import Box from '@mui/material/Box';
+import React, { useEffect } from "react";
+import Header from "components/Header";
+import Box from "@mui/material/Box";
 import {
   Button,
   IconButton,
   Select,
   TextField,
   Typography,
-} from '@mui/material';
-import { colorPalette } from 'customTheme';
-import HttpsIcon from '@mui/icons-material/Https';
-import FlexBetween from 'components/FlexBetween';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import { useState } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { useReducer } from 'react';
+} from "@mui/material";
+import { colorPalette } from "customTheme";
+import HttpsIcon from "@mui/icons-material/Https";
+import FlexBetween from "components/FlexBetween";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useReducer } from "react";
 
-const positions = [
-  'Admin',
-  'Operator',
-  'Read Only',
-];
+const positions = ["Admin", "Operator", "Read Only"];
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'FETCH_REQUEST':
+    case "FETCH_REQUEST":
       return { ...state, loading: true };
-    case 'FETCH_SUCCESS':
+    case "FETCH_SUCCESS":
       return { ...state, systemData: action.payload, loading: false };
-    case 'FETCH_ERROR':
+    case "FETCH_ERROR":
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
 };
 
-
-
 const Tape = () => {
-
-
   const [{ systemData, loading, error }, dispatch] = useReducer(reducer, {
     systemData: [],
     loading: true,
-    error: '',
+    error: "",
   });
 
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: 'FETCH_REQUEST' });
+      dispatch({ type: "FETCH_REQUEST" });
       try {
-        const result = await axios.get('/api/systems/');
+        const result = await axios.get("/api/systems/");
         dispatch({
-          type: 'FETCH_SUCCESS',
+          type: "FETCH_SUCCESS",
           payload: result.data,
         });
-        dispatch({ type: 'FETCH_SITES', payload: result.data });
+        dispatch({ type: "FETCH_SITES", payload: result.data });
       } catch (err) {
-        dispatch({ type: 'FETCH_ERROR', payload: err.message });
+        dispatch({ type: "FETCH_ERROR", payload: err.message });
       }
     };
     fetchData();
@@ -70,37 +62,35 @@ const Tape = () => {
 
   console.log("new data", systemData);
 
-  
-  const navigate = useNavigate()
-  const [tapeId, setTapeId] = useState(''); // Add state for tape ID
-  const [sysName, setSysName] = useState(''); // Add state for system name
-  const [subSysName, setSubSysName] = useState(''); // Add state for subsystem name
-  const [bStatus, setBStatus] = useState(''); // Add state for backup status
-  const [mType, setMType] = useState(''); // Add state for media type
-  const [tStatus, setTStatus] = useState(''); // Add state for tape status
-  const [sDate, setSDate] = useState(''); // Add state for start date
-  const [eDate, setEDate] = useState(''); // Add state for end date
-  const [lStatus, setLStatus] = useState(''); // Add state for label status
-
+  const navigate = useNavigate();
+  const [tapeId, setTapeId] = useState(""); // Add state for tape ID
+  const [sysName, setSysName] = useState(""); // Add state for system name
+  const [subSysName, setSubSysName] = useState(""); // Add state for subsystem name
+  const [bStatus, setBStatus] = useState(""); // Add state for backup status
+  const [mType, setMType] = useState(""); // Add state for media type
+  const [tStatus, setTStatus] = useState(""); // Add state for tape status
+  const [sDate, setSDate] = useState(""); // Add state for start date
+  const [eDate, setEDate] = useState(""); // Add state for end date
+  const [lStatus, setLStatus] = useState(""); // Add state for label status
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-        await axios.post('/api/tape/addTape', {
-            tapeId,
-            sysName,
-            subSysName,
-            bStatus,
-            mType,
-            tStatus,
-            sDate,
-            eDate,
-            lStatus,
+      await axios.post("/api/tape/addTape", {
+        tapeId,
+        sysName,
+        subSysName,
+        bStatus,
+        mType,
+        tStatus,
+        sDate,
+        eDate,
+        lStatus,
       });
-      toast.success('New data has been created successfully!', {
+      toast.success("New data has been created successfully!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-      navigate('/tape');
+      navigate("/tape");
       window.location.reload();
     } catch (err) {
       toast.error(err.message, {
@@ -109,58 +99,61 @@ const Tape = () => {
     }
   };
 
-
   return (
     <Box
       width="100%"
       minHeight="20vh"
       p="3rem 0"
-      sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
       <Box sx={{ width: 450 }}>
         <Box
           width="100%"
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyItems: 'center',
-            alignItems: 'center',
-            mb: '1.5rem',
+            display: "flex",
+            flexDirection: "column",
+            justifyItems: "center",
+            alignItems: "center",
+            mb: "1.5rem",
           }}
         >
           <IconButton
             variant="solid"
             sx={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '100px',
+              width: "40px",
+              height: "40px",
+              borderRadius: "100px",
               backgroundColor: colorPalette.yellow[500],
               color: colorPalette.black[500],
             }}
           >
             <PersonAddIcon />
           </IconButton>
-          <Typography variant="h5" textAlign="center" sx={{color: '#fff', mt: '1rem'}}>
+          <Typography
+            variant="h5"
+            textAlign="center"
+            sx={{ color: "#fff", mt: "1rem" }}
+          >
             Add New Tape
           </Typography>
         </Box>
         <form onSubmit={submitHandler}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <TextField
-              name='tapeId'
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <TextField
+              name="tapeId"
               label="Tape ID"
               variant="outlined"
               type="text"
               sx={{
-                mb: '1.5rem',
-                
+                mb: "1.5rem",
+
                 "& .MuiOutlinedInput-root": {
                   color: "#fff",
                   "& .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#ffe404",
                   },
                 },
-               
+
                 "& .MuiInputLabel-outlined": {
                   color: "#fff",
                 },
@@ -190,54 +183,53 @@ const Tape = () => {
               onChange={(e) => setSysName(e.target.value)}
               required
             /> */}
-            
-            <FormControl sx={{
-                mb: '1.5rem',
-                
+
+            <FormControl
+              sx={{
+                mb: "1.5rem",
+
                 "& .MuiOutlinedInput-root": {
                   color: "#fff",
                   "& .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#ffe404",
                   },
                 },
-               
+
                 "& .MuiInputLabel-outlined": {
                   color: "#fff",
                 },
-              }}>
-                <InputLabel id="demo-simple-select-label">System Name</InputLabel>
-                <Select
-                  name="system"
-                  value={sysName}
-                  label="System Name"
-                  onChange={(e) => setSysName(e.target.value)}
-                >
-                  {systemData.map((system) => (
-                    <MenuItem
-                    key={system.sysId}
-                    value={system.sysName}
-                  >
+              }}
+            >
+              <InputLabel id="demo-simple-select-label">System Name</InputLabel>
+              <Select
+                name="system"
+                value={sysName}
+                label="System Name"
+                onChange={(e) => setSysName(e.target.value)}
+              >
+                {systemData.map((system) => (
+                  <MenuItem key={system.sysId} value={system.sysName}>
                     {system.sysName}
                   </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                ))}
+              </Select>
+            </FormControl>
 
             <TextField
-              name='subSysName'
+              name="subSysName"
               label="Subsystem Name"
               variant="outlined"
               type="text"
               sx={{
-                mb: '1.5rem',
-                
+                mb: "1.5rem",
+
                 "& .MuiOutlinedInput-root": {
                   color: "#fff",
                   "& .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#ffe404",
                   },
                 },
-               
+
                 "& .MuiInputLabel-outlined": {
                   color: "#fff",
                 },
@@ -245,174 +237,212 @@ const Tape = () => {
               onChange={(e) => setSubSysName(e.target.value)}
             />
 
-<FormControl sx={{
-  mb: '1.5rem',
-  "& .MuiOutlinedInput-root": {
-    color: "#fff",
-    "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#ffe404",
-    },
-  },
-  "& .MuiInputLabel-outlined": {
-    color: "#fff",
-  },
-}}>
-  <InputLabel id="demo-simple-select-label">Backup Status</InputLabel>
-  <Select
-    name="bStatus"
-    value={bStatus}
-    label="Backup Status"
-    id="bStatus" // Added id
-    onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
-  >
-    <MenuItem value={'Complete'}>Completed</MenuItem>
-    <MenuItem value={'Failed'}>Failed</MenuItem>
-    <MenuItem value={'In Progress'}>In Progress</MenuItem>
-    
-  </Select>
-</FormControl>
-            
-
-<FormControl sx={{
-                mb: '1.5rem',
-                
+            <FormControl
+              sx={{
+                mb: "1.5rem",
                 "& .MuiOutlinedInput-root": {
                   color: "#fff",
                   "& .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#ffe404",
                   },
                 },
-               
                 "& .MuiInputLabel-outlined": {
                   color: "#fff",
                 },
-              }}>
-                <InputLabel id="demo-simple-select-label">Media Type</InputLabel>
-                <Select
-                  name="mType"
-                  value={mType}
-                  label="Media Type"
-                  onChange={(e) => setMType(e.target.value)}
-                >
-                  
-                    <MenuItem value={'LTO6'}>LTO6</MenuItem>
-                    <MenuItem value={'LTO7'}>LTO7</MenuItem>
-                    <MenuItem value={'LTO8'}>LTO8</MenuItem>
-                
-                </Select>
-              </FormControl>
+              }}
+            >
+              <InputLabel id="demo-simple-select-label">
+                Backup Status
+              </InputLabel>
+              <Select
+                name="bStatus"
+                value={bStatus}
+                label="Backup Status"
+                id="bStatus" // Added id
+                onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
+              >
+                <MenuItem value={"Complete"}>Completed</MenuItem>
+                <MenuItem value={"Failed"}>Failed</MenuItem>
+                <MenuItem value={"In Progress"}>In Progress</MenuItem>
+              </Select>
+            </FormControl>
 
+            <FormControl
+              sx={{
+                mb: "1.5rem",
 
-              <FormControl sx={{
-  mb: '1.5rem',
-  "& .MuiOutlinedInput-root": {
-    color: "#fff",
-    "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#ffe404",
-    },
-  },
-  "& .MuiInputLabel-outlined": {
-    color: "#fff",
-  },
-}}>
-  <InputLabel id="demo-simple-select-label">Tape Status</InputLabel>
-  <Select
-    name="tStatus"
-    value={tStatus}
-    label="Tape Status"
-    id="tStatus" // Added id
-    onChange={(e) => setTStatus(e.target.value)} // Corrected onChange handler
-  >
-    <MenuItem value={'Completed'}>Completed</MenuItem>
-    <MenuItem value={'Ongoing'}>Ongoing</MenuItem>
-    
-    
-  </Select>
-</FormControl>
-           
-<TextField
-  name='sDate'
-  label="Start Date & Time" // Updated label
-  variant="outlined"
-  type="datetime-local" // Changed to datetime-local
-  sx={{
-    mb: '1.5rem',
-    "& .MuiOutlinedInput-root": {
-      color: "#fff",
-      "& .MuiOutlinedInput-notchedOutline": {
-        borderColor: "#ffe404",
-      },
-    },
-    "& .MuiInputLabel-outlined": {
-      color: "#fff",
-    },
-  }}
-  onChange={(e) => setSDate(e.target.value)} 
-/>
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
 
-<TextField
-  name='eDate'
-  label="End Date & Time" // Updated label
-  variant="outlined"
-  type="datetime-local" // Changed to datetime-local
-  sx={{
-    mb: '1.5rem',
-    "& .MuiOutlinedInput-root": {
-      color: "#fff",
-      "& .MuiOutlinedInput-notchedOutline": {
-        borderColor: "#ffe404",
-      },
-    },
-    "& .MuiInputLabel-outlined": {
-      color: "#fff",
-    },
-  }}
-  onChange={(e) => setEDate(e.target.value)}
-/>
-<FormControl sx={{
-  mb: '1.5rem',
-  "& .MuiOutlinedInput-root": {
-    color: "#fff",
-    "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#ffe404",
-    },
-  },
-  "& .MuiInputLabel-outlined": {
-    color: "#fff",
-  },
-}}>
-  <InputLabel id="demo-simple-select-label">Location Status</InputLabel>
-  <Select
-    name="lStatus"
-    value={lStatus}
-    label="Location Status"
-    id="lStatus" 
-    onChange={(e) => setLStatus(e.target.value)} // Corrected onChange handler
-  >
-    <MenuItem value={'HO'}>Head Office</MenuItem>
-    <MenuItem value={'DRN'}>DR Nugegoda</MenuItem>
-    <MenuItem value={'DRM'}>DR Maharagama</MenuItem>
-    <MenuItem value={'HO->DRN'}>HO to DRN</MenuItem>
-    <MenuItem value={'DRN->DRM'}>DRN to DRM</MenuItem>
-    <MenuItem value={'DRM->DRN'}>DRM to DRN</MenuItem>
-    <MenuItem value={'DRN->HO'}>DRN to HO</MenuItem>
-    <MenuItem value={'DRM->HO'}>DRM to HO</MenuItem>
-    <MenuItem value={'HO->DRM'}>HO to DRM</MenuItem>
-    
-    
-  </Select>
-</FormControl>
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+              }}
+            >
+              <InputLabel id="demo-simple-select-label">Media Type</InputLabel>
+              <Select
+                name="mType"
+                value={mType}
+                label="Media Type"
+                onChange={(e) => setMType(e.target.value)}
+              >
+                <MenuItem value={"LTO6"}>LTO6</MenuItem>
+                <MenuItem value={"LTO7"}>LTO7</MenuItem>
+                <MenuItem value={"LTO8"}>LTO8</MenuItem>
+              </Select>
+            </FormControl>
+
+            <FormControl
+              sx={{
+                mb: "1.5rem",
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+              }}
+            >
+              <InputLabel id="demo-simple-select-label">Tape Status</InputLabel>
+              <Select
+                name="tStatus"
+                value={tStatus}
+                label="Tape Status"
+                id="tStatus" // Added id
+                onChange={(e) => setTStatus(e.target.value)} // Corrected onChange handler
+              >
+                <MenuItem value={"Completed"}>Completed</MenuItem>
+                <MenuItem value={"Ongoing"}>Ongoing</MenuItem>
+              </Select>
+            </FormControl>
+
+            <div>
+      <TextField
+        name='sDate'
+        label="Start Date & Time" // Updated label
+        variant="outlined"
+        type="datetime-local" // Changed to datetime-local
+        InputLabelProps={{
+          shrink: true,
+        }}
+        sx={{
+          mb: '1.5rem',
+          "& .MuiOutlinedInput-root": {
+            color: "#fff",
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderColor: "#ffe404",
+            },
+          },
+          "& .MuiInputLabel-outlined": {
+            color: "#fff",
+          },
+          "& .MuiInputLabel-root": {
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            maxWidth: '100%',
+          },
+        }}
+        onChange={(e) => setSDate(e.target.value)} 
+      />
+
+      <TextField
+        name='eDate'
+        label="End Date & Time" // Updated label
+        variant="outlined"
+        type="datetime-local" // Changed to datetime-local
+        InputLabelProps={{
+          shrink: true,
+        }}
+        sx={{
+          mb: '1.5rem',
+          "& .MuiOutlinedInput-root": {
+            color: "#fff",
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderColor: "#ffe404",
+            },
+          },
+          "& .MuiInputLabel-outlined": {
+            color: "#fff",
+          },
+          "& .MuiInputLabel-root": {
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            maxWidth: '100%',
+          },
+        }}
+        onChange={(e) => setEDate(e.target.value)}
+      />
+
+      <FormControl sx={{
+        mb: '1.5rem',
+        "& .MuiOutlinedInput-root": {
+          color: "#fff",
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#ffe404",
+          },
+        },
+        "& .MuiInputLabel-outlined": {
+          color: "#fff",
+        },
+      }}>
+        {/* Additional form elements */}
+      </FormControl>
+    </div>
+            <FormControl
+              sx={{
+                mb: "1.5rem",
+                "& .MuiOutlinedInput-root": {
+                  color: "#fff",
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#ffe404",
+                  },
+                },
+                "& .MuiInputLabel-outlined": {
+                  color: "#fff",
+                },
+              }}
+            >
+              <InputLabel id="demo-simple-select-label">
+                Location Status
+              </InputLabel>
+              <Select
+                name="lStatus"
+                value={lStatus}
+                label="Location Status"
+                id="lStatus"
+                onChange={(e) => setLStatus(e.target.value)} // Corrected onChange handler
+              >
+                <MenuItem value={"HO"}>Head Office</MenuItem>
+                <MenuItem value={"DRN"}>DR Nugegoda</MenuItem>
+                <MenuItem value={"DRM"}>DR Maharagama</MenuItem>
+                <MenuItem value={"HO->DRN"}>HO to DRN</MenuItem>
+                <MenuItem value={"DRN->DRM"}>DRN to DRM</MenuItem>
+                <MenuItem value={"DRM->DRN"}>DRM to DRN</MenuItem>
+                <MenuItem value={"DRN->HO"}>DRN to HO</MenuItem>
+                <MenuItem value={"DRM->HO"}>DRM to HO</MenuItem>
+                <MenuItem value={"HO->DRM"}>HO to DRM</MenuItem>
+              </Select>
+            </FormControl>
 
             <FlexBetween>
               <Button
                 variant="filled"
-                onClick={() => navigate('/staff')}
+                onClick={() => navigate("/staff")}
                 sx={{
-                  width: '45%',
+                  width: "45%",
                   backgroundColor: colorPalette.black2[500],
                   color: colorPalette.secondary[200],
-                  padding: '0.5rem 0',
-                  '&:hover': {
+                  padding: "0.5rem 0",
+                  "&:hover": {
                     backgroundColor: colorPalette.black2[400],
                     color: colorPalette.secondary[200],
                   },
@@ -423,13 +453,13 @@ const Tape = () => {
               <br />
               <Button
                 variant="filled"
-                type='submit'
+                type="submit"
                 sx={{
-                  width: '45%',
+                  width: "45%",
                   backgroundColor: colorPalette.yellow[500],
                   color: colorPalette.black2[500],
-                  padding: '0.5rem 0',
-                  '&:hover': {
+                  padding: "0.5rem 0",
+                  "&:hover": {
                     backgroundColor: colorPalette.yellow[400],
                     color: colorPalette.secondary[200],
                   },
