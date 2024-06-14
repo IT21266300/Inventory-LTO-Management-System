@@ -187,12 +187,10 @@ const Tape = () => {
 
             <Box
               sx={{
-                width: '100%',
                 display: 'flex',
-                justifyContent: 'space-between',
+                flexDirection: { xs: 'column', md: 'row' },
                 gap: '1.5rem',
                 marginBottom: '1.5rem',
-                flexDirection: {xs: 'column', md: 'row'}
               }}
             >
               <FormControl
@@ -235,7 +233,6 @@ const Tape = () => {
               {subSystems.length > 0 && (
                 <FormControl
                   sx={{
-                    mb: '1.5rem',
                     width: '100%',
                     '& .MuiOutlinedInput-root': {
                       color: '#fff',
@@ -276,12 +273,10 @@ const Tape = () => {
 
             <Box
               sx={{
-                width: '100%',
                 display: 'flex',
-                justifyContent: 'space-between',
+                flexDirection: { xs: 'column', md: 'row' },
                 gap: '1.5rem',
                 marginBottom: '1.5rem',
-                flexDirection: {xs: 'column', md: 'row'}
               }}
             >
               <FormControl
@@ -374,12 +369,10 @@ const Tape = () => {
 
             <Box
               sx={{
-                width: '100%',
                 display: 'flex',
-                justifyContent: 'space-between',
+                flexDirection: { xs: 'column', md: 'row' },
                 gap: '1.5rem',
                 marginBottom: '1.5rem',
-                flexDirection: {xs: 'column', md: 'row'}
               }}
             >
               <TextField
@@ -391,7 +384,6 @@ const Tape = () => {
                   shrink: true,
                 }}
                 sx={{
-                  width: '100%',
                   '& .MuiOutlinedInput-root': {
                     color: '#fff',
                     '& .MuiOutlinedInput-notchedOutline': {
@@ -420,7 +412,6 @@ const Tape = () => {
                   shrink: true,
                 }}
                 sx={{
-                  width: '100%',
                   '& .MuiOutlinedInput-root': {
                     color: '#fff',
                     '& .MuiOutlinedInput-notchedOutline': {
@@ -432,7 +423,7 @@ const Tape = () => {
                   },
                   '& .MuiInputLabel-root': {
                     whiteSpace: 'nowrap',
-                    overflow: 'hidden',
+                    // overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     maxWidth: '100%',
                   },
