@@ -205,11 +205,11 @@ const Tape = () => {
                   color: "#fff",
                 },
               }}>
-                <InputLabel id="demo-simple-select-label">Position</InputLabel>
+                <InputLabel id="demo-simple-select-label">System Name</InputLabel>
                 <Select
-                  name="position"
+                  name="system"
                   value={sysName}
-                  label="User Type"
+                  label="System Name"
                   onChange={(e) => setSysName(e.target.value)}
                 >
                   {systemData.map((system) => (
@@ -244,12 +244,36 @@ const Tape = () => {
               }}
               onChange={(e) => setSubSysName(e.target.value)}
             />
-            <TextField
-              name='bStatus'
-              label="Backup Status"
-              variant="outlined"
-              type="text"
-              sx={{
+
+<FormControl sx={{
+  mb: '1.5rem',
+  "& .MuiOutlinedInput-root": {
+    color: "#fff",
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#ffe404",
+    },
+  },
+  "& .MuiInputLabel-outlined": {
+    color: "#fff",
+  },
+}}>
+  <InputLabel id="demo-simple-select-label">Backup Status</InputLabel>
+  <Select
+    name="bStatus"
+    value={bStatus}
+    label="Backup Status"
+    id="bStatus" // Added id
+    onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
+  >
+    <MenuItem value={'Complete'}>Completed</MenuItem>
+    <MenuItem value={'Failed'}>Failed</MenuItem>
+    <MenuItem value={'In Progress'}>In Progress</MenuItem>
+    
+  </Select>
+</FormControl>
+            
+
+<FormControl sx={{
                 mb: '1.5rem',
                 
                 "& .MuiOutlinedInput-root": {
@@ -262,114 +286,122 @@ const Tape = () => {
                 "& .MuiInputLabel-outlined": {
                   color: "#fff",
                 },
-              }}
-              onChange={(e) => setBStatus(e.target.value)}
-            />
-            <TextField
-              name='mType'
-              label="Media Type"
-              variant="outlined"
-              type="text"
-              sx={{
-                mb: '1.5rem',
+              }}>
+                <InputLabel id="demo-simple-select-label">Media Type</InputLabel>
+                <Select
+                  name="mType"
+                  value={mType}
+                  label="Media Type"
+                  onChange={(e) => setMType(e.target.value)}
+                >
+                  
+                    <MenuItem value={'LTO6'}>LTO6</MenuItem>
+                    <MenuItem value={'LTO7'}>LTO7</MenuItem>
+                    <MenuItem value={'LTO8'}>LTO8</MenuItem>
                 
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
-                  },
-                },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
-                },
-              }}
-              onChange={(e) => setMType(e.target.value)}
-            />
-            <TextField
-              name='tStatus'
-              label="Tape Status"
-              variant="outlined"
-              type="text"
-              sx={{
-                mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
-                  },
-                },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
-                },
-              }}
-              onChange={(e) => setTStatus(e.target.value)}
-            />
-            <TextField
-              name='sDate'
-              label="Start Date"
-              variant="outlined"
-              type="date"
-              sx={{
-                mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
-                  },
-                },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
-                },
-              }}
-              onChange={(e) => setSDate(e.target.value)}
-            />
-            <TextField
-              name='eDate'
-              label="End Date"
-              variant="outlined"
-              type="date"
-              sx={{
-                mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
-                  },
-                },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
-                },
-              }}
-              onChange={(e) => setEDate(e.target.value)}
-            />
-            <TextField
-              name='lStatus'
-              label="Location Status"
-              variant="outlined"
-              type="text"
-              sx={{
-                mb: '1.5rem',
-                
-                "& .MuiOutlinedInput-root": {
-                  color: "#fff",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#ffe404",
-                  },
-                },
-               
-                "& .MuiInputLabel-outlined": {
-                  color: "#fff",
-                },
-              }}
-              onChange={(e) => setLStatus(e.target.value)}
-            />
+                </Select>
+              </FormControl>
+
+
+              <FormControl sx={{
+  mb: '1.5rem',
+  "& .MuiOutlinedInput-root": {
+    color: "#fff",
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#ffe404",
+    },
+  },
+  "& .MuiInputLabel-outlined": {
+    color: "#fff",
+  },
+}}>
+  <InputLabel id="demo-simple-select-label">Tape Status</InputLabel>
+  <Select
+    name="tStatus"
+    value={tStatus}
+    label="Tape Status"
+    id="tStatus" // Added id
+    onChange={(e) => setTStatus(e.target.value)} // Corrected onChange handler
+  >
+    <MenuItem value={'Completed'}>Completed</MenuItem>
+    <MenuItem value={'Ongoing'}>Ongoing</MenuItem>
+    
+    
+  </Select>
+</FormControl>
+           
+<TextField
+  name='sDate'
+  label="Start Date & Time" // Updated label
+  variant="outlined"
+  type="datetime-local" // Changed to datetime-local
+  sx={{
+    mb: '1.5rem',
+    "& .MuiOutlinedInput-root": {
+      color: "#fff",
+      "& .MuiOutlinedInput-notchedOutline": {
+        borderColor: "#ffe404",
+      },
+    },
+    "& .MuiInputLabel-outlined": {
+      color: "#fff",
+    },
+  }}
+  onChange={(e) => setSDate(e.target.value)} 
+/>
+
+<TextField
+  name='eDate'
+  label="End Date & Time" // Updated label
+  variant="outlined"
+  type="datetime-local" // Changed to datetime-local
+  sx={{
+    mb: '1.5rem',
+    "& .MuiOutlinedInput-root": {
+      color: "#fff",
+      "& .MuiOutlinedInput-notchedOutline": {
+        borderColor: "#ffe404",
+      },
+    },
+    "& .MuiInputLabel-outlined": {
+      color: "#fff",
+    },
+  }}
+  onChange={(e) => setEDate(e.target.value)}
+/>
+<FormControl sx={{
+  mb: '1.5rem',
+  "& .MuiOutlinedInput-root": {
+    color: "#fff",
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#ffe404",
+    },
+  },
+  "& .MuiInputLabel-outlined": {
+    color: "#fff",
+  },
+}}>
+  <InputLabel id="demo-simple-select-label">Location Status</InputLabel>
+  <Select
+    name="lStatus"
+    value={lStatus}
+    label="Location Status"
+    id="lStatus" 
+    onChange={(e) => setLStatus(e.target.value)} // Corrected onChange handler
+  >
+    <MenuItem value={'HO'}>Head Office</MenuItem>
+    <MenuItem value={'DRN'}>DR Nugegoda</MenuItem>
+    <MenuItem value={'DRM'}>DR Maharagama</MenuItem>
+    <MenuItem value={'HO->DRN'}>HO to DRN</MenuItem>
+    <MenuItem value={'DRN->DRM'}>DRN to DRM</MenuItem>
+    <MenuItem value={'DRM->DRN'}>DRM to DRN</MenuItem>
+    <MenuItem value={'DRN->HO'}>DRN to HO</MenuItem>
+    <MenuItem value={'DRM->HO'}>DRM to HO</MenuItem>
+    <MenuItem value={'HO->DRM'}>HO to DRM</MenuItem>
+    
+    
+  </Select>
+</FormControl>
 
             <FlexBetween>
               <Button
