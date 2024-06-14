@@ -53,7 +53,7 @@ CREATE TABLE SubSystems (
 --New Tape table
 
 CREATE TABLE Tape (
-    tapeId INT AUTO_INCREMENT PRIMARY KEY,
+    tapeId VARCHAR(255) PRIMARY KEY,
     sysName VARCHAR(255) NOT NULL,
     subSysName VARCHAR(255),
     bStatus VARCHAR(50),

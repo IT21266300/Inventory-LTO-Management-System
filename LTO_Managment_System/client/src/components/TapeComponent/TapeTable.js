@@ -50,6 +50,7 @@ const TapeTable = ({ result, loading, error }) => {
     setOpenAlert(true);
     setAnchorEl(null);
   };
+  console.log(result)
 
   const handleCloseAlert = () => {
     setOpenAlert(false);
@@ -73,7 +74,7 @@ const TapeTable = ({ result, loading, error }) => {
     setAnchorEl(null);
     setOpenAlert(false);
     try {
-      axios.delete(`/api/staffs/delete/${passValue.staffId}`);
+      axios.delete(`/api/tape/delete/${passValue.tapeId}`);
       toast.success('Data successfully deleted!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -174,10 +175,15 @@ const TapeTable = ({ result, loading, error }) => {
   if (result !== undefined) {
     rows = result.map((row, x) => ({
       id: x + 1,
-      staffId: row.staffId,
-      name: row.name,
-      phone: row.phone,
-      position: row.position,
+      tapeId: row.tapeId,
+      sysName: row.sysName,
+      subSysName: row.subSysName,
+      bStatus: row.bStatus,
+      mType: row.mType,
+      tStatus: row.tStatus,
+      sDate: row.sDate,
+      eDate: row.eDate,
+      lStatus: row.lStatus,
       
     }));
   }

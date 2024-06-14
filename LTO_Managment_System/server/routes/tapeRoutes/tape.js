@@ -93,132 +93,60 @@ router.route('/subsystems/:systemId').get(async (req, res) => {
   });
 });
 
-//add new subsystem to the system
 
-router.route('/addSubSystem').post(async (req, res) => {
-  const { subSysName, parentSystemId } = req.body;
-
-  // Check if the staffId already exists
-  const checkSql = 'SELECT * FROM SubSystem WHERE subSysName = ? AND parentSystemId = ?';
-  db.query(checkSql, [subSysName, parentSystemId], (err, results) => {
-    if (err) return res.status(500).json({ message: err.message });
-
-    if (results.length > 0) {
-      return res.status(409).json({ message: 'Sub System name already in use...!' });
-    }
-
-    // Insert the new sub system
-    const insertSql = 'INSERT INTO SubSystem (subSysName, parentSystemId) VALUES (?, ?)';
-    db.query(insertSql, [subSysName, parentSystemId], (err, result) => {
-      if (err) return res.status(400).json({ message: err.message });
-      return res.json({ message: 'Sub System Added..!' });
-    });
-  });
-});
 
 // delete system
-router.route('/delete/:systemId').delete(async (req, res) => {
-  const { systemId } = req.params;
+router.route('/delete/:tapeId').delete(async (req, res) => {
+  const { tapeId } = req.params;
 
-  const sql = 'DELETE FROM Systems WHERE sysId = ?';
+  const sql = 'DELETE FROM Tape WHERE tapeId = ?';
   
-  db.query(sql, [systemId], (err, result) => {
+  db.query(sql, [tapeId], (err, result) => {
     if (err) {
       console.error(err.message);
-      return res.status(500).send({ status: 'Error with deleting system', error: err.message });
+      return res.status(500).send({ status: 'Error with deleting tape', error: err.message });
     }
 
     if (result.affectedRows === 0) {
-      return res.status(404).send({ status: 'System not found' });
+      return res.status(404).send({ status: 'Tape not found' });
     }
 
-    return res.status(200).send({ status: 'System Deleted' });
+    return res.status(200).send({ status: 'Tape Deleted' });
   });
 });
 
-// Route to delete a SubSystem
-router.route('/deleteSubSystem/:subSysId').delete(async (req, res) => {
-  const { subSysId } = req.params;
 
-  const sql = 'DELETE FROM SubSystem WHERE subSysId = ?';
-  
-  db.query(sql, [subSysId], (err, result) => {
-    if (err) {
-      console.error(err.message);
-      return res.status(500).send({ status: 'Error with deleting system', error: err.message });
-    }
+//update tape
 
-    if (result.affectedRows === 0) {
-      return res.status(404).send({ status: 'System not found' });
-    }
+router.route('/updateTape/:tapeId').put(async (req, res) => {
+  const tapeId = req.params.tapeId;
+  const { sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus } = req.body;
 
-    return res.status(200).send({ status: 'System Deleted' });
-  });
-});
-
-//update system
-
-router.route('/updateSystem/:systemId').put(async (req, res) => {
-  const sysId = req.params.systemId;
-  const { sysName } = req.body;
-
-  // Check if the updated staffId already exists
-  const checkSql = 'SELECT * FROM Systems WHERE sysId = ? AND sysName = ?';
-  db.query(checkSql, [sysId, sysName], (checkErr, checkResult) => {
+  // Check if the tape ID exists
+  const checkSql = 'SELECT * FROM Tape WHERE tapeId = ?';
+  db.query(checkSql, [tapeId], (checkErr, checkResult) => {
     if (checkErr) {
       console.error(checkErr.message);
-      return res.status(500).json({ message: 'Error with checking system', error: checkErr.message });
+      return res.status(500).json({ message: 'Error with checking tape', error: checkErr.message });
     }
 
-    if (checkResult.length > 0) {
-      return res.status(409).json({ message: 'System name already in used' });
+    if (checkResult.length === 0) {
+      return res.status(404).json({ message: 'Tape not found' });
     }
 
-    const updateSql = 'UPDATE Systems SET sysName = ? WHERE sysId = ?';
-    db.query(updateSql, [sysName, sysId], (updateErr, updateResult) => {
+    // Update the tape record
+    const updateSql = 'UPDATE Tape SET sysName = ?, subSysName = ?, bStatus = ?, mType = ?, tStatus = ?, sDate = ?, eDate = ?, lStatus = ? WHERE tapeId = ?';
+    db.query(updateSql, [sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus, tapeId], (updateErr, updateResult) => {
       if (updateErr) {
         console.error(updateErr.message);
-        return res.status(400).json({ message: 'Error with updating system', error: updateErr.message });
+        return res.status(400).json({ message: 'Error with updating tape', error: updateErr.message });
       }
 
       if (updateResult.affectedRows === 0) {
-        return res.status(404).json({ message: 'System not found' });
+        return res.status(404).json({ message: 'Tape not found' });
       }
 
-      return res.status(200).json({ message: 'System Updated' });
-    });
-  });
-});
-
-// update subsystem
-router.route('/updateSubSystem/:subSysId').put(async (req, res) => {
-  const sysId = req.params.subSysId;
-  const { subSysName, parentSystemId } = req.body;
-
-  // Check if the updated staffId already exists
-  const checkSql = 'SELECT * FROM SubSystem WHERE subSysName = ? AND subSysId != ? AND parentSystemId = ?';
-  db.query(checkSql, [subSysName, sysId, parentSystemId], (checkErr, checkResult) => {
-    if (checkErr) {
-      console.error(checkErr.message);
-      return res.status(500).json({ message: 'Error with checking system', error: checkErr.message });
-    }
-
-    if (checkResult.length > 0) {
-      return res.status(409).json({ message: 'Sub System name already in used' });
-    }
-
-    const updateSql = 'UPDATE SubSystem SET subSysName = ?, parentSystemId = ? WHERE subSysId = ?';
-    db.query(updateSql, [subSysName, parentSystemId ,sysId], (updateErr, updateResult) => {
-      if (updateErr) {
-        console.error(updateErr.message);
-        return res.status(400).json({ message: 'Error with updating system', error: updateErr.message });
-      }
-
-      if (updateResult.affectedRows === 0) {
-        return res.status(404).json({ message: 'System not found' });
-      }
-
-      return res.status(200).json({ message: 'System Updated' });
+      return res.status(200).json({ message: 'Tape Updated' });
     });
   });
 });
