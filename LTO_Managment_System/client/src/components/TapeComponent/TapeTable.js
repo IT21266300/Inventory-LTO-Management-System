@@ -71,7 +71,7 @@ const TapeTable = ({ result, loading, error }) => {
   };
 
   const handleUpdate = () => {
-    navigate('/updateStaff', { state: { data: passValue } });
+    navigate('/updateTape', { state: { data: passValue } });
   };
 
   const handleDelete = async () => {

@@ -18,7 +18,7 @@ import FormControl from '@mui/material/FormControl';
 import { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useReducer } from 'react';
 
 const positions = ['Admin', 'Operator', 'Read Only'];
@@ -40,6 +40,12 @@ const Tape = () => {
   const navigate = useNavigate();
   const [tapeId, setTapeId] = useState(''); // Add state for tape ID
 
+  const location = useLocation();
+
+  const { data } = location.state;
+
+  console.log(data);
+
   const [{ systemData, loading, error }, dispatch] = useReducer(reducer, {
     systemData: [],
     loading: true,
@@ -57,6 +63,24 @@ const Tape = () => {
   const [sDate, setSDate] = useState(''); // Add state for start date
   const [eDate, setEDate] = useState(''); // Add state for end date
   const [lStatus, setLStatus] = useState(''); // Add state for label status
+
+  useEffect(()=> {
+    setTapeId(data.tapeId);
+    setParentSystem(prevState => ({
+      ...prevState,
+      sysName: data.sysName,
+    }));
+    setSubSysName(data.subSysName);
+    setBStatus(data.bStatus);
+    setMType(data.mType);
+    setTStatus(data.tStatus);
+    setSDate(data.sDate);
+    setEDate(data.eDate);
+    setLStatus(data.lStatus);
+
+  },[data]);
+
+  console.log(parentSystem.sysName);
 
   useEffect(() => {
     const fetchData = async () => {
