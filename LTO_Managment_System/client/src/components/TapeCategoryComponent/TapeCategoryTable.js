@@ -435,7 +435,7 @@ const SystemTable = ({ result, loading, error }) => {
           {isSubsystemsLoading ? (
             <LoadingAnimation />
           ) : subsystemsError ? ( // Display error message if it exists
-            <Alert severity="error">{subsystemsError}</Alert>
+            <Alert severity='warning' sx={{fontSize: '1rem', textAlign: 'center'}}>Sub Systems Not Found..!</Alert>
           ) : subsystems.length > 0 ? (
             <TapeSubCategoryTable
               data={buttonClickedValue}

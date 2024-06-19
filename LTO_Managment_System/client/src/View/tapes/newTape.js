@@ -20,6 +20,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useReducer } from 'react';
+import textFieldStyles from 'styles/textFieldStyles';
 
 const positions = ['Admin', 'Operator', 'Read Only'];
 
@@ -100,7 +101,7 @@ const Tape = () => {
       await axios.post('/api/tape/addTape', {
         tapeId,
         sysName: parentSystem.sysName,
-
+        sysId: parentSystem.sysId,
         subSysName,
         bStatus,
         mType,
@@ -148,6 +149,10 @@ const Tape = () => {
               borderRadius: '100px',
               backgroundColor: colorPalette.yellow[500],
               color: colorPalette.black[500],
+              '&:hover': {
+                backgroundColor: colorPalette.yellow[500],
+                color: colorPalette.black[500],
+              },
             }}
           >
             <PersonAddIcon />
@@ -167,20 +172,7 @@ const Tape = () => {
               label="Tape ID"
               variant="outlined"
               type="text"
-              sx={{
-                mb: '1.5rem',
-
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
-              }}
+              sx={textFieldStyles}
               onChange={(e) => setTapeId(e.target.value)}
               required
             />
@@ -190,23 +182,9 @@ const Tape = () => {
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },
                 gap: '1.5rem',
-                marginBottom: '1.5rem',
               }}
             >
-              <FormControl
-                sx={{
-                  width: '100%',
-                  '& .MuiOutlinedInput-root': {
-                    color: '#fff',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ffe404',
-                    },
-                  },
-                  '& .MuiInputLabel-outlined': {
-                    color: '#fff',
-                  },
-                }}
-              >
+              <FormControl sx={textFieldStyles}>
                 <InputLabel id="system-select-label">System</InputLabel>
                 <Select
                   labelId="system-select-label"
@@ -231,20 +209,7 @@ const Tape = () => {
               </FormControl>
 
               {subSystems.length > 0 && (
-                <FormControl
-                  sx={{
-                    width: '100%',
-                    '& .MuiOutlinedInput-root': {
-                      color: '#fff',
-                      '& .MuiOutlinedInput-notchedOutline': {
-                        borderColor: '#ffe404',
-                      },
-                    },
-                    '& .MuiInputLabel-outlined': {
-                      color: '#fff',
-                    },
-                  }}
-                >
+                <FormControl sx={textFieldStyles}>
                   <InputLabel id="system-select-label">Sub System</InputLabel>
                   <Select
                     name="subSysName"
@@ -276,23 +241,9 @@ const Tape = () => {
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },
                 gap: '1.5rem',
-                marginBottom: '1.5rem',
               }}
             >
-              <FormControl
-                sx={{
-                  width: '100%',
-                  '& .MuiOutlinedInput-root': {
-                    color: '#fff',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ffe404',
-                    },
-                  },
-                  '& .MuiInputLabel-outlined': {
-                    color: '#fff',
-                  },
-                }}
-              >
+              <FormControl sx={textFieldStyles}>
                 <InputLabel id="demo-simple-select-label">
                   Backup Status
                 </InputLabel>
@@ -303,27 +254,14 @@ const Tape = () => {
                   id="bStatus" // Added id
                   onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
                 >
-                  <MenuItem value={'Complete'}>Completed</MenuItem>
+                  <MenuItem value={'Completed'}>Completed</MenuItem>
                   <MenuItem value={'Failed'}>Failed</MenuItem>
                   <MenuItem value={'In Progress'}>In Progress</MenuItem>
+                  <MenuItem value={'Not Taken'}>Not Taken</MenuItem>
                 </Select>
               </FormControl>
 
-              <FormControl
-                sx={{
-                  width: '100%',
-                  '& .MuiOutlinedInput-root': {
-                    color: '#fff',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ffe404',
-                    },
-                  },
-
-                  '& .MuiInputLabel-outlined': {
-                    color: '#fff',
-                  },
-                }}
-              >
+              <FormControl sx={textFieldStyles}>
                 <InputLabel id="demo-simple-select-label">
                   Media Type
                 </InputLabel>
@@ -340,20 +278,7 @@ const Tape = () => {
               </FormControl>
             </Box>
 
-            <FormControl
-              sx={{
-                mb: '1.5rem',
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
-              }}
-            >
+            <FormControl sx={textFieldStyles}>
               <InputLabel id="demo-simple-select-label">Tape Status</InputLabel>
               <Select
                 name="tStatus"
@@ -372,7 +297,6 @@ const Tape = () => {
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },
                 gap: '1.5rem',
-                marginBottom: '1.5rem',
               }}
             >
               <TextField
@@ -383,23 +307,7 @@ const Tape = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    color: '#fff',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ffe404',
-                    },
-                  },
-                  '& .MuiInputLabel-outlined': {
-                    color: '#fff',
-                  },
-                  '& .MuiInputLabel-root': {
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    maxWidth: '100%',
-                  },
-                }}
+                sx={textFieldStyles}
                 onChange={(e) => setSDate(e.target.value)}
               />
 
@@ -411,58 +319,13 @@ const Tape = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    color: '#fff',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ffe404',
-                    },
-                  },
-                  '& .MuiInputLabel-outlined': {
-                    color: '#fff',
-                  },
-                  '& .MuiInputLabel-root': {
-                    whiteSpace: 'nowrap',
-                    // overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    maxWidth: '100%',
-                  },
-                }}
+                sx={textFieldStyles}
                 onChange={(e) => setEDate(e.target.value)}
               />
 
-              <FormControl
-                sx={{
-                  mb: '1.5rem',
-                  '& .MuiOutlinedInput-root': {
-                    color: '#fff',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ffe404',
-                    },
-                  },
-                  '& .MuiInputLabel-outlined': {
-                    color: '#fff',
-                  },
-                }}
-              >
-                {/* Additional form elements */}
-              </FormControl>
             </Box>
 
-            <FormControl
-              sx={{
-                mb: '1.5rem',
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
-              }}
-            >
+            <FormControl sx={textFieldStyles}>
               <InputLabel id="demo-simple-select-label">
                 Location Status
               </InputLabel>
@@ -488,7 +351,7 @@ const Tape = () => {
             <FlexBetween>
               <Button
                 variant="filled"
-                onClick={() => navigate('/staff')}
+                onClick={() => navigate('/tape')}
                 sx={{
                   width: '45%',
                   backgroundColor: colorPalette.black2[500],
@@ -513,7 +376,6 @@ const Tape = () => {
                   padding: '0.5rem 0',
                   '&:hover': {
                     backgroundColor: colorPalette.yellow[400],
-                    color: colorPalette.secondary[200],
                   },
                 }}
               >

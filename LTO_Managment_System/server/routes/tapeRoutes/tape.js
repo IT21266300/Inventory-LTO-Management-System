@@ -6,7 +6,7 @@ import db from '../../dbConnection.js';
 const router = express.Router();
 
 router.route('/addTape').post(async (req, res) => {
-  const { tapeId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus } = req.body;
+  const { tapeId, sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus } = req.body;
 
   // Check if the tapeId already exists
   const checkSql = 'SELECT * FROM Tape WHERE tapeId = ?';
@@ -18,8 +18,8 @@ router.route('/addTape').post(async (req, res) => {
     }
 
     // Insert the new tape
-    const insertSql = 'INSERT INTO Tape (tapeId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    db.query(insertSql, [tapeId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus], (err, result) => {
+    const insertSql = 'INSERT INTO Tape (tapeId, sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    db.query(insertSql, [tapeId, sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus], (err, result) => {
       if (err) return res.status(400).json({ message: err.message });
       return res.json({ message: 'New Tape add..!' });
     });
@@ -94,7 +94,6 @@ router.route('/subsystems/:systemId').get(async (req, res) => {
 });
 
 
-
 // delete system
 router.route('/delete/:tapeId').delete(async (req, res) => {
   const { tapeId } = req.params;
@@ -120,7 +119,7 @@ router.route('/delete/:tapeId').delete(async (req, res) => {
 
 router.route('/updateTape/:tapeId').put(async (req, res) => {
   const tapeId = req.params.tapeId;
-  const { sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus } = req.body;
+  const { sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus } = req.body;
 
   // Check if the tape ID exists
   const checkSql = 'SELECT * FROM Tape WHERE tapeId = ?';
@@ -135,8 +134,8 @@ router.route('/updateTape/:tapeId').put(async (req, res) => {
     }
 
     // Update the tape record
-    const updateSql = 'UPDATE Tape SET sysName = ?, subSysName = ?, bStatus = ?, mType = ?, tStatus = ?, sDate = ?, eDate = ?, lStatus = ? WHERE tapeId = ?';
-    db.query(updateSql, [sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus, tapeId], (updateErr, updateResult) => {
+    const updateSql = 'UPDATE Tape SET sysName = ?, sysId = ?, subSysName = ?, bStatus = ?, mType = ?, tStatus = ?, sDate = ?, eDate = ?, lStatus = ? WHERE tapeId = ?';
+    db.query(updateSql, [sysName, sysId, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus, tapeId], (updateErr, updateResult) => {
       if (updateErr) {
         console.error(updateErr.message);
         return res.status(400).json({ message: 'Error with updating tape', error: updateErr.message });

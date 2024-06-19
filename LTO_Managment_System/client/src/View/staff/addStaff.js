@@ -109,6 +109,10 @@ const Profile = () => {
               borderRadius: '100px',
               backgroundColor: colorPalette.yellow[500],
               color: colorPalette.black[500],
+              '&:hover': {
+                backgroundColor: colorPalette.yellow[500],
+                color: colorPalette.black[500],
+              },
             }}
           >
             <PersonAddIcon />

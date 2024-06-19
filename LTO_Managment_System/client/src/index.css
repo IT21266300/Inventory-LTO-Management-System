@@ -7,7 +7,7 @@ body,
   height: 100%;
   width: 100%;
   font-family: 'Poppins', sans-serif;
-  background-color: black;
+  background-color: #14171a;
 }
 
 /* width */
@@ -25,9 +25,10 @@ body,
 ::-webkit-scrollbar-thumb {
   background: #fdc50c;
   border-radius: 10px;
+  width: 8px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #85ccf8;
+  background: #ffe936;
 }

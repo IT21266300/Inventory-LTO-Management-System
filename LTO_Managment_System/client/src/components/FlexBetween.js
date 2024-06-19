@@ -5,6 +5,7 @@ const FlexBetween = styled(Box)({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    gap: '1rem'
 });
 
 export default FlexBetween;

@@ -20,6 +20,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useReducer } from 'react';
+import textFieldStyles from 'styles/textFieldStyles';
 
 const positions = ['Admin', 'Operator', 'Read Only'];
 
@@ -64,21 +65,34 @@ const Tape = () => {
   const [eDate, setEDate] = useState(''); // Add state for end date
   const [lStatus, setLStatus] = useState(''); // Add state for label status
 
-  useEffect(()=> {
+  console.log(data);
+
+  useEffect(() => {
     setTapeId(data.tapeId);
-    setParentSystem(prevState => ({
+    setParentSystem((prevState) => ({
       ...prevState,
       sysName: data.sysName,
+      sysId: data.sysId,
     }));
     setSubSysName(data.subSysName);
     setBStatus(data.bStatus);
     setMType(data.mType);
     setTStatus(data.tStatus);
-    setSDate(data.sDate);
+    // setSDate(data.sDate);
     setEDate(data.eDate);
     setLStatus(data.lStatus);
+  }, [data]);
 
-  },[data]);
+  useEffect(() => {
+    const isoSDate = data.sDate;
+    const isoEDate = data.eDate;
+    const stDate = new Date(isoSDate);
+    const endDate = new Date(isoEDate);
+    const formattedSDate = stDate.toISOString().slice(0, 16);
+    const formattedEDate = endDate.toISOString().slice(0, 16);
+    setSDate(formattedSDate);
+    setEDate(formattedEDate);
+  }, []);
 
   console.log(parentSystem.sysName);
 
@@ -109,6 +123,7 @@ const Tape = () => {
         setSubSystems(result.data);
       } catch (err) {
         console.log(err);
+        setSubSystems(null);
       }
     };
 
@@ -121,10 +136,9 @@ const Tape = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/tape/addTape', {
-        tapeId,
+      await axios.put(`/api/tape/updateTape/${data.tapeId}`, {
+        sysId: parentSystem.sysId,
         sysName: parentSystem.sysName,
-
         subSysName,
         bStatus,
         mType,
@@ -145,6 +159,9 @@ const Tape = () => {
       });
     }
   };
+
+  console.log(parentSystem);
+  console.log(subSystems);
 
   return (
     <Box
@@ -172,6 +189,10 @@ const Tape = () => {
               borderRadius: '100px',
               backgroundColor: colorPalette.yellow[500],
               color: colorPalette.black[500],
+              '&:hover': {
+                backgroundColor: colorPalette.yellow[500],
+                color: colorPalette.black[500],
+              },
             }}
           >
             <PersonAddIcon />
@@ -181,7 +202,7 @@ const Tape = () => {
             textAlign="center"
             sx={{ color: '#fff', mt: '1rem' }}
           >
-            Add New Tape
+            Update Tape
           </Typography>
         </Box>
         <form onSubmit={submitHandler}>
@@ -191,175 +212,122 @@ const Tape = () => {
               label="Tape ID"
               variant="outlined"
               type="text"
-              sx={{
-                mb: '1.5rem',
-
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
-              }}
+              value={tapeId}
+              sx={textFieldStyles}
               onChange={(e) => setTapeId(e.target.value)}
               required
             />
-            
-            <FormControl
+
+            <Box
               sx={{
-                mb: '1.5rem',
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                gap: '1.5rem',
               }}
             >
-              <InputLabel id="system-select-label">System</InputLabel>
-              <Select
-                labelId="system-select-label"
-                value={parentSystem.sysName}
-                label="System"
-                onChange={(e) => {
-                  const selectedSystem = systemData.find(
-                    (system) => system.sysName === e.target.value
-                  );
-                  setParentSystem({
-                    sysName: selectedSystem.sysName,
-                    sysId: selectedSystem.sysId,
-                  });
-                }}
-              >
-                {systemData.map((system) => (
-                  <MenuItem key={system.sysId} value={system.sysName}>
-                    {system.sysName}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-
-            {subSystems.length > 0 && (
-              <FormControl
-                sx={{
-                  mb: '1.5rem',
-                  '& .MuiOutlinedInput-root': {
-                    color: '#fff',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ffe404',
-                    },
-                  },
-                  '& .MuiInputLabel-outlined': {
-                    color: '#fff',
-                  },
-                }}
-              >
-                <InputLabel id="system-select-label">Sub System</InputLabel>
+              <FormControl sx={textFieldStyles}>
+                <InputLabel id="system-select-label">System</InputLabel>
                 <Select
-                  name="subSysName"
-                  value={subSysName}
-                  label="subSysName"
-                  onChange={(e) => setSubSysName(e.target.value)}
+                  labelId="system-select-label"
+                  value={parentSystem.sysName}
+                  label="System"
+                  onChange={(e) => {
+                    const selectedSystem = systemData.find(
+                      (system) => system.sysName === e.target.value
+                    );
+                    setParentSystem({
+                      sysName: selectedSystem.sysName,
+                      sysId: selectedSystem.sysId,
+                    });
+                    axios
+                      .get(`/api/systems/subsystems/${selectedSystem.sysId}`)
+                      .then((response) => {
+                        setSubSystems(response.data);
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                      });
+                  }}
                 >
-                  {subSystems ? (
-                    subSystems.map((system) => (
-                      <MenuItem key={system.subSysId} value={system.subSysName}>
-                        {system.subSysName}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    <MenuItem disabled value="">
-                      No sub systems available
+                  {systemData.map((system) => (
+                    <MenuItem key={system.sysId} value={system.sysName}>
+                      {system.sysName}
                     </MenuItem>
-                  )}
+                  ))}
                 </Select>
               </FormControl>
-            )}
 
-            <FormControl
+              {subSystems && (
+                <FormControl sx={textFieldStyles}>
+                  <InputLabel id="system-select-label">Sub System</InputLabel>
+                  <Select
+                    name="subSysName"
+                    value={subSysName}
+                    label="subSysName"
+                    onChange={(e) => setSubSysName(e.target.value)}
+                  >
+                    {subSystems ? (
+                      subSystems.map((system) => (
+                        <MenuItem
+                          key={system.subSysId}
+                          value={system.subSysName}
+                        >
+                          {system.subSysName}
+                        </MenuItem>
+                      ))
+                    ) : (
+                      <MenuItem disabled value="">
+                        No sub systems available
+                      </MenuItem>
+                    )}
+                  </Select>
+                </FormControl>
+              )}
+            </Box>
+
+            <Box
               sx={{
-                mb: '1.5rem',
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                gap: '1.5rem',
               }}
             >
-              <InputLabel id="demo-simple-select-label">
-                Backup Status
-              </InputLabel>
-              <Select
-                name="bStatus"
-                value={bStatus}
-                label="Backup Status"
-                id="bStatus" // Added id
-                onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
-              >
+              <FormControl sx={textFieldStyles}>
+                <InputLabel id="demo-simple-select-label">
+                  Backup Status
+                </InputLabel>
+                <Select
+                  name="bStatus"
+                  value={bStatus}
+                  label="Backup Status"
+                  id="bStatus" // Added id
+                  onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
+                >
+                  <MenuItem value={'Complete'}>Completed</MenuItem>
+                  <MenuItem value={'Failed'}>Failed</MenuItem>
+                  <MenuItem value={'In Progress'}>In Progress</MenuItem>
+                  <MenuItem value={'Not Taken'}>Not Taken</MenuItem>
+                </Select>
+              </FormControl>
 
-                <MenuItem value={"Complete"}>Completed</MenuItem>
-                <MenuItem value={"Failed"}>Failed</MenuItem>
-                <MenuItem value={"In Progress"}>In Progress</MenuItem>
-                <MenuItem value={"NOt Taken"}>Not Taken</MenuItem>
+              <FormControl sx={textFieldStyles}>
+                <InputLabel id="demo-simple-select-label">
+                  Media Type
+                </InputLabel>
+                <Select
+                  name="mType"
+                  value={mType}
+                  label="Media Type"
+                  onChange={(e) => setMType(e.target.value)}
+                >
+                  <MenuItem value={'LTO6'}>LTO6</MenuItem>
+                  <MenuItem value={'LTO7'}>LTO7</MenuItem>
+                  <MenuItem value={'LTO8'}>LTO8</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
 
-
-              </Select>
-            </FormControl>
-
-            <FormControl
-              sx={{
-                mb: '1.5rem',
-
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
-              }}
-            >
-              <InputLabel id="demo-simple-select-label">Media Type</InputLabel>
-              <Select
-                name="mType"
-                value={mType}
-                label="Media Type"
-                onChange={(e) => setMType(e.target.value)}
-              >
-                <MenuItem value={'LTO6'}>LTO6</MenuItem>
-                <MenuItem value={'LTO7'}>LTO7</MenuItem>
-                <MenuItem value={'LTO8'}>LTO8</MenuItem>
-              </Select>
-            </FormControl>
-
-            <FormControl
-              sx={{
-                mb: '1.5rem',
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
-              }}
-            >
+            <FormControl sx={textFieldStyles}>
               <InputLabel id="demo-simple-select-label">Tape Status</InputLabel>
               <Select
                 name="tStatus"
@@ -373,7 +341,13 @@ const Tape = () => {
               </Select>
             </FormControl>
 
-            <Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                gap: '1.5rem',
+              }}
+            >
               <TextField
                 name="sDate"
                 label="Start Date & Time" // Updated label
@@ -382,72 +356,26 @@ const Tape = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                sx={{
-                  mb: '1.5rem',
-                  '& .MuiOutlinedInput-root': {
-                    color: '#fff',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ffe404',
-                    },
-                  },
-                  '& .MuiInputLabel-outlined': {
-                    color: '#fff',
-                  },
-                  '& .MuiInputLabel-root': {
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    maxWidth: '100%',
-                  },
-                }}
+                value={sDate}
+                sx={textFieldStyles}
                 onChange={(e) => setSDate(e.target.value)}
+                aria-readonly
               />
 
               <TextField
                 name="eDate"
                 label="End Date & Time" // Updated label
                 variant="outlined"
+                value={eDate}
                 type="datetime-local" // Changed to datetime-local
                 InputLabelProps={{
                   shrink: true,
                 }}
-                sx={{
-                  mb: '1.5rem',
-                  '& .MuiOutlinedInput-root': {
-                    color: '#fff',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ffe404',
-                    },
-                  },
-                  '& .MuiInputLabel-outlined': {
-                    color: '#fff',
-                  },
-                  '& .MuiInputLabel-root': {
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    maxWidth: '100%',
-                  },
-                }}
+                sx={textFieldStyles}
                 onChange={(e) => setEDate(e.target.value)}
+                aria-readonly
               />
 
-              <FormControl
-                sx={{
-                  mb: '1.5rem',
-                  '& .MuiOutlinedInput-root': {
-                    color: '#fff',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#ffe404',
-                    },
-                  },
-                  '& .MuiInputLabel-outlined': {
-                    color: '#fff',
-                  },
-                }}
-              >
-                {/* Additional form elements */}
-              </FormControl>
             </Box>
 
             <FormControl
@@ -489,7 +417,7 @@ const Tape = () => {
             <FlexBetween>
               <Button
                 variant="filled"
-                onClick={() => navigate('/staff')}
+                onClick={() => navigate('/tape')}
                 sx={{
                   width: '45%',
                   backgroundColor: colorPalette.black2[500],
@@ -514,11 +442,10 @@ const Tape = () => {
                   padding: '0.5rem 0',
                   '&:hover': {
                     backgroundColor: colorPalette.yellow[400],
-                    color: colorPalette.secondary[200],
                   },
                 }}
               >
-                Add new Tape
+                Update Tape
               </Button>
             </FlexBetween>
           </Box>
