@@ -21,6 +21,7 @@ import Profile from 'View/profile';
 import Tape from 'View/tapes';
 import NewTape from 'View/tapes/newTape';
 import UpdateTape from 'View/tapes/updateTape';
+import TapeDetails from 'View/tapes/tapeDetails'
 
 import TapeSubCategoryTable from './TapeSubCategoryComponent/TapeSubCategoryTable';
 import System from 'View/systems/addSystem';
@@ -107,6 +108,14 @@ const routesConfig = [
           <RouteProtector>
             <UpdateTape />
           </RouteProtector>
+        ),
+      },
+      {
+        path: '/tape/:tapeId',
+        element: (
+          
+            <TapeDetails/>
+          
         ),
       },
       {

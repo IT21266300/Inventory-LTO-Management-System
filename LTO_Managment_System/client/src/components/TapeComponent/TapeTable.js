@@ -39,6 +39,7 @@ import DownloadActions from 'components/DownloadComponent/DownloadActions';
 import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import VisibilityIcon from '@mui/icons-material/Visibility'; // Import the icon for viewing
 
 const TapeTable = ({ result, loading, error }) => {
   const navigate = useNavigate();
@@ -92,6 +93,19 @@ const TapeTable = ({ result, loading, error }) => {
   };
 
   const [passValue, setPassValue] = useState({});
+
+  useEffect(() => {
+    setPassValue(buttonClickedValue);
+  }, [buttonClickedValue]);
+
+  // Handle navigation to the single tape details page
+  const handleViewDetails = () => {
+    navigate( `/tape/${passValue.tapeId}`,
+       { state: { data: passValue } }); 
+    
+  };
+ 
+ 
 
   useEffect(() => {
     setPassValue(buttonClickedValue);
@@ -192,7 +206,7 @@ const TapeTable = ({ result, loading, error }) => {
   ];
 
   // console.log("info", userInfo);
-  if (userInfo.position === 'Admin') {
+ 
     columns.push({
       field: 'action',
       headerName: 'Actions',
@@ -202,10 +216,18 @@ const TapeTable = ({ result, loading, error }) => {
       renderCell: (params) => (
         <Box>
           <ActionButton handleClick={handleClick} params={params} open={open} />
+          <Button
+            variant="contained"
+            size="medium"
+            startIcon={<VisibilityIcon />} 
+            onClick={handleViewDetails}
+            sx={{ ml: 1, backgroundColor: colorPalette.yellow[500], color: colorPalette.black[900], Color: colorPalette.black[300] }} // Add some margin to the left
+          >
+          </Button>
         </Box>
       ),
     });
-  }
+  
 
   let pdfColumn = [];
   if (userInfo.position === 'Admin') {
