@@ -15,6 +15,7 @@ import {
 import { colorPalette } from 'customTheme';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import textFieldStyles from 'styles/textFieldStyles';
 
 const AddSubsystemPopup = ({
   open,
@@ -64,10 +65,10 @@ const AddSubsystemPopup = ({
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle sx={{ bgcolor: colorPalette.black1[400], color: '#fff' }}>
+      <DialogTitle sx={{ bgcolor: colorPalette.black[500], color: '#fff' }}>
         Add New Subsystem
       </DialogTitle>
-      <DialogContent sx={{ bgcolor: colorPalette.black1[400] }}>
+      <DialogContent sx={{ background: colorPalette.black[500]}}>
         <form onSubmit={handleFormSubmit}>
           <TextField
             label="Subsystem Name"
@@ -77,21 +78,7 @@ const AddSubsystemPopup = ({
             fullWidth
             margin="normal"
             required
-            sx={{
-              input: { color: '#fff' },
-              label: { color: '#fff' },
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: colorPalette.yellow[500],
-                },
-                '&:hover fieldset': {
-                  borderColor: colorPalette.yellow[600],
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: colorPalette.yellow[700],
-                },
-              },
-            }}
+            sx={textFieldStyles}
           />
 
           <TextField
@@ -118,7 +105,7 @@ const AddSubsystemPopup = ({
             }}
           />
 
-          <DialogActions sx={{ bgcolor: colorPalette.black1[400], mt: 2 }}>
+          <DialogActions sx={{ background: colorPalette.black[500], mt: 2 }}>
             <Button
               onClick={onClose}
               variant="outlined"

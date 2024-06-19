@@ -54,12 +54,12 @@ const UpdateSystemPopup = ({ systemData, open, onClose, onUpdateSuccess }) => { 
 
   return (
     <Dialog open={open} onClose={onClose} >
-      <DialogTitle sx={{ bgcolor: colorPalette.black1[400], color: '#fff'}}>
+      <DialogTitle sx={{ bgcolor: colorPalette.black[500], color: '#fff'}}>
         <Typography variant="h6" align="center">
           Update System
         </Typography>
       </DialogTitle>
-      <DialogContent sx={{ bgcolor: colorPalette.black1[400]}}>
+      <DialogContent sx={{ bgcolor: colorPalette.black[500]}}>
         <form onSubmit={handleFormSubmit}>
           <TextField
             name="sysName"
@@ -92,7 +92,7 @@ const UpdateSystemPopup = ({ systemData, open, onClose, onUpdateSuccess }) => { 
             }}
           />
 
-          <DialogActions sx={{ bgcolor: colorPalette.black1[400], mt: 2 }}>
+          <DialogActions sx={{ bgcolor: colorPalette.black[500], mt: 2 }}>
             <Button onClick={onClose} variant="outlined" sx={{ color: colorPalette.secondary[200], borderColor: colorPalette.secondary[200] }}>
               Cancel
             </Button>

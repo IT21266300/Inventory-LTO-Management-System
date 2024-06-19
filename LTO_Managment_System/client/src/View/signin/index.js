@@ -29,6 +29,7 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import textFieldStyles from 'styles/textFieldStyles';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -127,7 +128,11 @@ const SignIn = () => {
             <HttpsIcon />
           </IconButton>
 
-          <Typography variant="h5" textAlign="center" sx={{ color: '#fff', mt: '1rem' }}>
+          <Typography
+            variant="h5"
+            textAlign="center"
+            sx={{ color: '#fff', mt: '1rem' }}
+          >
             Sign In
           </Typography>
         </Box>
@@ -137,27 +142,7 @@ const SignIn = () => {
               label="Staff ID"
               variant="outlined"
               type="text"
-              sx={{
-                mb: '1.5rem',
-
-                width: '100%',
-
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
-                // "&.Mui-focused": {
-                //   "& .MuiOutlinedInput-notchedOutline": {
-                //     borderColor: "#ffe404",
-                //     borderWidth: "3px",
-                //   },
-                // },
-              }}
+              sx={textFieldStyles}
               required
               onChange={(e) => setstaffId(e.target.value)}
             />
@@ -165,27 +150,7 @@ const SignIn = () => {
               label="Password"
               variant="outlined"
               type="password"
-              sx={{
-                mb: '1.5rem',
-
-                width: '100%',
-
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
-                // "&.Mui-focused": {
-                //   "& .MuiOutlinedInput-notchedOutline": {
-                //     borderColor: "#ffe404",
-                //     borderWidth: "3px",
-                //   },
-                // },
-              }}
+              sx={textFieldStyles}
               required
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -194,7 +159,7 @@ const SignIn = () => {
               type="submit"
               sx={{
                 backgroundColor: colorPalette.yellow[500],
-                color: colorPalette.black2[500],
+                color: colorPalette.black1[500],
                 padding: '0.5rem 0',
                 '&:hover': {
                   backgroundColor: colorPalette.yellow[400],
@@ -211,7 +176,12 @@ const SignIn = () => {
         <Box mt="1rem">
           <Link
             to="#"
-            sx={{ textAlign: 'center', fontSize: '0.9rem', color: colorPalette.yellow[500] }}
+            sx={{
+              textAlign: 'center',
+              fontSize: '0.9rem',
+              color: colorPalette.yellow[500],
+              cursor: 'pointer',
+            }}
             onClick={handleClickOpen}
           >
             Forget Password?
@@ -224,9 +194,19 @@ const SignIn = () => {
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
         >
-          <DialogTitle>{'Forget Password...?'}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
+          <DialogTitle
+            sx={{
+              background: colorPalette.black[500],
+              color: colorPalette.yellow[500],
+            }}
+          >
+            {'Forget Password...?'}
+          </DialogTitle>
+          <DialogContent sx={{ background: colorPalette.black[500] }}>
+            <DialogContentText
+              sx={{ color: colorPalette.black[100] }}
+              id="alert-dialog-slide-description"
+            >
               If you have forgotten your password, please send your email
               address, employee ID, and Phone Number. Our project manager will
               then send you a new password promptly.
@@ -238,6 +218,7 @@ const SignIn = () => {
               type="email"
               fullWidth
               variant="outlined"
+              sx={textFieldStyles}
             />
             <FlexBetween>
               <TextField
@@ -245,7 +226,7 @@ const SignIn = () => {
                 id="id"
                 label="Employee ID *"
                 type="text"
-                sx={{ width: '47%' }}
+                sx={textFieldStyles}
                 variant="outlined"
               />
               <TextField
@@ -253,12 +234,12 @@ const SignIn = () => {
                 id="phoneNumber"
                 label="Phone Number *"
                 type="number"
-                sx={{ width: '47%' }}
+                sx={textFieldStyles}
                 variant="outlined"
               />
             </FlexBetween>
           </DialogContent>
-          <DialogActions>
+          <DialogActions sx={{ background: colorPalette.black1[500] }}>
             <Button onClick={handleClose}>Cancel</Button>
             <Button onClick={handleClose} endIcon={<SendIcon />}>
               Send
