@@ -116,25 +116,24 @@ const TapeTable = ({ result, loading, error }) => {
     {
       field: 'sysId',
       headerName: 'System No',
-      flex: 0.4,
+      flex: 0,
     },
     {
       field: 'subSysName',
       headerName: 'Application Name',
       flex: 0.5,
     },
-
     {
       field: 'bStatus',
       headerName: 'Backup Status',
-      flex: 0.4,
+      flex: 0.5,
       renderCell: (params) => {
         const status = params.value;
         return (
           <Box
             sx={{
               backgroundColor:
-                status === 'Complete'
+                status === 'Completed'
                   ? '#017816'
                   : status === 'In Progress'
                   ? '#0366fc'
@@ -161,7 +160,7 @@ const TapeTable = ({ result, loading, error }) => {
     {
       field: 'tStatus',
       headerName: 'Tape Status',
-      flex: 0.4,
+      flex: 0.5,
       renderCell: (params) => {
         const status = params.value;
         return (
@@ -316,7 +315,7 @@ const TapeTable = ({ result, loading, error }) => {
             initialState={{
               columns: {
                 columnVisibilityModel: {
-                  mongoID: false,
+                  sysId: false,
                 },
               },
               // sorting: { sortModel: [{field: 'date', sort: 'asc'}]}

@@ -21,6 +21,7 @@ import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useReducer } from 'react';
 import textFieldStyles from 'styles/textFieldStyles';
+import SdStorageIcon from '@mui/icons-material/SdStorage';
 
 const positions = ['Admin', 'Operator', 'Read Only'];
 
@@ -195,7 +196,7 @@ const Tape = () => {
               },
             }}
           >
-            <PersonAddIcon />
+            <SdStorageIcon/>
           </IconButton>
           <Typography
             variant="h5"
@@ -303,7 +304,7 @@ const Tape = () => {
                   id="bStatus" // Added id
                   onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
                 >
-                  <MenuItem value={'Complete'}>Completed</MenuItem>
+                  <MenuItem value={'Completed'}>Completed</MenuItem>
                   <MenuItem value={'Failed'}>Failed</MenuItem>
                   <MenuItem value={'In Progress'}>In Progress</MenuItem>
                   <MenuItem value={'Not Taken'}>Not Taken</MenuItem>
@@ -416,18 +417,14 @@ const Tape = () => {
 
             <FlexBetween>
               <Button
-                variant="filled"
                 onClick={() => navigate('/tape')}
                 sx={{
                   width: '45%',
-                  backgroundColor: colorPalette.black2[500],
-                  color: colorPalette.secondary[200],
+                  color: colorPalette.secondary[100],
                   padding: '0.5rem 0',
-                  '&:hover': {
-                    backgroundColor: colorPalette.black2[400],
-                    color: colorPalette.secondary[200],
-                  },
+                  borderColor: '#fff'
                 }}
+                variant="outlined"
               >
                 Cancel
               </Button>

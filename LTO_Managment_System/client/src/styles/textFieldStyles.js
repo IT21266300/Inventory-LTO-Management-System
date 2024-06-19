@@ -36,6 +36,10 @@ const textFieldStyles = {
   '& .MuiSvgIcon-root': {
     color: colorPalette.secondary[100], // Icon color
   },
+  '& .MuiFormHelperText-root': {
+    color: colorPalette.yellow[500], // Set your desired color here
+    fontSize: '0.8rem',
+  }
 };
 
 export default textFieldStyles;
