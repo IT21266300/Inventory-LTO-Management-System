@@ -24,7 +24,7 @@ const logger = winston.createLogger({
   ),
   transports: [
     // Log to file (default)
-    new winston.transports.File({ filename: 'staff_activity.log' })
+    new winston.transports.File({ filename: 'staff_activity_%DATE%.log' })
   ]
 });
 
@@ -51,16 +51,22 @@ app.use(
 // Middleware for logging staff activities
 app.use((req, res, next) => {
   // Get staff ID from request (assuming you have staff authentication)
-  const staffId = req.user ? req.user.staffId : 'Anonymous';
+  const staffId = req.user ? req.user.staffId : "";
+
+  if (req.method === 'GET') {
+    next();
+    return; 
+  }
+
 
   // Log the request details
   logger.info({
-    timestamp: Date.now(),
+    //timestamp: Date.now(),
     staffId,
-    method: req.method,
+    method:req.method,
     url: req.url,
     ip: req.ip,
-    userAgent: req.headers['user-agent']
+    //userAgent: req.headers['user-agent']
   });
 
   next();
@@ -68,21 +74,32 @@ app.use((req, res, next) => {
 
 // Route to download log file
 app.get('/download-log', (req, res) => {
-  const filePath = path.join(__dirname, 'staff_activity.log');
+  const logDir = path.join(__dirname); // Directory where log files are stored
+  const logFiles = fs.readdirSync(logDir).filter(file => 
+    file.startsWith('staff_activity_')); 
+
+  // Combine all log files into a single string
+  let logData = "";
+  logFiles.forEach(file => {
+    const filePath = path.join(logDir, file);
+    logData += fs.readFileSync(filePath, 'utf8') + "\n"; // Add newline for separation
+  });
 
   res.setHeader('Content-Type', 'text/plain');
   res.setHeader('Content-Disposition', 'attachment; filename=staff_activity.log');
 
-  // Read the log file and send it as response
-  fs.readFile(filePath, (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Error downloading log file');
-    } else {
-      res.send(data);
-    }
-  });
+  res.send(logData); 
 });
+  // Read the log file and send it as response
+//   fs.readFile(filePath, (err, data) => {
+//     if (err) {
+//       console.error(err);
+//       res.status(500).send('Error downloading log file');
+//     } else {
+//       res.send(data);
+//     }
+//   });
+// });
 
 app.listen(PORT, () => {
   console.log("running");

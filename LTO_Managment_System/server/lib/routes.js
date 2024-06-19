@@ -34,6 +34,9 @@ app.use('/staffs', StaffR);
 //tape
 app.use('/tape', TapeRouter);
 
+//log
+//app.use('/log', LogRouter);
+
 app.use('/systems', SystemRouter);
 
 export default app;
