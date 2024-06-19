@@ -26,6 +26,11 @@ import TapeSubCategoryTable from './TapeSubCategoryComponent/TapeSubCategoryTabl
 import System from 'View/systems/addSystem';
 import AddSubSystem from 'View/subsystems/addSubSystem';
 
+//log views
+import Log from 'View/log';
+import UpdateLog from 'View/log/updateLog';
+
+
 const routesConfig = [
   {
     path: '/',
@@ -106,6 +111,22 @@ const routesConfig = [
         element: (
           <RouteProtector>
             <UpdateTape />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: '/log',
+        element: (
+          <RouteProtector>
+            <Log />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: '/updateLog',
+        element: (
+          <RouteProtector>
+            <UpdateLog />
           </RouteProtector>
         ),
       },

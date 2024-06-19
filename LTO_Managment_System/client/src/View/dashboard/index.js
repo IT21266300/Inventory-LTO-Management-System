@@ -24,7 +24,7 @@ import i2 from '../../assets/2.png';
 import i3 from '../../assets/3.jpg';
 import i4 from '../../assets/4.jpeg';
 import i5 from '../../assets/5.jpg';
-import i6 from '../../assets/6.jpg';
+import i6 from '../../assets/image.jpeg';
 import i7 from '../../assets/7.jpg';
 import i8 from '../../assets/8.jpg';
 import { Helmet } from 'react-helmet-async';
@@ -98,6 +98,13 @@ const Dashboard = () => {
       para: 'From This function mange finance status in each site.',
       link: '/systems',
       img: i5,
+    },
+    {
+      id: 6,
+      name: 'Log Management',
+      para: 'From This function manage the user status in each user.',
+      link: '/log',
+      img: i6,
     },
   ];
 
