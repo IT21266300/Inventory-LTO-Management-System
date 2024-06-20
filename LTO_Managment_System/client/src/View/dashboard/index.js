@@ -27,7 +27,10 @@ import i5 from '../../assets/5.jpg';
 import i6 from '../../assets/image.jpeg';
 import i7 from '../../assets/7.jpg';
 import i8 from '../../assets/8.jpg';
+import i9 from '../../assets/9.webp';
+import i10 from '../../assets/10.jpg';
 import { Helmet } from 'react-helmet-async';
+
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -101,6 +104,20 @@ const Dashboard = () => {
     },
     {
       id: 6,
+      name: 'Inventory Management',
+      para: 'From This function manage the inventory of tape.',
+      link: '/inventory',
+      img: i9,
+    },
+    {
+      id: 7,
+      name: 'Admin Panel',
+      para: 'From This function manage LTO system.',
+      link: '/admin',
+      img: i10,
+    },
+    {
+      id: 8,
       name: 'Log Management',
       para: 'From This function manage the user status in each user.',
       link: '/log',

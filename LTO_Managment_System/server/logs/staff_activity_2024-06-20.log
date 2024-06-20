@@ -5,3 +5,18 @@
 {"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSystem"},"timestamp":"2024-06-20 15:52:59"}
 {"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSystem"},"timestamp":"2024-06-20 15:53:17"}
 {"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSystem"},"timestamp":"2024-06-20 15:53:29"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSubSystem"},"timestamp":"2024-06-20 10:25:34"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSystem"},"timestamp":"2024-06-20 10:27:09"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSubSystem"},"timestamp":"2024-06-20 10:27:18"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSubSystem"},"timestamp":"2024-06-20 10:28:54"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSubSystem"},"timestamp":"2024-06-20 10:35:37"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSubSystem"},"timestamp":"2024-06-20 10:35:56"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSubSystem"},"timestamp":"2024-06-20 10:41:50"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSubSystem"},"timestamp":"2024-06-20 10:44:39"}
+{"level":"info","message":{"ip":"::1","method":"DELETE","staffId":"","success":false,"url":"/api/systems/delete/6"},"timestamp":"2024-06-20 10:53:05"}
+{"level":"info","message":{"ip":"::1","method":"DELETE","staffId":"","success":true,"url":"/api/systems/delete/6"},"timestamp":"2024-06-20 11:03:13"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","success":true,"url":"/api/systems/addSubSystem"},"timestamp":"2024-06-20 11:03:46"}
+{"level":"info","message":{"ip":"::1","method":"DELETE","staffId":"","success":false,"url":"/api/systems/delete/6"},"timestamp":"2024-06-20 11:17:24"}
+{"level":"info","message":{"ip":"::1","method":"DELETE","staffId":"","success":true,"url":"/api/systems/delete/6"},"timestamp":"2024-06-20 12:24:44"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","success":true,"url":"/api/tape/addTape"},"timestamp":"2024-06-20 13:47:33"}
+

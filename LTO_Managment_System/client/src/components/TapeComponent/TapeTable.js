@@ -113,27 +113,32 @@ const TapeTable = ({ result, loading, error }) => {
       headerName: 'System Name',
       flex: 0.4,
     },
-
+    {
+      field: 'sysId',
+      headerName: 'System No',
+      flex: 0,
+    },
     {
       field: 'subSysName',
       headerName: 'Application Name',
       flex: 0.5,
     },
-
     {
       field: 'bStatus',
       headerName: 'Backup Status',
-      flex: 0.4,
+      flex: 0.5,
       renderCell: (params) => {
         const status = params.value;
         return (
           <Box
             sx={{
               backgroundColor:
-                status === 'Complete'
+                status === 'Completed'
                   ? '#017816'
                   : status === 'In Progress'
                   ? '#0366fc'
+                  : status === 'Not Taken'
+                  ? '#580096'
                   : '#fc0303',
               color: 'white',
               padding: '4px 8px',
@@ -155,7 +160,7 @@ const TapeTable = ({ result, loading, error }) => {
     {
       field: 'tStatus',
       headerName: 'Tape Status',
-      flex: 0.4,
+      flex: 0.5,
       renderCell: (params) => {
         const status = params.value;
         return (
@@ -213,6 +218,8 @@ const TapeTable = ({ result, loading, error }) => {
   } else {
     pdfColumn = columns.slice(1);
   }
+  
+  console.log(result);
 
   let rows = {};
   if (result !== undefined) {
@@ -220,6 +227,7 @@ const TapeTable = ({ result, loading, error }) => {
       id: x + 1,
       tapeId: row.tapeId,
       sysName: row.sysName,
+      sysId: row.sysId,
       subSysName: row.subSysName,
       bStatus: row.bStatus,
       mType: row.mType,
@@ -307,7 +315,7 @@ const TapeTable = ({ result, loading, error }) => {
             initialState={{
               columns: {
                 columnVisibilityModel: {
-                  mongoID: false,
+                  sysId: false,
                 },
               },
               // sorting: { sortModel: [{field: 'date', sort: 'asc'}]}

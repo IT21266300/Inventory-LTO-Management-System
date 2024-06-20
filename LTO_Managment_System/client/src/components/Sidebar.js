@@ -32,6 +32,7 @@ import {
 
 import CellTowerIcon from '@mui/icons-material/CellTower';
 import TimelineIcon from '@mui/icons-material/Timeline';
+import CloseIcon from '@mui/icons-material/Close';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
@@ -39,6 +40,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import FolderIcon from '@mui/icons-material/Folder';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Logo from './../assets/logo.svg';
 import Logo1 from './../assets/enLogo.png';
@@ -58,12 +60,6 @@ const navItems = [
     op: 'Dashboard',
     icon: <DashboardIcon />,
   },
-  // {
-  //   text: 'ntInfoDash',
-  //   op: 'Towers Information',
-  //   path: '/ntInfoDash',
-  //   icon: <CellTowerIcon />,
-  // },
   {
     text: 'tape',
     op: 'LTO Management',
@@ -79,16 +75,6 @@ const navItems = [
     op: 'LTO Transport',
     icon: <PermContactCalendarIcon />,
   },
-  // {
-  //   text: 'Safety',
-  //   op: 'Environment health and safety',
-  //   icon: <HealthAndSafetyIcon />,
-  // },
-  // {
-  //   text: 'Transports',
-  //   op: 'Transports',
-  //   icon: <LocalShippingIcon />,
-  // },
   {
     text: 'Staff',
     op: 'Staff Management',
@@ -119,35 +105,6 @@ const Sidebar = ({
   const { state } = useContext(Store);
   const { userInfo } = state;
 
-  const [position, setPosition] = useState(null);
-
-  useEffect(() => {
-    userInfo &&
-      (() => {
-        switch (userInfo.position) {
-          case 'Finance Executive':
-            setPosition(true);
-            break;
-          case 'Rollout Manager':
-            setPosition(true);
-            break;
-          case 'Business Dev Manager':
-            setPosition(true);
-            break;
-          case 'Project Manager':
-            setPosition(true);
-            break;
-          default:
-            setPosition(false);
-        }
-      })();
-  }, [userInfo]);
-
-  const newItems =
-    position === false
-      ? navItems.filter((item) => item.text !== 'Financial')
-      : navItems;
-
   return (
     userInfo && (
       <Box component="nav">
@@ -155,7 +112,7 @@ const Sidebar = ({
           <Drawer
             open={isSidebarOpen}
             onClose={() => setIsSidebarOpen(false)}
-            variant="persistent"
+            // variant="persistent"
             anchor="left"
             sx={{
               width: drawerWidth,
@@ -169,61 +126,61 @@ const Sidebar = ({
             }}
           >
             <Box width="100%">
-              <Box m="1.5rem 2rem 2rem 3rem">
+              <Box sx={{margin: '1rem 1rem 0 1rem'}}>
                 <FlexBetween color={colorPalette.secondary[500]}>
-                  <Box
-                    sx={{
-                      width: '100%',
-                      display: 'flex',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {/* <Typography variant="h4" fontWeight="bold" >
-                      BOC LTO Management
-                    </Typography> */}
+                  <Box>
                     <img src={Logo} width="150px" height="70px" />
                   </Box>
-                  {!isDesktop && (
+                  {isDesktop && (
                     <IconButton
                       onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                      sx={{ color: colorPalette.yellow[500] }}
                     >
-                      <DashboardIcon />
+                      <ArrowBackIosIcon />
                     </IconButton>
                   )}
                 </FlexBetween>
               </Box>
               <List>
-                {newItems.map(({ text, icon, op }) => {
+                {navItems.map(({ text, icon, op }) => {
                   const simText = text.toLowerCase();
                   return (
-                    <ListItem key={text} disablePadding>
+                    <ListItem
+                      key={text}
+                      disablePadding
+                      sx={{
+                        backgroundColor:
+                          active === simText
+                            ? colorPalette.yellow[500]
+                            : 'transparent',
+                        color:
+                          active === simText
+                            ? colorPalette.primary[900]
+                            : colorPalette.yellow[500],
+                        '&:hover': {
+                          backgroundColor: colorPalette.yellow[500],
+                          color: colorPalette.black[500],
+                        },
+                        '&:hover .list-item-icon': {
+                          color: 'black', // Apply hover effect to the icon
+                        },
+                      }}
+                    >
                       <ListItemButton
                         onClick={() => {
                           navigate(`/${simText}`);
                           setActive(simText);
-                        }}
-                        sx={{
-                          backgroundColor:
-                            active === simText
-                              ? colorPalette.yellow[500]
-                              : 'transparent',
-                          color:
-                            active === simText
-                              ? colorPalette.primary[900]
-                              : colorPalette.yellow[500],
-                          '&:hover': {
-                            backgroundColor: colorPalette.yellow[400],
-                            color: colorPalette.black[500],
-                          },
+                          setIsSidebarOpen(false);
                         }}
                       >
                         <ListItemIcon
+                          className="list-item-icon"
                           sx={(theme) => ({
                             ml: '1rem',
                             color:
                               active === simText
                                 ? colorPalette.primary[900]
-                                : colorPalette.yellow[500]                            
+                                : colorPalette.yellow[500],
                           })}
                         >
                           {icon}

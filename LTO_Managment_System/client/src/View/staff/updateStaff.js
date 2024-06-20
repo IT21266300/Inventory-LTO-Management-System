@@ -20,6 +20,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import textFieldStyles from 'styles/textFieldStyles';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const positions = ['Admin', 'Operator', 'Read Only'];
 
@@ -92,7 +94,7 @@ const UpdateStaff = () => {
       p="3rem 0"
       sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
     >
-      <Box>
+      <Box sx={{ width: 450 }}>
         <Box
           width="100%"
           sx={{
@@ -113,7 +115,7 @@ const UpdateStaff = () => {
               color: colorPalette.black[500],
             }}
           >
-            <PersonAddIcon />
+            <AccountCircleIcon/>
           </IconButton>
           <Typography
             variant="h5"
@@ -124,34 +126,14 @@ const UpdateStaff = () => {
           </Typography>
         </Box>
         <form onSubmit={handleFormSubmit}>
-          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <TextField
               name="name"
               label="Name"
               variant="outlined"
               value={formData.name ? formData.name : ''}
               type="text"
-              sx={{
-                mb: '1.5rem',
-
-                width: '100%',
-
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
-                // "&.Mui-focused": {
-                //   "& .MuiOutlinedInput-notchedOutline": {
-                //     borderColor: "#ffe404",
-                //     borderWidth: "3px",
-                //   },
-                // },
-              }}
+              sx={textFieldStyles}
               onChange={handleChange}
               required
             />
@@ -161,34 +143,11 @@ const UpdateStaff = () => {
               variant="outlined"
               type="text"
               value={formData.staffId ? formData.staffId : ''}
-              sx={{
-                mb: '1.5rem',
-                color: colorPalette.yellow[500],
-
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
-                '& .MuiInputBase-root.Mui-disabled': {
-                  color: '#fff', // Change this to your desired text color
-                },
-                '& .MuiInputBase-input.Mui-disabled': {
-                  color: 'red', // Change this to your desired text color for the value
-                },
-                '& .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline':
-                  {
-                    borderColor: '#ffe404', // Change this to your desired outline color
-                  },
-              }}
+              sx={textFieldStyles}
               required
               onChange={handleChange}
-              disabled
+              helperText="Can not Change...!"
+              inputProps={{ readOnly: true }}
             />
             <TextField
               name="phone"
@@ -293,18 +252,14 @@ const UpdateStaff = () => {
             </FlexBetween>
             <FlexBetween>
               <Button
-                variant="filled"
                 onClick={() => navigate('/staff')}
                 sx={{
                   width: '45%',
-                  backgroundColor: colorPalette.black2[500],
-                  color: colorPalette.secondary[200],
+                  color: colorPalette.secondary[100],
                   padding: '0.5rem 0',
-                  '&:hover': {
-                    backgroundColor: colorPalette.black2[400],
-                    color: colorPalette.secondary[200],
-                  },
+                  borderColor: '#fff'
                 }}
+                variant="outlined"
               >
                 Cancel
               </Button>
