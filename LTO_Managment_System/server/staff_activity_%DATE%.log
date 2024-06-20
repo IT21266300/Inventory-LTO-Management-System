@@ -2,3 +2,9 @@
 {"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/staffs/addStaff"},"timestamp":"2024-06-19T06:39:44.520Z"}
 {"level":"info","message":{"ip":"::1","method":"DELETE","staffId":"/staff","url":"/api/staffs/delete/103"},"timestamp":"2024-06-19T06:44:23.916Z"}
 {"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/staffs/addStaff"},"timestamp":"2024-06-19T08:27:03.808Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSystem"},"timestamp":"2024-06-20T02:44:19.321Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/tape/addTape"},"timestamp":"2024-06-20T02:53:15.052Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSubSystem"},"timestamp":"2024-06-20T02:54:03.722Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSubSystem"},"timestamp":"2024-06-20T02:58:01.726Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSubSystem"},"timestamp":"2024-06-20T02:58:06.370Z"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSubSystem"},"timestamp":"2024-06-20"}
