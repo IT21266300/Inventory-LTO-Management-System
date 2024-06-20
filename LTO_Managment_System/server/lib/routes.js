@@ -15,6 +15,9 @@ import SystemRouter from '../routes/tapeRoutes/tapeCategory.js'
 //tape routes
 import TapeRouter from '../routes/tapeRoutes/tape.js'
 
+//log routes
+//import LogRouter from '../routes/logRoutes/log.js'
+
 
 
 const app = express.Router();
@@ -33,6 +36,9 @@ app.use('/staffs', StaffR);
  
 //tape
 app.use('/tape', TapeRouter);
+
+//log
+//app.use('/log', LogRouter);
 
 app.use('/systems', SystemRouter);
 

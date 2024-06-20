@@ -63,3 +63,11 @@ CREATE TABLE Tape (
     eDate DATE,
     lStatus VARCHAR(50)
 );
+
+CREATE TABLE `WinstonTest`.`sys_logs_default` (
+ `id` INT NOT NULL AUTO_INCREMENT,
+ `level` VARCHAR(16) NOT NULL,
+ `message` VARCHAR(2048) NOT NULL,
+ `meta` VARCHAR(2048) NOT NULL,
+ `timestamp` DATETIME NOT NULL,
+ PRIMARY KEY (`id`));

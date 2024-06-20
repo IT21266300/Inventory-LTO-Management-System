@@ -12,7 +12,7 @@ const reducer = (state, action) => {
     case 'FETCH_REQUEST':
       return { ...state, loading: true };
     case 'FETCH_SUCCESS':
-      return { ...state, tapeData: action.payload, loading: false };
+      return { ...state, logData: action.payload, loading: false };
     case 'FETCH_ERROR':
       return { ...state, loading: false, error: action.payload };
     default:
@@ -26,8 +26,8 @@ const Logs = () => {
   
  
 
-  const [{ tapeData, loading, error }, dispatch] = useReducer(reducer, {
-    tapeData: [],
+  const [{ logData, loading, error }, dispatch] = useReducer(reducer, {
+    logData: [],
     loading: true,
     error: '',
   });
@@ -48,7 +48,7 @@ const Logs = () => {
     fetchData();
   }, [ ]);
 
-  console.log('logData', tapeData);
+  console.log('logData', logData);
   return (
     <Box m="1.5rem  2.5rem">
       <Helmet>
@@ -57,7 +57,7 @@ const Logs = () => {
       <Header title="Log Management" subtitle="Manage Logs" />
 
 
-      <LogTables result={tapeData} loading={loading} error={error} />
+      <LogTables result={logData} loading={loading} error={error} />
     </Box>
   );
 };
