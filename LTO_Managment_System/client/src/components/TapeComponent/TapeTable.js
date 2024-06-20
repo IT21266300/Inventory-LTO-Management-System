@@ -22,6 +22,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { Link } from 'react-router-dom'; 
 import { colorPalette } from 'customTheme';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -216,14 +217,15 @@ const TapeTable = ({ result, loading, error }) => {
       renderCell: (params) => (
         <Box>
           <ActionButton handleClick={handleClick} params={params} open={open} />
-          <Button
-            variant="contained"
-            size="medium"
-            startIcon={<VisibilityIcon />} 
-            onClick={handleViewDetails}
-            sx={{ ml: 1, backgroundColor: colorPalette.yellow[500], color: colorPalette.black[900], Color: colorPalette.black[300] }} // Add some margin to the left
-          >
-          </Button>
+          <Link to={`/tape/${params.row.tapeId}`}  style={{textDecoration: 'none'}}> 
+        <Button
+          variant="contained"
+          size="medium"
+          startIcon={<VisibilityIcon />} 
+          sx={{ ml: 1, backgroundColor: colorPalette.yellow[500], color: colorPalette.black[900], Color: colorPalette.black[300] }}
+        >
+        </Button>
+      </Link>
         </Box>
       ),
     });
