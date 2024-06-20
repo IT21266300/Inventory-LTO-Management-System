@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from 'components/Header';
 import Box from '@mui/material/Box';
 import {
@@ -16,31 +16,15 @@ import HttpsIcon from '@mui/icons-material/Https';
 import FlexBetween from 'components/FlexBetween';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import textFieldStyles from 'styles/textFieldStyles';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const positions = ['Admin', 'Operator', 'Read Only'];
 
-// const teams = [
-//   'Project Team',
-//   'Revanue & Commercial Team',
-//   'Warehouse Operation Team',
-//   'Rollout Team',
-//   'Document Team',
-// ];
-
-const UpdateStaff = () => {
+const UpdateLog = () => {
   const navigate = useNavigate();
-
   const location = useLocation();
-
   const { data } = location.state;
-
-  console.log(data);
 
   const [formData, setFormData] = useState({
     staffId: '',
@@ -51,22 +35,19 @@ const UpdateStaff = () => {
   });
 
   useEffect(() => {
-    setFormData((prevState) => {
-      let newData = { ...prevState };
-      return {
-        ...newData,
-        staffId: data.staffId,
-        name: data.name,
-        phone: data.phone,
-        position: data.position,
-      };
-    });
+    setFormData((prevState) => ({
+      ...prevState,
+      staffId: data.staffId,
+      name: data.name,
+      phone: data.phone,
+      position: data.position,
+    }));
   }, [data]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/staffs/updateStaff/${formData.staffId}`, formData);
+      await axios.put(`/api/log/updateLog/${formData.staffId}`, formData);
       toast.success('Data has been updated successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -94,7 +75,7 @@ const UpdateStaff = () => {
       p="3rem 0"
       sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
     >
-      <Box sx={{ width: 450 }}>
+      <Box>
         <Box
           width="100%"
           sx={{
@@ -115,7 +96,7 @@ const UpdateStaff = () => {
               color: colorPalette.black[500],
             }}
           >
-            <AccountCircleIcon/>
+            <PersonAddIcon />
           </IconButton>
           <Typography
             variant="h5"
@@ -126,14 +107,34 @@ const UpdateStaff = () => {
           </Typography>
         </Box>
         <form onSubmit={handleFormSubmit}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
             <TextField
               name="name"
               label="Name"
               variant="outlined"
               value={formData.name ? formData.name : ''}
               type="text"
-              sx={textFieldStyles}
+              sx={{
+                mb: '1.5rem',
+
+                width: '100%',
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
+                  },
+                },
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
+                },
+                // "&.Mui-focused": {
+                //   "& .MuiOutlinedInput-notchedOutline": {
+                //     borderColor: "#ffe404",
+                //     borderWidth: "3px",
+                //   },
+                // },
+              }}
               onChange={handleChange}
               required
             />
@@ -143,11 +144,34 @@ const UpdateStaff = () => {
               variant="outlined"
               type="text"
               value={formData.staffId ? formData.staffId : ''}
-              sx={textFieldStyles}
+              sx={{
+                mb: '1.5rem',
+                color: colorPalette.yellow[500],
+
+                '& .MuiOutlinedInput-root': {
+                  color: '#fff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#ffe404',
+                  },
+                },
+
+                '& .MuiInputLabel-outlined': {
+                  color: '#fff',
+                },
+                '& .MuiInputBase-root.Mui-disabled': {
+                  color: '#fff', // Change this to your desired text color
+                },
+                '& .MuiInputBase-input.Mui-disabled': {
+                  color: 'red', // Change this to your desired text color for the value
+                },
+                '& .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline':
+                  {
+                    borderColor: '#ffe404', // Change this to your desired outline color
+                  },
+              }}
               required
               onChange={handleChange}
-              helperText="Can not Change...!"
-              inputProps={{ readOnly: true }}
+              disabled
             />
             <TextField
               name="phone"
@@ -252,14 +276,18 @@ const UpdateStaff = () => {
             </FlexBetween>
             <FlexBetween>
               <Button
+                variant="filled"
                 onClick={() => navigate('/staff')}
                 sx={{
                   width: '45%',
-                  color: colorPalette.secondary[100],
+                  backgroundColor: colorPalette.black2[500],
+                  color: colorPalette.secondary[200],
                   padding: '0.5rem 0',
-                  borderColor: '#fff'
+                  '&:hover': {
+                    backgroundColor: colorPalette.black2[400],
+                    color: colorPalette.secondary[200],
+                  },
                 }}
-                variant="outlined"
               >
                 Cancel
               </Button>
@@ -288,4 +316,4 @@ const UpdateStaff = () => {
   );
 };
 
-export default UpdateStaff;
+export default UpdateLog;

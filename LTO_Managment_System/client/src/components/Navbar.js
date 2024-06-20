@@ -15,7 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Stack } from '@mui/system';
-import { colorPalette } from 'customTheme';
+import customTheme, { colorPalette } from 'customTheme';
 import { useLocation, useNavigate } from 'react-router-dom';
 import StyledMenu from './StyledMenu';
 
@@ -68,7 +68,14 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
               <MenuIcon sx={{ color: 'white', fontSize: 35 }} />
             </IconButton>
           )}
-          <Box>
+          <Box sx={{
+            [customTheme.breakpoints.down('sm')]: {
+              display: 'none',
+            },
+            [customTheme.breakpoints.up('md')]: {
+              display: 'block',
+            },
+          }}>
             <Button variant="text" sx={{ color: 'white' , fontSize: '1.5rem'}} onClick={() => navigate('/dashboard')}>
               BOC LTO Management System
             </Button>

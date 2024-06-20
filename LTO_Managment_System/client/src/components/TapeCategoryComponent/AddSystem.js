@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import {
-  Button,
-  IconButton,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Button, IconButton, TextField, Typography } from '@mui/material';
 import { colorPalette } from 'customTheme';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import FlexBetween from 'components/FlexBetween';
@@ -16,6 +11,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import textFieldStyles from 'styles/textFieldStyles';
 
 const AddNewSystemPopup = ({ open, onClose }) => {
   const navigate = useNavigate();
@@ -41,88 +37,43 @@ const AddNewSystemPopup = ({ open, onClose }) => {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle sx={{ bgcolor: colorPalette.black1[400], color: '#fff' }}>Add New System</DialogTitle>
-      <DialogContent sx={{ bgcolor: colorPalette.black1[400] }}>
-        <Box
-          width="450px" // Adjust width as needed
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyItems: 'center',
-            alignItems: 'center',
-            mb: '1.5rem',
-          }}
-        >
-          <IconButton
-            variant="solid"
-            sx={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '100px',
-              backgroundColor: colorPalette.yellow[500],
-              color: colorPalette.black[500],
-            }}
-          >
-            <PersonAddIcon />
-          </IconButton>
-          <Typography variant="h5" textAlign="center" sx={{ color: '#fff', mt: '1rem' }}>
-            Add New System
-          </Typography>
-        </Box>
+      <DialogTitle sx={{ bgcolor: colorPalette.black[500], color: '#fff', width: '450px' }}>
+        Add New System
+      </DialogTitle>
+      <DialogContent sx={{ bgcolor: colorPalette.black[500] }}>
         <form onSubmit={submitHandler}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <TextField
               name="sysName"
               label="System Name"
               variant="outlined"
               type="text"
-              sx={{
-                mb: '1.5rem',
-                '& .MuiOutlinedInput-root': {
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#ffe404',
-                  },
-                },
-                '& .MuiInputLabel-outlined': {
-                  color: '#fff',
-                },
-              }}
+              sx={textFieldStyles}
               onChange={(e) => setSysName(e.target.value)}
               required
             />
             <DialogActions>
-              <Button onClick={onClose} 
-              sx={{
-                width: '45%',
-                backgroundColor: colorPalette.black2[500],
-                color: colorPalette.secondary[200],
-                padding: '0.5rem 0',
-                '&:hover': {
-                  backgroundColor: colorPalette.black2[400],
-                  color: colorPalette.secondary[200],
-                },
-              }}>
+              <Button
+                onClick={onClose}
+                variant="outlined"
+                sx={{ color: '#fff', borderColor: '#fff' }}
+              >
                 Cancel
               </Button>
-              <Button type="submit"
-               sx={{
-                width: '45%',
-                backgroundColor: colorPalette.yellow[500],
-                color: colorPalette.black2[500],
-                padding: '0.5rem 0',
-                '&:hover': {
-                  backgroundColor: colorPalette.yellow[400],
-                  color: colorPalette.secondary[200],
-                },
-              }}>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  bgcolor: colorPalette.yellow[500],
+                  '&:hover': { bgcolor: colorPalette.yellow[600] },
+                }}
+              >
                 Add System
               </Button>
             </DialogActions>
-          </Box>
         </form>
       </DialogContent>
     </Dialog>
+    
   );
 };
 

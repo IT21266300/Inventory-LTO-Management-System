@@ -367,6 +367,7 @@ const SystemTable = ({ result, loading, error }) => {
             <Box width="100%" sx={{ color: '#fff', minHeight: '50vh' }}>
               <DataGrid
                 rows={rows}
+                sx={{ backgroundColor: colorPalette.black[500] }}
                 rowHeight={60}
                 columns={columns}
                 initialState={{
@@ -435,7 +436,12 @@ const SystemTable = ({ result, loading, error }) => {
           {isSubsystemsLoading ? (
             <LoadingAnimation />
           ) : subsystemsError ? ( // Display error message if it exists
-            <Alert severity="error">{subsystemsError}</Alert>
+            <Alert
+              severity="warning"
+              sx={{ fontSize: '1rem', textAlign: 'center' }}
+            >
+              Sub Systems Not Found..!
+            </Alert>
           ) : subsystems.length > 0 ? (
             <TapeSubCategoryTable
               data={buttonClickedValue}

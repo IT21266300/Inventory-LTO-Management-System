@@ -19,6 +19,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import SensorWindowIcon from '@mui/icons-material/SensorWindow';
 
 
 
@@ -53,7 +54,7 @@ const AddSubSystem = () => {
       width="100%"
       minHeight="20vh"
       p="3rem 0"
-      sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: colorPalette.black[500]}}
     >
       <Box sx={{ width: 450 }}>
         <Box

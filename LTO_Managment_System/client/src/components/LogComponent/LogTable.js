@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  DataGrid,
-  GridToolbar,
-  GridToolbarContainer,
-  GridToolbarFilterButton,
-  GridToolbarQuickFilter,
-} from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import {
   Alert,
   Box,
@@ -22,7 +16,6 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom'; 
 import { colorPalette } from 'customTheme';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -40,12 +33,13 @@ import DownloadActions from 'components/DownloadComponent/DownloadActions';
 import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import VisibilityIcon from '@mui/icons-material/Visibility'; // Import the icon for viewing
 
-const TapeTable = ({ result, loading, error }) => {
+const LogTable = ({ result, loading, error }) => {
+
   const navigate = useNavigate();
 
-  const { state } = useContext(Store);
+
+  const { state} = useContext(Store);
   const { userInfo } = state;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -56,7 +50,6 @@ const TapeTable = ({ result, loading, error }) => {
     setOpenAlert(true);
     setAnchorEl(null);
   };
-  console.log(result);
 
   const handleCloseAlert = () => {
     setOpenAlert(false);
@@ -73,14 +66,14 @@ const TapeTable = ({ result, loading, error }) => {
   };
 
   const handleUpdate = () => {
-    navigate('/updateTape', { state: { data: passValue } });
+    navigate('/updateLog', { state: { data: passValue } });
   };
 
   const handleDelete = async () => {
     setAnchorEl(null);
     setOpenAlert(false);
     try {
-      axios.delete(`/api/tape/delete/${passValue.tapeId}`);
+      axios.delete(`/api/log/delete/${passValue.staffId}`);
       toast.success('Data successfully deleted!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -99,19 +92,6 @@ const TapeTable = ({ result, loading, error }) => {
     setPassValue(buttonClickedValue);
   }, [buttonClickedValue]);
 
-  // Handle navigation to the single tape details page
-  const handleViewDetails = () => {
-    navigate( `/tape/${passValue.tapeId}`,
-       { state: { data: passValue } }); 
-    
-  };
- 
- 
-
-  useEffect(() => {
-    setPassValue(buttonClickedValue);
-  }, [buttonClickedValue]);
-
   const columns = [
     {
       field: 'id',
@@ -119,100 +99,25 @@ const TapeTable = ({ result, loading, error }) => {
       flex: 0.1,
     },
     {
-      field: 'tapeId',
-      headerName: 'Tape ID',
+      field: 'name',
+      headerName: 'Employee Name',
+      flex: 0.7,
+    },
+    {
+      field: 'staffId',
+      headerName: 'Staff ID',
       flex: 0.4,
     },
+    
     {
-      field: 'sysName',
-      headerName: 'System Name',
-      flex: 0.4,
-    },
-    {
-      field: 'sysId',
-      headerName: 'System No',
-      flex: 0,
-    },
-    {
-      field: 'subSysName',
-      headerName: 'Application Name',
+      field: 'activity',
+      headerName: 'Activity',
       flex: 0.5,
-    },
-    {
-      field: 'bStatus',
-      headerName: 'Backup Status',
-      flex: 0.5,
-      renderCell: (params) => {
-        const status = params.value;
-        return (
-          <Box
-            sx={{
-              backgroundColor:
-                status === 'Completed'
-                  ? '#017816'
-                  : status === 'In Progress'
-                  ? '#0366fc'
-                  : status === 'Not Taken'
-                  ? '#580096'
-                  : '#fc0303',
-              color: 'white',
-              padding: '4px 8px',
-              borderRadius: '4px',
-              textAlign: 'center',
-              width: '100%',
-            }}
-          >
-            {status}
-          </Box>
-        );
-      },
-    },
-    {
-      field: 'mType',
-      headerName: 'Media Type',
-      flex: 0.4,
-    },
-    {
-      field: 'tStatus',
-      headerName: 'Tape Status',
-      flex: 0.5,
-      renderCell: (params) => {
-        const status = params.value;
-        return (
-          <Box
-            sx={{
-              backgroundColor: status === 'Completed' ? '#017816' : '#0366fc',
-              color: 'white',
-              padding: '4px 8px',
-              borderRadius: '4px',
-              textAlign: 'center',
-              width: '100%',
-            }}
-          >
-            {status}
-          </Box>
-        );
-      },
-    },
-    {
-      field: 'sDate',
-      headerName: 'Start Date',
-      flex: 0.4,
-    },
-    {
-      field: 'eDate',
-      headerName: 'End Date',
-      flex: 0.4,
-    },
-    {
-      field: 'lStatus',
-      headerName: 'Location Status',
-      flex: 0.4,
     },
   ];
 
   // console.log("info", userInfo);
- 
+  if (userInfo.position === 'Admin') {
     columns.push({
       field: 'action',
       headerName: 'Actions',
@@ -222,19 +127,10 @@ const TapeTable = ({ result, loading, error }) => {
       renderCell: (params) => (
         <Box>
           <ActionButton handleClick={handleClick} params={params} open={open} />
-          <Link to={`/tape/${params.row.tapeId}`}  style={{textDecoration: 'none'}}> 
-        <Button
-          variant="contained"
-          size="medium"
-          startIcon={<VisibilityIcon />} 
-          sx={{ ml: 1, backgroundColor: colorPalette.yellow[500], color: colorPalette.black[900], Color: colorPalette.black[300] }}
-        >
-        </Button>
-      </Link>
         </Box>
       ),
     });
-  
+  }
 
   let pdfColumn = [];
   if (userInfo.position === 'Admin') {
@@ -242,29 +138,22 @@ const TapeTable = ({ result, loading, error }) => {
   } else {
     pdfColumn = columns.slice(1);
   }
-  
-  console.log(result);
 
   let rows = {};
   if (result !== undefined) {
     rows = result.map((row, x) => ({
       id: x + 1,
-      tapeId: row.tapeId,
-      sysName: row.sysName,
-      sysId: row.sysId,
-      subSysName: row.subSysName,
-      bStatus: row.bStatus,
-      mType: row.mType,
-      tStatus: row.tStatus,
-      sDate: row.sDate,
-      eDate: row.eDate,
-      lStatus: row.lStatus,
+      staffId: row.staffId,
+      name: row.name,
+      activity: row.activity,
+      
     }));
   }
+  
 
   return loading ? (
     <Box width="100%">
-      <LoadingAnimation />
+      <LoadingAnimation/>
     </Box>
   ) : error ? (
     <Alert severity="error">{error}</Alert>
@@ -278,9 +167,9 @@ const TapeTable = ({ result, loading, error }) => {
           m: '2rem 0',
         }}
       >
-        <Button
+        {/* <Button
           onClick={() => {
-            navigate('/newTape');
+            navigate('/addLog');
           }}
           sx={{
             backgroundColor: colorPalette.yellow[500],
@@ -295,13 +184,13 @@ const TapeTable = ({ result, loading, error }) => {
           }}
         >
           <AddCircleIcon sx={{ mr: '10px' }} />
-          <Typography fontSize="0.9rem">Add New Tape</Typography>
-        </Button>
-        <Box sx={{ ml: '1.5rem' }}>
+          <Typography fontSize="0.9rem">Add New Log</Typography>
+        </Button> */}
+        <Box sx={{ml: '1.5rem'}}>
           <DownloadActions
             pdfColumn={pdfColumn}
             rows={rows}
-            funcName={'Tape Management'}
+            funcName={'Log Management'}
           />
         </Box>
       </Box>
@@ -329,17 +218,18 @@ const TapeTable = ({ result, loading, error }) => {
             color: `${colorPalette.primary[500]} !important`,
           },
           display: 'flex',
+          
         }}
       >
-        <Box width="100%" sx={{ color: '#fff' }}>
-          <DataGrid
+        <Box width="100%" sx={{color: '#fff'}}>
+        <DataGrid
             rows={rows}
             rowHeight={60}
             columns={columns}
             initialState={{
               columns: {
                 columnVisibilityModel: {
-                  sysId: false,
+                  mongoID: false,
                 },
               },
               // sorting: { sortModel: [{field: 'date', sort: 'asc'}]}
@@ -349,15 +239,9 @@ const TapeTable = ({ result, loading, error }) => {
               toolbar: () => {
                 return (
                   <GridToolbarContainer
-                    style={{
-                      justifyContent: 'flex-start',
-                      padding: '0.4rem',
-                      background: colorPalette.black[100],
-                    }}
+                    style={{ justifyContent: 'flex-start', padding: '0.4rem', background: colorPalette.black[100] }}
                   >
-                    <GridToolbarFilterButton
-                      style={{ color: colorPalette.yellow[500] }}
-                    />
+                    <GridToolbarFilterButton style={{ color: colorPalette.yellow[500]}}/>
                     <GridToolbarQuickFilter />
                   </GridToolbarContainer>
                 );
@@ -365,24 +249,25 @@ const TapeTable = ({ result, loading, error }) => {
             }}
           />
         </Box>
-
+        
         <ActionsMenu
-          anchorEl={anchorEl}
-          open={open}
-          handleClose={handleClose}
-          handleUpdate={handleUpdate}
-          handleClickOpenAlert={handleClickOpenAlert}
-          position={userInfo.position}
-        />
+        anchorEl={anchorEl}
+        open={open}
+        handleClose={handleClose}
+        handleUpdate={handleUpdate}
+        handleClickOpenAlert={handleClickOpenAlert}
+        position={userInfo.position}
+      />
 
-        <DeleteAlertBox
-          openAlert={openAlert}
-          handleCloseAlert={handleCloseAlert}
-          handleDelete={handleDelete}
-        />
+      <DeleteAlertBox
+        openAlert={openAlert}
+        handleCloseAlert={handleCloseAlert}
+        handleDelete={handleDelete}
+      />
+
       </Box>
     </Box>
   );
 };
 
-export default TapeTable;
+export default LogTable;
