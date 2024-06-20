@@ -2,3 +2,6 @@
 {"level":"info","message":{"ip":"::1","method":"PUT","staffId":"","url":"/api/systems/updateSystem/3"},"timestamp":"2024-06-20 09:57:44"}
 {"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSubSystem"},"timestamp":"2024-06-20 10:04:33"}
 {"level":"info","message":{"ip":"::1","method":"DELETE","staffId":"","url":"/api/systems/delete/3"},"timestamp":"2024-06-20 10:06:59"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSystem"},"timestamp":"2024-06-20 15:52:59"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSystem"},"timestamp":"2024-06-20 15:53:17"}
+{"level":"info","message":{"ip":"::1","method":"POST","staffId":"","url":"/api/systems/addSystem"},"timestamp":"2024-06-20 15:53:29"}

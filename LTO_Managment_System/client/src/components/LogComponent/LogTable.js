@@ -73,7 +73,7 @@ const LogTable = ({ result, loading, error }) => {
     setAnchorEl(null);
     setOpenAlert(false);
     try {
-      axios.delete(`/api/log/delete/${passValue.staffId}`);
+      axios.delete(`/api/log/delete/${passValue.level}`);
       toast.success('Data successfully deleted!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -95,42 +95,41 @@ const LogTable = ({ result, loading, error }) => {
   const columns = [
     {
       field: 'id',
-      headerName: 'No',
+      headermessage: 'ID',
       flex: 0.1,
     },
     {
-      field: 'name',
-      headerName: 'Employee Name',
+      field: 'level',
+      headermessage: 'Level',
+      flex: 0.4,
+    },
+    {
+      field: 'message',
+      headermessage: 'Message',
       flex: 0.7,
     },
     {
-      field: 'staffId',
-      headerName: 'Staff ID',
-      flex: 0.4,
-    },
-    
-    {
-      field: 'activity',
-      headerName: 'Activity',
+      field: 'timestamp',
+      headermessage: 'Timestamp',
       flex: 0.5,
     },
   ];
 
   // console.log("info", userInfo);
-  if (userInfo.position === 'Admin') {
-    columns.push({
-      field: 'action',
-      headerName: 'Actions',
-      flex: 0.5,
-      sortable: false,
-      filterable: false,
-      renderCell: (params) => (
-        <Box>
-          <ActionButton handleClick={handleClick} params={params} open={open} />
-        </Box>
-      ),
-    });
-  }
+  // if (userInfo.position === 'Admin') {
+  //   columns.push({
+  //     field: 'action',
+  //     headermessage: 'Actions',
+  //     flex: 0.5,
+  //     sortable: false,
+  //     filterable: false,
+  //     renderCell: (params) => (
+  //       <Box>
+  //         <ActionButton handleClick={handleClick} params={params} open={open} />
+  //       </Box>
+  //     ),
+  //   });
+  // }
 
   let pdfColumn = [];
   if (userInfo.position === 'Admin') {
@@ -143,9 +142,9 @@ const LogTable = ({ result, loading, error }) => {
   if (result !== undefined) {
     rows = result.map((row, x) => ({
       id: x + 1,
-      staffId: row.staffId,
-      name: row.name,
-      activity: row.activity,
+      level: row.level,
+      message: row.message,
+      timestamp: row.timestamp,
       
     }));
   }
@@ -190,7 +189,7 @@ const LogTable = ({ result, loading, error }) => {
           <DownloadActions
             pdfColumn={pdfColumn}
             rows={rows}
-            funcName={'Log Management'}
+            funcmessage={'Log Management'}
           />
         </Box>
       </Box>
