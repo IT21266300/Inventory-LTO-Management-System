@@ -1,4 +1,5 @@
-import { Navigate, Route } from 'react-router-dom';
+import { Navigate, Route, Link } from 'react-router-dom';
+
 
 // import views
 
@@ -11,6 +12,7 @@ import Test from 'View/test';
 import Systems from 'View/systems'
 import AddSystem from 'View/systems/addSystem'
 
+
 //staff views
 import StaffDashboard from 'View/staff';
 import AddStaff from 'View/staff/addStaff';
@@ -21,6 +23,7 @@ import Profile from 'View/profile';
 import Tape from 'View/tapes';
 import NewTape from 'View/tapes/newTape';
 import UpdateTape from 'View/tapes/updateTape';
+import ViewTape from 'View/tapes/tapeDetails'
 
 import TapeSubCategoryTable from './TapeSubCategoryComponent/TapeSubCategoryTable';
 import System from 'View/systems/addSystem';
@@ -115,6 +118,13 @@ const routesConfig = [
         ),
       },
       {
+
+        path: '/tape/:tapeId',
+        element: (
+          
+            <ViewTape/>
+          
+
         path: '/log',
         element: (
           <RouteProtector>
@@ -128,6 +138,7 @@ const routesConfig = [
           <RouteProtector>
             <UpdateLog />
           </RouteProtector>
+
         ),
       },
       {
