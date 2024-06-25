@@ -147,6 +147,46 @@ router.route('/updateTape/:tapeId').put(async (req, res) => {
 
       return res.status(200).json({ message: 'Tape Updated' });
     });
+    
+  });
+});
+
+
+
+
+//update tape status
+
+router.route('/updateTapeStatus/:tapeId').put(async (req, res) => {
+  const tapeId = req.params.tapeId;
+  const { bStatus, tStatus, lStatus } = req.body;
+
+  // Check if the tape ID exists
+  const checkSql = 'SELECT * FROM Tape WHERE tapeId = ?';
+  db.query(checkSql, [tapeId], (checkErr, checkResult) => {
+    if (checkErr) {
+      console.error(checkErr.message);
+      return res.status(500).json({ message: 'Error with checking tape', error: checkErr.message });
+    }
+
+    if (checkResult.length === 0) {
+      return res.status(404).json({ message: 'Tape not found' });
+    }
+
+    // Update the tape record
+    const updateSql = 'UPDATE Tape SET bStatus = ?, tStatus = ?, lStatus = ? WHERE tapeId = ?';
+    db.query(updateSql, [bStatus, tStatus, lStatus], (updateErr, updateResult) => {
+      if (updateErr) {
+        console.error(updateErr.message);
+        return res.status(400).json({ message: 'Error with updating tape', error: updateErr.message });
+      }
+
+      if (updateResult.affectedRows === 0) {
+        return res.status(404).json({ message: 'Tape not found' });
+      }
+
+      return res.status(200).json({ message: 'Tape Updated' });
+    });
+    
   });
 });
 

@@ -70,7 +70,7 @@ const ViewTape = () => {
 
   const handleUpdateStatus = async () => {
     try {
-      const response = await axios.put(`/api/tape/update/${tapeId}`, { 
+      const response = await axios.put(`/api/tape/updateTapeStatus/${tapeId}`, { 
         bStatus: backupStatus,
         tStatus: tapeStatus,
         lStatus: locationStatus
