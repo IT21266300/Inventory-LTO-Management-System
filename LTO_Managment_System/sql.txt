@@ -72,3 +72,12 @@ CREATE TABLE `WinstonTest`.`sys_logs_default` (
  `meta` VARCHAR(2048) NOT NULL,
  `timestamp` DATETIME NOT NULL,
  PRIMARY KEY (`id`));
+
+
+ CREATE TABLE TapeDetails (
+  tapeId VARCHAR(255) NOT NULL, -- Assuming tape IDs are strings
+  date DATE NOT NULL,
+  remarks TEXT,
+  tapeContent TEXT,
+  PRIMARY KEY (tapeId, date) -- Combine tapeId and date for uniqueness
+);

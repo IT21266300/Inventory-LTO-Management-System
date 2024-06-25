@@ -14,6 +14,7 @@ import {
 import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTwo';
 import { toast } from 'react-toastify';
 import { colorPalette } from 'customTheme';
+import AddNewTapePopup from '../../components/TapeComponent/TapeDetailsAdd'; // Assuming your popup component is called AddNewTapePopup
 
 const ViewTape = () => {
   const navigate = useNavigate();
@@ -26,6 +27,9 @@ const ViewTape = () => {
   const [backupStatus, setBackupStatus] = useState(null);
   const [tapeStatus, setTapeStatus] = useState(null);
   const [locationStatus, setLocationStatus] = useState(null);
+
+  // State for the Add New Tape Popup
+  const [addNewTapePopupOpen, setAddNewTapePopupOpen] = useState(false);
 
   useEffect(() => {
     const fetchTapeData = async () => {
@@ -95,9 +99,15 @@ const ViewTape = () => {
     }
   };
 
-  
+  const handleAddNewTape = () => {
+    setAddNewTapePopupOpen(true);
+  };
+
+  const handleCloseAddNewTapePopup = () => {
+    setAddNewTapePopupOpen(false);
+  };
+
   return (
-    
     <Box sx={{ 
       padding: '2rem', 
     }}>
@@ -269,7 +279,19 @@ const ViewTape = () => {
 
       {/* Right Side - Tape Details */}
       <Box sx={{ width: '50%', marginLeft: '2rem' }}> 
-        
+        <Button
+          variant="contained"
+          onClick={handleAddNewTape} // Open the popup
+          sx={{ mt: '2rem', backgroundColor: colorPalette.yellow[500], color: colorPalette.black[900] }} 
+        >
+          Add New Tape
+        </Button>
+        {/* Add New Tape Popup */}
+        <AddNewTapePopup 
+          open={addNewTapePopupOpen} 
+          onClose={handleCloseAddNewTapePopup}
+          systemId={tapeData ? tapeData.sysId : null} // Pass systemId if available 
+        /> 
       </Box> 
       
     </Box>
@@ -277,4 +299,4 @@ const ViewTape = () => {
   );
 };
 
-export default ViewTape;
+export default ViewTape; 

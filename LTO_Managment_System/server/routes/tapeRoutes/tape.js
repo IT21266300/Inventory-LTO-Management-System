@@ -190,4 +190,17 @@ router.route('/updateTapeStatus/:tapeId').put(async (req, res) => {
   });
 });
 
+router.route('/addTapeDetails').post(async (req, res) => {
+  const { tapeId, date, remarks, tapeContent } = req.body;
+
+
+    // Insert the new tape
+    const insertSql = 'INSERT INTO TapeDetails (tapeId, date, remarks, tapeContent ) VALUES (?, ?, ?, ?)';
+    db.query(insertSql, [tapeId, date, remarks, tapeContent ], (err, result) => {
+      if (err) return res.status(400).json({ message: err.message });
+      return res.json({ message: 'New Tape details add..!' });
+    });
+  
+});
+
 export default router;
