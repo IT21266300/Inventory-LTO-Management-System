@@ -440,7 +440,7 @@ const ViewTape = () => {
           }}
 
         >
-          Add New Tape
+          Add New Tape Detail 
         </Button>
         {/* Add New Tape Popup */}
         <AddNewTapePopup
