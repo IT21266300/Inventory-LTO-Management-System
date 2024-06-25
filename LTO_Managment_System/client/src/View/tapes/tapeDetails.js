@@ -100,7 +100,7 @@ const ViewTape = () => {
     }
   };
 
-  const handleAddNewTape = () => {
+  const handleAddNewTapeDetails = () => {
     setAddNewTapePopupOpen(true);
   };
 
@@ -283,7 +283,7 @@ const ViewTape = () => {
       <Box sx={{ width: '50%', marginLeft: '2rem' }}> 
         <Button
           variant="contained"
-          onClick={handleAddNewTape} // Open the popup
+          onClick={handleAddNewTapeDetails} // Open the popup
           sx={{ mt: '2rem', backgroundColor: colorPalette.yellow[500], color: colorPalette.black[900] }} 
         >
           Add New Tape
@@ -292,7 +292,7 @@ const ViewTape = () => {
         <AddNewTapePopup 
           open={addNewTapePopupOpen} 
           onClose={handleCloseAddNewTapePopup}
-          systemId={tapeData ? tapeData.sysId : null} // Pass systemId if available 
+          systemId={tapeData ? tapeData.tapeId : null} 
         /> 
       </Box> 
       
