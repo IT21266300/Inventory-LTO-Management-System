@@ -55,6 +55,7 @@ CREATE TABLE SubSystems (
 CREATE TABLE Tape (
     tapeId VARCHAR(255) PRIMARY KEY,
     sysName VARCHAR(255) NOT NULL,
+    sysId VARCHAR(255) NOT NULL,
     subSysName VARCHAR(255),
     bStatus VARCHAR(50),
     mType VARCHAR(50),
