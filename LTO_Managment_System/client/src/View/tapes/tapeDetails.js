@@ -277,7 +277,7 @@ const ViewTape = () => {
                     >
                       <Typography variant="subtitle1" gutterBottom>
                         Tape ID :
-                        <span style={{ fontSize: '1.3rem', marginLeft: '0.4rem' }}>
+                        <span style={{ fontSize: '1.3rem', marginLeft: '0.4rem', color: '#fff' }}>
                           {tapeData.tapeId}
                         </span>
                       </Typography>
@@ -290,6 +290,7 @@ const ViewTape = () => {
                         padding: '1rem',
                         borderRadius: '8px',
                         backgroundColor: 'transparent',
+                        color: '#fff'
                       }}
                     >
                       <Typography variant="subtitle1" gutterBottom>
@@ -309,9 +310,9 @@ const ViewTape = () => {
                         backgroundColor: 'transparent',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom>
+                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
                         Application Name:
-                        <span style={{ fontWeight: 'bold' }}>
+                        <span style={{ fontWeight: 'bold', color: '#fff' }}>
                           {tapeData.subSysName}
                         </span>
                       </Typography>
@@ -326,9 +327,9 @@ const ViewTape = () => {
                         backgroundColor: 'transparent',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom>
+                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
                         Backup Status:
-                        <span style={{ fontWeight: 'bold' }}>
+                        <span style={{ fontWeight: 'bold', color: '#fff' }}>
                           {tapeData.bStatus}
                         </span>
                       </Typography>
@@ -343,9 +344,9 @@ const ViewTape = () => {
                         backgroundColor: 'transparent',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom>
+                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
                         Media Type:
-                        <span style={{ fontWeight: 'bold' }}>{tapeData.mType}</span>
+                        <span style={{ fontWeight: 'bold', color: '#fff' }}>{tapeData.mType}</span>
                       </Typography>
                     </Paper>
                   </Grid>
@@ -358,9 +359,9 @@ const ViewTape = () => {
                         backgroundColor: 'transparent',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom>
+                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
                         Tape Status:
-                        <span style={{ fontWeight: 'bold' }}>
+                        <span style={{ fontWeight: 'bold', color: '#fff' }}>
                           {tapeData.tStatus}
                         </span>
                       </Typography>
@@ -375,9 +376,9 @@ const ViewTape = () => {
                         backgroundColor: 'transparent',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom>
+                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
                         Start Date:
-                        <span style={{ fontWeight: 'bold' }}>
+                        <span style={{ fontWeight: 'bold', color: '#fff' }}>
                           {formatDate(tapeData.sDate)}
                         </span>
                       </Typography>
@@ -392,9 +393,9 @@ const ViewTape = () => {
                         backgroundColor: 'transparent',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom>
+                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
                         End Date:
-                        <span style={{ fontWeight: 'bold' }}>
+                        <span style={{ fontWeight: 'bold', color: '#fff' }}>
                           {formatDate(tapeData.eDate)}
                         </span>
                       </Typography>
@@ -409,9 +410,9 @@ const ViewTape = () => {
                         backgroundColor: 'transparent',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom>
-                        Location Status:
-                        <span style={{ fontWeight: 'bold' }}>
+                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
+                        Location Status : 
+                        <span style={{ fontWeight: 'bold', color: '#fff'}}>
                           {tapeData.lStatus}
                         </span>
                       </Typography>
@@ -422,7 +423,7 @@ const ViewTape = () => {
             )}
           </Box>
           <Box>
-            fdsg
+            
           </Box>
         </Box>
       </Box>
@@ -432,7 +433,7 @@ const ViewTape = () => {
         <Button
           variant="contained"
 
-          onClick={handleAddNewTape} // Open the popup
+          onClick={handleAddNewTapeDetails} // Open the popup
           sx={{
             mt: '2rem',
             backgroundColor: colorPalette.yellow[500],
