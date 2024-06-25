@@ -14,6 +14,8 @@ import {
 import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTwo';
 import { toast } from 'react-toastify';
 import { colorPalette } from 'customTheme';
+import textFieldSubStyles from 'styles/textFieldSubStyles';
+import textFieldStyles from 'styles/textFieldStyles';
 
 const ViewTape = () => {
   const navigate = useNavigate();
@@ -79,14 +81,10 @@ const ViewTape = () => {
       // Assuming your API returns the updated data
       setTapeData(response.data);
 
-      // Reset the update states
-      setBackupStatus(null);
-      setTapeStatus(null);
-      setLocationStatus(null);
-
       toast.success('Status updated successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
+      window.location.reload();
     } catch (err) {
       toast.error(err.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -94,6 +92,8 @@ const ViewTape = () => {
       console.error(err);
     }
   };
+
+  console.log(backupStatus, tapeStatus, locationStatus);
 
   
   return (
