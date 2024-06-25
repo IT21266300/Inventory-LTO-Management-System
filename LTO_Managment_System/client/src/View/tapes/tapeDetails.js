@@ -100,20 +100,17 @@ const ViewTape = () => {
     
     <Box sx={{ 
       padding: '2rem', 
-      background: colorPalette.black1[500],
-      color: colorPalette.secondary[100],
-      display: 'flex', // Use flexbox for layout
     }}>
       {/* Left Side Component - Placeholder */}
-      <Box sx={{ width: '50%' }}>
+      <Box>
         {/* Your other component goes here */}
-        <Paper elevation={3} sx={{ padding: '2rem', marginBottom: '2rem', borderRadius: '10px', backgroundColor: colorPalette.black1[400] }}> 
+        <Paper elevation={3} sx={{ padding: '2rem', marginBottom: '2rem', borderRadius: '10px', backgroundColor: colorPalette.black1[500], color: '#fff' }}> 
           <Typography variant="h5" gutterBottom>
             Update Tape Status
           </Typography>
 
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={12}>
+          <Grid container spacing={4} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <Grid item xs={12}  md={3}>
               <Typography variant="subtitle1" gutterBottom>
                 Backup Status:
               </Typography>
@@ -123,13 +120,13 @@ const ViewTape = () => {
                 fullWidth
                 sx={{ backgroundColor: colorPalette.black1[400], color: '#fff' }}
               >
-                <MenuItem value="Complete">Complete</MenuItem>
+                <MenuItem value="Completed">Completed</MenuItem>
                 <MenuItem value="In Progress">In Progress</MenuItem>
                 <MenuItem value="Failed">Failed</MenuItem>
               </Select>
             </Grid>
 
-            <Grid item xs={12} md={12}>
+            <Grid item xs={12} md={3}>
               <Typography variant="subtitle1" gutterBottom>
                 Tape Status:
               </Typography>
@@ -144,7 +141,7 @@ const ViewTape = () => {
               </Select>
             </Grid>
 
-            <Grid item xs={12} md={12}>
+            <Grid item xs={12} md={3}>
               <Typography variant="subtitle1" gutterBottom>
                 Location Status:
               </Typography>
@@ -154,16 +151,23 @@ const ViewTape = () => {
                 fullWidth
                 sx={{ backgroundColor: colorPalette.black1[400], color: '#fff' }}
               >
-                <MenuItem value="DRM">DRM</MenuItem>
-                <MenuItem value="Vault">Vault</MenuItem>
+                <MenuItem value={'HO'}>Head Office</MenuItem>
+                <MenuItem value={'DRN'}>DR Nugegoda</MenuItem>
+                <MenuItem value={'DRM'}>DR Maharagama</MenuItem>
+                <MenuItem value={'HO->DRN'}>HO to DRN</MenuItem>
+                <MenuItem value={'DRN->DRM'}>DRN to DRM</MenuItem>
+                <MenuItem value={'DRM->DRN'}>DRM to DRN</MenuItem>
+                <MenuItem value={'DRN->HO'}>DRN to HO</MenuItem>
+                <MenuItem value={'DRM->HO'}>DRM to HO</MenuItem>
+                <MenuItem value={'HO->DRM'}>HO to DRM</MenuItem>
               </Select>
             </Grid>
 
-            <Grid item xs={12} md={12}>
+            <Grid item xs={12} md={2} sx={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
               <Button 
                 variant="contained" 
                 onClick={handleUpdateStatus}
-                sx={{ backgroundColor: colorPalette.yellow[500], color: colorPalette.black[900] }} 
+                sx={{ backgroundColor: colorPalette.yellow[500], color: colorPalette.black[900], marginTop: '1.5rem'}} 
               >
                 Update
               </Button>
