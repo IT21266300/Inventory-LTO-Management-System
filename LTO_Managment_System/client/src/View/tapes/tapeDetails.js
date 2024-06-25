@@ -104,7 +104,7 @@ const ViewTape = () => {
     }
   };
 
-  const handleAddNewTapeDetails = () => {
+  const handleAddNewTape = () => {
     setAddNewTapePopupOpen(true);
   };
 
@@ -422,7 +422,7 @@ const ViewTape = () => {
             )}
           </Box>
           <Box>
-            fdsg
+            
           </Box>
         </Box>
       </Box>
