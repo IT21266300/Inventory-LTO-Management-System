@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { 
-  Box, 
-  Typography, 
-  Grid, 
-  Button, 
+import {
+  Box,
+  Typography,
+  Grid,
+  Button,
   Paper,
   TextField,
   Select,
-  MenuItem
+  MenuItem,
 } from '@mui/material';
 import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTwo';
 import { toast } from 'react-toastify';
@@ -19,7 +19,7 @@ import AddNewTapePopup from '../../components/TapeComponent/TapeDetailsAdd'; // 
 
 import textFieldSubStyles from 'styles/textFieldSubStyles';
 import textFieldStyles from 'styles/textFieldStyles';
-
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const ViewTape = () => {
   const navigate = useNavigate();
@@ -39,8 +39,8 @@ const ViewTape = () => {
   useEffect(() => {
     const fetchTapeData = async () => {
       try {
-        const response = await axios.get(`/api/tape/${tapeId}`); 
-        setTapeData(response.data[0]); 
+        const response = await axios.get(`/api/tape/${tapeId}`);
+        setTapeData(response.data[0]);
 
         // Initialize update states with current values
         setBackupStatus(response.data[0].bStatus);
@@ -63,7 +63,11 @@ const ViewTape = () => {
   }
 
   if (error) {
-    return <Typography variant="h6" color="error">Error: {error}</Typography>;
+    return (
+      <Typography variant="h6" color="error">
+        Error: {error}
+      </Typography>
+    );
   }
 
   const formatDate = (dateString) => {
@@ -73,16 +77,16 @@ const ViewTape = () => {
       month: 'long',
       day: 'numeric',
       hour: 'numeric',
-      minute: 'numeric'
+      minute: 'numeric',
     });
   };
 
   const handleUpdateStatus = async () => {
     try {
-      const response = await axios.put(`/api/tape/updateTapeStatus/${tapeId}`, { 
+      const response = await axios.put(`/api/tape/updateTapeStatus/${tapeId}`, {
         bStatus: backupStatus,
         tStatus: tapeStatus,
-        lStatus: locationStatus
+        lStatus: locationStatus,
       });
 
       // Assuming your API returns the updated data
@@ -108,21 +112,51 @@ const ViewTape = () => {
     setAddNewTapePopupOpen(false);
   };
 
-
   return (
-    <Box sx={{ 
-      padding: '2rem', 
-    }}>
-      {/* Left Side Component - Placeholder */}
+    <Box
+      sx={{
+        padding: '2rem',
+      }}
+    >
+      <Box sx={{marginBottom: '1rem'}}>
+        <Button
+          variant="contained"
+          onClick={() => navigate(-1)}
+          sx={{
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[900],
+          }}
+        >
+          Back to Tape
+        </Button>
+      </Box>
+      {/* top component */}
       <Box>
         {/* Your other component goes here */}
-        <Paper elevation={3} sx={{ padding: '2rem', marginBottom: '2rem', borderRadius: '10px', backgroundColor: colorPalette.black1[500], color: '#fff' }}> 
+        <Paper
+          elevation={3}
+          sx={{
+            padding: '2rem',
+            marginBottom: '2rem',
+            borderRadius: '10px',
+            backgroundColor: colorPalette.black1[500],
+            color: '#fff',
+          }}
+        >
           <Typography variant="h5" gutterBottom>
             Update Tape Status
           </Typography>
 
-          <Grid container spacing={4} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <Grid item xs={12}  md={3}>
+          <Grid
+            container
+            spacing={4}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Grid item xs={12} md={3}>
               <Typography variant="subtitle1" gutterBottom>
                 Backup Status:
               </Typography>
@@ -130,7 +164,10 @@ const ViewTape = () => {
                 value={backupStatus}
                 onChange={(e) => setBackupStatus(e.target.value)}
                 fullWidth
-                sx={{ backgroundColor: colorPalette.black1[400], color: '#fff' }}
+                sx={{
+                  backgroundColor: colorPalette.black1[400],
+                  color: '#fff',
+                }}
               >
                 <MenuItem value="Completed">Completed</MenuItem>
                 <MenuItem value="In Progress">In Progress</MenuItem>
@@ -146,7 +183,10 @@ const ViewTape = () => {
                 value={tapeStatus}
                 onChange={(e) => setTapeStatus(e.target.value)}
                 fullWidth
-                sx={{ backgroundColor: colorPalette.black1[400], color: '#fff' }}
+                sx={{
+                  backgroundColor: colorPalette.black1[400],
+                  color: '#fff',
+                }}
               >
                 <MenuItem value="Completed">Completed</MenuItem>
                 <MenuItem value="Ongoing">Ongoing</MenuItem>
@@ -161,7 +201,10 @@ const ViewTape = () => {
                 value={locationStatus}
                 onChange={(e) => setLocationStatus(e.target.value)}
                 fullWidth
-                sx={{ backgroundColor: colorPalette.black1[400], color: '#fff' }}
+                sx={{
+                  backgroundColor: colorPalette.black1[400],
+                  color: '#fff',
+                }}
               >
                 <MenuItem value={'HO'}>Head Office</MenuItem>
                 <MenuItem value={'DRN'}>DR Nugegoda</MenuItem>
@@ -175,130 +218,237 @@ const ViewTape = () => {
               </Select>
             </Grid>
 
-            <Grid item xs={12} md={2} sx={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-              <Button 
-                variant="contained" 
+            <Grid
+              item
+              xs={12}
+              md={2}
+              sx={{
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Button
+                variant="contained"
                 onClick={handleUpdateStatus}
-                sx={{ backgroundColor: colorPalette.yellow[500], color: colorPalette.black[900], marginTop: '1.5rem'}} 
+                sx={{
+                  backgroundColor: colorPalette.yellow[500],
+                  color: colorPalette.black[900],
+                  marginTop: '1.5rem',
+                }}
               >
                 Update
               </Button>
             </Grid>
-
           </Grid>
         </Paper>
-        <Typography variant="h5" gutterBottom>
+      </Box>
+
+      {/* bottom component */}
+      <Box>
+        <Typography variant="h5" gutterBottom sx={{color: '#fff'}}>
           Tape Details
         </Typography>
-
-        {tapeData && (
-          <Paper elevation={3} sx={{ padding: '2rem', marginBottom: '2rem', borderRadius: '10px', backgroundColor: colorPalette.black1[400] }}> 
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={12}>
-                <Paper elevation={1} sx={{ padding: '1rem', borderRadius: '8px', backgroundColor: 'transparent' }}>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Tape ID: 
-                    <span style={{ fontWeight: 'bold' }}>{tapeData.tapeId}</span>
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <Paper elevation={1} sx={{ padding: '1rem', borderRadius: '8px', backgroundColor: 'transparent' }}>
-                  <Typography variant="subtitle1" gutterBottom>
-                    System Name: 
-                    <span style={{ fontWeight: 'bold' }}>{tapeData.sysName}</span>
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <Paper elevation={1} sx={{ padding: '1rem', borderRadius: '8px', backgroundColor: 'transparent' }}>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Application Name: 
-                    <span style={{ fontWeight: 'bold' }}>{tapeData.subSysName}</span>
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <Paper elevation={1} sx={{ padding: '1rem', borderRadius: '8px', backgroundColor: 'transparent' }}>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Backup Status: 
-                    <span style={{ fontWeight: 'bold' }}>{tapeData.bStatus}</span>
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <Paper elevation={1} sx={{ padding: '1rem', borderRadius: '8px', backgroundColor: 'transparent' }}>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Media Type: 
-                    <span style={{ fontWeight: 'bold' }}>{tapeData.mType}</span>
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <Paper elevation={1} sx={{ padding: '1rem', borderRadius: '8px', backgroundColor: 'transparent' }}>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Tape Status: 
-                    <span style={{ fontWeight: 'bold' }}>{tapeData.tStatus}</span>
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <Paper elevation={1} sx={{ padding: '1rem', borderRadius: '8px', backgroundColor: 'transparent' }}>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Start Date: 
-                    <span style={{ fontWeight: 'bold' }}>{formatDate(tapeData.sDate)}</span> 
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <Paper elevation={1} sx={{ padding: '1rem', borderRadius: '8px', backgroundColor: 'transparent' }}>
-                  <Typography variant="subtitle1" gutterBottom>
-                    End Date: 
-                    <span style={{ fontWeight: 'bold' }}>{formatDate(tapeData.eDate)}</span> 
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <Paper elevation={1} sx={{ padding: '1rem', borderRadius: '8px', backgroundColor: 'transparent' }}>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Location Status: 
-                    <span style={{ fontWeight: 'bold' }}>{tapeData.lStatus}</span>
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Paper>
-        )}
-
-        <Button
-          variant="contained"
-          onClick={() => navigate(-1)} 
-          sx={{ mt: '2rem', backgroundColor: colorPalette.yellow[500], color: colorPalette.black[900] }} 
-        >
-          Back
-        </Button>
+        
+        <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+          <Box>
+            {tapeData && (
+              <Paper
+                elevation={3}
+                sx={{
+                  padding: '2rem',
+                  marginBottom: '2rem',
+                  borderRadius: '10px',
+                  backgroundColor: colorPalette.black1[500],
+                }}
+              >
+                  <Grid container spacing={2}>
+                  <Grid item xs={12} md={12}>
+                    <Paper
+                      elevation={1}
+                      sx={{
+                        padding: '1rem',
+                        borderRadius: '8px',
+                        backgroundColor: 'transparent',
+                        color: '#fff',
+                      }}
+                    >
+                      <Typography variant="subtitle1" gutterBottom>
+                        Tape ID :
+                        <span style={{ fontSize: '1.3rem', marginLeft: '0.4rem' }}>
+                          {tapeData.tapeId}
+                        </span>
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Paper
+                      elevation={1}
+                      sx={{
+                        padding: '1rem',
+                        borderRadius: '8px',
+                        backgroundColor: 'transparent',
+                      }}
+                    >
+                      <Typography variant="subtitle1" gutterBottom>
+                        System Name:
+                        <span style={{ fontWeight: 'bold' }}>
+                          {tapeData.sysName}
+                        </span>
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Paper
+                      elevation={1}
+                      sx={{
+                        padding: '1rem',
+                        borderRadius: '8px',
+                        backgroundColor: 'transparent',
+                      }}
+                    >
+                      <Typography variant="subtitle1" gutterBottom>
+                        Application Name:
+                        <span style={{ fontWeight: 'bold' }}>
+                          {tapeData.subSysName}
+                        </span>
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Paper
+                      elevation={1}
+                      sx={{
+                        padding: '1rem',
+                        borderRadius: '8px',
+                        backgroundColor: 'transparent',
+                      }}
+                    >
+                      <Typography variant="subtitle1" gutterBottom>
+                        Backup Status:
+                        <span style={{ fontWeight: 'bold' }}>
+                          {tapeData.bStatus}
+                        </span>
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Paper
+                      elevation={1}
+                      sx={{
+                        padding: '1rem',
+                        borderRadius: '8px',
+                        backgroundColor: 'transparent',
+                      }}
+                    >
+                      <Typography variant="subtitle1" gutterBottom>
+                        Media Type:
+                        <span style={{ fontWeight: 'bold' }}>{tapeData.mType}</span>
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Paper
+                      elevation={1}
+                      sx={{
+                        padding: '1rem',
+                        borderRadius: '8px',
+                        backgroundColor: 'transparent',
+                      }}
+                    >
+                      <Typography variant="subtitle1" gutterBottom>
+                        Tape Status:
+                        <span style={{ fontWeight: 'bold' }}>
+                          {tapeData.tStatus}
+                        </span>
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Paper
+                      elevation={1}
+                      sx={{
+                        padding: '1rem',
+                        borderRadius: '8px',
+                        backgroundColor: 'transparent',
+                      }}
+                    >
+                      <Typography variant="subtitle1" gutterBottom>
+                        Start Date:
+                        <span style={{ fontWeight: 'bold' }}>
+                          {formatDate(tapeData.sDate)}
+                        </span>
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Paper
+                      elevation={1}
+                      sx={{
+                        padding: '1rem',
+                        borderRadius: '8px',
+                        backgroundColor: 'transparent',
+                      }}
+                    >
+                      <Typography variant="subtitle1" gutterBottom>
+                        End Date:
+                        <span style={{ fontWeight: 'bold' }}>
+                          {formatDate(tapeData.eDate)}
+                        </span>
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Paper
+                      elevation={1}
+                      sx={{
+                        padding: '1rem',
+                        borderRadius: '8px',
+                        backgroundColor: 'transparent',
+                      }}
+                    >
+                      <Typography variant="subtitle1" gutterBottom>
+                        Location Status:
+                        <span style={{ fontWeight: 'bold' }}>
+                          {tapeData.lStatus}
+                        </span>
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                </Grid>
+              </Paper>
+            )}
+          </Box>
+          <Box>
+            fdsg
+          </Box>
+        </Box>
       </Box>
 
       {/* Right Side - Tape Details */}
-      <Box sx={{ width: '50%', marginLeft: '2rem' }}> 
+      <Box sx={{ width: '50%', marginLeft: '2rem' }}>
         <Button
           variant="contained"
           onClick={handleAddNewTape} // Open the popup
-          sx={{ mt: '2rem', backgroundColor: colorPalette.yellow[500], color: colorPalette.black[900] }} 
+          sx={{
+            mt: '2rem',
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[900],
+          }}
         >
           Add New Tape
         </Button>
         {/* Add New Tape Popup */}
-        <AddNewTapePopup 
-          open={addNewTapePopupOpen} 
+        <AddNewTapePopup
+          open={addNewTapePopupOpen}
           onClose={handleCloseAddNewTapePopup}
-          systemId={tapeData ? tapeData.sysId : null} // Pass systemId if available 
-        /> 
-      </Box> 
-      
+          systemId={tapeData ? tapeData.sysId : null} // Pass systemId if available
+        />
+      </Box>
     </Box>
-    
   );
 };
 
-export default ViewTape; 
+export default ViewTape;
