@@ -123,7 +123,10 @@ const routesConfig = [
         element: (
           
             <ViewTape/>
-          
+        ),
+      },
+
+        {
 
         path: '/log',
         element: (

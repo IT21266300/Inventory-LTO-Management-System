@@ -30,7 +30,7 @@ const ViewTape = () => {
   useEffect(() => {
     const fetchTapeData = async () => {
       try {
-        const response = await axios.get(`/api/tape/updateTape/${tapeId}`); 
+        const response = await axios.get(`/api/tape/${tapeId}`); 
         setTapeData(response.data[0]); 
 
         // Initialize update states with current values
