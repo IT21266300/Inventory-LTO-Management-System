@@ -286,7 +286,7 @@ const ViewTape = () => {
           onClick={handleAddNewTapeDetails} // Open the popup
           sx={{ mt: '2rem', backgroundColor: colorPalette.yellow[500], color: colorPalette.black[900] }} 
         >
-          Add New Tape
+          Add New Tape Detail 
         </Button>
         {/* Add New Tape Popup */}
         <AddNewTapePopup 
