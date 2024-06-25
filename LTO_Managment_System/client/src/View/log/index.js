@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import Header from 'components/Header';
 import axios from 'axios';
 import { Tabs, Tab, Box, tabsClasses, Divider } from '@mui/material';
-import LogTables from 'components/LogComponent/LogTable';
+//import LogTables from 'components/LogComponent/LogTable';
 import { Helmet } from 'react-helmet-async';
 import { colorPalette } from 'customTheme';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -57,7 +57,7 @@ const Logs = () => {
       <Header title="Log Management" subtitle="Manage Logs" />
 
 
-      <LogTables result={logData} loading={loading} error={error} />
+      {/* <LogTables result={logData} loading={loading} error={error} /> */}
     </Box>
   );
 };
