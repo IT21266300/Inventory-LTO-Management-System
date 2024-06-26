@@ -433,7 +433,7 @@ const ViewTape = () => {
         <Button
           variant="contained"
 
-          onClick={handleAddNewTapeDetails} // Open the popup
+          onClick={handleAddNewTape} // Open the popup
           sx={{
             mt: '2rem',
             backgroundColor: colorPalette.yellow[500],

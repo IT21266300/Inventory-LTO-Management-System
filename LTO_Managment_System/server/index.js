@@ -9,9 +9,10 @@ import fs from 'fs';
 import path from 'path';
 import winston from 'winston';
 import { format } from 'winston';
-import moment from 'moment'; // Add moment for date formatting
+import moment from 'moment';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import mysql from 'mysql2/promise'; // Import MySQL driver
 
 // Import routes
 import routes from './lib/routes.js';
@@ -103,6 +104,44 @@ app.get('/active-staff', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send('Error fetching active staff');
+  }
+});
+
+// Route to retrieve log entries and combine them with staff details
+app.get('/logs', async (req, res) => {
+  try {
+    // Read all log files in the log directory
+    const files = fs.readdirSync(logDir).filter(file => file.endsWith('.log'));
+
+    let logs = [];
+
+    // Read each log file and parse the JSON entries
+    for (const file of files) {
+      const data = fs.readFileSync(path.join(logDir, file), 'utf-8');
+      const lines = data.split('\n').filter(line => line);
+      const entries = lines.map(line => JSON.parse(line));
+      logs = logs.concat(entries);
+    }
+
+    // Fetch staff details
+    const connection = await mysql.createConnection(db);
+    const [staffRows] = await connection.execute('SELECT staffId, name FROM staff');
+    const staffMap = staffRows.reduce((acc, row) => {
+      acc[row.staffId] = row.name;
+      return acc;
+    }, {});
+
+    // Combine logs with staff details
+    logs = logs.map(log => ({
+      ...log,
+      staffName: staffMap[log.staffId] || 'Unknown'
+    }));
+
+    await connection.end();
+    res.json(logs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching logs');
   }
 });
 

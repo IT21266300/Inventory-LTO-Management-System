@@ -30,8 +30,8 @@ import System from 'View/systems/addSystem';
 import AddSubSystem from 'View/subsystems/addSubSystem';
 
 //log views
-import Log from 'View/log';
-import UpdateLog from 'View/log/updateLog';
+import Log from './LogComponent/LogTable';
+//import UpdateLog from 'View/log/updateLog';
 
 
 const routesConfig = [
@@ -135,15 +135,15 @@ const routesConfig = [
           </RouteProtector>
         ),
       },
-      {
-        path: '/updateLog',
-        element: (
-          <RouteProtector>
-            <UpdateLog />
-          </RouteProtector>
+      // {
+      //   path: '/updateLog',
+      //   element: (
+      //     <RouteProtector>
+      //       <UpdateLog />
+      //     </RouteProtector>
 
-        ),
-      },
+      //   ),
+      // },
       {
         path: '/test',
         element: (
