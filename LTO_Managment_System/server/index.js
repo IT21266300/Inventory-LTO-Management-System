@@ -38,7 +38,7 @@ const logger = winston.createLogger({
   ),
   transports: [
     new winston.transports.File({ 
-      filename: path.join(logDir, `staff_activity_${moment().format('YYYY-MM-DD')}`),
+      filename: path.join(logDir, `staff_activity_${moment().format('YYYY-MM-DD')}.log`),
       maxsize: 5242880, // 5MB file size limit
       maxFiles: 5, // rotate logs, keep up to 5 files
       tailable: true // stream the log output
