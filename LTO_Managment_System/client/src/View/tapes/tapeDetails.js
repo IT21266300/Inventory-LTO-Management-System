@@ -104,7 +104,7 @@ const ViewTape = () => {
     }
   };
 
-  const handleAddNewTape = () => {
+  const handleAddNewTapeDetails = () => {
     setAddNewTapePopupOpen(true);
   };
 
