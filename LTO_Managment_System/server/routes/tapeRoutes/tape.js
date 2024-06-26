@@ -49,34 +49,6 @@ router.route('/:tapeId').get(async (req, res) => {
   });
 });
 
-// 1. Get all subsystems (from all systems)
-// router.route('/subsystems').get(async (req, res) => {
-//   const sql = 'SELECT * FROM subSystem';
-//   db.query(sql, (err, data) => {
-//     if (err) return res.json(err, "hello");
-//     return res.json(data);
-//   });
-// });
-
-// 2. Get a specific subsystem by subSysId
-// router.route('/subsystems/:subSysId').get(async (req, res) => {
-//   const { subSysId } = req.params;
-
-//   try {
-//     const sql = 'SELECT * FROM SubSystem WHERE subSysId = ?';
-//     const [data] = await db.query(sql, [subSysId]);
-
-//     if (data.length === 0) {
-//       return res.status(404).json({ message: 'Subsystem not found' });
-//     }
-
-//     res.json(data[0]);
-//   } catch (err) {
-//     console.error('Error fetching subsystem:', err);
-//     res.status(500).json({ message: 'Failed to fetch subsystem' });
-//   }
-// });
-
 
 router.route('/subsystems/:systemId').get(async (req, res) => {
   const { systemId } = req.params;
@@ -212,3 +184,33 @@ router.route('/tapecon').get((req, res) => {
 });
 
 export default router;
+
+
+
+// 1. Get all subsystems (from all systems)
+// router.route('/subsystems').get(async (req, res) => {
+//   const sql = 'SELECT * FROM subSystem';
+//   db.query(sql, (err, data) => {
+//     if (err) return res.json(err, "hello");
+//     return res.json(data);
+//   });
+// });
+
+// 2. Get a specific subsystem by subSysId
+// router.route('/subsystems/:subSysId').get(async (req, res) => {
+//   const { subSysId } = req.params;
+
+//   try {
+//     const sql = 'SELECT * FROM SubSystem WHERE subSysId = ?';
+//     const [data] = await db.query(sql, [subSysId]);
+
+//     if (data.length === 0) {
+//       return res.status(404).json({ message: 'Subsystem not found' });
+//     }
+
+//     res.json(data[0]);
+//   } catch (err) {
+//     console.error('Error fetching subsystem:', err);
+//     res.status(500).json({ message: 'Failed to fetch subsystem' });
+//   }
+// });

@@ -6,7 +6,7 @@ import SignRouter from '../routes/signinRoutes/signin.js';
 
 
 // import Staff routes
-import StaffRouter from '../routes/staffRoutes/staff.js'
+
 import StaffR from '../routes/staffRouteMysql/staffRoute.js';
 
 // system routes

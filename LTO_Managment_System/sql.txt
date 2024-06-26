@@ -81,3 +81,7 @@ CREATE TABLE `WinstonTest`.`sys_logs_default` (
   tapeContent TEXT,
   PRIMARY KEY (tapeId, date) -- Combine tapeId and date for uniqueness
 );
+
+
+
+npm install sanitize-html
