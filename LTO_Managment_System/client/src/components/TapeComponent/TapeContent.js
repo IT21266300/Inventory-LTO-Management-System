@@ -136,7 +136,6 @@ const TapeContentTable = ({ result, loading, error }) => {
       headerName: 'Remarks',
       flex: 0.5,
     },
-    
   ];
 
   // console.log("info", userInfo);
@@ -197,24 +196,7 @@ const TapeContentTable = ({ result, loading, error }) => {
   ) : error ? (
     <Alert severity="error">{error}</Alert>
   ) : (
-    <Box>
-      <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-          justifyContent: 'flex-end',
-          m: '2rem 0',
-        }}
-      >
-       
-        <Box sx={{ ml: '1.5rem' }}>
-          <DownloadActions
-            pdfColumn={pdfColumn}
-            rows={rows}
-            funcName={'Tape Content'}
-          />
-        </Box>
-      </Box>
+    <Box width="100%">
       <Box
         height="100vh"
         width="100%"
