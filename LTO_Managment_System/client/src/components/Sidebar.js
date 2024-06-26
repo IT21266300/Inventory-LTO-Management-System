@@ -42,6 +42,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import BookIcon from '@mui/icons-material/Book';
 import Logo from './../assets/logo.svg';
 import Logo1 from './../assets/enLogo.png';
 
@@ -79,6 +80,11 @@ const navItems = [
     text: 'Staff',
     op: 'Staff Management',
     icon: <Diversity3Icon />,
+  },
+  {
+    text: 'Log',
+    op: 'Log Management',
+    icon: <BookIcon />,
   },
   {
     text: 'Documentation',

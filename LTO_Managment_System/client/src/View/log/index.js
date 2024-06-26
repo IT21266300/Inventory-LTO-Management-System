@@ -55,9 +55,7 @@ const Logs = () => {
         <title>Log Management</title>
       </Helmet>
       <Header title="Log Management" subtitle="Manage Logs" />
-
-
-      <LogTables result={logData} loading={loading} error={error} />
+      <LogTables/>
     </Box>
   );
 };

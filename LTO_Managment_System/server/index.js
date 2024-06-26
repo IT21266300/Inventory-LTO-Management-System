@@ -1,6 +1,5 @@
 // Import Packages
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
@@ -9,9 +8,10 @@ import fs from 'fs';
 import path from 'path';
 import winston from 'winston';
 import { format } from 'winston';
-import moment from 'moment'; // Add moment for date formatting
+import moment from 'moment';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import mysql from 'mysql2'; // Import MySQL driver
 
 // Import routes
 import routes from './lib/routes.js';
@@ -38,7 +38,10 @@ const logger = winston.createLogger({
   ),
   transports: [
     new winston.transports.File({ 
-      filename: path.join(logDir, `staff_activity_${moment().format('YYYY-MM-DD')}.log`) 
+      filename: path.join(logDir, `staff_activity_${moment().format('YYYY-MM-DD')}`),
+      maxsize: 5242880, // 5MB file size limit
+      maxFiles: 5, // rotate logs, keep up to 5 files
+      tailable: true // stream the log output
     }) 
   ]
 });
@@ -57,30 +60,24 @@ const PORT = process.env.PORT || 3308;
 
 // Middleware for logging staff activities
 app.use((req, res, next) => {
-  // Get staff ID from request (assuming you have staff authentication)
-  const staffId = req.user ? req.user.staffId : "";
+  if (req.method !== 'GET') {
+    // Get staff ID from request (assuming you have staff authentication)
+    const staffId = req.user ? req.user.staffId : "";
 
-  // Add a success flag to log object based on the response status
-  let success = true; // Initialize success as false
-  res.on('finish', () => {
-    success = res.statusCode >= 200 && res.statusCode < 300; // Consider 2xx as success
-  });
-
-  if (req.method === 'GET') {
-    next();
-    return; 
+    // Add a success flag to log object based on the response status
+    let success = false; // Initialize success as false
+    res.on('finish', () => {
+      success = res.statusCode >= 200 && res.statusCode < 300; // Consider 2xx as success
+      // Log the request details
+      logger.info({
+        staffId,
+        method: req.method,
+        url: req.url,
+        ip: req.ip,
+        success // Add success flag to log
+      });
+    });
   }
-
-  // Log the request details
-  logger.info({
-    staffId,
-    method: req.method,
-    url: req.url,
-    ip: req.ip,
-    //userAgent: req.headers['user-agent'],
-    success // Add success flag to log
-  });
-
   next();
 });
 
@@ -101,8 +98,46 @@ app.get('/active-staff', async (req, res) => {
     // Close the connection
     await connection.end();
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching active staff:', error.message);
     res.status(500).send('Error fetching active staff');
+  }
+});
+
+// Route to retrieve log entries and combine them with staff details
+app.get('/logs', async (req, res) => {
+  try {
+    // Read all log files in the log directory
+    const files = fs.readdirSync(logDir).filter(file => file.endsWith('.log'));
+
+    let logs = [];
+
+    // Read each log file and parse the JSON entries
+    for (const file of files) {
+      const data = fs.readFileSync(path.join(logDir, file), 'utf-8');
+      const lines = data.split('\n').filter(line => line);
+      const entries = lines.map(line => JSON.parse(line));
+      logs = logs.concat(entries);
+    }
+
+    // Fetch staff details
+    const connection = await mysql.createConnection(db);
+    const [staffRows] = await connection.execute('SELECT staffId, name FROM staff');
+    const staffMap = staffRows.reduce((acc, row) => {
+      acc[row.staffId] = row.name;
+      return acc;
+    }, {});
+
+    // Combine logs with staff details
+    logs = logs.map(log => ({
+      ...log,
+      staffName: staffMap[log.staffId] || 'Unknown'
+    }));
+
+    await connection.end();
+    res.json(logs);
+  } catch (error) {
+    console.error('Error fetching logs:', error.message);
+    res.status(500).send('Error fetching logs');
   }
 });
 
@@ -118,7 +153,7 @@ app.get('/download-log/:date', (req, res) => {
       if (err.code === 'ENOENT') {
         return res.status(404).send('Log file not found.');
       } else {
-        console.error(err);
+        console.error('Error downloading log file:', err.message);
         return res.status(500).send('Error downloading log file');
       }
     } else {
@@ -127,6 +162,30 @@ app.get('/download-log/:date', (req, res) => {
       res.send(data); 
     }
   });
+});
+
+
+// Route to get a list of log files
+app.get('/api/logs', (req, res) => {
+  fs.readdir(logDir, (err, files) => {
+    if (err) {
+      logger.error('Error reading log files:', err); // Log the error
+      res.status(500).send('Error reading log files');
+      return;
+    }
+    const logFiles = files.map(file => ({
+      fileName: file,
+      createdAt: fs.statSync(path.join(logDir, file)).birthtime
+    }));
+    res.json(logFiles);
+  });
+});
+
+// Route to download a specific log file
+app.get('/api/logs/download/:fileName', (req, res) => {
+  const fileName = req.params.fileName;
+  const filePath = path.join(logDir, fileName);
+  res.sendFile(filePath);
 });
 
 // Router calls
