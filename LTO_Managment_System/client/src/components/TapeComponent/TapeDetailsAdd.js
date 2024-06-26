@@ -13,7 +13,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import textFieldStyles from 'styles/textFieldStyles';
 
-const AddNewTapePopup = ({ open, onClose}) => {
+const AddNewTapePopup = ({ open, onClose, tapeId }) => {
   const navigate = useNavigate();
   const [tapeContent, setTapeContent] = useState('');
   const [date, setDate] = useState('');
@@ -27,6 +27,7 @@ const AddNewTapePopup = ({ open, onClose}) => {
         tapeContent,
         date,
         remarks,
+        tapeId,
       });
       toast.success('Tape data has been added successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,

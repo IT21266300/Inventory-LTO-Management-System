@@ -170,9 +170,10 @@ const ViewTape = () => {
                   color: '#fff',
                 }}
               >
-                <MenuItem value="Completed">Completed</MenuItem>
-                <MenuItem value="In Progress">In Progress</MenuItem>
-                <MenuItem value="Failed">Failed</MenuItem>
+                 <MenuItem value={'Completed'}>Completed</MenuItem>
+                  <MenuItem value={'Failed'}>Failed</MenuItem>
+                  <MenuItem value={'In Progress'}>In Progress</MenuItem>
+                  <MenuItem value={'Not Taken'}>Not Taken</MenuItem>
               </Select>
             </Grid>
 
@@ -448,8 +449,7 @@ const ViewTape = () => {
         <AddNewTapePopup
           open={addNewTapePopupOpen}
           onClose={handleCloseAddNewTapePopup}
-
-          systemId={tapeData ? tapeData.sysId : null} // Pass systemId if available
+          tapeId={tapeData ? tapeData.tapeId : null}// Pass systemId if available
         />
       </Box>
 
