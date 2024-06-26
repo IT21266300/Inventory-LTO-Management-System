@@ -142,3 +142,51 @@ router.route('/updateStaff/:staffId').put(async (req, res) => {
 
 
 export default router;
+
+
+
+
+
+
+// router.route('/update/:staffId').put(async (req, res) => {
+//   const userId = req.params.staffId;
+//   const { staffId, name, phone, position, password } = req.body;
+
+//   if (!validateInput(staffId, name, phone, position, password)) {
+//     return res.status(400).json({ message: 'Invalid input data' });
+//   }
+
+//   // Sanitize input data
+//   const sanitizedInput = sanitizeInput(staffId, name, phone, position, password);
+
+//   // Check if the updated staffId already exists
+//   const checkSql = 'SELECT * FROM Staff WHERE staffId = ? AND staffId != ?';
+//   db.query(checkSql, [sanitizedInput.staffId, userId], (checkErr, checkResult) => {
+//     if (checkErr) {
+//       console.error(checkErr.message);
+//       return res.status(500).json({ message: 'Error with checking user', error: checkErr.message });
+//     }
+
+//     if (checkResult.length > 0) {
+//       return res.status(409).json({ message: 'Username or staffID already in use by another user' });
+//     }
+
+//     // Hash the password if provided
+//     const hashedPassword = password ? bcrypt.hashSync(sanitizedInput.password, 10) : null;
+
+//     // Update the staff member
+//     const updateSql = 'UPDATE Staff SET staffId = ?, name = ?, phone = ?, position = ?, password = ? WHERE staffId = ?';
+//     db.query(updateSql, [sanitizedInput.staffId, sanitizedInput.name, sanitizedInput.phone, sanitizedInput.position, hashedPassword, userId], (updateErr, updateResult) => {
+//       if (updateErr) {
+//         console.error(updateErr.message);
+//         return res.status(400).json({ message: 'Error with updating user', error: updateErr.message });
+//       }
+
+//       if (updateResult.affectedRows === 0) {
+//         return res.status(404).json({ message: 'User not found' });
+//       }
+
+//       return res.status(200).json({ message: 'User Updated' });
+//     });
+//   });
+// });

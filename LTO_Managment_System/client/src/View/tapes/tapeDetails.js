@@ -119,7 +119,7 @@ const ViewTape = () => {
         padding: '2rem',
       }}
     >
-      <Box sx={{marginBottom: '1rem'}}>
+      <Box sx={{ marginBottom: '1rem' }}>
         <Button
           variant="contained"
           onClick={() => navigate(-1)}
@@ -170,10 +170,10 @@ const ViewTape = () => {
                   color: '#fff',
                 }}
               >
-                 <MenuItem value={'Completed'}>Completed</MenuItem>
-                  <MenuItem value={'Failed'}>Failed</MenuItem>
-                  <MenuItem value={'In Progress'}>In Progress</MenuItem>
-                  <MenuItem value={'Not Taken'}>Not Taken</MenuItem>
+                <MenuItem value={'Completed'}>Completed</MenuItem>
+                <MenuItem value={'Failed'}>Failed</MenuItem>
+                <MenuItem value={'In Progress'}>In Progress</MenuItem>
+                <MenuItem value={'Not Taken'}>Not Taken</MenuItem>
               </Select>
             </Grid>
 
@@ -248,14 +248,40 @@ const ViewTape = () => {
         </Paper>
       </Box>
 
-      {/* bottom component */}
-      <Box>
-        <Typography variant="h5" gutterBottom sx={{color: '#fff'}}>
+      {/* title component */}
+      <Box sx={{width: '100%', height: '20vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+        <Typography variant="h5" sx={{ color: '#fff' }}>
           Tape Details
         </Typography>
-        
-        <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-          <Box>
+        <Button
+          variant="contained"
+          onClick={handleAddNewTapeDetails} // Open the popup
+          sx={{
+            mt: '2rem',
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[900],
+          }}
+        >
+          Add New Tape Detail
+        </Button>
+        <AddNewTapePopup
+            open={addNewTapePopupOpen}
+            onClose={handleCloseAddNewTapePopup}
+            tapeId={tapeData ? tapeData.tapeId : null} // Pass systemId if available
+          />
+      </Box>
+
+      {/* bottom component */}
+      <Box>
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: '2rem',
+          }}
+        >
+          <Box sx={{ width: '100%' }}>
             {tapeData && (
               <Paper
                 elevation={3}
@@ -266,7 +292,7 @@ const ViewTape = () => {
                   backgroundColor: colorPalette.black1[500],
                 }}
               >
-                  <Grid container spacing={2}>
+                <Grid container spacing={2}>
                   <Grid item xs={12} md={12}>
                     <Paper
                       elevation={1}
@@ -275,13 +301,20 @@ const ViewTape = () => {
                         borderRadius: '8px',
                         backgroundColor: 'transparent',
                         color: '#fff',
+                        display: 'flex',
+                        alignItems: 'center',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom>
-                        Tape ID :
-                        <span style={{ fontSize: '1.3rem', marginLeft: '0.4rem', color: '#fff' }}>
-                          {tapeData.tapeId}
-                        </span>
+                      <Typography
+                        style={{
+                          color: colorPalette.yellow[200],
+                          width: '170px',
+                        }}
+                      >
+                        Tape ID :{' '}
+                      </Typography>
+                      <Typography style={{ fontSize: '1.5rem', color: '#fff' }}>
+                        {tapeData.tapeId}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -292,14 +325,21 @@ const ViewTape = () => {
                         padding: '1rem',
                         borderRadius: '8px',
                         backgroundColor: 'transparent',
-                        color: '#fff'
+                        color: '#fff',
+                        display: 'flex',
+                        alignItems: 'center',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom>
+                      <Typography
+                        style={{
+                          color: colorPalette.yellow[200],
+                          width: '170px',
+                        }}
+                      >
                         System Name:
-                        <span style={{ fontWeight: 'bold' }}>
-                          {tapeData.sysName}
-                        </span>
+                      </Typography>
+                      <Typography style={{ fontSize: '1.5rem', color: '#fff' }}>
+                        {tapeData.sysName}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -310,13 +350,20 @@ const ViewTape = () => {
                         padding: '1rem',
                         borderRadius: '8px',
                         backgroundColor: 'transparent',
+                        display: 'flex',
+                        alignItems: 'center',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
+                      <Typography
+                        style={{
+                          color: colorPalette.yellow[200],
+                          width: '170px',
+                        }}
+                      >
                         Application Name:
-                        <span style={{ fontWeight: 'bold', color: '#fff' }}>
-                          {tapeData.subSysName}
-                        </span>
+                      </Typography>
+                      <Typography style={{ fontSize: '1.5rem', color: '#fff' }}>
+                        {tapeData.subSysName}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -327,13 +374,20 @@ const ViewTape = () => {
                         padding: '1rem',
                         borderRadius: '8px',
                         backgroundColor: 'transparent',
+                        display: 'flex',
+                        alignItems: 'center',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
+                      <Typography
+                        style={{
+                          color: colorPalette.yellow[200],
+                          width: '170px',
+                        }}
+                      >
                         Backup Status:
-                        <span style={{ fontWeight: 'bold', color: '#fff' }}>
-                          {tapeData.bStatus}
-                        </span>
+                      </Typography>
+                      <Typography style={{ fontSize: '1.5rem', color: '#fff' }}>
+                        {tapeData.bStatus}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -344,11 +398,20 @@ const ViewTape = () => {
                         padding: '1rem',
                         borderRadius: '8px',
                         backgroundColor: 'transparent',
+                        display: 'flex',
+                        alignItems: 'center',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
+                      <Typography
+                        style={{
+                          color: colorPalette.yellow[200],
+                          width: '170px',
+                        }}
+                      >
                         Media Type:
-                        <span style={{ fontWeight: 'bold', color: '#fff' }}>{tapeData.mType}</span>
+                      </Typography>
+                      <Typography style={{ fontSize: '1.5rem', color: '#fff' }}>
+                        {tapeData.mType}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -359,13 +422,20 @@ const ViewTape = () => {
                         padding: '1rem',
                         borderRadius: '8px',
                         backgroundColor: 'transparent',
+                        display: 'flex',
+                        alignItems: 'center',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
+                      <Typography
+                        style={{
+                          color: colorPalette.yellow[200],
+                          width: '170px',
+                        }}
+                      >
                         Tape Status:
-                        <span style={{ fontWeight: 'bold', color: '#fff' }}>
-                          {tapeData.tStatus}
-                        </span>
+                      </Typography>
+                      <Typography style={{ fontSize: '1.5rem', color: '#fff' }}>
+                        {tapeData.tStatus}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -376,13 +446,20 @@ const ViewTape = () => {
                         padding: '1rem',
                         borderRadius: '8px',
                         backgroundColor: 'transparent',
+                        display: 'flex',
+                        alignItems: 'center',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
+                      <Typography
+                        style={{
+                          color: colorPalette.yellow[200],
+                          width: '170px',
+                        }}
+                      >
                         Start Date:
-                        <span style={{ fontWeight: 'bold', color: '#fff' }}>
-                          {formatDate(tapeData.sDate)}
-                        </span>
+                      </Typography>
+                      <Typography style={{ fontSize: '1.5rem', color: '#fff' }}>
+                        {formatDate(tapeData.sDate)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -393,13 +470,20 @@ const ViewTape = () => {
                         padding: '1rem',
                         borderRadius: '8px',
                         backgroundColor: 'transparent',
+                        display: 'flex',
+                        alignItems: 'center',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
+                      <Typography
+                        style={{
+                          color: colorPalette.yellow[200],
+                          width: '170px',
+                        }}
+                      >
                         End Date:
-                        <span style={{ fontWeight: 'bold', color: '#fff' }}>
-                          {formatDate(tapeData.eDate)}
-                        </span>
+                      </Typography>
+                      <Typography style={{ fontSize: '1.5rem', color: '#fff' }}>
+                        {formatDate(tapeData.eDate)}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -410,13 +494,20 @@ const ViewTape = () => {
                         padding: '1rem',
                         borderRadius: '8px',
                         backgroundColor: 'transparent',
+                        display: 'flex',
+                        alignItems: 'center',
                       }}
                     >
-                      <Typography variant="subtitle1" gutterBottom style={{ fontWeight: 'bold', color: '#fff'}}>
-                        Location Status : 
-                        <span style={{ fontWeight: 'bold', color: '#fff'}}>
-                          {tapeData.lStatus}
-                        </span>
+                      <Typography
+                        style={{
+                          color: colorPalette.yellow[200],
+                          width: '170px',
+                        }}
+                      >
+                        Location Status :
+                      </Typography>
+                      <Typography style={{ fontSize: '1.5rem', color: '#fff' }}>
+                        {tapeData.lStatus}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -424,33 +515,10 @@ const ViewTape = () => {
               </Paper>
             )}
           </Box>
-          <Box>
-            <TapeContent/>
+          <Box sx={{ width: '100%' }}>
+            <TapeContent tapeId={tapeData.tapeId} />
           </Box>
         </Box>
-      </Box>
-
-      {/* Right Side - Tape Details */}
-      <Box sx={{ width: '50%', marginLeft: '2rem' }}>
-        <Button
-          variant="contained"
-
-          onClick={handleAddNewTapeDetails} // Open the popup
-          sx={{
-            mt: '2rem',
-            backgroundColor: colorPalette.yellow[500],
-            color: colorPalette.black[900],
-          }}
-
-        >
-          Add New Tape Detail 
-        </Button>
-        {/* Add New Tape Popup */}
-        <AddNewTapePopup
-          open={addNewTapePopupOpen}
-          onClose={handleCloseAddNewTapePopup}
-          tapeId={tapeData ? tapeData.tapeId : null}// Pass systemId if available
-        />
       </Box>
 
     </Box>

@@ -74,6 +74,7 @@ CREATE TABLE `WinstonTest`.`sys_logs_default` (
  PRIMARY KEY (`id`));
 
 
+<<<<<<< Updated upstream
  CREATE TABLE TapeDetails (
   tapeId VARCHAR(255) NOT NULL, -- Assuming tape IDs are strings
   date DATE NOT NULL,
@@ -81,3 +82,16 @@ CREATE TABLE `WinstonTest`.`sys_logs_default` (
   tapeContent TEXT,
   PRIMARY KEY (tapeId, date) -- Combine tapeId and date for uniqueness
 );
+
+
+
+npm install sanitize-html
+=======
+    CREATE TABLE TapeDetails (
+    tapeId VARCHAR(255) NOT NULL, -- Assuming tape IDs are strings
+    date DATE NOT NULL,
+    remarks TEXT,
+    tapeContent TEXT,
+    PRIMARY KEY (tapeId, date) -- Combine tapeId and date for uniqueness
+    );
+>>>>>>> Stashed changes
