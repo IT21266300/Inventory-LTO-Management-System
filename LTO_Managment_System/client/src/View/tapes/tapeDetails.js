@@ -20,6 +20,7 @@ import AddNewTapePopup from '../../components/TapeComponent/TapeDetailsAdd'; // 
 import textFieldSubStyles from 'styles/textFieldSubStyles';
 import textFieldStyles from 'styles/textFieldStyles';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import TapeContent from 'components/TapeComponent/TapeContent';
 
 const ViewTape = () => {
   const navigate = useNavigate();
@@ -423,7 +424,7 @@ const ViewTape = () => {
             )}
           </Box>
           <Box>
-            
+            <TapeContent/>
           </Box>
         </Box>
       </Box>

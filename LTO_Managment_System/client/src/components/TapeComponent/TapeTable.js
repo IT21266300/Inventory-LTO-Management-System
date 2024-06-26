@@ -22,7 +22,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import { colorPalette } from 'customTheme';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -101,12 +101,8 @@ const TapeTable = ({ result, loading, error }) => {
 
   // Handle navigation to the single tape details page
   const handleViewDetails = () => {
-    navigate( `/tape/${passValue.tapeId}`,
-       { state: { data: passValue } }); 
-    
+    navigate(`/tape/${passValue.tapeId}`, { state: { data: passValue } });
   };
- 
- 
 
   useEffect(() => {
     setPassValue(buttonClickedValue);
@@ -212,29 +208,35 @@ const TapeTable = ({ result, loading, error }) => {
   ];
 
   // console.log("info", userInfo);
- 
-    columns.push({
-      field: 'action',
-      headerName: 'Actions',
-      flex: 0.5,
-      sortable: false,
-      filterable: false,
-      renderCell: (params) => (
-        <Box>
-          <ActionButton handleClick={handleClick} params={params} open={open} />
-          <Link to={`/tape/${params.row.tapeId}`}  style={{textDecoration: 'none'}}> 
-        <Button
-          variant="contained"
-          size="medium"
-          startIcon={<VisibilityIcon />} 
-          sx={{ ml: 1, backgroundColor: colorPalette.yellow[500], color: colorPalette.black[900], Color: colorPalette.black[300] }}
+
+  columns.push({
+    field: 'action',
+    headerName: 'Actions',
+    flex: 0.5,
+    sortable: false,
+    filterable: false,
+    renderCell: (params) => (
+      <Box>
+        <ActionButton handleClick={handleClick} params={params} open={open} />
+        <Link
+          to={`/tape/${params.row.tapeId}`}
+          style={{ textDecoration: 'none' }}
         >
-        </Button>
-      </Link>
-        </Box>
-      ),
-    });
-  
+          <Button
+            variant="contained"
+            size="medium"
+            startIcon={<VisibilityIcon />}
+            sx={{
+              ml: 1,
+              backgroundColor: colorPalette.yellow[500],
+              color: colorPalette.black[900],
+              Color: colorPalette.black[300],
+            }}
+          ></Button>
+        </Link>
+      </Box>
+    ),
+  });
 
   let pdfColumn = [];
   if (userInfo.position === 'Admin') {
@@ -242,7 +244,7 @@ const TapeTable = ({ result, loading, error }) => {
   } else {
     pdfColumn = columns.slice(1);
   }
-  
+
   console.log(result);
 
   let rows = {};
