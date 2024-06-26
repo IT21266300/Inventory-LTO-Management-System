@@ -50,6 +50,8 @@ router.route('/:tapeId').get(async (req, res) => {
 });
 
 
+// ========================================================================================
+
 router.route('/subsystems/:systemId').get(async (req, res) => {
   const { systemId } = req.params;
   const sql = 'SELECT * FROM SubSystem WHERE parentSystemId = ?';
@@ -175,10 +177,18 @@ router.route('/addTapeDetails').post(async (req, res) => {
   
 });
 
-router.route('/tapecon').get((req, res) => {
-  const sql = 'SELECT * FROM tapedetails';
-  db.query(sql, (err, data) => {
-    if (err) return res.json(err);
+
+router.route('/tapeContent/:tapeId').get(async (req, res) => {
+  const { tapeId } = req.params;
+  const sql = 'SELECT * FROM tapedetails where tapeId = ?';
+
+  db.query(sql, [tapeId], (err, data) => {
+    if (err) return res.status(500).json({ error: err.message });
+
+    if (data.length === 0) {
+      return res.status(404).json({ message: 'Sub System not found..!' });
+    }
+
     return res.json(data);
   });
 });

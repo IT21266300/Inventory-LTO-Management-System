@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import {
   DataGrid,
   GridToolbar,
@@ -43,11 +43,52 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility'; // Import the icon for viewing
 import { hi } from 'date-fns/locale';
 
-const TapeContentTable = ({ result, loading, error }) => {
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true };
+    case 'FETCH_SUCCESS':
+      return { ...state, tapeData: action.payload, loading: false };
+    case 'FETCH_ERROR':
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+const TapeContentTable = ({ tapeId }) => {
   const navigate = useNavigate();
+
 
   const { state } = useContext(Store);
   const { userInfo } = state;
+
+  const [{ tapeData, loading, error }, dispatch] = useReducer(reducer, {
+    tapeData: [],
+    loading: true,
+    error: '',
+  });
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: 'FETCH_REQUEST' });
+      try {
+        const result = await axios.get(`/api/tape/tapeContent/${tapeId}`);
+        dispatch({
+          type: 'FETCH_SUCCESS',
+          payload: result.data,
+        });
+        dispatch({ type: 'FETCH_SITES', payload: result.data });
+      } catch (err) {
+        dispatch({ type: 'FETCH_ERROR', payload: err.message });
+      }
+    };
+    fetchData();
+  }, []);
+
+  console.log(tapeData);
+
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -57,7 +98,6 @@ const TapeContentTable = ({ result, loading, error }) => {
     setOpenAlert(true);
     setAnchorEl(null);
   };
-  console.log(result);
 
   const handleCloseAlert = () => {
     setOpenAlert(false);
@@ -72,10 +112,6 @@ const TapeContentTable = ({ result, loading, error }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  // const handleUpdate = () => {
-  //   navigate('/updateTape', { state: { data: passValue } });
-  // };
 
   // const handleDelete = async () => {
   //   setAnchorEl(null);
@@ -94,20 +130,20 @@ const TapeContentTable = ({ result, loading, error }) => {
   //   }
   // };
 
-  const [passValue, setPassValue] = useState({});
+  // const [passValue, setPassValue] = useState({});
 
-  useEffect(() => {
-    setPassValue(buttonClickedValue);
-  }, [buttonClickedValue]);
+  // useEffect(() => {
+  //   setPassValue(buttonClickedValue);
+  // }, [buttonClickedValue]);
 
   // Handle navigation to the single tape details page
-  const handleViewDetails = () => {
-    // navigate(`/tape/${passValue.tapeId}`, { state: { data: passValue } });
-  };
+  // const handleViewDetails = () => {
+  //   navigate(`/tape/${passValue.tapeId}`, { state: { data: passValue } });
+  // };
 
-  useEffect(() => {
-    setPassValue(buttonClickedValue);
-  }, [buttonClickedValue]);
+  // useEffect(() => {
+  //   setPassValue(buttonClickedValue);
+  // }, [buttonClickedValue]);
 
   const columns = [
     {
@@ -176,11 +212,9 @@ const TapeContentTable = ({ result, loading, error }) => {
     pdfColumn = columns.slice(1);
   }
 
-  console.log(result);
-
   let rows = {};
-  if (result !== undefined) {
-    rows = result.map((row, x) => ({
+  if (tapeData !== undefined) {
+    rows = tapeData.map((row, x) => ({
       id: x + 1,
       tapeId: row.tapeId,
       date: row.date,

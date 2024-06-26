@@ -248,14 +248,40 @@ const ViewTape = () => {
         </Paper>
       </Box>
 
-      {/* bottom component */}
-      <Box>
-        <Typography variant="h5" gutterBottom sx={{ color: '#fff' }}>
+      {/* title component */}
+      <Box sx={{width: '100%', height: '20vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+        <Typography variant="h5" sx={{ color: '#fff' }}>
           Tape Details
         </Typography>
+        <Button
+          variant="contained"
+          onClick={handleAddNewTapeDetails} // Open the popup
+          sx={{
+            mt: '2rem',
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[900],
+          }}
+        >
+          Add New Tape Detail
+        </Button>
+        <AddNewTapePopup
+            open={addNewTapePopupOpen}
+            onClose={handleCloseAddNewTapePopup}
+            tapeId={tapeData ? tapeData.tapeId : null} // Pass systemId if available
+          />
+      </Box>
 
-        <Box sx={{width: '100%', display: 'flex', justifyContent: 'space-between', gap: '2rem' }}>
-          <Box sx={{width: '100%'}}>
+      {/* bottom component */}
+      <Box>
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: '2rem',
+          }}
+        >
+          <Box sx={{ width: '100%' }}>
             {tapeData && (
               <Paper
                 elevation={3}
@@ -489,32 +515,12 @@ const ViewTape = () => {
               </Paper>
             )}
           </Box>
-          <Box sx={{width: '100%'}}>
-            <TapeContent />
+          <Box sx={{ width: '100%' }}>
+            <TapeContent tapeId={tapeData.tapeId} />
           </Box>
         </Box>
       </Box>
 
-      {/* Right Side - Tape Details */}
-      <Box sx={{ width: '50%', marginLeft: '2rem' }}>
-        <Button
-          variant="contained"
-          onClick={handleAddNewTapeDetails} // Open the popup
-          sx={{
-            mt: '2rem',
-            backgroundColor: colorPalette.yellow[500],
-            color: colorPalette.black[900],
-          }}
-        >
-          Add New Tape Detail
-        </Button>
-        {/* Add New Tape Popup */}
-        <AddNewTapePopup
-          open={addNewTapePopupOpen}
-          onClose={handleCloseAddNewTapePopup}
-          tapeId={tapeData ? tapeData.tapeId : null} // Pass systemId if available
-        />
-      </Box>
     </Box>
   );
 };

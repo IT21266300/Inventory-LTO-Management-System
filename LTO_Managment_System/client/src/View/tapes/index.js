@@ -31,6 +31,7 @@ const Tapes = () => {
     loading: true,
     error: '',
   });
+  
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
