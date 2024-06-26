@@ -203,8 +203,8 @@ router.route('/addTapeDetails').post(async (req, res) => {
   
 });
 
-router.route('/tapecontent').get((req, res) => {
-  const sql = 'SELECT * FROM lto_db.tapedetails';
+router.route('/tapecon').get((req, res) => {
+  const sql = 'SELECT * FROM tapedetails';
   db.query(sql, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
