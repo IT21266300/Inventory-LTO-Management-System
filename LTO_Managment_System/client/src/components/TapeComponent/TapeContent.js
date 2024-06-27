@@ -121,7 +121,7 @@ const TapeContentTable = ({ tapeId, tapeDate }) => {
     setAnchorEl(null);
     setOpenAlert(false);
     try {
-      axios.delete(`/api/tape/deleteTapeContent/${tapeId}/${tapeDate}`);
+      axios.delete(`/api/tape/deleteTapeContent/${buttonClickedValue.tapeId}/${buttonClickedValue.date}`);
       toast.success('Tape Content deleted!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -223,7 +223,7 @@ const TapeContentTable = ({ tapeId, tapeDate }) => {
     rows = tapeData.map((row, x) => ({
       id: x + 1,
       tapeId: row.tapeId,
-      date: row.date.substring(0, 10),
+      date: row.date,
       tapeContent: row.tapeContent,
       remarks: row.remarks,
     }));
@@ -234,7 +234,7 @@ const TapeContentTable = ({ tapeId, tapeDate }) => {
       <LoadingAnimation />
     </Box>
   ) : error ? (
-    <Alert severity="error">{error}</Alert>
+    <Alert severity="warning">Tape Content Empty..!</Alert>
   ) : (
     <Box width="100%">
       <Box
@@ -271,7 +271,7 @@ const TapeContentTable = ({ tapeId, tapeDate }) => {
             initialState={{
               columns: {
                 columnVisibilityModel: {
-                  sysId: false,
+                  tapeId: false,
                 },
               },
               // sorting: { sortModel: [{field: 'date', sort: 'asc'}]}

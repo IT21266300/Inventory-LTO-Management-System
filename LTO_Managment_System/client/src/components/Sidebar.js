@@ -36,7 +36,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import FolderIcon from '@mui/icons-material/Folder';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -45,6 +44,13 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import BookIcon from '@mui/icons-material/Book';
 import Logo from './../assets/logo.svg';
 import Logo1 from './../assets/enLogo.png';
+import SdCardIcon from '@mui/icons-material/SdCard';
+import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import SensorWindowIcon from '@mui/icons-material/SensorWindow';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+
+import LineAxisIcon from '@mui/icons-material/LineAxis';
 
 import { useEffect, useSate } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -64,22 +70,37 @@ const navItems = [
   {
     text: 'tape',
     op: 'LTO Management',
-    icon: <TimelineIcon />,
+    icon: <SdCardIcon />,
   },
   {
     text: 'Locker Management',
     op: 'Locker Management',
-    icon: <EngineeringIcon />,
+    icon: <WorkHistoryIcon />,
   },
   {
     text: 'LTO Transport',
     op: 'LTO Transport',
-    icon: <PermContactCalendarIcon />,
+    icon: <LocalShippingIcon />,
   },
   {
     text: 'Staff',
     op: 'Staff Management',
     icon: <Diversity3Icon />,
+  },
+  {
+    text: 'Systems',
+    op: 'Systems Management',
+    icon: <SensorWindowIcon />,
+  },
+  {
+    text: 'Inventory',
+    op: 'Inventory Management',
+    icon: <Inventory2Icon />,
+  },
+  {
+    text: 'Admin',
+    op: 'Admin Panel',
+    icon: <LineAxisIcon />,
   },
   {
     text: 'Log',
