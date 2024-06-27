@@ -165,6 +165,19 @@ const LogTable = () => {
           />
         </Box>
       </Box>
+      
+      <Box sx={{ marginBottom: '1rem' }}>
+        <Button
+          variant="contained"
+          onClick={() => navigate(-1)}
+          sx={{
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[900],
+          }}
+        >
+          Back to Dashboard
+        </Button>
+      </Box>
     </Box>
   );
 };
