@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTwo';
 import { toast } from 'react-toastify';
-import { colorPalette } from 'customTheme';
+import customTheme, { colorPalette } from 'customTheme';
 
 import AddNewTapePopup from '../../components/TapeComponent/TapeDetailsAdd'; // Assuming your popup component is called AddNewTapePopup
 
@@ -277,8 +277,12 @@ const ViewTape = () => {
           sx={{
             width: '100%',
             display: 'flex',
-            justifyContent: 'space-between',
             gap: '2rem',
+            flexDirection: 'row',
+            [customTheme.breakpoints.down("md")]: {
+              justifyContent: 'space-between',
+              flexDirection: 'column',
+            },
           }}
         >
           <Box sx={{ width: '100%' }}>
@@ -516,7 +520,7 @@ const ViewTape = () => {
             )}
           </Box>
           <Box sx={{ width: '100%' }}>
-            <TapeContent tapeId={tapeData.tapeId} />
+            <TapeContent tapeId={tapeData.tapeId} tapeDate={tapeData.eDate} />
           </Box>
         </Box>
       </Box>

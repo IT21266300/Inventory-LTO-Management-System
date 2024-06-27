@@ -164,6 +164,8 @@ router.route('/updateTapeStatus/:tapeId').put(async (req, res) => {
   });
 });
 
+// tape contents manage
+
 router.route('/addTapeDetails').post(async (req, res) => {
   const { tapeId, date, remarks, tapeContent } = req.body;
 
@@ -190,6 +192,27 @@ router.route('/tapeContent/:tapeId').get(async (req, res) => {
     }
 
     return res.json(data);
+  });
+});
+
+
+
+router.route('/deleteTapeContent/:tapeId/:date').delete(async (req, res) => {
+  const { tapeId, date } = req.params;
+
+  const sql = 'DELETE FROM tapedetails WHERE tapeId = ? AND date = ?';
+  
+  db.query(sql, [tapeId, date], (err, result) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send({ status: 'Error with deleting tape', error: err.message });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).send({ status: 'Tape Content not found' });
+    }
+
+    return res.status(200).send({ status: 'Tape Content Deleted...!' });
   });
 });
 

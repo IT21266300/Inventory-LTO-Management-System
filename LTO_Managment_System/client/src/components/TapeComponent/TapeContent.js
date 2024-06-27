@@ -56,7 +56,7 @@ const reducer = (state, action) => {
   }
 };
 
-const TapeContentTable = ({ tapeId }) => {
+const TapeContentTable = ({ tapeId, tapeDate }) => {
   const navigate = useNavigate();
 
 
@@ -69,6 +69,11 @@ const TapeContentTable = ({ tapeId }) => {
     error: '',
   });
 
+  const [convertDate, setConvertDate] = useState();
+
+  useEffect(() => {
+    setConvertDate(tapeDate.substring(0, 10));
+  }, [tapeDate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,7 +92,6 @@ const TapeContentTable = ({ tapeId }) => {
     fetchData();
   }, []);
 
-  console.log(tapeData);
 
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -113,37 +117,39 @@ const TapeContentTable = ({ tapeId }) => {
     setAnchorEl(null);
   };
 
-  // const handleDelete = async () => {
-  //   setAnchorEl(null);
-  //   setOpenAlert(false);
-  //   try {
-  //     axios.delete(`/api/tape/delete/${passValue.tapeId}`);
-  //     toast.success('Data successfully deleted!', {
-  //       position: toast.POSITION.BOTTOM_RIGHT,
-  //     });
-  //     window.location.reload();
-  //   } catch (err) {
-  //     toast.error(err.message, {
-  //       position: toast.POSITION.BOTTOM_RIGHT,
-  //     });
-  //     console.log(err);
-  //   }
-  // };
+  const handleDelete = async () => {
+    setAnchorEl(null);
+    setOpenAlert(false);
+    try {
+      axios.delete(`/api/tape/deleteTapeContent/${tapeId}/${tapeDate}`);
+      toast.success('Tape Content deleted!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      window.location.reload();
+    } catch (err) {
+      toast.error(err.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      console.log(err);
+    }
+  };
 
-  // const [passValue, setPassValue] = useState({});
 
-  // useEffect(() => {
-  //   setPassValue(buttonClickedValue);
-  // }, [buttonClickedValue]);
+  const [passValue, setPassValue] = useState({});
+
+  useEffect(() => {
+    setPassValue(buttonClickedValue);
+  }, [buttonClickedValue]);
 
   // Handle navigation to the single tape details page
-  // const handleViewDetails = () => {
-  //   navigate(`/tape/${passValue.tapeId}`, { state: { data: passValue } });
-  // };
+  const handleViewDetails = () => {
+    navigate(`/tape/${passValue.tapeId}`, { state: { data: passValue } });
+  };
 
-  // useEffect(() => {
-  //   setPassValue(buttonClickedValue);
-  // }, [buttonClickedValue]);
+  useEffect(() => {
+    setPassValue(buttonClickedValue);
+  }, [buttonClickedValue]);
+
 
   const columns = [
     {
@@ -217,7 +223,7 @@ const TapeContentTable = ({ tapeId }) => {
     rows = tapeData.map((row, x) => ({
       id: x + 1,
       tapeId: row.tapeId,
-      date: row.date,
+      date: row.date.substring(0, 10),
       tapeContent: row.tapeContent,
       remarks: row.remarks,
     }));
@@ -292,20 +298,20 @@ const TapeContentTable = ({ tapeId }) => {
           />
         </Box>
 
-        {/* <ActionsMenu
+        <ActionsMenu
           anchorEl={anchorEl}
           open={open}
           handleClose={handleClose}
-          handleUpdate={handleUpdate}
+          // handleUpdate={handleUpdate}
           handleClickOpenAlert={handleClickOpenAlert}
           position={userInfo.position}
-        /> */}
+        />
 
-        {/* <DeleteAlertBox
+        <DeleteAlertBox
           openAlert={openAlert}
           handleCloseAlert={handleCloseAlert}
           handleDelete={handleDelete}
-        /> */}
+        />
       </Box>
     </Box>
   );
