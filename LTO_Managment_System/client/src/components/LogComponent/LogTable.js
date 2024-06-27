@@ -116,6 +116,18 @@ const LogTable = () => {
           m: '2rem 0',
         }}
       ></Box>
+      <Box sx={{ marginBottom: '1rem' }}>
+        <Button
+          variant="contained"
+          onClick={() => navigate(-1)}
+          sx={{
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[900],
+          }}
+        >
+          Back to Dashboard
+        </Button>
+      </Box>
       <Box
         height="100vh"
         width="75%"
@@ -166,18 +178,6 @@ const LogTable = () => {
         </Box>
       </Box>
       
-      <Box sx={{ marginBottom: '1rem' }}>
-        <Button
-          variant="contained"
-          onClick={() => navigate(-1)}
-          sx={{
-            backgroundColor: colorPalette.yellow[500],
-            color: colorPalette.black[900],
-          }}
-        >
-          Back to Dashboard
-        </Button>
-      </Box>
     </Box>
   );
 };

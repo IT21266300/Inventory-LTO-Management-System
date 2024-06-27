@@ -166,6 +166,18 @@ const StaffTables = ({ result, loading, error }) => {
     <Alert severity="error">{error}</Alert>
   ) : (
     <Box>
+      <Box sx={{ marginBottom: '1rem' }}>
+        <Button
+          variant="contained"
+          onClick={() => navigate(-1)}
+          sx={{
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[900],
+          }}
+        >
+          Back to Dashboard
+        </Button>
+      </Box>
       <Box
         sx={{
           display: 'flex',
