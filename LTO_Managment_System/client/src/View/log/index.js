@@ -1,11 +1,13 @@
 import React, { useReducer, useEffect } from 'react';
 import Header from 'components/Header';
 import axios from 'axios';
-import { Tabs, Tab, Box, tabsClasses, Divider } from '@mui/material';
+import { Tabs, Tab, Box, tabsClasses, Divider, IconButton } from '@mui/material';
 import LogTables from 'components/LogComponent/LogTable';
 import { Helmet } from 'react-helmet-async';
 import { colorPalette } from 'customTheme';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -21,6 +23,9 @@ const reducer = (state, action) => {
 };
 
 const Logs = () => {
+
+  const navigate = useNavigate();
+
   
   const [value, setValue] = React.useState(0);
   
@@ -54,7 +59,24 @@ const Logs = () => {
       <Helmet>
         <title>Log Management</title>
       </Helmet>
-      <Header title="Log Management" subtitle="Manage Logs" />
+      <Box sx={{ width: '100%', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <IconButton
+          onClick={() => navigate(-1)}
+          sx={{
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[500],
+            width: '40px',
+            height: '40px',
+            '&:hover': {
+              backgroundColor: colorPalette.yellow[400],
+              color: colorPalette.black[500],
+            },
+          }}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+        <Header title="Log Management" subtitle="Manage Logs" />
+      </Box>
       <LogTables/>
     </Box>
   );

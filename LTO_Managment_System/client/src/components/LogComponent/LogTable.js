@@ -107,27 +107,7 @@ const LogTable = () => {
   ) : error ? (
     <Alert severity="error">{error}</Alert>
   ) : (
-    <Box>
-      <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-          justifyContent: 'flex-end',
-          m: '2rem 0',
-        }}
-      ></Box>
-      <Box sx={{ marginBottom: '1rem' }}>
-        <Button
-          variant="contained"
-          onClick={() => navigate(-1)}
-          sx={{
-            backgroundColor: colorPalette.yellow[500],
-            color: colorPalette.black[900],
-          }}
-        >
-          Back to Dashboard
-        </Button>
-      </Box>
+    <Box sx={{marginTop: '1.4rem'}}>
       <Box
         height="100vh"
         width="75%"
