@@ -58,7 +58,11 @@ const routesConfig = [
 
       {
         path: '/profile',
-        element: <Profile />,
+        element:(
+          <RouteProtector>
+            <Profile />
+          </RouteProtector>
+      ),
       },
 
       {
@@ -72,7 +76,7 @@ const routesConfig = [
       {
         path: '/addStaff',
         element: (
-          <RouteProtector>
+          <RouteProtector allowedPositions={['as']}>
             <AddStaff />
           </RouteProtector>
         ),

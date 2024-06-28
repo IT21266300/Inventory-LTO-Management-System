@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
@@ -21,6 +21,7 @@ import textFieldSubStyles from 'styles/textFieldSubStyles';
 import textFieldStyles from 'styles/textFieldStyles';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import TapeContent from 'components/TapeComponent/TapeContent';
+import { Store } from 'store';
 
 const ViewTape = () => {
   const navigate = useNavigate();
@@ -28,6 +29,9 @@ const ViewTape = () => {
   const [tapeData, setTapeData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const { state } = useContext(Store);
+  const { userInfo } = state;
 
   // State for updating status
   const [backupStatus, setBackupStatus] = useState(null);
@@ -168,6 +172,7 @@ const ViewTape = () => {
                 sx={{
                   backgroundColor: colorPalette.black1[400],
                   color: '#fff',
+                  border: '1px solid #ffe404',
                 }}
               >
                 <MenuItem value={'Completed'}>Completed</MenuItem>
@@ -188,6 +193,7 @@ const ViewTape = () => {
                 sx={{
                   backgroundColor: colorPalette.black1[400],
                   color: '#fff',
+                  border: '1px solid #ffe404',
                 }}
               >
                 <MenuItem value="Completed">Completed</MenuItem>
@@ -206,6 +212,7 @@ const ViewTape = () => {
                 sx={{
                   backgroundColor: colorPalette.black1[400],
                   color: '#fff',
+                  border: '1px solid #ffe404',
                 }}
               >
                 <MenuItem value={'HO'}>Head Office</MenuItem>
@@ -249,26 +256,36 @@ const ViewTape = () => {
       </Box>
 
       {/* title component */}
-      <Box sx={{width: '100%', height: '20vh', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+      <Box
+        sx={{
+          width: '100%',
+          height: '20vh',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <Typography variant="h5" sx={{ color: '#fff' }}>
           Tape Details
         </Typography>
-        <Button
-          variant="contained"
-          onClick={handleAddNewTapeDetails} // Open the popup
-          sx={{
-            mt: '2rem',
-            backgroundColor: colorPalette.yellow[500],
-            color: colorPalette.black[900],
-          }}
-        >
-          Add New Tape Detail
-        </Button>
+        {userInfo.position === 'Admin' && (
+          <Button
+            variant="contained"
+            onClick={handleAddNewTapeDetails} // Open the popup
+            sx={{
+              mt: '2rem',
+              backgroundColor: colorPalette.yellow[500],
+              color: colorPalette.black[900],
+            }}
+          >
+            Add New Tape Detail
+          </Button>
+        )}
         <AddNewTapePopup
-            open={addNewTapePopupOpen}
-            onClose={handleCloseAddNewTapePopup}
-            tapeId={tapeData ? tapeData.tapeId : null} // Pass systemId if available
-          />
+          open={addNewTapePopupOpen}
+          onClose={handleCloseAddNewTapePopup}
+          tapeId={tapeData ? tapeData.tapeId : null} // Pass systemId if available
+        />
       </Box>
 
       {/* bottom component */}
@@ -279,7 +296,7 @@ const ViewTape = () => {
             display: 'flex',
             gap: '2rem',
             flexDirection: 'row',
-            [customTheme.breakpoints.down("md")]: {
+            [customTheme.breakpoints.down('md')]: {
               justifyContent: 'space-between',
               flexDirection: 'column',
             },
@@ -302,11 +319,11 @@ const ViewTape = () => {
                       elevation={1}
                       sx={{
                         padding: '1rem',
-                        borderRadius: '8px',
                         backgroundColor: 'transparent',
                         color: '#fff',
                         display: 'flex',
                         alignItems: 'center',
+                        borderBottom: '1px solid #ffe404',
                       }}
                     >
                       <Typography
@@ -327,11 +344,11 @@ const ViewTape = () => {
                       elevation={1}
                       sx={{
                         padding: '1rem',
-                        borderRadius: '8px',
                         backgroundColor: 'transparent',
                         color: '#fff',
                         display: 'flex',
                         alignItems: 'center',
+                        borderBottom: '1px solid #ffe404',
                       }}
                     >
                       <Typography
@@ -352,10 +369,10 @@ const ViewTape = () => {
                       elevation={1}
                       sx={{
                         padding: '1rem',
-                        borderRadius: '8px',
                         backgroundColor: 'transparent',
                         display: 'flex',
                         alignItems: 'center',
+                        borderBottom: '1px solid #ffe404',
                       }}
                     >
                       <Typography
@@ -376,10 +393,10 @@ const ViewTape = () => {
                       elevation={1}
                       sx={{
                         padding: '1rem',
-                        borderRadius: '8px',
                         backgroundColor: 'transparent',
                         display: 'flex',
                         alignItems: 'center',
+                        borderBottom: '1px solid #ffe404',
                       }}
                     >
                       <Typography
@@ -400,10 +417,10 @@ const ViewTape = () => {
                       elevation={1}
                       sx={{
                         padding: '1rem',
-                        borderRadius: '8px',
                         backgroundColor: 'transparent',
                         display: 'flex',
                         alignItems: 'center',
+                        borderBottom: '1px solid #ffe404',
                       }}
                     >
                       <Typography
@@ -424,10 +441,10 @@ const ViewTape = () => {
                       elevation={1}
                       sx={{
                         padding: '1rem',
-                        borderRadius: '8px',
                         backgroundColor: 'transparent',
                         display: 'flex',
                         alignItems: 'center',
+                        borderBottom: '1px solid #ffe404',
                       }}
                     >
                       <Typography
@@ -448,10 +465,10 @@ const ViewTape = () => {
                       elevation={1}
                       sx={{
                         padding: '1rem',
-                        borderRadius: '8px',
                         backgroundColor: 'transparent',
                         display: 'flex',
                         alignItems: 'center',
+                        borderBottom: '1px solid #ffe404',
                       }}
                     >
                       <Typography
@@ -472,10 +489,10 @@ const ViewTape = () => {
                       elevation={1}
                       sx={{
                         padding: '1rem',
-                        borderRadius: '8px',
                         backgroundColor: 'transparent',
                         display: 'flex',
                         alignItems: 'center',
+                        borderBottom: '1px solid #ffe404',
                       }}
                     >
                       <Typography
@@ -496,10 +513,10 @@ const ViewTape = () => {
                       elevation={1}
                       sx={{
                         padding: '1rem',
-                        borderRadius: '8px',
                         backgroundColor: 'transparent',
                         display: 'flex',
                         alignItems: 'center',
+                        borderBottom: '1px solid #ffe404',
                       }}
                     >
                       <Typography
@@ -524,7 +541,6 @@ const ViewTape = () => {
           </Box>
         </Box>
       </Box>
-
     </Box>
   );
 };

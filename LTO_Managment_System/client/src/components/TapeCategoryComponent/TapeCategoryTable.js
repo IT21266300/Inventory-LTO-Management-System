@@ -7,7 +7,14 @@ import {
   GridToolbarFilterButton,
   GridToolbarQuickFilter,
 } from '@mui/x-data-grid';
-import { Alert, Box, Button, Grid, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Typography,
+} from '@mui/material';
 
 import { colorPalette } from 'customTheme';
 import { useNavigate } from 'react-router-dom';
@@ -26,6 +33,7 @@ import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 import AddNewSystemPopup from './AddSystem';
 import TapeSubCategoryTable from 'components/TapeSubCategoryComponent/TapeSubCategoryTable';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const SystemTable = ({ result, loading, error }) => {
   const navigate = useNavigate();
@@ -201,28 +209,26 @@ const SystemTable = ({ result, loading, error }) => {
       sortable: false,
       filterable: false,
       renderCell: (params) => (
-        <Button
-          onClick={() => handleView(params)} // Pass params to handleView
+        <IconButton
+          aria-label="delete"
+          onClick={() => handleView(params)}
           sx={{
             backgroundColor: colorPalette.yellow[500],
             color: colorPalette.black[500],
-            fontSize: '14px',
-            fontWeight: 'bold',
-            padding: '10px 20px',
             '&:hover': {
-              backgroundColor: colorPalette.black[400],
-              color: colorPalette.secondary[100],
+              backgroundColor: colorPalette.yellow[400],
+              color: colorPalette.black[500],
             },
           }}
         >
-          <RemoveRedEyeIcon />
-        </Button>
+          <VisibilityIcon />
+        </IconButton>
       ),
     },
 
     {
       field: 'actions',
-      headerName: 'Add Subsystem',
+      headerName: 'Add Sub System',
       flex: 0.5,
       sortable: false,
       filterable: false,
@@ -235,14 +241,13 @@ const SystemTable = ({ result, loading, error }) => {
               color: colorPalette.black[500],
               fontSize: '12px',
               fontWeight: 'bold',
-              padding: '10px 12px',
               '&:hover': {
                 backgroundColor: colorPalette.black[400],
                 color: colorPalette.secondary[100],
               },
             }}
           >
-            Add Subsystem
+            Add Sub System
           </Button>
           {/* Add ActionButton here if needed */}
           {/* <ActionButton handleClick={handleClick} params={params} open={open} /> */}
@@ -301,18 +306,6 @@ const SystemTable = ({ result, loading, error }) => {
     <Grid container spacing={{ xs: 8, md: 3 }}>
       <Grid item xs={12} md={6}>
         <Box>
-        <Box sx={{ marginBottom: '1rem' }}>
-        <Button
-          variant="contained"
-          onClick={() => navigate(-1)}
-          sx={{
-            backgroundColor: colorPalette.yellow[500],
-            color: colorPalette.black[900],
-          }}
-        >
-          Back to Dashboard
-        </Button>
-      </Box>
           <Box
             sx={{
               display: 'flex',

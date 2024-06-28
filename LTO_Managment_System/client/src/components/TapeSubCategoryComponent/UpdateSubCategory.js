@@ -86,7 +86,7 @@ const UpdateSystemPopup = ({ systemData, open, onClose, onUpdateSuccess }) => { 
             value={formData.parentSystemId}
             fullWidth
             margin="normal"
-            disabled 
+             
             sx={{
               '& .MuiOutlinedInput-root': { color: '#fff', '& .MuiOutlinedInput-notchedOutline': { borderColor: '#ffe404' } },
               '& .MuiInputLabel-outlined': { color: '#fff' },

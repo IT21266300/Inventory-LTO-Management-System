@@ -240,6 +240,7 @@ const TapeSubCategoryTable = ({ result, loading, error, subsystemsdata }) => {
         sx={{
           '& .MuiDataGrid-cell': {
             borderBottom: 'none',
+            borderBottom: '1px solid #ccc',
             color: '#fff',
           },
           '& .MuiDataGrid-columnHeaders': {

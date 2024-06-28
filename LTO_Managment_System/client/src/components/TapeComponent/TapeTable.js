@@ -15,6 +15,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  IconButton,
   Menu,
   MenuItem,
   Skeleton,
@@ -212,27 +213,31 @@ const TapeTable = ({ result, loading, error }) => {
   columns.push({
     field: 'action',
     headerName: 'Actions',
-    flex: 0.5,
+    flex: userInfo.position === 'Admin' ? 0.5 : 0.3,
     sortable: false,
     filterable: false,
+    textAlign: 'center',
     renderCell: (params) => (
       <Box>
-        <ActionButton handleClick={handleClick} params={params} open={open} />
+        {userInfo.position === 'Admin' && (
+          <ActionButton handleClick={handleClick} params={params} open={open}/>
+        )}
         <Link
           to={`/tape/${params.row.tapeId}`}
           style={{ textDecoration: 'none' }}
         >
-          <Button
-            variant="contained"
-            size="medium"
-            startIcon={<VisibilityIcon />}
+          <IconButton
             sx={{
-              ml: 1,
               backgroundColor: colorPalette.yellow[500],
-              color: colorPalette.black[900],
-              Color: colorPalette.black[300],
+              color: colorPalette.black[500],
+              '&:hover': {
+                backgroundColor: colorPalette.yellow[400],
+                color: colorPalette.black[500],
+              },
             }}
-          ></Button>
+          >
+            <VisibilityIcon />
+          </IconButton>
         </Link>
       </Box>
     ),
@@ -272,18 +277,6 @@ const TapeTable = ({ result, loading, error }) => {
     <Alert severity="error">{error}</Alert>
   ) : (
     <Box>
-        <Box sx={{ marginBottom: '1rem' }}>
-        <Button
-          variant="contained"
-          onClick={() => navigate(-1)}
-          sx={{
-            backgroundColor: colorPalette.yellow[500],
-            color: colorPalette.black[900],
-          }}
-        >
-          Back to Dashboard
-        </Button>
-      </Box>
       <Box
         sx={{
           display: 'flex',
@@ -292,7 +285,6 @@ const TapeTable = ({ result, loading, error }) => {
           m: '2rem 0',
         }}
       >
-        
         <Button
           onClick={() => {
             navigate('/newTape');
