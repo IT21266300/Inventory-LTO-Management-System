@@ -1,11 +1,13 @@
 import React, { useReducer, useEffect } from 'react';
 import Header from 'components/Header';
 import axios from 'axios';
-import { Tabs, Tab, Box, tabsClasses, Divider } from '@mui/material';
+import { Tabs, Tab, Box, tabsClasses, Divider, IconButton } from '@mui/material';
 import CategoryTable from 'components/TapeCategoryComponent/TapeCategoryTable';
 import { Helmet } from 'react-helmet-async';
 import { colorPalette } from 'customTheme';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -21,6 +23,9 @@ const reducer = (state, action) => {
 };
 
 const Systems = () => {
+
+  const navigate = useNavigate();
+
   const tabs = [
     {
       id: '1',
@@ -68,7 +73,25 @@ const Systems = () => {
       <Helmet>
         <title>System Management</title>
       </Helmet>
-      <Header title="System Management" subtitle="Manage Systems" />
+      
+      <Box sx={{ width: '100%', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <IconButton
+          onClick={() => navigate(-1)}
+          sx={{
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[500],
+            width: '40px',
+            height: '40px',
+            '&:hover': {
+              backgroundColor: colorPalette.yellow[400],
+              color: colorPalette.black[500],
+            },
+          }}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+        <Header title="System Management" subtitle="Manage Systems" />
+      </Box>
 
 
 

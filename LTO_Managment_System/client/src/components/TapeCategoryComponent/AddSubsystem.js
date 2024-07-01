@@ -66,7 +66,7 @@ const AddSubsystemPopup = ({
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle sx={{ bgcolor: colorPalette.black[500], color: '#fff' }}>
-        Add New Subsystem
+        Add New Sub system
       </DialogTitle>
       <DialogContent sx={{ background: colorPalette.black[500]}}>
         <form onSubmit={handleFormSubmit}>
@@ -88,6 +88,7 @@ const AddSubsystemPopup = ({
             fullWidth
             margin="normal"
             required
+            aria-readonly
             sx={{
               input: { color: '#fff' },
               label: { color: '#fff' },

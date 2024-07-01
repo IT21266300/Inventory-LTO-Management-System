@@ -6,6 +6,7 @@ const textFieldSubStyles = {
 
   '& .MuiOutlinedInput-root': {
     color: '#fff', // Default text color
+    backgroundColor: colorPalette.black1[400],
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: colorPalette.yellow[500], // Default border color
     },
@@ -39,7 +40,7 @@ const textFieldSubStyles = {
   '& .MuiFormHelperText-root': {
     color: colorPalette.yellow[500], // Set your desired color here
     fontSize: '0.8rem',
-  }
+  },
 };
 
 export default textFieldSubStyles;

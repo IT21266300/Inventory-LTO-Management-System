@@ -1,11 +1,13 @@
 import React, { useReducer, useEffect } from 'react';
 import Header from 'components/Header';
 import axios from 'axios';
-import { Tabs, Tab, Box, tabsClasses, Divider } from '@mui/material';
+import { Tabs, Tab, Box, tabsClasses, Divider, IconButton } from '@mui/material';
 import StaffTables from 'components/StaffComponents/StaffTables';
 import { Helmet } from 'react-helmet-async';
 import { colorPalette } from 'customTheme';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -21,6 +23,8 @@ const reducer = (state, action) => {
 };
 
 const Staff = () => {
+  const navigate = useNavigate();
+
   const tabs = [
     {
       id: '1',
@@ -68,7 +72,24 @@ const Staff = () => {
       <Helmet>
         <title>Staff Management</title>
       </Helmet>
-      <Header title="Staff Management" subtitle="Manage Staff" />
+      <Box sx={{ width: '100%', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <IconButton
+          onClick={() => navigate(-1)}
+          sx={{
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[500],
+            width: '40px',
+            height: '40px',
+            '&:hover': {
+              backgroundColor: colorPalette.yellow[400],
+              color: colorPalette.black[500],
+            },
+          }}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+        <Header title="Staff Management" subtitle="Manage Staff" />
+      </Box>
 
 
       {tabName.col === 'staff' && <StaffTables result={staffData} loading={loading} error={error} />}

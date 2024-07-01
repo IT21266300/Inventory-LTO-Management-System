@@ -1,5 +1,5 @@
-import { Button } from "@mui/material";
-import { colorPalette } from "customTheme";
+import { Button } from '@mui/material';
+import { colorPalette } from 'customTheme';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function ActionButton({ handleClick, params, open }) {
@@ -17,10 +17,10 @@ export default function ActionButton({ handleClick, params, open }) {
       sx={{
         backgroundColor: colorPalette.yellow[500],
         color: colorPalette.black1[500],
-        
-              fontSize: "12px", // Adjust font size as needed
-              fontWeight: "bold",
-        padding: "9px 12px",
+
+        fontSize: '12px', // Adjust font size as needed
+        fontWeight: 'bold',
+        marginRight: '0.5rem',
         '&:hover': {
           backgroundColor: colorPalette.yellow[500],
           color: colorPalette.black1[500],
