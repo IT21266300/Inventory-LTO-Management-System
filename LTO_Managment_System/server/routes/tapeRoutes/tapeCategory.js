@@ -64,7 +64,7 @@ router.route('/:systemId').get(async (req, res) => {
 // Get Subsystems for a System
 router.route('/subsystems/:systemId').get(async (req, res) => {
   const { systemId } = req.params;
-  const sql = 'SELECT * FROM SubSystem WHERE parentSystemId = ?';
+  const sql = 'SELECT * FROM SubSystems WHERE parentSystemId = ?';
 
   db.query(sql, [systemId], (err, data) => {
     if (err) return res.status(500).json({ error: err.message });
@@ -88,7 +88,7 @@ router.route('/addSubSystem').post(async (req, res) => {
   });
 
   // Check if the sub system name already exists
-  const checkSql = 'SELECT * FROM SubSystem WHERE subSysName = ? AND parentSystemId = ?';
+  const checkSql = 'SELECT * FROM SubSystems WHERE subSysName = ? AND parentSystemId = ?';
   db.query(checkSql, [sanitizedSubSysName, parentSystemId], (err, results) => {
     if (err) return res.status(500).json({ message: err.message });
 
@@ -97,7 +97,7 @@ router.route('/addSubSystem').post(async (req, res) => {
     }
 
     // Insert the new sub system
-    const insertSql = 'INSERT INTO SubSystem (subSysName, parentSystemId) VALUES (?, ?)';
+    const insertSql = 'INSERT INTO SubSystems (subSysName, parentSystemId) VALUES (?, ?)';
     db.query(insertSql, [sanitizedSubSysName, parentSystemId], (err, result) => {
       if (err) return res.status(400).json({ message: err.message });
       return res.json({ message: 'Sub System Added..!' });

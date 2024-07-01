@@ -43,7 +43,6 @@ import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility'; // Import the icon for viewing
-import SearchComponent from 'components/SearchComponent';
 
 const TapeTable = ({ result, loading, error }) => {
   const navigate = useNavigate();

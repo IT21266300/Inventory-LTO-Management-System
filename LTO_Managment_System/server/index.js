@@ -57,7 +57,7 @@ app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 app.use(morgan('common'));
 app.use(cors());
 
-const PORT = process.env.PORT || 3308;
+const PORT = process.env.PORT || 3306;
 
 // Middleware for logging staff activities
 app.use((req, res, next) => {
