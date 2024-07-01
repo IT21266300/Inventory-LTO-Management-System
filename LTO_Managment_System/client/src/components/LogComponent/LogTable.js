@@ -10,7 +10,6 @@ import { colorPalette } from 'customTheme';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import Search from 'components/SearchComponent/SearchAction'; // Your existing Search component
 import DownloadIcon from '@mui/icons-material/Download';
 import { Store } from 'store';
 import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTwo';
@@ -23,7 +22,6 @@ const LogTable = () => {
   const [logFiles, setLogFiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState(''); // State for search term
 
   // Fetch log files from server
   useEffect(() => {
@@ -39,19 +37,6 @@ const LogTable = () => {
     };
     fetchLogFiles();
   }, []);
-
-  // Function to handle search
-  const handleSearch = async (searchTerm) => {
-    setLoading(true);
-    try {
-      const response = await axios.get(`/api/logs/search?query=${encodeURIComponent(searchTerm)}`); // Replace with your server search endpoint
-      setLogFiles(response.data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleDownload = (fileName) => {
     axios.get(`/api/logs/download/${fileName}`, { responseType: 'blob' }) // Replace with your server endpoint
@@ -144,7 +129,6 @@ const LogTable = () => {
         >
           Back to Dashboard
         </Button>
-        <Search onSearch={setSearchTerm} onSearchSubmit={handleSearch} />  {/* Your Search component */}
       </Box>
       <Box
         height="100vh"
