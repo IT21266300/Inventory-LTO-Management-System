@@ -35,6 +35,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useContext } from 'react';
 import { Store } from 'store';
+import Search from 'components/SearchComponent/SearchAction';
 import ActionButton from 'components/ActionsComponent/ActionButton';
 import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTwo';
 import DownloadActions from 'components/DownloadComponent/DownloadActions';
@@ -42,6 +43,7 @@ import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility'; // Import the icon for viewing
+import SearchComponent from 'components/SearchComponent';
 
 const TapeTable = ({ result, loading, error }) => {
   const navigate = useNavigate();
@@ -277,6 +279,19 @@ const TapeTable = ({ result, loading, error }) => {
     <Alert severity="error">{error}</Alert>
   ) : (
     <Box>
+        <Box sx={{ marginBottom: '1rem' }}>
+        <Button
+          variant="contained"
+          onClick={() => navigate(-1)}
+          sx={{
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[900],
+          }}
+        >
+          Back to Dashboard
+        </Button>
+        <Search></Search>
+      </Box>
       <Box
         sx={{
           display: 'flex',

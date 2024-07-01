@@ -1,3 +1,4 @@
+// backend/index.js
 // Import Packages
 import express from 'express';
 import cors from 'cors';
@@ -186,6 +187,33 @@ app.get('/api/logs/download/:fileName', (req, res) => {
   const fileName = req.params.fileName;
   const filePath = path.join(logDir, fileName);
   res.sendFile(filePath);
+});
+
+// **New Route for Search (search by filename)**
+app.get('/api/logs/search', (req, res) => {
+  const query = req.query.query; // Get the search term from the query parameter
+
+  fs.readdir(logDir, (err, files) => {
+    if (err) {
+      logger.error('Error reading log files:', err); // Log the error
+      res.status(500).send('Error reading log files');
+      return;
+    }
+
+    // Filter log files based on the query (filename)
+    const matchingFiles = files.filter(file => {
+      // Simple search logic - check if file name contains the query
+      return file.toLowerCase().includes(query.toLowerCase()); 
+    });
+
+    // Create an array of log file objects
+    const logFiles = matchingFiles.map(file => ({
+      fileName: file,
+      createdAt: fs.statSync(path.join(logDir, file)).birthtime
+    }));
+
+    res.json(logFiles); // Send the filtered log files as JSON
+  });
 });
 
 // Router calls

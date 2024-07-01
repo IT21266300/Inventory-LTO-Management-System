@@ -1,3 +1,4 @@
+// frontend/src/components/LogComponent/LogTable.js
 import React, { useEffect, useState, useContext } from 'react';
 import { DataGrid, GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import {
@@ -9,7 +10,6 @@ import { colorPalette } from 'customTheme';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
 import DownloadIcon from '@mui/icons-material/Download';
 import { Store } from 'store';
 import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTwo';
@@ -82,14 +82,16 @@ const LogTable = () => {
       sortable: false,
       filterable: false,
       renderCell: (params) => (
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={<DownloadIcon />}
-          onClick={() => handleDownload(params.row.fileName)}
-        >
-          Download
-        </Button>
+        <div>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<DownloadIcon />}
+            onClick={() => handleDownload(params.row.fileName)}
+          >
+            Download
+          </Button>
+        </div>
       ),
     });
   }
