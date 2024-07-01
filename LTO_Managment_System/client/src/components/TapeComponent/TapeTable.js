@@ -35,6 +35,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useContext } from 'react';
 import { Store } from 'store';
+import Search from 'components/SearchComponent/SearchAction';
 import ActionButton from 'components/ActionsComponent/ActionButton';
 import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTwo';
 import DownloadActions from 'components/DownloadComponent/DownloadActions';
@@ -277,6 +278,19 @@ const TapeTable = ({ result, loading, error }) => {
     <Alert severity="error">{error}</Alert>
   ) : (
     <Box>
+        <Box sx={{ marginBottom: '1rem' }}>
+        <Button
+          variant="contained"
+          onClick={() => navigate(-1)}
+          sx={{
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[900],
+          }}
+        >
+          Back to Dashboard
+        </Button>
+        <Search></Search>
+      </Box>
       <Box
         sx={{
           display: 'flex',
