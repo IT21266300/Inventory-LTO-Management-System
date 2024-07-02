@@ -263,34 +263,58 @@ router.route('/deleteTapeContent/:tapeId/:date').delete(async (req, res) => {
   });
 });
 
+// Search for Tapes
+router.post('/search', async (req, res) => {
+  try {
+    const { tapeId, systemName, applicationName, backupStatus, mediaType, tapeStatus, startDate, endDate, location } = req.body;
+
+    // Build your SQL query based on the search criteria 
+    let sql = 'SELECT * FROM Tape WHERE 1=1'; // Start with 'WHERE 1=1' for easy appending
+    const params = [];
+
+    if (tapeId) {
+      sql += ' AND tapeId = ?';
+      params.push(tapeId);
+    }
+    if (systemName) {
+      sql += ' AND sysName LIKE ?';
+      params.push(`%${systemName}%`);
+    }
+    if (applicationName) {
+      sql += ' AND subSysName LIKE ?';
+      params.push(`%${applicationName}%`);
+    }
+    if (backupStatus) {
+      sql += ' AND bStatus = ?';
+      params.push(backupStatus);
+    }
+    if (mediaType) {
+      sql += ' AND mType = ?';
+      params.push(mediaType);
+    }
+    if (tapeStatus) {
+      sql += ' AND tStatus = ?';
+      params.push(tapeStatus);
+    }
+    if (startDate) {
+      sql += ' AND sDate >= ?';
+      params.push(startDate);
+    }
+    if (endDate) {
+      sql += ' AND eDate <= ?';
+      params.push(endDate);
+    }
+    if (location) {
+      sql += ' AND lStatus = ?';
+      params.push(location);
+    }
+
+    const [results] = await db.query(sql, params);
+    res.json(results);
+  } catch (err) {
+    console.error('Error searching for tapes:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 export default router;
-
-
-
-// 1. Get all subsystems (from all systems)
-// router.route('/subsystems').get(async (req, res) => {
-//   const sql = 'SELECT * FROM subSystem';
-//   db.query(sql, (err, data) => {
-//     if (err) return res.json(err, "hello");
-//     return res.json(data);
-//   });
-// });
-
-// 2. Get a specific subsystem by subSysId
-// router.route('/subsystems/:subSysId').get(async (req, res) => {
-//   const { subSysId } = req.params;
-
-//   try {
-//     const sql = 'SELECT * FROM SubSystem WHERE subSysId = ?';
-//     const [data] = await db.query(sql, [subSysId]);
-
-//     if (data.length === 0) {
-//       return res.status(404).json({ message: 'Subsystem not found' });
-//     }
-
-//     res.json(data[0]);
-//   } catch (err) {
-//     console.error('Error fetching subsystem:', err);
-//     res.status(500).json({ message: 'Failed to fetch subsystem' });
-//   }
-// });

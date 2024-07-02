@@ -23,9 +23,8 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { colorPalette } from 'customTheme';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -44,9 +43,8 @@ import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility'; // Import the icon for viewing
 
-const TapeTable = ({ result, loading, error }) => {
+const TapeTable = () => {
   const navigate = useNavigate();
-
   const { state } = useContext(Store);
   const { userInfo } = state;
 
@@ -58,14 +56,12 @@ const TapeTable = ({ result, loading, error }) => {
     setOpenAlert(true);
     setAnchorEl(null);
   };
-  console.log(result);
 
-  const handleCloseAlert = () => {
+  const handleCloseAlert = () => { 
     setOpenAlert(false);
   };
 
   const [buttonClickedValue, setButtonClickedValue] = useState({});
-
   const handleClick = (event, params) => {
     setAnchorEl(event.currentTarget);
     setButtonClickedValue(params.row);
@@ -96,19 +92,45 @@ const TapeTable = ({ result, loading, error }) => {
   };
 
   const [passValue, setPassValue] = useState({});
-
   useEffect(() => {
     setPassValue(buttonClickedValue);
   }, [buttonClickedValue]);
 
-  // Handle navigation to the single tape details page
   const handleViewDetails = () => {
     navigate(`/tape/${passValue.tapeId}`, { state: { data: passValue } });
   };
 
+  const [tapes, setTapes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
   useEffect(() => {
-    setPassValue(buttonClickedValue);
-  }, [buttonClickedValue]);
+    const fetchTapes = async () => {
+      try {
+        const response = await axios.get('/api/tape'); // Replace with your actual API endpoint
+        setTapes(response.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTapes();
+  }, []);
+
+  const handleSearch = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.get(`/api/tape/search?query=${searchQuery}`); // Replace with your actual API endpoint for search
+      setTapes(response.data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const columns = [
     {
@@ -209,8 +231,6 @@ const TapeTable = ({ result, loading, error }) => {
     },
   ];
 
-  // console.log("info", userInfo);
-
   columns.push({
     field: 'action',
     headerName: 'Actions',
@@ -221,7 +241,11 @@ const TapeTable = ({ result, loading, error }) => {
     renderCell: (params) => (
       <Box>
         {userInfo.position === 'Admin' && (
-          <ActionButton handleClick={handleClick} params={params} open={open}/>
+          <ActionButton
+            handleClick={handleClick}
+            params={params}
+            open={open}
+          />
         )}
         <Link
           to={`/tape/${params.row.tapeId}`}
@@ -251,24 +275,19 @@ const TapeTable = ({ result, loading, error }) => {
     pdfColumn = columns.slice(1);
   }
 
-  console.log(result);
-
-  let rows = {};
-  if (result !== undefined) {
-    rows = result.map((row, x) => ({
-      id: x + 1,
-      tapeId: row.tapeId,
-      sysName: row.sysName,
-      sysId: row.sysId,
-      subSysName: row.subSysName,
-      bStatus: row.bStatus,
-      mType: row.mType,
-      tStatus: row.tStatus,
-      sDate: row.sDate,
-      eDate: row.eDate,
-      lStatus: row.lStatus,
-    }));
-  }
+  let rows = tapes.map((row, x) => ({
+    id: x + 1,
+    tapeId: row.tapeId,
+    sysName: row.sysName,
+    sysId: row.sysId,
+    subSysName: row.subSysName,
+    bStatus: row.bStatus,
+    mType: row.mType,
+    tStatus: row.tStatus,
+    sDate: row.sDate,
+    eDate: row.eDate,
+    lStatus: row.lStatus,
+  }));
 
   return loading ? (
     <Box width="100%">
@@ -278,7 +297,7 @@ const TapeTable = ({ result, loading, error }) => {
     <Alert severity="error">{error}</Alert>
   ) : (
     <Box>
-        <Box sx={{ marginBottom: '1rem' }}>
+      <Box sx={{ marginBottom: '1rem' }}>
         <Button
           variant="contained"
           onClick={() => navigate(-1)}
@@ -289,7 +308,10 @@ const TapeTable = ({ result, loading, error }) => {
         >
           Back to Dashboard
         </Button>
-        <Search></Search>
+        <Search
+          //onSearch={handleSearch} // Call handleSearch when the search button is clicked
+          //setSearchQuery={setSearchQuery} // Update searchQuery when the search input changes
+        />
       </Box>
       <Box
         sx={{
@@ -398,7 +420,7 @@ const TapeTable = ({ result, loading, error }) => {
 
         <DeleteAlertBox
           openAlert={openAlert}
-          handleCloseAlert={handleCloseAlert}
+          handleCloseAlert={handleCloseAlert} // Pass the function as a prop 
           handleDelete={handleDelete}
         />
       </Box>
