@@ -82,5 +82,10 @@ CREATE TABLE `WinstonTest`.`sys_logs_default` (
 );
 
 
+CREATE TABLE TapeInventory (
+    tapeName VARCHAR(100) PRIMARY KEY,
+    tapeQuantity INT  
+);
+
 
 npm install sanitize-html
