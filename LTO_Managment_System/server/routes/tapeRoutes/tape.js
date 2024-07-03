@@ -172,9 +172,6 @@ router.route('/updateTape/:tapeId').put(async (req, res) => {
   });
 });
 
-
-
-
 //update tape status
 
 router.route('/updateTapeStatus/:tapeId').put(async (req, res) => {
@@ -264,57 +261,58 @@ router.route('/deleteTapeContent/:tapeId/:date').delete(async (req, res) => {
 });
 
 // Search for Tapes
-router.post('/search', async (req, res) => {
-  try {
-    const { tapeId, systemName, applicationName, backupStatus, mediaType, tapeStatus, startDate, endDate, location } = req.body;
+// router.post('/search', async (req, res) => {
+//   try {
+//     const { tapeId, systemName, applicationName, backupStatus, mediaType, tapeStatus, startDate, endDate, location } = req.body;
 
-    // Build your SQL query based on the search criteria 
-    let sql = 'SELECT * FROM Tape WHERE 1=1'; // Start with 'WHERE 1=1' for easy appending
-    const params = [];
+//     // Build your SQL query based on the search criteria 
 
-    if (tapeId) {
-      sql += ' AND tapeId = ?';
-      params.push(tapeId);
-    }
-    if (systemName) {
-      sql += ' AND sysName LIKE ?';
-      params.push(`%${systemName}%`);
-    }
-    if (applicationName) {
-      sql += ' AND subSysName LIKE ?';
-      params.push(`%${applicationName}%`);
-    }
-    if (backupStatus) {
-      sql += ' AND bStatus = ?';
-      params.push(backupStatus);
-    }
-    if (mediaType) {
-      sql += ' AND mType = ?';
-      params.push(mediaType);
-    }
-    if (tapeStatus) {
-      sql += ' AND tStatus = ?';
-      params.push(tapeStatus);
-    }
-    if (startDate) {
-      sql += ' AND sDate >= ?';
-      params.push(startDate);
-    }
-    if (endDate) {
-      sql += ' AND eDate <= ?';
-      params.push(endDate);
-    }
-    if (location) {
-      sql += ' AND lStatus = ?';
-      params.push(location);
-    }
+//     let sql = 'SELECT * FROM Tape WHERE 1=1'; // Start with 'WHERE 1=1' for easy appending
+//     const params = [];
 
-    const [results] = await db.query(sql, params);
-    res.json(results);
-  } catch (err) {
-    console.error('Error searching for tapes:', err);
-    res.status(500).json({ error: err.message });
-  }
-});
+//     if (tapeId) {
+//       sql += ' AND tapeId = ?';
+//       params.push(tapeId);
+//     }
+//     if (systemName) {
+//       sql += ' AND sysName LIKE ?';
+//       params.push(`%${systemName}%`);
+//     }
+//     if (applicationName) {
+//       sql += ' AND subSysName LIKE ?';
+//       params.push(`%${applicationName}%`);
+//     }
+//     if (backupStatus) {
+//       sql += ' AND bStatus = ?';
+//       params.push(backupStatus);
+//     }
+//     if (mediaType) {
+//       sql += ' AND mType = ?';
+//       params.push(mediaType);
+//     }
+//     if (tapeStatus) {
+//       sql += ' AND tStatus = ?';
+//       params.push(tapeStatus);
+//     }
+//     if (startDate) {
+//       sql += ' AND sDate >= ?';
+//       params.push(startDate);
+//     }
+//     if (endDate) {
+//       sql += ' AND eDate <= ?';
+//       params.push(endDate);
+//     }
+//     if (location) {
+//       sql += ' AND lStatus = ?';
+//       params.push(location);
+//     }
+
+//     const [results] = await db.query(sql, params);
+//     res.json(results);
+//   } catch (err) {
+//     console.error('Error searching for tapes:', err);
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
 export default router;
