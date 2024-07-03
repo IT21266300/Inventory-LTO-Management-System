@@ -39,8 +39,7 @@ CREATE TABLE Systems (
     sysId INT AUTO_INCREMENT PRIMARY KEY,
     sysName VARCHAR(255) NOT NULL UNIQUE
 );
-
--- New SubSystem table
+-- New SubSystems table
 CREATE TABLE SubSystems (
     subSysId INT AUTO_INCREMENT PRIMARY KEY,
     subSysName VARCHAR(255) NOT NULL, 

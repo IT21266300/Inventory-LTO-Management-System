@@ -95,6 +95,8 @@ const TapeTable = ({ result, loading, error }) => {
     }
   };
 
+  
+
   const [passValue, setPassValue] = useState({});
 
   useEffect(() => {
