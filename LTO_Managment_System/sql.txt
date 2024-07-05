@@ -61,7 +61,8 @@ CREATE TABLE Tape (
     tStatus VARCHAR(50),
     sDate DATE,
     eDate DATE,
-    lStatus VARCHAR(50)
+    lStatus VARCHAR(50),
+    isReUse TINYINT(1) DEFAULT 0
 );
 
 CREATE TABLE `WinstonTest`.`sys_logs_default` (

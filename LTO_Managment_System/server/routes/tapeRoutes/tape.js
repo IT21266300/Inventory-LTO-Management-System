@@ -263,6 +263,45 @@ router.route('/deleteTapeContent/:tapeId/:date').delete(async (req, res) => {
   });
 });
 
+
+router.route('/changeTapeStatus/:tapeId').put(async (req, res) => {
+  const tapeId = req.params.tapeId;
+
+  // Check if the tape ID exists
+  const checkSql = 'SELECT * FROM Tape WHERE tapeId = ?';
+  db.query(checkSql, [tapeId], (checkErr, checkResult) => {
+    if (checkErr) {
+      console.error(checkErr.message);
+      return res.status(500).json({ message: 'Error with checking tape', error: checkErr.message });
+    }
+
+    if (checkResult.length === 0) {
+      return res.status(404).json({ message: 'Tape not found' });
+    }
+
+    if (checkResult[0].isReUse === 1) {
+      return res.status(404).json({ message: 'Already Reuse' });
+    }
+
+    // Update the tape status record
+    const updateSql = 'UPDATE Tape SET isReUse = ?';
+    db.query(updateSql, [1], (updateErr, updateResult) => {
+      if (updateErr) {
+        console.error(updateErr.message);
+        return res.status(400).json({ message: 'Error with updating tape', error: updateErr.message });
+      }
+
+      if (updateResult.affectedRows === 0) {
+        return res.status(404).json({ message: 'Tape not found' });
+      }
+
+      return res.status(200).json({ message: 'Tape Updated', checkResult});
+
+    });
+    
+  });
+});
+
 export default router;
 
 

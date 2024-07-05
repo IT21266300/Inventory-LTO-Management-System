@@ -43,6 +43,7 @@ import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility'; // Import the icon for viewing
+import SelectTapeStock from './SelectTape';
 
 const TapeTable = ({ result, loading, error }) => {
   const navigate = useNavigate();
@@ -272,6 +273,18 @@ const TapeTable = ({ result, loading, error }) => {
     }));
   }
 
+  //=======================================================================
+  const [openForm, setOpenForm] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenForm(true);
+  };
+
+  const handleClickClose = () => {
+    setOpenForm(false);
+  };
+
+  // =========================================================================
   return loading ? (
     <Box width="100%">
       <LoadingAnimation />
@@ -302,9 +315,7 @@ const TapeTable = ({ result, loading, error }) => {
         }}
       >
         <Button
-          onClick={() => {
-            navigate('/newTape');
-          }}
+          onClick={handleClickOpen}
           sx={{
             backgroundColor: colorPalette.yellow[500],
             color: colorPalette.black[500],
@@ -403,6 +414,7 @@ const TapeTable = ({ result, loading, error }) => {
           handleCloseAlert={handleCloseAlert}
           handleDelete={handleDelete}
         />
+        <SelectTapeStock open={openForm} handleClickClose={handleClickClose}/>
       </Box>
     </Box>
   );
