@@ -9,9 +9,9 @@ const RouteProtector = ({ children, allowedPositions }) => {
   const { state } = useContext(Store);
   const { userInfo } = state;
 
-  // if (!userInfo) {
-  //   return <Navigate to="/signin" state={{path: location.pathname}}/>;
-  // }
+  if (!userInfo) {
+    return <Navigate to="/signin" state={{path: location.pathname}}/>;
+  }
 
   if (!userInfo && !allowedPositions.includes(userInfo.position)) {
     return <Navigate to="/unauthorized" />;

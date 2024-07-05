@@ -68,8 +68,8 @@ const SelectTapeStock = ({ open, onClose, tapeId }) => {
         {showReuseForm && ( // Show the reuse form if showReuseForm is true
           <form onSubmit={submitHandler}>
             <TextField
-              name="tapeReuse"
-              label="Tape Content"
+              name="tapeId"
+              label="Tape ID"
               variant="outlined"
               multiline
               rows={4}
