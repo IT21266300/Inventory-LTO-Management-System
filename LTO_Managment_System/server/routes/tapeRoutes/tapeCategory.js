@@ -196,7 +196,7 @@ router.route('/updateSubSystem/:subSysId').put(async (req, res) => {
   });
 
   // Check if the updated sub system name already exists
-  const checkSql = 'SELECT * FROM SubSystem WHERE subSysName = ? AND subSysId != ? AND parentSystemId = ?';
+  const checkSql = 'SELECT * FROM SubSystems WHERE subSysName = ? AND subSysId != ? AND parentSystemId = ?';
   db.query(checkSql, [sanitizedSubSysName, subSysId, parentSystemId], (checkErr, checkResult) => {
     if (checkErr) {
       console.error(checkErr.message);
