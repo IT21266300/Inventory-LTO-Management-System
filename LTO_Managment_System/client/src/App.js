@@ -30,6 +30,10 @@ function App() {
   const { state } = useContext(Store);
   const { userInfo } = state;
 
+if(userInfo){
+  localStorage.setItem("userPosition", userInfo.position);
+}
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="app">

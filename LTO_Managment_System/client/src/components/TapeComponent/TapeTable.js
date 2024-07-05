@@ -291,7 +291,7 @@ const TapeTable = ({ result, loading, error }) => {
         >
           Back to Dashboard
         </Button>
-        <Search></Search>
+        <Search/>
       </Box>
       <Box
         sx={{
