@@ -174,7 +174,7 @@ const routesConfig = [
         ),
       },
       {
-        path: "/addStock",
+        path: "/inventory",
         element: (
           <RouteProtector>
             <TapeStock />
