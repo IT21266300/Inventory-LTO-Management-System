@@ -301,6 +301,58 @@ router.route('/changeTapeStatus/:tapeId').put(async (req, res) => {
     
   });
 });
+// Route to add new tapes to stock
+router.post('/tapes', async (req, res) => {
+  const { tapeName, tapeQuantity } = req.body; 
+
+  try {
+    // 1. Validate Input (Important! - Add more validation as needed)
+    if (!tapeName || !tapeQuantity) {
+      return res.status(400).json({ message: 'Tape name and quantity are required' });
+    }
+
+    // 2. Check if Tape Already Exists in Inventory
+    const [existingTape] = await db.query('SELECT * FROM TapeInventory WHERE tapeName = ?', [tapeName]);
+
+    if (existingTape.length > 0) {
+      // If the tape exists, update the quantity
+      const newQuantity = existingTape[0].tapeQuantity + parseInt(tapeQuantity, 10);
+      const updateSql = 'UPDATE TapeInventory SET tapeQuantity = ? WHERE tapeName = ?';
+      await db.query(updateSql, [newQuantity, tapeName]);
+      return res.json({ message: `Tape quantity updated: ${tapeName} - Quantity: ${newQuantity}` });
+    } else {
+      // If the tape doesn't exist, insert a new record
+      const insertSql = 'INSERT INTO TapeInventory (tapeName, tapeQuantity) VALUES (?, ?)';
+      await db.query(insertSql, [tapeName, tapeQuantity]);
+      return res.json({ message: 'New tape added to inventory successfully' });
+    }
+  } catch (err) {
+    console.error('Error adding/updating tape inventory:', err);
+    res.status(500).json({ message: 'Failed to add/update tape inventory' });
+  }
+});
+
+// Route to get the list of tape names for the dropdown
+router.get('/tape-names', async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT DISTINCT tapeName FROM TapeInventory');
+    const tapeNames = rows.map(row => row.tapeName);
+    res.json(tapeNames);
+  } catch (err) {
+    console.error('Error fetching tape names:', err);
+    res.status(500).json({ message: 'Failed to fetch tape names' });
+  }
+});
+
+router.route('/tapestock').get((req, res) => {
+  const sql = 'SELECT * FROM tapeinventory';
+  db.query(sql, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+
+
 
 export default router;
 

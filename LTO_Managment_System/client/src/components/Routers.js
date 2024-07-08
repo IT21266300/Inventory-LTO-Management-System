@@ -27,6 +27,8 @@ import TapeSubCategoryTable from "./TapeSubCategoryComponent/TapeSubCategoryTabl
 import System from "View/systems/addSystem";
 import AddSubSystem from "View/subsystems/addSubSystem";
 
+import TapeStock from "View/tapeStock/index";
+
 //log views
 import Log from "View/log";
 import UpdateLog from "View/log/updateLog";
@@ -171,6 +173,15 @@ const routesConfig = [
           </RouteProtector>
         ),
       },
+      {
+        path: "/addStock",
+        element: (
+          <RouteProtector>
+            <TapeStock />
+          </RouteProtector>
+        ),
+      },
+
       {
         path: "/addSubSystem",
         element: (
