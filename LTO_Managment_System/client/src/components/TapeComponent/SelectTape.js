@@ -29,7 +29,7 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
   const [tapeId, setTapeId] = useState("");
-  const [mediaType, setMediaType] = useState("");
+  const [tapeType, setTapeType] = useState("");
   const [showReuseForm, setShowReuseForm] = useState(false); // Track if reuse form is visible
   const [showNewTapeForm, setShowNewTapeForm] = useState(false);
 
@@ -57,6 +57,20 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
       });
       handleClickClose();
       window.location.reload();
+    } catch (err) {
+      toast.error(err.response.data.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      console.log(err.response.data.message);
+    }
+  };
+
+  const newTapeSubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      // Update the tape record with tapeReuse and set reuseTape to true
+      handleClickClose();
+      navigate(`/newTape/${tapeType}`)
     } catch (err) {
       toast.error(err.response.data.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -119,7 +133,7 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
         )}
 
         {showNewTapeForm && (
-          <form>
+          <form onSubmit={newTapeSubmitHandler}>
             <Box sx={{ width: "100%", marginTop: "1rem" }}>
               <FormControl sx={textFieldStyles}>
                 <InputLabel id="demo-simple-select-autowidth-label">
@@ -128,14 +142,17 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
                 <Select
                   labelId="demo-simple-select-autowidth-label"
                   id="demo-simple-select-autowidth"
-                  value={mediaType}
-                  onChange={(e) => setMediaType(e.target.value)}
+                  value={tapeType}
+                  onChange={(e) => setTapeType(e.target.value)}
                   autoWidth
                   label="Age"
                 >
                   <MenuItem value={"LTO1"}>LTO1</MenuItem>
                   <MenuItem value={"LTO2"}>LTO2</MenuItem>
                   <MenuItem value={"LTO3"}>LTO3</MenuItem>
+                  <MenuItem value={"LTO4"}>LTO4</MenuItem>
+                  <MenuItem value={"LTO5"}>LTO5</MenuItem>
+                  <MenuItem value={"LTO6"}>LTO6</MenuItem>
                 </Select>
               </FormControl>
 

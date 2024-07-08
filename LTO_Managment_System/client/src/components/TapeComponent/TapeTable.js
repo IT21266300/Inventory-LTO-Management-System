@@ -404,6 +404,7 @@ const TapeTable = ({ result, loading, error }) => {
           handleCloseAlert={handleCloseAlert}
           handleDelete={handleDelete}
         />
+        
         <SelectTapeStock open={openForm} handleClickClose={handleClickClose}/>
       </Box>
     </Box>

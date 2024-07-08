@@ -105,7 +105,7 @@ const routesConfig = [
         ),
       },
       {
-        path: "/newTape",
+        path: "/newTape/:tapeType",
         element: (
           <RouteProtector>
             <NewTape />
