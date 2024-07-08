@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import {
   Button,
+  FormControl,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
   useMediaQuery,
@@ -25,14 +29,22 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
   const [tapeId, setTapeId] = useState("");
+  const [mediaType, setMediaType] = useState("");
   const [showReuseForm, setShowReuseForm] = useState(false); // Track if reuse form is visible
+  const [showNewTapeForm, setShowNewTapeForm] = useState(false);
 
   const openShowReuseForm = () => {
     setShowReuseForm(true);
+    setShowNewTapeForm(false);
   };
 
   const closeShowReuseForm = () => {
     setShowReuseForm(true);
+  };
+
+  const openShowNewTapeForm = () => {
+    setShowNewTapeForm(true);
+    setShowReuseForm(false);
   };
 
   const submitHandler = async (e) => {
@@ -67,33 +79,27 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
           }}
         >
           <Button
-            onClick={() => {
-              navigate("/newTape");
-            }}
-            variant="outlined"
-            sx={{ color: "#fff", borderColor: "#fff" }}
+            onClick={openShowNewTapeForm}
+            variant={showNewTapeForm ? "contained" : "outlined"}
           >
-            New Tape
+            Media Type
           </Button>
           <Button
             onClick={openShowReuseForm} // Show the reuse form
-            variant="contained"
-            sx={{
-              bgcolor: colorPalette.yellow[500],
-              "&:hover": { bgcolor: colorPalette.yellow[600] },
-            }}
+            variant={showReuseForm ? "contained" : "outlined"}
           >
             Reuse Tape
           </Button>
         </Box>
         {showReuseForm && ( // Show the reuse form if showReuseForm is true
           <form onSubmit={submitHandler}>
-            <Box sx={{ width: "100%", marginTop: "1rem"}}>
+            <Box sx={{ width: "100%", marginTop: "1rem" }}>
               <TextField
                 name="tapeId"
                 label="Tape ID"
                 variant="outlined"
                 type="text"
+                value={tapeId}
                 sx={textFieldStyles}
                 required
                 onChange={(e) => setTapeId(e.target.value)}
@@ -107,6 +113,41 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
                 }}
               >
                 Change Tape ID
+              </Button>
+            </Box>
+          </form>
+        )}
+
+        {showNewTapeForm && (
+          <form>
+            <Box sx={{ width: "100%", marginTop: "1rem" }}>
+              <FormControl sx={textFieldStyles}>
+                <InputLabel id="demo-simple-select-autowidth-label">
+                  Media Type
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-autowidth-label"
+                  id="demo-simple-select-autowidth"
+                  value={mediaType}
+                  onChange={(e) => setMediaType(e.target.value)}
+                  autoWidth
+                  label="Age"
+                >
+                  <MenuItem value={"LTO1"}>LTO1</MenuItem>
+                  <MenuItem value={"LTO2"}>LTO2</MenuItem>
+                  <MenuItem value={"LTO3"}>LTO3</MenuItem>
+                </Select>
+              </FormControl>
+
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  bgcolor: colorPalette.yellow[500],
+                  "&:hover": { bgcolor: colorPalette.yellow[600] },
+                }}
+              >
+                Add New Tape
               </Button>
             </Box>
           </form>
