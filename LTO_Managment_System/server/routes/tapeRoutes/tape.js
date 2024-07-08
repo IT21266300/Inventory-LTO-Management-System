@@ -345,9 +345,11 @@ router.get('/tape-names', async (req, res) => {
 });
 
 router.route('/tapestock').get((req, res) => {
-  const sql = 'SELECT * FROM tapeinventory';
+  const sql = 'SELECT * FROM TapeInventory';
   db.query(sql, (err, data) => {
-    if (err) return res.json(err);
+    if (err) {
+      return res.json(err)
+    };
     return res.json(data);
   });
 });

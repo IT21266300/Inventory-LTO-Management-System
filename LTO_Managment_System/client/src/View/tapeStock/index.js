@@ -43,7 +43,7 @@ const TapeStock = () => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get('/api/tape/tapestock');
+        const result = await axios.get('/api/inventory/tapeStock');
         dispatch({
           type: 'FETCH_SUCCESS',
           payload: result.data,

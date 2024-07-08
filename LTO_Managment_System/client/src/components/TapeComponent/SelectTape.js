@@ -82,7 +82,7 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
             onClick={openShowNewTapeForm}
             variant={showNewTapeForm ? "contained" : "outlined"}
           >
-            Media Type
+            New Tape Type
           </Button>
           <Button
             onClick={openShowReuseForm} // Show the reuse form

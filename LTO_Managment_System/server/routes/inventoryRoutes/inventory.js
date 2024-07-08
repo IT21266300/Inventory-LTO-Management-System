@@ -26,8 +26,8 @@ router.route('/addSystem').post(async (req, res) => {
   });
 });
 
-router.route('/').get((req, res) => {
-  const sql = 'SELECT * FROM Systems';
+router.route('/tapeStock').get((req, res) => {
+  const sql = 'SELECT * FROM TapeInventory';
   db.query(sql, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
