@@ -313,25 +313,9 @@ const TapeTable = () => {
   ) : (
     <Box>
 
-      <Box sx={{ marginBottom: '1rem' }}>
-        <Button
-          variant="contained"
-          onClick={() => navigate(-1)}
-          sx={{
-            backgroundColor: colorPalette.yellow[500],
-            color: colorPalette.black[900],
-          }}
-        >
-          Back to Dashboard
-        </Button>
-        <Search
-          //onSearch={handleSearch} // Call handleSearch when the search button is clicked
-          //setSearchQuery={setSearchQuery} // Update searchQuery when the search input changes
-        />
-        
+      <Box sx={{ marginBottom: '1rem' }}>        
         <Box sx={{ marginBottom: '1rem' }}>
         <Search/>
-
       </Box>
       <Box
         sx={{

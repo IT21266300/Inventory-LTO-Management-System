@@ -81,15 +81,16 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
 
   return (
     <Dialog open={open} onClose={handleClickClose}>
-      <DialogTitle sx={{ bgcolor: colorPalette.black[500], color: "#fff" }}>
+      <DialogTitle sx={{ bgcolor: colorPalette.black[500], color: "#fff", width: '100%'}}>
         Select Tape Stock
       </DialogTitle>
-      <DialogContent sx={{ bgcolor: colorPalette.black[500], width: "40vw" }}>
+      <DialogContent sx={{ bgcolor: colorPalette.black[500]}}>
         <Box
           sx={{
             width: "100%",
             display: "flex",
             justifyContent: "space-around",
+            gap: '10rem'
           }}
         >
           <Button
@@ -122,7 +123,8 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
                 type="submit"
                 variant="contained"
                 sx={{
-                  bgcolor: colorPalette.yellow[500],
+                  bgcolor
+                  : colorPalette.yellow[500],
                   "&:hover": { bgcolor: colorPalette.yellow[600] },
                 }}
               >
@@ -137,7 +139,7 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
             <Box sx={{ width: "100%", marginTop: "1rem" }}>
               <FormControl sx={textFieldStyles}>
                 <InputLabel id="demo-simple-select-autowidth-label">
-                  Media Type
+                  Tape Type
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-autowidth-label"
@@ -145,7 +147,8 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
                   value={tapeType}
                   onChange={(e) => setTapeType(e.target.value)}
                   autoWidth
-                  label="Age"
+                  label="Tape Type"
+                  sx={textFieldStyles}
                 >
                   <MenuItem value={"LTO1"}>LTO1</MenuItem>
                   <MenuItem value={"LTO2"}>LTO2</MenuItem>
