@@ -1,11 +1,10 @@
 import React, { useReducer, useEffect } from 'react';
 import Header from 'components/Header';
 import axios from 'axios';
-import { Tabs, Tab, Box, tabsClasses, Divider, IconButton } from '@mui/material';
+import {Box,IconButton } from '@mui/material';
 import LogTables from 'components/LogComponent/LogTable';
 import { Helmet } from 'react-helmet-async';
 import { colorPalette } from 'customTheme';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
@@ -40,7 +39,7 @@ const Logs = () => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const result = await axios.get('/api/log/');
+        const result = await axios.get('/api/logs');
         dispatch({
           type: 'FETCH_SUCCESS',
           payload: result.data,

@@ -1,6 +1,6 @@
 import React from 'react';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-const TeamsTable = ({result, tabLabel, loading, error})=>{
+import { DataGrid} from '@mui/x-data-grid';
+const TeamsTable = ({result})=>{
 const data ={}
     if(result.data !== undefined){
         data = result.data.map((data) => ({

@@ -16,10 +16,6 @@ import { toast } from 'react-toastify';
 import customTheme, { colorPalette } from 'customTheme';
 
 import AddNewTapePopup from '../../components/TapeComponent/TapeDetailsAdd'; // Assuming your popup component is called AddNewTapePopup
-
-import textFieldSubStyles from 'styles/textFieldSubStyles';
-import textFieldStyles from 'styles/textFieldStyles';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import TapeContent from 'components/TapeComponent/TapeContent';
 import { Store } from 'store';
 
