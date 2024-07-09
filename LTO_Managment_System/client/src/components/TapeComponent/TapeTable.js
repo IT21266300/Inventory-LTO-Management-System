@@ -445,6 +445,7 @@ const TapeTable = () => {
         <SelectTapeStock open={openForm} handleClickClose={handleClickClose}/>
       </Box>
     </Box>
+    </Box>
   );
 };
 

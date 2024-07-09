@@ -255,7 +255,8 @@ router.route('/deleteTapeContent/:tapeId/:date').delete(async (req, res) => {
     }
 
     return res.status(200).send({ status: 'Tape Content Deleted...!' });
-  }
+  })
+})
            
 // Search for Tapes
 // router.post('/search', async (req, res) => {
@@ -351,10 +352,6 @@ router.route('/tapestock').get((req, res) => {
     return res.json(data);
   });
 });
-
-
-
-export default router;
 
 
 
