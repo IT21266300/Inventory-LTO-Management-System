@@ -42,6 +42,7 @@ import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility'; // Import the icon for viewing
+import SelectTapeStock from './SelectTape';
 
 const TapeTable = () => {
   const navigate = useNavigate();
@@ -90,6 +91,8 @@ const TapeTable = () => {
       console.log(err);
     }
   };
+
+  
 
   const [passValue, setPassValue] = useState({});
   useEffect(() => {
@@ -289,6 +292,18 @@ const TapeTable = () => {
     lStatus: row.lStatus,
   }));
 
+  //=======================================================================
+  const [openForm, setOpenForm] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenForm(true);
+  };
+
+  const handleClickClose = () => {
+    setOpenForm(false);
+  };
+
+  // =========================================================================
   return loading ? (
     <Box width="100%">
       <LoadingAnimation />
@@ -297,6 +312,7 @@ const TapeTable = () => {
     <Alert severity="error">{error}</Alert>
   ) : (
     <Box>
+
       <Box sx={{ marginBottom: '1rem' }}>
         <Button
           variant="contained"
@@ -312,6 +328,10 @@ const TapeTable = () => {
           //onSearch={handleSearch} // Call handleSearch when the search button is clicked
           //setSearchQuery={setSearchQuery} // Update searchQuery when the search input changes
         />
+        
+        <Box sx={{ marginBottom: '1rem' }}>
+        <Search/>
+
       </Box>
       <Box
         sx={{
@@ -322,9 +342,7 @@ const TapeTable = () => {
         }}
       >
         <Button
-          onClick={() => {
-            navigate('/newTape');
-          }}
+          onClick={handleClickOpen}
           sx={{
             backgroundColor: colorPalette.yellow[500],
             color: colorPalette.black[500],
@@ -423,6 +441,8 @@ const TapeTable = () => {
           handleCloseAlert={handleCloseAlert} // Pass the function as a prop 
           handleDelete={handleDelete}
         />
+        
+        <SelectTapeStock open={openForm} handleClickClose={handleClickClose}/>
       </Box>
     </Box>
   );

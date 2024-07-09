@@ -1,37 +1,37 @@
-import React, { useEffect } from 'react';
-import Header from 'components/Header';
-import Box from '@mui/material/Box';
+import React, { useEffect } from "react";
+import Header from "components/Header";
+import Box from "@mui/material/Box";
 import {
   Button,
   IconButton,
   Select,
   TextField,
   Typography,
-} from '@mui/material';
-import { colorPalette } from 'customTheme';
-import HttpsIcon from '@mui/icons-material/Https';
-import FlexBetween from 'components/FlexBetween';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import { useState } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { useReducer } from 'react';
-import textFieldStyles from 'styles/textFieldStyles';
-import SdStorageIcon from '@mui/icons-material/SdStorage';
+} from "@mui/material";
+import { colorPalette } from "customTheme";
+import HttpsIcon from "@mui/icons-material/Https";
+import FlexBetween from "components/FlexBetween";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
+import { useReducer } from "react";
+import textFieldStyles from "styles/textFieldStyles";
+import SdStorageIcon from "@mui/icons-material/SdStorage";
 
-const positions = ['Admin', 'Operator', 'Read Only'];
+const positions = ["Admin", "Operator", "Read Only"];
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'FETCH_REQUEST':
+    case "FETCH_REQUEST":
       return { ...state, loading: true };
-    case 'FETCH_SUCCESS':
+    case "FETCH_SUCCESS":
       return { ...state, systemData: action.payload, loading: false };
-    case 'FETCH_ERROR':
+    case "FETCH_ERROR":
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
@@ -40,38 +40,40 @@ const reducer = (state, action) => {
 
 const Tape = () => {
   const navigate = useNavigate();
-  const [tapeId, setTapeId] = useState(''); // Add state for tape ID
+  const [tapeId, setTapeId] = useState(""); // Add state for tape ID
+
+  const { tapeType } = useParams();
 
   const [{ systemData, loading, error }, dispatch] = useReducer(reducer, {
     systemData: [],
     loading: true,
-    error: '',
+    error: "",
   });
   const [subSystems, setSubSystems] = useState([]);
   const [parentSystem, setParentSystem] = useState({
-    sysName: '',
-    sysId: '',
+    sysName: "",
+    sysId: "",
   });
-  const [subSysName, setSubSysName] = useState(''); // Add state for subsystem name
-  const [bStatus, setBStatus] = useState(''); // Add state for backup status
-  const [mType, setMType] = useState(''); // Add state for media type
-  const [tStatus, setTStatus] = useState(''); // Add state for tape status
-  const [sDate, setSDate] = useState(''); // Add state for start date
-  const [eDate, setEDate] = useState(''); // Add state for end date
-  const [lStatus, setLStatus] = useState(''); // Add state for label status
+  const [subSysName, setSubSysName] = useState(""); // Add state for subsystem name
+  const [bStatus, setBStatus] = useState(""); // Add state for backup status
+  const [mType, setMType] = useState(tapeType); // Add state for media type
+  const [tStatus, setTStatus] = useState(""); // Add state for tape status
+  const [sDate, setSDate] = useState(""); // Add state for start date
+  const [eDate, setEDate] = useState(""); // Add state for end date
+  const [lStatus, setLStatus] = useState(""); // Add state for label status
 
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: 'FETCH_REQUEST' });
+      dispatch({ type: "FETCH_REQUEST" });
       try {
-        const result = await axios.get('/api/systems/');
+        const result = await axios.get("/api/systems/");
         dispatch({
-          type: 'FETCH_SUCCESS',
+          type: "FETCH_SUCCESS",
           payload: result.data,
         });
-        dispatch({ type: 'FETCH_SITES', payload: result.data });
+        dispatch({ type: "FETCH_SITES", payload: result.data });
       } catch (err) {
-        dispatch({ type: 'FETCH_ERROR', payload: err.message });
+        dispatch({ type: "FETCH_ERROR", payload: err.message });
       }
     };
     fetchData();
@@ -83,7 +85,7 @@ const Tape = () => {
         const result = await axios.get(
           `/api/systems/subsystems/${parentSystem.sysId}`
         );
-        console.log('result:', result);
+        console.log("result:", result);
         setSubSystems(result.data);
       } catch (err) {
         console.log(err);
@@ -99,7 +101,7 @@ const Tape = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/tape/addTape', {
+      await axios.post("/api/tape/addTape", {
         tapeId,
         sysName: parentSystem.sysName,
         sysId: parentSystem.sysId,
@@ -112,10 +114,18 @@ const Tape = () => {
         lStatus,
       });
 
-      toast.success('New Tape has been created successfully!', {
+      toast.success("New Tape has been created successfully!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-      navigate('/tape');
+
+      await axios.get(`/api/inventory/tapeStock/${mType}`);
+
+      // Show success toast for the new tape addition
+      toast.success("New Tape Added", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+
+      navigate("/tape");
       window.location.reload();
     } catch (err) {
       toast.error(err.message, {
@@ -129,28 +139,28 @@ const Tape = () => {
       width="100%"
       minHeight="20vh"
       p="3rem 0"
-      sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
       <Box sx={{ width: 450 }}>
         <Box
           width="100%"
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyItems: 'center',
-            alignItems: 'center',
-            mb: '1.5rem',
+            display: "flex",
+            flexDirection: "column",
+            justifyItems: "center",
+            alignItems: "center",
+            mb: "1.5rem",
           }}
         >
           <IconButton
             variant="solid"
             sx={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '100px',
+              width: "40px",
+              height: "40px",
+              borderRadius: "100px",
               backgroundColor: colorPalette.yellow[500],
               color: colorPalette.black[500],
-              '&:hover': {
+              "&:hover": {
                 backgroundColor: colorPalette.yellow[500],
                 color: colorPalette.black[500],
               },
@@ -161,13 +171,13 @@ const Tape = () => {
           <Typography
             variant="h5"
             textAlign="center"
-            sx={{ color: '#fff', mt: '1rem' }}
+            sx={{ color: "#fff", mt: "1rem" }}
           >
             Add New Tape
           </Typography>
         </Box>
         <form onSubmit={submitHandler}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
             <TextField
               name="tapeId"
               label="Tape ID"
@@ -180,9 +190,9 @@ const Tape = () => {
 
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: { xs: 'column', md: 'row' },
-                gap: '1.5rem',
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                gap: "1.5rem",
               }}
             >
               <FormControl sx={textFieldStyles}>
@@ -239,9 +249,9 @@ const Tape = () => {
 
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: { xs: 'column', md: 'row' },
-                gap: '1.5rem',
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                gap: "1.5rem",
               }}
             >
               <FormControl sx={textFieldStyles}>
@@ -255,10 +265,10 @@ const Tape = () => {
                   id="bStatus" // Added id
                   onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
                 >
-                  <MenuItem value={'Completed'}>Completed</MenuItem>
-                  <MenuItem value={'Failed'}>Failed</MenuItem>
-                  <MenuItem value={'In Progress'}>In Progress</MenuItem>
-                  <MenuItem value={'Not Taken'}>Not Taken</MenuItem>
+                  <MenuItem value={"Completed"}>Completed</MenuItem>
+                  <MenuItem value={"Failed"}>Failed</MenuItem>
+                  <MenuItem value={"In Progress"}>In Progress</MenuItem>
+                  <MenuItem value={"Not Taken"}>Not Taken</MenuItem>
                 </Select>
               </FormControl>
 
@@ -272,9 +282,9 @@ const Tape = () => {
                   label="Media Type"
                   onChange={(e) => setMType(e.target.value)}
                 >
-                  <MenuItem value={'LTO6'}>LTO6</MenuItem>
-                  <MenuItem value={'LTO7'}>LTO7</MenuItem>
-                  <MenuItem value={'LTO8'}>LTO8</MenuItem>
+                  <MenuItem value={"LTO6"}>LTO6</MenuItem>
+                  <MenuItem value={"LTO7"}>LTO7</MenuItem>
+                  <MenuItem value={"LTO8"}>LTO8</MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -288,16 +298,16 @@ const Tape = () => {
                 id="tStatus" // Added id
                 onChange={(e) => setTStatus(e.target.value)} // Corrected onChange handler
               >
-                <MenuItem value={'Completed'}>Completed</MenuItem>
-                <MenuItem value={'Ongoing'}>Ongoing</MenuItem>
+                <MenuItem value={"Completed"}>Completed</MenuItem>
+                <MenuItem value={"Ongoing"}>Ongoing</MenuItem>
               </Select>
             </FormControl>
 
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: { xs: 'column', md: 'row' },
-                gap: '1.5rem',
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                gap: "1.5rem",
               }}
             >
               <TextField
@@ -323,7 +333,6 @@ const Tape = () => {
                 sx={textFieldStyles}
                 onChange={(e) => setEDate(e.target.value)}
               />
-
             </Box>
 
             <FormControl sx={textFieldStyles}>
@@ -337,26 +346,26 @@ const Tape = () => {
                 id="lStatus"
                 onChange={(e) => setLStatus(e.target.value)} // Corrected onChange handler
               >
-                <MenuItem value={'HO'}>Head Office</MenuItem>
-                <MenuItem value={'DRN'}>DR Nugegoda</MenuItem>
-                <MenuItem value={'DRM'}>DR Maharagama</MenuItem>
-                <MenuItem value={'HO->DRN'}>HO to DRN</MenuItem>
-                <MenuItem value={'DRN->DRM'}>DRN to DRM</MenuItem>
-                <MenuItem value={'DRM->DRN'}>DRM to DRN</MenuItem>
-                <MenuItem value={'DRN->HO'}>DRN to HO</MenuItem>
-                <MenuItem value={'DRM->HO'}>DRM to HO</MenuItem>
-                <MenuItem value={'HO->DRM'}>HO to DRM</MenuItem>
+                <MenuItem value={"HO"}>Head Office</MenuItem>
+                <MenuItem value={"DRN"}>DR Nugegoda</MenuItem>
+                <MenuItem value={"DRM"}>DR Maharagama</MenuItem>
+                <MenuItem value={"HO->DRN"}>HO to DRN</MenuItem>
+                <MenuItem value={"DRN->DRM"}>DRN to DRM</MenuItem>
+                <MenuItem value={"DRM->DRN"}>DRM to DRN</MenuItem>
+                <MenuItem value={"DRN->HO"}>DRN to HO</MenuItem>
+                <MenuItem value={"DRM->HO"}>DRM to HO</MenuItem>
+                <MenuItem value={"HO->DRM"}>HO to DRM</MenuItem>
               </Select>
             </FormControl>
 
             <FlexBetween>
               <Button
-                onClick={() => navigate('/tape')}
+                onClick={() => navigate("/tape")}
                 sx={{
-                  width: '45%',
+                  width: "45%",
                   color: colorPalette.secondary[100],
-                  padding: '0.5rem 0',
-                  borderColor: '#fff'
+                  padding: "0.5rem 0",
+                  borderColor: "#fff",
                 }}
                 variant="outlined"
               >
@@ -367,11 +376,11 @@ const Tape = () => {
                 variant="filled"
                 type="submit"
                 sx={{
-                  width: '45%',
+                  width: "45%",
                   backgroundColor: colorPalette.yellow[500],
                   color: colorPalette.black2[500],
-                  padding: '0.5rem 0',
-                  '&:hover': {
+                  padding: "0.5rem 0",
+                  "&:hover": {
                     backgroundColor: colorPalette.yellow[400],
                   },
                 }}

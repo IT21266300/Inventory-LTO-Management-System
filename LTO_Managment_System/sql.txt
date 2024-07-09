@@ -39,8 +39,7 @@ CREATE TABLE Systems (
     sysId INT AUTO_INCREMENT PRIMARY KEY,
     sysName VARCHAR(255) NOT NULL UNIQUE
 );
-
--- New SubSystem table
+-- New SubSystems table
 CREATE TABLE SubSystems (
     subSysId INT AUTO_INCREMENT PRIMARY KEY,
     subSysName VARCHAR(255) NOT NULL, 
@@ -62,7 +61,8 @@ CREATE TABLE Tape (
     tStatus VARCHAR(50),
     sDate DATE,
     eDate DATE,
-    lStatus VARCHAR(50)
+    lStatus VARCHAR(50),
+    isReUse TINYINT(1) DEFAULT 0
 );
 
 CREATE TABLE `WinstonTest`.`sys_logs_default` (
@@ -82,6 +82,11 @@ CREATE TABLE `WinstonTest`.`sys_logs_default` (
   PRIMARY KEY (tapeId, date) -- Combine tapeId and date for uniqueness
 );
 
+
+CREATE TABLE TapeInventory (
+    tapeName VARCHAR(100) PRIMARY KEY,
+    tapeQuantity INT  
+);
 
 
 npm install sanitize-html

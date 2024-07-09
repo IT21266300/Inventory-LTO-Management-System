@@ -1,50 +1,50 @@
-import { Navigate, Route, Link } from 'react-router-dom';
-
+import { Navigate, Route, Link } from "react-router-dom";
 
 // import views
 
 // main views
-import Dashboard from 'View/dashboard';
-import Layout from 'View/layout';
-import RouteProtector from 'components/RouteProtector';
-import SignIn from 'View/signin';
-import Test from 'View/test';
-import Systems from 'View/systems'
-import AddSystem from 'View/systems/addSystem'
-
+import Dashboard from "View/dashboard";
+import Layout from "View/layout";
+import RouteProtector from "components/RouteProtector";
+import SignIn from "View/signin";
+import Test from "View/test";
+import Systems from "View/systems";
+import AddSystem from "View/systems/addSystem";
 
 //staff views
-import StaffDashboard from 'View/staff';
-import AddStaff from 'View/staff/addStaff';
-import UpdateStaff from 'View/staff/updateStaff';
-import Profile from 'View/profile';
+import StaffDashboard from "View/staff";
+import AddStaff from "View/staff/addStaff";
+import UpdateStaff from "View/staff/updateStaff";
+import Profile from "View/profile";
 
 //tape views
-import Tape from 'View/tapes';
-import NewTape from 'View/tapes/newTape';
-import UpdateTape from 'View/tapes/updateTape';
-import ViewTape from 'View/tapes/tapeDetails'
+import Tape from "View/tapes";
+import NewTape from "View/tapes/newTape";
+import UpdateTape from "View/tapes/updateTape";
+import ViewTape from "View/tapes/tapeDetails";
 
-import TapeSubCategoryTable from './TapeSubCategoryComponent/TapeSubCategoryTable';
-import System from 'View/systems/addSystem';
-import AddSubSystem from 'View/subsystems/addSubSystem';
+import TapeSubCategoryTable from "./TapeSubCategoryComponent/TapeSubCategoryTable";
+import System from "View/systems/addSystem";
+import AddSubSystem from "View/subsystems/addSubSystem";
+
+import TapeStock from "View/tapeStock/index";
 
 //log views
-import Log from 'View/log';
-import UpdateLog from 'View/log/updateLog';
-
+import Log from "View/log";
+import UpdateLog from "View/log/updateLog";
+import NotFound from "View/NotFound";
 
 const routesConfig = [
   {
-    path: '/',
+    path: "/",
     element: <Layout />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Navigate to="/dashboard" replace />,
       },
       {
-        path: '/dashboard',
+        path: "/dashboard",
         element: (
           <RouteProtector>
             <Dashboard />
@@ -52,21 +52,20 @@ const routesConfig = [
         ),
       },
       {
-        path: '/signin',
+        path: "/signin",
         element: <SignIn />,
       },
 
       {
-        path: '/profile',
-        element:(
+        path: "/profile",
+        element: (
           <RouteProtector>
             <Profile />
           </RouteProtector>
-      ),
+        ),
       },
-
       {
-        path: '/staff',
+        path: "/staff",
         element: (
           <RouteProtector>
             <StaffDashboard />
@@ -74,15 +73,15 @@ const routesConfig = [
         ),
       },
       {
-        path: '/addStaff',
+        path: "/addStaff",
         element: (
-          <RouteProtector allowedPositions={['as']}>
+          <RouteProtector allowedPositions={["as"]}>
             <AddStaff />
           </RouteProtector>
         ),
       },
       {
-        path: '/updateStaff',
+        path: "/updateStaff",
         element: (
           <RouteProtector>
             <UpdateStaff />
@@ -90,7 +89,7 @@ const routesConfig = [
         ),
       },
       {
-        path: '/TapeSubCategoryTable',
+        path: "/TapeSubCategoryTable",
         element: (
           <RouteProtector>
             <TapeSubCategoryTable />
@@ -98,15 +97,15 @@ const routesConfig = [
         ),
       },
       {
-        path: '/tape',
+        path: "/tape",
         element: (
-          <RouteProtector>
+          <RouteProtector allowedPositions={["as"]}>
             <Tape />
           </RouteProtector>
         ),
       },
       {
-        path: '/newTape',
+        path: "/newTape/:tapeType",
         element: (
           <RouteProtector>
             <NewTape />
@@ -114,7 +113,7 @@ const routesConfig = [
         ),
       },
       {
-        path: '/updateTape',
+        path: "/updateTape",
         element: (
           <RouteProtector>
             <UpdateTape />
@@ -122,34 +121,28 @@ const routesConfig = [
         ),
       },
       {
-
-        path: '/tape/:tapeId',
-        element: (
-          
-            <ViewTape/>
-        ),
+        path: "/tape/:tapeId",
+        element: <ViewTape />,
       },
 
-        {
-
-        path: '/log',
+      {
+        path: "/log",
         element: (
-          <RouteProtector>
+          <RouteProtector allowedPositions={["Admin"]}>
             <Log />
           </RouteProtector>
         ),
       },
       {
-        path: '/updateLog',
+        path: "/updateLog",
         element: (
           <RouteProtector>
             <UpdateLog />
           </RouteProtector>
-
         ),
       },
       {
-        path: '/test',
+        path: "/test",
         element: (
           <RouteProtector>
             <Test />
@@ -157,7 +150,7 @@ const routesConfig = [
         ),
       },
       {
-        path: '/systems',
+        path: "/systems",
         element: (
           <RouteProtector>
             <Systems />
@@ -165,7 +158,7 @@ const routesConfig = [
         ),
       },
       {
-        path: '/addSystem',
+        path: "/addSystem",
         element: (
           <RouteProtector>
             <System />
@@ -173,7 +166,7 @@ const routesConfig = [
         ),
       },
       {
-        path: '/subsystems',
+        path: "/subsystems",
         element: (
           <RouteProtector>
             <Systems />
@@ -181,12 +174,25 @@ const routesConfig = [
         ),
       },
       {
-        path: '/addSubSystem',
+        path: "/inventory",
+        element: (
+          <RouteProtector>
+            <TapeStock />
+          </RouteProtector>
+        ),
+      },
+
+      {
+        path: "/addSubSystem",
         element: (
           <RouteProtector>
             <AddSubSystem />
           </RouteProtector>
         ),
+      },
+      {
+        path: "/unauthorized",
+        element: <NotFound />,
       },
     ],
   },
