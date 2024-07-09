@@ -1,3 +1,4 @@
+// AddNewStock.js
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import {
@@ -57,12 +58,12 @@ const AddNewStock = () => {
         mt: 5,
       }}
     >
-      <Typography variant="h5" gutterBottom sx={{ color: '#fff' }}>
+      <Typography variant="h5" gutterBottom sx={{ color: '#000' }}>
         Add New Tape Stock
       </Typography>
       <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3, width: '50%' }}>
         <FormControl fullWidth sx={{ mb: 2 }}>
-          <InputLabel id="tapeName-label" sx={{ color: '#fff' }}>
+          <InputLabel id="tapeName-label" sx={{ color: '#000' }}>
             Tape Name
           </InputLabel>
           <Select
@@ -74,7 +75,7 @@ const AddNewStock = () => {
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: '#fff', // Change the border color here
+                  borderColor: '#000', // Change the border color here
                 },
                 '&:hover fieldset': {
                   borderColor: colorPalette.yellow[500],
@@ -84,7 +85,7 @@ const AddNewStock = () => {
                 },
               },
               '& .MuiInputLabel-root': {
-                color: '#fff',
+                color: '#000',
               },
             }}
           >
@@ -96,16 +97,16 @@ const AddNewStock = () => {
         <TextField
           fullWidth
           label="Quantity"
-          type="number" // Use type="number" for quantity input
+          type="text" // Use type="number" for quantity input
           id="tapeQuantity"
           value={tapeQuantity}
           onChange={(e) => setTapeQuantity(e.target.value)}
           sx={{
             mb: 3,
             '& .MuiOutlinedInput-root': {
-              color: '#fff',
+              color: '#000',
               '& fieldset': {
-                borderColor: '#fff', // Change the border color here
+                borderColor: '#000', // Change the border color here
               },
               '&:hover fieldset': {
                 borderColor: colorPalette.yellow[500],
@@ -115,7 +116,7 @@ const AddNewStock = () => {
               },
             },
             '& .MuiInputLabel-root': {
-              color: '#fff',
+              color: '#000',
             },
           }}
         />
