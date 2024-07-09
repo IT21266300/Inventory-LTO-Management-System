@@ -148,7 +148,6 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
                   onChange={(e) => setTapeType(e.target.value)}
                   autoWidth
                   label="Tape Type"
-                  sx={textFieldStyles}
                 >
                   <MenuItem value={"LTO1"}>LTO1</MenuItem>
                   <MenuItem value={"LTO2"}>LTO2</MenuItem>

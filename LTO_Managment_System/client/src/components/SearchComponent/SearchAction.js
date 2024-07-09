@@ -253,9 +253,6 @@ function Search({ onSearch }) {
           Search
         </Button>
       </SearchFormStyled>
-      <FooterStyled variant="body1">
-        Welcome to BOC LTO Management System
-      </FooterStyled>
     </ContainerStyled>
   );
 }
