@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import DownloadIcon from '@mui/icons-material/Download';
 import { Store } from 'store';
 import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTwo';
+import RouteProtector from 'components/RouteProtector'; // Import RouteProtector
 
 const LogTable = () => {
   const navigate = useNavigate();
@@ -102,65 +103,70 @@ const LogTable = () => {
     createdAt: file.createdAt,
   }));
 
-  return loading ? (
-    <Box width="100%">
-      <LoadingAnimation />
-    </Box>
-  ) : error ? (
-    <Alert severity="error">{error}</Alert>
-  ) : (
-    <Box sx={{marginTop: '1.4rem'}}>
-      <Box
-        height="100vh"
-        width="75%"
-        sx={{
-          '& .MuiDataGrid-cell': {
-            borderBottom: 'none',
-            color: '#fff',
-          },
-          '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: colorPalette.black1[400],
-            color: colorPalette.secondary[200],
-          },
-          '& .MuiDataGrid-footerContainer': {
-            backgroundColor: colorPalette.black1[500],
-            color: colorPalette.yellow[500],
-            borderTop: 'none',
-          },
-          '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
-            color: `${colorPalette.primary[500]} !important`,
-          },
-          display: 'flex',
-        }}
-      >
-        <Box width="100%" sx={{ color: '#fff' }}>
-          <DataGrid
-            rows={rows}
-            rowHeight={60}
-            columns={columns}
-            initialState={{
-              columns: {
-                columnVisibilityModel: {
-                  mongoID: false,
-                },
-              },
-            }}
-            pageSize={10}
-            components={{
-              toolbar: () => (
-                <GridToolbarContainer
-                  style={{ justifyContent: 'flex-start', padding: '0.4rem', background: colorPalette.black[100] }}
-                >
-                  <GridToolbarFilterButton style={{ color: colorPalette.yellow[500] }} />
-                  <GridToolbarQuickFilter />
-                </GridToolbarContainer>
-              ),
-            }}
-          />
+  return (
+    //only admin position can view log table
+    <RouteProtector allowedPositions={['super super']}>
+      {loading ? (
+        <Box width="100%">
+          <LoadingAnimation />
         </Box>
-      </Box>
-      
-    </Box>
+      ) : error ? (
+        <Alert severity="error">{error}</Alert>
+      ) : (
+        <Box sx={{ marginTop: '1.4rem' }}>
+          <Box
+            height="100vh"
+            width="75%"
+            sx={{
+              '& .MuiDataGrid-cell': {
+                borderBottom: 'none',
+                color: '#fff',
+              },
+              '& .MuiDataGrid-columnHeaders': {
+                backgroundColor: colorPalette.black1[400],
+                color: colorPalette.secondary[200],
+              },
+              '& .MuiDataGrid-footerContainer': {
+                backgroundColor: colorPalette.black1[500],
+                color: colorPalette.yellow[500],
+                borderTop: 'none',
+              },
+              '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
+                color: `${colorPalette.primary[500]} !important`,
+              },
+              display: 'flex',
+            }}
+          >
+            <Box width="100%" sx={{ color: '#fff' }}>
+              <DataGrid
+                rows={rows}
+                rowHeight={60}
+                columns={columns}
+                initialState={{
+                  columns: {
+                    columnVisibilityModel: {
+                      mongoID: false,
+                    },
+                  },
+                }}
+                pageSize={10}
+                components={{
+                  toolbar: () => (
+                    <GridToolbarContainer
+                      style={{ justifyContent: 'flex-start', padding: '0.4rem', background: colorPalette.black[100] }}
+                    >
+                      <GridToolbarFilterButton style={{ color: colorPalette.yellow[500] }} />
+                      <GridToolbarQuickFilter />
+                    </GridToolbarContainer>
+                  ),
+                }}
+              />
+            </Box>
+          </Box>
+
+        </Box>
+      )}
+    </RouteProtector>
   );
 };
 
