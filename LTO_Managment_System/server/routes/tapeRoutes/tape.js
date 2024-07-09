@@ -96,8 +96,6 @@ router.route('/:tapeId').get(async (req, res) => {
 });
 
 
-// ========================================================================================
-
 router.route('/subsystems/:systemId').get(async (req, res) => {
   const { systemId } = req.params;
   const sql = 'SELECT * FROM SubSystem WHERE parentSystemId = ?';
@@ -171,9 +169,6 @@ router.route('/updateTape/:tapeId').put(async (req, res) => {
     
   });
 });
-
-
-
 
 //update tape status
 
@@ -260,9 +255,12 @@ router.route('/deleteTapeContent/:tapeId/:date').delete(async (req, res) => {
     }
 
     return res.status(200).send({ status: 'Tape Content Deleted...!' });
-  });
-});
-
+  }
+           
+// Search for Tapes
+// router.post('/search', async (req, res) => {
+//   try {
+//     const { tapeId, systemName, applicationName, backupStatus, mediaType, tapeStatus, startDate, endDate, location } = req.body;
 
 router.route('/changeTapeStatus/:tapeId').put(async (req, res) => {
   const tapeId = req.params.tapeId;
@@ -369,21 +367,55 @@ export default router;
 //   });
 // });
 
-// 2. Get a specific subsystem by subSysId
-// router.route('/subsystems/:subSysId').get(async (req, res) => {
-//   const { subSysId } = req.params;
 
-//   try {
-//     const sql = 'SELECT * FROM SubSystem WHERE subSysId = ?';
-//     const [data] = await db.query(sql, [subSysId]);
+//     // Build your SQL query based on the search criteria 
 
-//     if (data.length === 0) {
-//       return res.status(404).json({ message: 'Subsystem not found' });
+//     let sql = 'SELECT * FROM Tape WHERE 1=1'; // Start with 'WHERE 1=1' for easy appending
+//     const params = [];
+
+//     if (tapeId) {
+//       sql += ' AND tapeId = ?';
+//       params.push(tapeId);
+//     }
+//     if (systemName) {
+//       sql += ' AND sysName LIKE ?';
+//       params.push(`%${systemName}%`);
+//     }
+//     if (applicationName) {
+//       sql += ' AND subSysName LIKE ?';
+//       params.push(`%${applicationName}%`);
+//     }
+//     if (backupStatus) {
+//       sql += ' AND bStatus = ?';
+//       params.push(backupStatus);
+//     }
+//     if (mediaType) {
+//       sql += ' AND mType = ?';
+//       params.push(mediaType);
+//     }
+//     if (tapeStatus) {
+//       sql += ' AND tStatus = ?';
+//       params.push(tapeStatus);
+//     }
+//     if (startDate) {
+//       sql += ' AND sDate >= ?';
+//       params.push(startDate);
+//     }
+//     if (endDate) {
+//       sql += ' AND eDate <= ?';
+//       params.push(endDate);
+//     }
+//     if (location) {
+//       sql += ' AND lStatus = ?';
+//       params.push(location);
 //     }
 
-//     res.json(data[0]);
+//     const [results] = await db.query(sql, params);
+//     res.json(results);
 //   } catch (err) {
-//     console.error('Error fetching subsystem:', err);
-//     res.status(500).json({ message: 'Failed to fetch subsystem' });
+//     console.error('Error searching for tapes:', err);
+//     res.status(500).json({ error: err.message });
 //   }
 // });
+
+export default router;
