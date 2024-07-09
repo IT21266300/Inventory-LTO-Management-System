@@ -24,7 +24,7 @@ const AddNewStock = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/tapes/addStock', {
+      const response = await axios.post('/api/inventory/addstock', {
         tapeName,
         tapeQuantity: parseInt(tapeQuantity, 10), // Ensure quantity is an integer
       });

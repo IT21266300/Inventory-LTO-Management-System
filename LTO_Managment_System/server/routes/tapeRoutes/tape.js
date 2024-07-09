@@ -355,14 +355,6 @@ router.route('/tapestock').get((req, res) => {
 
 
 
-// 1. Get all subsystems (from all systems)
-// router.route('/subsystems').get(async (req, res) => {
-//   const sql = 'SELECT * FROM subSystem';
-//   db.query(sql, (err, data) => {
-//     if (err) return res.json(err, "hello");
-//     return res.json(data);
-//   });
-// });
 
 
 //     // Build your SQL query based on the search criteria 
