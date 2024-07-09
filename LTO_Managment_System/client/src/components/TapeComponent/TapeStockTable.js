@@ -52,6 +52,16 @@ const TapeStockTables = ({ result, loading, error }) => {
     setAnchorEl(null);
   };
 
+  const [openForm, setOpenForm] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenForm(true);
+  };
+
+  const handleClickClose = () => {
+    setOpenForm(false);
+  };
+
   const handleCloseAlert = () => {
     setOpenAlert(false);
   };

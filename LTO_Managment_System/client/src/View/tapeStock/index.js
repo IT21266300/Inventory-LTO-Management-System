@@ -78,7 +78,7 @@ const TapeStock = () => {
         >
           <ArrowBackIcon />
         </IconButton>
-        <Header title="Tape Management" subtitle="Manage Tapes" />
+        <Header title="Tape Inventory Management" subtitle="Manage Tapes Inventory" />
       </Box>
 
       <TapeTables result={tapeStock} loading={loading} error={error} />
