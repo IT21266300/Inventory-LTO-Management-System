@@ -33,6 +33,7 @@ const AddNewStock = () => {
         toast.success('New stock added successfully!', {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
+        window.location.reload();
         // Reset form fields or perform any other actions after successful submission
         setTapeName('');
         setTapeQuantity('');
