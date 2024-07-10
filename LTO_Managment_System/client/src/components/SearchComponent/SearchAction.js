@@ -220,8 +220,8 @@ function Search({ onSearch }) {
               fullWidth
               sx={textFieldStyles}
             >
-              <MenuItem value="Completed">Completed</MenuItem>
-              <MenuItem value="Ongoing">Ongoing</MenuItem>
+              <MenuItem value="Completed">Full</MenuItem>
+              <MenuItem value="Ongoing">IN Use</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
