@@ -170,9 +170,10 @@ const TapeStockTables = ({ result, loading, error }) => {
             color: `${colorPalette.primary[500]} !important`,
           },
           display: 'flex',
+          justifyContent: 'center',
         }}
       >
-        <Box width="100%" sx={{ color: '#fff' }}>
+        <Box width="50%" sx={{ color: '#fff' }}>
           <DataGrid
             rows={rows}
             rowHeight={60}
