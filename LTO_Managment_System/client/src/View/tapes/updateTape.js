@@ -89,8 +89,8 @@ const Tape = () => {
     const isoEDate = data.eDate;
     const stDate = new Date(isoSDate);
     const endDate = new Date(isoEDate);
-    const formattedSDate = stDate.toISOString().slice(0, 16);
-    const formattedEDate = endDate.toISOString().slice(0, 16);
+    const formattedSDate = stDate.toISOString().split('T')[0];
+    const formattedEDate = endDate.toISOString().split('T')[0];
     setSDate(formattedSDate);
     setEDate(formattedEDate);
   }, []);
@@ -351,30 +351,30 @@ const Tape = () => {
             >
               <TextField
                 name="sDate"
-                label="Start Date & Time" // Updated label
+                label="Start Date" // Updated label
                 variant="outlined"
-                type="datetime-local" // Changed to datetime-local
+                type="date" // Changed to datetime-local
                 InputLabelProps={{
                   shrink: true,
                 }}
                 value={sDate}
                 sx={textFieldStyles}
                 onChange={(e) => setSDate(e.target.value)}
-                aria-readonly
+                // aria-readonly
               />
 
               <TextField
                 name="eDate"
-                label="End Date & Time" // Updated label
+                label="End Date" // Updated label
                 variant="outlined"
                 value={eDate}
-                type="datetime-local" // Changed to datetime-local
+                type="date" // Changed to datetime-local
                 InputLabelProps={{
                   shrink: true,
                 }}
                 sx={textFieldStyles}
                 onChange={(e) => setEDate(e.target.value)}
-                aria-readonly
+                // aria-readonly
               />
 
             </Box>

@@ -59,8 +59,8 @@ CREATE TABLE Tape (
     bStatus VARCHAR(50),
     mType VARCHAR(50),
     tStatus VARCHAR(50),
-    sDate DATE,
-    eDate DATE,
+    sDate VARCHAR(255),
+    eDate VARCHAR(255),
     lStatus VARCHAR(50),
     isReUse TINYINT(1) DEFAULT 0
 );
