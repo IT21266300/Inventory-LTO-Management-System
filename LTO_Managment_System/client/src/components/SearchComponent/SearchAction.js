@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   Select,
@@ -9,64 +9,64 @@ import {
   Container,
   styled,
   InputLabel,
-  FormControl
-} from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import axios from 'axios';
-import { colorPalette } from 'customTheme';
-import textFieldStyles from 'styles/textFieldStyles';
+  FormControl,
+} from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import axios from "axios";
+import { colorPalette } from "customTheme";
+import textFieldStyles from "styles/textFieldStyles";
 
 const ContainerStyled = styled(Container)(({ theme }) => ({
-  marginTop: '2px',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: '20px',
-  backgroundColor: 'white',
-  borderRadius: '5px',
-  boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+  marginTop: "2px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  padding: "20px",
+  backgroundColor: "white",
+  borderRadius: "5px",
+  boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
 }));
 
 const HeaderStyled = styled(Typography)(({ theme }) => ({
-  textAlign: 'center',
-  marginBottom: '5px',
+  textAlign: "center",
+  marginBottom: "5px",
 }));
 
-const SearchFormStyled = styled('form')(({ theme }) => ({
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-  gap: '10px',
-  marginBottom: '5px',
+const SearchFormStyled = styled("form")(({ theme }) => ({
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "center",
+  gap: "10px",
+  marginBottom: "5px",
 }));
 
 const SearchInputGroupStyled = styled(Grid)(({ theme }) => ({
-  width: '200px',
-  marginBottom: '5px',
+  width: "200px",
+  marginBottom: "5px",
 }));
 
 const FooterStyled = styled(Typography)(({ theme }) => ({
-  textAlign: 'center',
-  marginTop: '5px',
+  textAlign: "center",
+  marginTop: "5px",
 }));
 
 function Search({ onSearch }) {
-  const [tapeId, setTapeId] = useState('');
-  const [systemName, setSystemName] = useState('');
-  const [applicationName, setApplicationName] = useState('');
-  const [backupStatus, setBackupStatus] = useState('');
-  const [mediaType, setMediaType] = useState('');
-  const [tapeStatus, setTapeStatus] = useState('');
+  const [tapeId, setTapeId] = useState("");
+  const [systemName, setSystemName] = useState("");
+  const [applicationName, setApplicationName] = useState("");
+  const [backupStatus, setBackupStatus] = useState("");
+  const [mediaType, setMediaType] = useState("");
+  const [tapeStatus, setTapeStatus] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState("");
   const [systemData, setSystemData] = useState([]);
   const [parentSystem, setParentSystem] = useState({
-    sysName: '',
-    sysId: ''
+    sysName: "",
+    sysId: "",
   });
   const [subSystems, setSubSystems] = useState([]);
-  const [subSysName, setSubSysName] = useState('');
+  const [subSysName, setSubSysName] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -81,24 +81,24 @@ function Search({ onSearch }) {
       startDate: startDate ? startDate.toISOString().slice(0, 10) : null,
       endDate: endDate ? endDate.toISOString().slice(0, 10) : null,
       location,
-      subSysName
+      subSysName,
     };
 
     try {
-      const response = await axios.post('/api/tape/search', searchData);
+      const response = await axios.post("/api/tape/search", searchData);
       onSearch(response.data);
     } catch (error) {
-      console.error('Error during search:', error);
+      console.error("Error during search:", error);
     }
   };
 
   useEffect(() => {
     const fetchSystemData = async () => {
       try {
-        const response = await axios.get('/api/systems');
+        const response = await axios.get("/api/systems");
         setSystemData(response.data);
       } catch (error) {
-        console.error('Error fetching system data:', error);
+        console.error("Error fetching system data:", error);
       }
     };
     fetchSystemData();
@@ -107,10 +107,12 @@ function Search({ onSearch }) {
   useEffect(() => {
     const fetchSubSystems = async () => {
       try {
-        const response = await axios.get(`/api/systems/subsystems/${parentSystem.sysId}`);
+        const response = await axios.get(
+          `/api/systems/subsystems/${parentSystem.sysId}`
+        );
         setSubSystems(response.data);
       } catch (error) {
-        console.error('Error fetching sub-systems:', error);
+        console.error("Error fetching sub-systems:", error);
       }
     };
     if (parentSystem.sysId) {
@@ -119,11 +121,14 @@ function Search({ onSearch }) {
   }, [parentSystem.sysId]);
 
   return (
-    <ContainerStyled maxWidth="md" sx={{background: colorPalette.black1[500]}}>
+    <ContainerStyled
+      maxWidth="xl"
+      sx={{ background: colorPalette.black1[500] }}
+    >
       <HeaderStyled variant="h4"></HeaderStyled>
       <SearchFormStyled onSubmit={handleSubmit}>
         <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={15} sm={3} className={SearchInputGroupStyled}>
+          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
             <TextField
               label="Tape ID"
               value={tapeId}
@@ -132,7 +137,7 @@ function Search({ onSearch }) {
               sx={textFieldStyles}
             />
           </Grid>
-          <Grid item xs={15} sm={3} className={SearchInputGroupStyled}>
+          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
             <FormControl fullWidth sx={textFieldStyles}>
               <InputLabel id="system-select-label">System</InputLabel>
               <Select
@@ -157,7 +162,7 @@ function Search({ onSearch }) {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={15} sm={3} className={SearchInputGroupStyled}>
+          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
             <FormControl fullWidth sx={textFieldStyles}>
               <InputLabel id="subsystem-select-label">Sub System</InputLabel>
               <Select
@@ -180,7 +185,7 @@ function Search({ onSearch }) {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={15} sm={3} className={SearchInputGroupStyled}>
+          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
             <TextField
               select
               label="Backup Status"
@@ -194,7 +199,7 @@ function Search({ onSearch }) {
               <MenuItem value="Not Taken">Not Taken</MenuItem>
             </TextField>
           </Grid>
-          <Grid item xs={15} sm={3} className={SearchInputGroupStyled}>
+          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
             <TextField
               select
               label="Media Type"
@@ -206,7 +211,7 @@ function Search({ onSearch }) {
               <MenuItem value="LTO6">LTO6</MenuItem>
             </TextField>
           </Grid>
-          <Grid item xs={15} sm={3} className={SearchInputGroupStyled}>
+          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
             <TextField
               select
               label="Tape Status"
@@ -219,7 +224,7 @@ function Search({ onSearch }) {
               <MenuItem value="Ongoing">Ongoing</MenuItem>
             </TextField>
           </Grid>
-          <Grid item xs={15} sm={3} className={SearchInputGroupStyled}>
+          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
             <DatePicker
               label="Start Date"
               value={startDate}
@@ -228,7 +233,7 @@ function Search({ onSearch }) {
               sx={textFieldStyles}
             />
           </Grid>
-          <Grid item xs={15} sm={3} className={SearchInputGroupStyled}>
+          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
             <DatePicker
               label="End Date"
               value={endDate}
@@ -237,7 +242,7 @@ function Search({ onSearch }) {
               sx={textFieldStyles}
             />
           </Grid>
-          <Grid item xs={15} sm={3} className={SearchInputGroupStyled}>
+          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
             <TextField
               select
               label="Location"
@@ -257,10 +262,12 @@ function Search({ onSearch }) {
               <MenuItem value="DRM to HO">DRM to HO</MenuItem>
             </TextField>
           </Grid>
+          <Grid item xs={15} sm={2} className={SearchInputGroupStyled} sx={{display: 'flex', justifyContent: 'center'}}>
+            <Button type="submit" variant="contained" color="primary" sx={{height: '50px'}}>
+              Search Tape
+            </Button>
+          </Grid>
         </Grid>
-        <Button type="submit" variant="contained" color="primary">
-          Search Tape
-        </Button>
       </SearchFormStyled>
     </ContainerStyled>
   );
