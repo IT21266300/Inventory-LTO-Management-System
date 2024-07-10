@@ -196,15 +196,17 @@ const TapeStockTables = ({ result, loading, error }) => {
       </Box>
 
       <Dialog open={openForm} onClose={handleClickClose}>
-        <DialogTitle>Add New Stock</DialogTitle>
-        <DialogContent>
-          <AddNewStock />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClickClose} color="primary">
-            Close
-          </Button>
-        </DialogActions>
+        <Box sx={{background: colorPalette.black[500], color: '#fff'}}>
+          <DialogTitle>Add New Tape Stock</DialogTitle>
+          <DialogContent>
+            <AddNewStock />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClickClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Box>
       </Dialog>
     </Box>
   );

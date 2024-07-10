@@ -13,6 +13,8 @@ import {
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import axios from 'axios';
+import { colorPalette } from 'customTheme';
+import textFieldStyles from 'styles/textFieldStyles';
 
 const ContainerStyled = styled(Container)(({ theme }) => ({
   marginTop: '2px',
@@ -117,7 +119,7 @@ function Search({ onSearch }) {
   }, [parentSystem.sysId]);
 
   return (
-    <ContainerStyled maxWidth="md">
+    <ContainerStyled maxWidth="md" sx={{background: colorPalette.black1[500]}}>
       <HeaderStyled variant="h4"></HeaderStyled>
       <SearchFormStyled onSubmit={handleSubmit}>
         <Grid container spacing={2} justifyContent="center">
@@ -127,10 +129,11 @@ function Search({ onSearch }) {
               value={tapeId}
               onChange={(e) => setTapeId(e.target.value)}
               fullWidth
+              sx={textFieldStyles}
             />
           </Grid>
           <Grid item xs={15} sm={3} className={SearchInputGroupStyled}>
-            <FormControl fullWidth>
+            <FormControl fullWidth sx={textFieldStyles}>
               <InputLabel id="system-select-label">System</InputLabel>
               <Select
                 labelId="system-select-label"
@@ -155,7 +158,7 @@ function Search({ onSearch }) {
             </FormControl>
           </Grid>
           <Grid item xs={15} sm={3} className={SearchInputGroupStyled}>
-            <FormControl fullWidth>
+            <FormControl fullWidth sx={textFieldStyles}>
               <InputLabel id="subsystem-select-label">Sub System</InputLabel>
               <Select
                 labelId="subsystem-select-label"
@@ -184,6 +187,7 @@ function Search({ onSearch }) {
               value={backupStatus}
               onChange={(e) => setBackupStatus(e.target.value)}
               fullWidth
+              sx={textFieldStyles}
             >
               <MenuItem value="Completed">Completed</MenuItem>
               <MenuItem value="In Progress">In Progress</MenuItem>
@@ -197,6 +201,7 @@ function Search({ onSearch }) {
               value={mediaType}
               onChange={(e) => setMediaType(e.target.value)}
               fullWidth
+              sx={textFieldStyles}
             >
               <MenuItem value="LTO6">LTO6</MenuItem>
             </TextField>
@@ -208,6 +213,7 @@ function Search({ onSearch }) {
               value={tapeStatus}
               onChange={(e) => setTapeStatus(e.target.value)}
               fullWidth
+              sx={textFieldStyles}
             >
               <MenuItem value="Completed">Completed</MenuItem>
               <MenuItem value="Ongoing">Ongoing</MenuItem>
@@ -219,6 +225,7 @@ function Search({ onSearch }) {
               value={startDate}
               onChange={(newStartDate) => setStartDate(newStartDate)}
               renderInput={(params) => <TextField {...params} fullWidth />}
+              sx={textFieldStyles}
             />
           </Grid>
           <Grid item xs={15} sm={3} className={SearchInputGroupStyled}>
@@ -227,6 +234,7 @@ function Search({ onSearch }) {
               value={endDate}
               onChange={(newEndDate) => setEndDate(newEndDate)}
               renderInput={(params) => <TextField {...params} fullWidth />}
+              sx={textFieldStyles}
             />
           </Grid>
           <Grid item xs={15} sm={3} className={SearchInputGroupStyled}>
@@ -236,6 +244,7 @@ function Search({ onSearch }) {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               fullWidth
+              sx={textFieldStyles}
             >
               <MenuItem value="Head Office">Head Office</MenuItem>
               <MenuItem value="DR Nugegoda">DR Nugegoda</MenuItem>
@@ -250,7 +259,7 @@ function Search({ onSearch }) {
           </Grid>
         </Grid>
         <Button type="submit" variant="contained" color="primary">
-          Search
+          Search Tape
         </Button>
       </SearchFormStyled>
     </ContainerStyled>

@@ -15,6 +15,7 @@ import { colorPalette } from 'customTheme';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import textFieldStyles from 'styles/textFieldStyles';
 
 const AddNewStock = () => {
   const [tapeName, setTapeName] = useState('');
@@ -56,15 +57,12 @@ const AddNewStock = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        mt: 5,
+        color: '#fff'
       }}
     >
-      <Typography variant="h5" gutterBottom sx={{ color: '#000' }}>
-        Add New Tape Stock
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3, width: '50%' }}>
-        <FormControl fullWidth sx={{ mb: 2 }}>
-          <InputLabel id="tapeName-label" sx={{ color: '#000' }}>
+      <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3}}>
+            <FormControl fullWidth sx={textFieldStyles}>
+          <InputLabel id="tapeName-label">
             Tape Name
           </InputLabel>
           <Select
@@ -73,22 +71,6 @@ const AddNewStock = () => {
             value={tapeName}
             label="Tape Name"
             onChange={(e) => setTapeName(e.target.value)}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: '#000', // Change the border color here
-                },
-                '&:hover fieldset': {
-                  borderColor: colorPalette.yellow[500],
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: colorPalette.yellow[500],
-                },
-              },
-              '& .MuiInputLabel-root': {
-                color: '#000',
-              },
-            }}
           >
             <MenuItem value="LTO6">LTO6</MenuItem>
             <MenuItem value="LTO7">LTO7</MenuItem>
@@ -102,24 +84,7 @@ const AddNewStock = () => {
           id="tapeQuantity"
           value={tapeQuantity}
           onChange={(e) => setTapeQuantity(e.target.value)}
-          sx={{
-            mb: 3,
-            '& .MuiOutlinedInput-root': {
-              color: '#000',
-              '& fieldset': {
-                borderColor: '#000', // Change the border color here
-              },
-              '&:hover fieldset': {
-                borderColor: colorPalette.yellow[500],
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: colorPalette.yellow[500],
-              },
-            },
-            '& .MuiInputLabel-root': {
-              color: '#000',
-            },
-          }}
+          sx={textFieldStyles}
         />
         <Button
           type="submit"
@@ -132,7 +97,7 @@ const AddNewStock = () => {
             },
           }}
         >
-          <AddCircleIcon sx={{ mr: 1 }} /> Add Stock
+          Add Stock
         </Button>
       </Box>
     </Box>
