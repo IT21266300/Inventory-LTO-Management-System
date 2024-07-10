@@ -56,7 +56,7 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       handleClickClose();
-      navigate(`/newTape/${tapeId}`)
+      navigate(`/newTapeReuse`)
       // window.location.reload();
     } catch (err) {
       toast.error(err.response.data.message, {
