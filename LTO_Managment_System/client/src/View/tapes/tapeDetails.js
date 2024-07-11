@@ -15,6 +15,7 @@ import {
 import { LoadingAnimation } from "components/LoadingComponent/LoadingAnimationTwo";
 import { toast } from "react-toastify";
 import customTheme, { colorPalette } from "customTheme";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import AddNewTapePopup from "../../components/TapeComponent/TapeDetailsAdd"; // Assuming your popup component is called AddNewTapePopup
 
@@ -31,7 +32,8 @@ const ViewTape = () => {
   const [tapeData, setTapeData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const { state } = useContext(Store);
   const { userInfo } = state;
 
@@ -548,6 +550,109 @@ const ViewTape = () => {
             <TapeContent tapeId={tapeData.tapeId} tapeDate={tapeData.eDate} />
           </Box>
         </Box>
+      </Box>
+
+{/* date update component */}
+      <Box>
+        {/* Your other component goes here */}
+        <Paper
+          elevation={3}
+          sx={{
+            padding: "2rem",
+            marginBottom: "2rem",
+            borderRadius: "10px",
+            backgroundColor: colorPalette.black1[500],
+            color: "#fff",
+          }}
+        >
+          <Typography variant="h5" gutterBottom>
+            Update Date Status
+          </Typography>
+
+          <Grid
+            container
+            spacing={4}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle1" gutterBottom>
+                Start Date:
+              </Typography>
+              {/* <Select
+                value={backupStatus}
+                onChange={(e) => setBackupStatus(e.target.value)}
+                fullWidth
+                sx={{
+                  backgroundColor: colorPalette.black1[400],
+                  color: "#fff",
+                  border: "1px solid #ffe404",
+                }}
+              >
+              </Select> */}
+              <DatePicker
+              label=" "
+              value={startDate}
+              onChange={(newStartDate) => setStartDate(newStartDate)}
+              renderInput={(params) => <TextField {...params} fullWidth />}
+              sx={textFieldStyles}
+            />
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle1" gutterBottom>
+                End Date:
+              </Typography>
+              {/* <Select
+                value={tapeStatus}
+                onChange={(e) => setTapeStatus(e.target.value)}
+                fullWidth
+                sx={{
+                  backgroundColor: colorPalette.black1[400],
+                  color: "#fff",
+                  border: "1px solid #ffe404",
+                }}
+              >
+              </Select> */}
+              <DatePicker
+              label=" "
+              value={endDate}
+              onChange={(newEndDate) => setEndDate(newEndDate)}
+              renderInput={(params) => <TextField {...params} fullWidth />}
+              sx={textFieldStyles}
+            />
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              md={2}
+              sx={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                variant="contained"
+                onClick={handleUpdateStatus}
+                sx={{
+                  backgroundColor: colorPalette.yellow[500],
+                  color: colorPalette.black[900],
+                  marginTop: "1.5rem",
+                  width: '200px'
+                }}
+              >
+                Update Date Status
+              </Button>
+            </Grid>
+          </Grid>
+        </Paper>
       </Box>
     </Box>
   );
