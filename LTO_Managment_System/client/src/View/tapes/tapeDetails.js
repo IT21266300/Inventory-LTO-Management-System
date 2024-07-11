@@ -203,8 +203,8 @@ const ViewTape = () => {
                   border: "1px solid #ffe404",
                 }}
               >
-                <MenuItem value="Completed">Full</MenuItem>
-                <MenuItem value="Ongoing">In Use</MenuItem>
+                <MenuItem value="Full">Full</MenuItem>
+                <MenuItem value="In Use">In Use</MenuItem>
               </Select>
             </Grid>
 
