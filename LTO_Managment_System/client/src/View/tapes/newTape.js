@@ -298,8 +298,8 @@ const Tape = () => {
                 id="tStatus" // Added id
                 onChange={(e) => setTStatus(e.target.value)} // Corrected onChange handler
               >
-                <MenuItem value={"Completed"}>Completed</MenuItem>
-                <MenuItem value={"Ongoing"}>Ongoing</MenuItem>
+                <MenuItem value={"Full"}>Full</MenuItem>
+                <MenuItem value={"In Use"}>In Use</MenuItem>
               </Select>
             </FormControl>
 

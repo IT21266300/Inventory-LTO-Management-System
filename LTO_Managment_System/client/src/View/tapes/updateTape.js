@@ -304,7 +304,7 @@ const Tape = () => {
                   id="bStatus" // Added id
                   onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
                 >
-                  <MenuItem value={'Completed'}>Completed</MenuItem>
+                  <MenuItem value={'Full'}>Full</MenuItem>
                   <MenuItem value={'Failed'}>Failed</MenuItem>
                   <MenuItem value={'In Progress'}>In Progress</MenuItem>
                   <MenuItem value={'Not Taken'}>Not Taken</MenuItem>
@@ -337,8 +337,8 @@ const Tape = () => {
                 id="tStatus" // Added id
                 onChange={(e) => setTStatus(e.target.value)} // Corrected onChange handler
               >
-                <MenuItem value={'Completed'}>Completed</MenuItem>
-                <MenuItem value={'Ongoing'}>Ongoing</MenuItem>
+                <MenuItem value={'Full'}>Full</MenuItem>
+                <MenuItem value={'In Use'}>In Use</MenuItem>
               </Select>
             </FormControl>
 

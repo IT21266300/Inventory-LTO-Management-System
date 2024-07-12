@@ -204,7 +204,7 @@ const TapeTable = () => {
         return (
           <Box
             sx={{
-              backgroundColor: status === 'Completed' ? '#017816' : '#0366fc',
+              backgroundColor: status === 'Full' ? '#017816' : '#0366fc',
               color: 'white',
               padding: '4px 8px',
               borderRadius: '4px',
