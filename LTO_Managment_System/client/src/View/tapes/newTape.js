@@ -58,8 +58,8 @@ const Tape = () => {
   const [bStatus, setBStatus] = useState(""); // Add state for backup status
   const [mType, setMType] = useState(tapeType); // Add state for media type
   const [tStatus, setTStatus] = useState(""); // Add state for tape status
-  const [sDate, setSDate] = useState(""); // Add state for start date
-  const [eDate, setEDate] = useState(""); // Add state for end date
+  const [sDate, setSDate] = useState("YYYY-MM-DD"); // Add state for start date
+  const [eDate, setEDate] = useState("YYYY-MM-DD"); // Add state for end date
   const [lStatus, setLStatus] = useState(""); // Add state for label status
 
   useEffect(() => {
@@ -312,9 +312,9 @@ const Tape = () => {
             >
               <TextField
                 name="sDate"
-                label="Start Date & Time" // Updated label
+                label="Start Date" // Updated label
                 variant="outlined"
-                type="datetime-local" // Changed to datetime-local
+                type="date" // Changed to datetime-local
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -324,9 +324,9 @@ const Tape = () => {
 
               <TextField
                 name="eDate"
-                label="End Date & Time" // Updated label
+                label="End Date" // Updated label
                 variant="outlined"
-                type="datetime-local" // Changed to datetime-local
+                type="date" // Changed to datetime-local
                 InputLabelProps={{
                   shrink: true,
                 }}
