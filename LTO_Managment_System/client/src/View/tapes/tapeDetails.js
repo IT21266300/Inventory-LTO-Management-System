@@ -32,8 +32,6 @@ const ViewTape = () => {
   const [tapeData, setTapeData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
   const { state } = useContext(Store);
   const { userInfo } = state;
 
@@ -41,6 +39,8 @@ const ViewTape = () => {
   const [backupStatus, setBackupStatus] = useState(null);
   const [tapeStatus, setTapeStatus] = useState(null);
   const [locationStatus, setLocationStatus] = useState(null);
+  const [sDate, setStartDate] = useState(null);
+  const [eDate, setEndDate] = useState(null);
 
   // State for the Add New Tape Popup
   const [addNewTapePopupOpen, setAddNewTapePopupOpen] = useState(false);
@@ -55,6 +55,7 @@ const ViewTape = () => {
         setBackupStatus(response.data[0].bStatus);
         setTapeStatus(response.data[0].tStatus);
         setLocationStatus(response.data[0].lStatus);
+        
       } catch (err) {
         setError(err.message);
         toast.error(err.message, {
@@ -111,6 +112,29 @@ const ViewTape = () => {
       setTapeData(response.data);
 
       toast.success("Status updated successfully!", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      window.location.reload();
+    } catch (err) {
+      toast.error(err.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      console.error(err);
+    }
+  };
+
+  const handleUpdateDateStatus = async () => {
+    try {
+      const response = await axios.put(`/api/tape/updateDateStatus/${tapeId}`, {
+        sDate: sDate,
+        eDate: eDate,
+        
+      });
+
+      // Assuming your API returns the updated data
+      setTapeData(response.data);
+
+      toast.success("Date Status updated successfully!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       window.location.reload();
@@ -479,6 +503,7 @@ const ViewTape = () => {
                       </Typography>
                     </Paper>
                   </Grid>
+                  
                   <Grid item xs={12} md={12}>
                     <Paper
                       elevation={1}
@@ -591,48 +616,33 @@ const ViewTape = () => {
               <Typography variant="subtitle1" gutterBottom>
                 Start Date:
               </Typography>
-              {/* <Select
-                value={backupStatus}
-                onChange={(e) => setBackupStatus(e.target.value)}
+              <DatePicker
+                value={sDate}
+                onChange={(e) => setStartDate(e.target.value)}
                 fullWidth
                 sx={{
                   backgroundColor: colorPalette.black1[400],
                   color: "#fff",
                   border: "1px solid #ffe404",
                 }}
-              >
-              </Select> */}
-              <DatePicker
-              label=" "
-              value={startDate}
-              onChange={(newStartDate) => setStartDate(newStartDate)}
-              renderInput={(params) => <TextField {...params} fullWidth />}
-              sx={textFieldStyles}
-            />
+              />
             </Grid>
 
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle1" gutterBottom>
                 End Date:
               </Typography>
-              {/* <Select
-                value={tapeStatus}
-                onChange={(e) => setTapeStatus(e.target.value)}
+              <DatePicker
+                value={eDate}
+                onChange={(e) => setEndDate(e.target.value)}
                 fullWidth
                 sx={{
                   backgroundColor: colorPalette.black1[400],
                   color: "#fff",
                   border: "1px solid #ffe404",
                 }}
-              >
-              </Select> */}
-              <DatePicker
-              label=" "
-              value={endDate}
-              onChange={(newEndDate) => setEndDate(newEndDate)}
-              renderInput={(params) => <TextField {...params} fullWidth />}
-              sx={textFieldStyles}
-            />
+              />
+              
             </Grid>
 
             <Grid
@@ -649,7 +659,7 @@ const ViewTape = () => {
             >
               <Button
                 variant="contained"
-                onClick={handleUpdateStatus}
+                onClick={handleUpdateDateStatus}
                 sx={{
                   backgroundColor: colorPalette.yellow[500],
                   color: colorPalette.black[900],
