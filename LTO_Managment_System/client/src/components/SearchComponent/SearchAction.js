@@ -208,7 +208,11 @@ function Search({ onSearch }) {
               fullWidth
               sx={textFieldStyles}
             >
-              <MenuItem value="LTO6">LTO6</MenuItem>
+              <MenuItem value={"LTO5"}>LTO5</MenuItem>
+              <MenuItem value={"LTO6"}>LTO6</MenuItem>
+              <MenuItem value={"LTO7"}>LTO7</MenuItem>
+              <MenuItem value={"LTO8"}>LTO8</MenuItem>
+              <MenuItem value={"LTO9"}>LTO9</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>

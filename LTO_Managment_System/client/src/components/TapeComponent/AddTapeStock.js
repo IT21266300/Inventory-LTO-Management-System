@@ -71,7 +71,7 @@ const AddNewStock = () => {
             label="Tape Name"
             onChange={(e) => setTapeName(e.target.value)}
           >
-          <MenuItem value="LTO5">LTO5</MenuItem>
+            <MenuItem value="LTO5">LTO5</MenuItem>
             <MenuItem value="LTO6">LTO6</MenuItem>
             <MenuItem value="LTO7">LTO7</MenuItem>
             <MenuItem value="LTO8">LTO8</MenuItem>
