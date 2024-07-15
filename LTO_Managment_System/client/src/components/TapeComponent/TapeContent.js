@@ -10,6 +10,8 @@ import {
   Alert,
   Box,
   IconButton,
+  Typography,
+  Modal,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { colorPalette } from 'customTheme';
@@ -23,8 +25,7 @@ import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTw
 import DownloadActions from 'components/DownloadComponent/DownloadActions';
 import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
-import VisibilityIcon from '@mui/icons-material/Visibility'; // Import the icon for viewing
-
+import VisibilityIcon from '@mui/icons-material/Visibility'; 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -36,6 +37,23 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+};
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '90%', // Increased width to 80%
+  maxWidth: 1000, // Optional: Set a maximum width
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+const contentStyle = {
+  maxHeight: 400, // Set a maximum height for the content area
+  overflowY: 'auto', // Enable vertical scrolling
 };
 
 const TapeContentTable = ({ tapeId, tapeDate }) => {
@@ -50,6 +68,24 @@ const TapeContentTable = ({ tapeId, tapeDate }) => {
     loading: true,
     error: '',
   });
+
+   // State for managing the modal
+   const [openDetailsModal, setOpenDetailsModal] = useState(false);
+   const [selectedTapeContent, setSelectedTapeContent] = useState(null);
+ 
+   const handleOpenDetailsModal = () => {
+     setOpenDetailsModal(true);
+   };
+ 
+   const handleCloseDetailsModal = () => {
+     setOpenDetailsModal(false);
+   };
+ 
+   // Handle viewing details
+   const handleViewDetail = (row) => {
+     setSelectedTapeContent(row);
+     handleOpenDetailsModal();
+   };
 
   const [convertDate, setConvertDate] = useState();
 
@@ -181,18 +217,19 @@ const TapeContentTable = ({ tapeId, tapeDate }) => {
           style={{ textDecoration: 'none' }}
         >
           <IconButton
-            aria-label="delete"
-            sx={{
-              backgroundColor: colorPalette.yellow[500],
+          aria-label="view"
+          onClick={() => handleViewDetail(params.row)} // Pass the entire row data
+          sx={{
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[500],
+            '&:hover': {
+              backgroundColor: colorPalette.yellow[400],
               color: colorPalette.black[500],
-              '&:hover': {
-                backgroundColor: colorPalette.yellow[400],
-                color: colorPalette.black[500],
-              },
-            }}
-          >
-            <VisibilityIcon />
-          </IconButton>
+            },
+          }}
+        >
+          <VisibilityIcon /> 
+        </IconButton>
         </Link>
       </Box>
     ),
@@ -217,90 +254,114 @@ const TapeContentTable = ({ tapeId, tapeDate }) => {
   }
 
   return loading ? (
+    
     <Box width="100%">
       <LoadingAnimation />
     </Box>
   ) : error ? (
     <Alert severity="warning">Tape Content Empty..!</Alert>
   ) : (
-    <Box width="100%">
-      <Box
-        height="100vh"
-        width="100%"
-        sx={{
-          '& .MuiDataGrid-cell': {
-            borderBottom: 'none',
-            color: '#fff',
-          },
-          '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: colorPalette.black1[400],
-            color: colorPalette.secondary[200],
-            // borderBottom: 'none',
-          },
-
-          '& .MuiDataGrid-footerContainer': {
-            backgroundColor: colorPalette.black1[500],
-            color: colorPalette.yellow[500],
-            // color: 'green',
-            borderTop: 'none',
-          },
-          '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
-            color: `${colorPalette.primary[500]} !important`,
-          },
-          display: 'flex',
-        }}
-      >
-        <Box width="100%" sx={{ color: '#fff' }}>
-          <DataGrid
-            rows={rows}
-            rowHeight={60}
-            columns={columns}
-            initialState={{
-              columns: {
-                columnVisibilityModel: {
-                  tapeId: false,
-                },
+    <><Box width="100%">
+          <Box
+            height="100vh"
+            width="100%"
+            sx={{
+              '& .MuiDataGrid-cell': {
+                borderBottom: 'none',
+                color: '#fff',
               },
-              // sorting: { sortModel: [{field: 'date', sort: 'asc'}]}
-            }}
-            pageSize={10}
-            components={{
-              toolbar: () => {
-                return (
-                  <GridToolbarContainer
-                    style={{
-                      justifyContent: 'flex-start',
-                      padding: '0.4rem',
-                      background: colorPalette.black[100],
-                    }}
-                  >
-                    <GridToolbarFilterButton
-                      style={{ color: colorPalette.yellow[500] }}
-                    />
-                    <GridToolbarQuickFilter />
-                  </GridToolbarContainer>
-                );
+              '& .MuiDataGrid-columnHeaders': {
+                backgroundColor: colorPalette.black1[400],
+                color: colorPalette.secondary[200],
+                // borderBottom: 'none',
               },
+
+              '& .MuiDataGrid-footerContainer': {
+                backgroundColor: colorPalette.black1[500],
+                color: colorPalette.yellow[500],
+                // color: 'green',
+                borderTop: 'none',
+              },
+              '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
+                color: `${colorPalette.primary[500]} !important`,
+              },
+              display: 'flex',
             }}
-          />
-        </Box>
+          >
+            <Box width="100%" sx={{ color: '#fff' }}>
+              <DataGrid
+                rows={rows}
+                rowHeight={60}
+                columns={columns}
+                initialState={{
+                  columns: {
+                    columnVisibilityModel: {
+                      tapeId: false,
+                    },
+                  },
+                  // sorting: { sortModel: [{field: 'date', sort: 'asc'}]}
+                }}
+                pageSize={10}
+                components={{
+                  toolbar: () => {
+                    return (
+                      <GridToolbarContainer
+                        style={{
+                          justifyContent: 'flex-start',
+                          padding: '0.4rem',
+                          background: colorPalette.black[100],
+                        }}
+                      >
+                        <GridToolbarFilterButton
+                          style={{ color: colorPalette.yellow[500] }} />
+                        <GridToolbarQuickFilter />
+                      </GridToolbarContainer>
+                    );
+                  },
+                }} />
+            </Box>
 
-        <ActionsMenu
-          anchorEl={anchorEl}
-          open={open}
-          handleClose={handleClose}
-          // handleUpdate={handleUpdate}
-          handleClickOpenAlert={handleClickOpenAlert}
-          position={userInfo.position}
-        />
+            <ActionsMenu
+              anchorEl={anchorEl}
+              open={open}
+              handleClose={handleClose}
+              // handleUpdate={handleUpdate}
+              handleClickOpenAlert={handleClickOpenAlert}
+              position={userInfo.position} />
 
-        <DeleteAlertBox
-          openAlert={openAlert}
-          handleCloseAlert={handleCloseAlert}
-          handleDelete={handleDelete}
-        />
+            <DeleteAlertBox
+              openAlert={openAlert}
+              handleCloseAlert={handleCloseAlert}
+              handleDelete={handleDelete} />
+          </Box>
+        </Box><Modal
+      open={openDetailsModal}
+      onClose={handleCloseDetailsModal}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={modalStyle}>
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          Tape Content Details
+        </Typography>
+        {selectedTapeContent && (
+          <Box sx={contentStyle}> {/* Apply contentStyle here */}
+            <Typography variant="body1">
+              <strong>Date:</strong> {selectedTapeContent.date}
+            </Typography>
+            <Typography variant="body1">
+              <strong>Tape Content:</strong> {selectedTapeContent.tapeContent}
+            </Typography>
+            <Typography variant="body1">
+              <strong>Remarks:</strong> {selectedTapeContent.remarks}
+            </Typography>
+          </Box>
+        )}
       </Box>
-    </Box>
+    </Modal></>
+
+    
+    
   );
 };
 
