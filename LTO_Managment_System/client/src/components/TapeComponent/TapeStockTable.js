@@ -1,3 +1,4 @@
+// TapeStockTables.js
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import {
@@ -16,14 +17,10 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AddNewStock from '../TapeComponent/AddTapeStock'; 
 
 const TapeStockTables = ({ result, loading, error }) => {
-
-  const navigate = useNavigate();
-
-
-  const { state} = useContext(Store);
+  const { state } = useContext(Store);
   const { userInfo } = state;
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const [openAlert, setOpenAlert] = useState(false);
@@ -32,7 +29,7 @@ const TapeStockTables = ({ result, loading, error }) => {
     setAnchorEl(null);
   };
 
-  const [openForm, setOpenForm] = React.useState(false);
+  const [openForm, setOpenForm] = useState(false);
 
   const handleClickOpen = () => {
     setOpenForm(true);
@@ -78,15 +75,9 @@ const TapeStockTables = ({ result, loading, error }) => {
       headerName: 'Tape Quantity',
       flex: 0.4,
     },
-    
-    
   ];
 
-  // console.log("info", userInfo);
- 
-
   let pdfColumn = [];
-  
 
   let rows = {};
   if (result !== undefined) {
@@ -96,11 +87,10 @@ const TapeStockTables = ({ result, loading, error }) => {
       tapeQuantity: row.tapeQuantity,
     }));
   }
-  
 
   return loading ? (
     <Box width="100%">
-      <LoadingAnimation/>
+      <LoadingAnimation />
     </Box>
   ) : error ? (
     <Alert severity="error">{error}</Alert>
@@ -115,10 +105,7 @@ const TapeStockTables = ({ result, loading, error }) => {
         }}
       >
         <Button
-          onClick={() => {
-            
-            navigate(AddNewStock);//navigate to add new stock component
-          }}
+          onClick={handleClickOpen}
           sx={{
             backgroundColor: colorPalette.yellow[500],
             color: colorPalette.black[500],
@@ -132,9 +119,9 @@ const TapeStockTables = ({ result, loading, error }) => {
           }}
         >
           <AddCircleIcon sx={{ mr: '10px' }} />
-          <Typography fontSize="0.9rem">Add New Stock </Typography>
+          <Typography fontSize="0.9rem">Add New Stock</Typography>
         </Button>
-        <Box sx={{ml: '1.5rem'}}>
+        <Box sx={{ ml: '1.5rem' }}>
           <DownloadActions
             pdfColumn={pdfColumn}
             rows={rows}
@@ -153,33 +140,25 @@ const TapeStockTables = ({ result, loading, error }) => {
           '& .MuiDataGrid-columnHeaders': {
             backgroundColor: colorPalette.black1[400],
             color: colorPalette.secondary[200],
-            // borderBottom: 'none',
           },
-
           '& .MuiDataGrid-footerContainer': {
             backgroundColor: colorPalette.black1[500],
             color: colorPalette.yellow[500],
-            // color: 'green',
             borderTop: 'none',
           },
           '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
             color: `${colorPalette.primary[500]} !important`,
           },
           display: 'flex',
-          
+          justifyContent: 'center',
         }}
       >
-        <Box width="100%" sx={{color: '#fff'}}>
-        <DataGrid
+        <Box width="50%" sx={{ color: '#fff' }}>
+          <DataGrid
             rows={rows}
             rowHeight={60}
             columns={columns}
-            initialState={{
-              columns: {
-                
-              },
-              // sorting: { sortModel: [{field: 'date', sort: 'asc'}]}
-            }}
+            initialState={{}}
             pageSize={10}
             components={{
               toolbar: () => {
@@ -187,7 +166,7 @@ const TapeStockTables = ({ result, loading, error }) => {
                   <GridToolbarContainer
                     style={{ justifyContent: 'flex-start', padding: '0.4rem', background: colorPalette.black[100] }}
                   >
-                    <GridToolbarFilterButton style={{ color: colorPalette.yellow[500]}}/>
+                    <GridToolbarFilterButton style={{ color: colorPalette.yellow[500] }} />
                     <GridToolbarQuickFilter />
                   </GridToolbarContainer>
                 );
@@ -195,10 +174,21 @@ const TapeStockTables = ({ result, loading, error }) => {
             }}
           />
         </Box>
-        
-      
-
       </Box>
+
+      <Dialog open={openForm} onClose={handleClickClose}>
+        <Box sx={{background: colorPalette.black[500], color: '#fff'}}>
+          <DialogTitle>Add New Tape Stock</DialogTitle>
+          <DialogContent>
+            <AddNewStock />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClickClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Box>
+      </Dialog>
     </Box>
   );
 };

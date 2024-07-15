@@ -20,6 +20,7 @@ import Profile from "View/profile";
 //tape views
 import Tape from "View/tapes";
 import NewTape from "View/tapes/newTape";
+import NewTapeReuse from "View/tapes/newTapeReuse";
 import UpdateTape from "View/tapes/updateTape";
 import ViewTape from "View/tapes/tapeDetails";
 
@@ -109,6 +110,14 @@ const routesConfig = [
         element: (
           <RouteProtector>
             <NewTape />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/newTapeReuse",
+        element: (
+          <RouteProtector>
+            <NewTapeReuse />
           </RouteProtector>
         ),
       },

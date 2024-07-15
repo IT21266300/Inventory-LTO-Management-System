@@ -51,7 +51,8 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       handleClickClose();
-      window.location.reload();
+      navigate(`/newTapeReuse`)
+      // window.location.reload();
     } catch (err) {
       toast.error(err.response.data.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -143,7 +144,6 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
                   onChange={(e) => setTapeType(e.target.value)}
                   autoWidth
                   label="Tape Type"
-                  sx={textFieldStyles}
                 >
                   <MenuItem value={"LTO1"}>LTO1</MenuItem>
                   <MenuItem value={"LTO2"}>LTO2</MenuItem>

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Header from "components/Header";
 import Box from "@mui/material/Box";
 import {
   Button,
@@ -8,7 +9,9 @@ import {
   Typography,
 } from "@mui/material";
 import { colorPalette } from "customTheme";
+import HttpsIcon from "@mui/icons-material/Https";
 import FlexBetween from "components/FlexBetween";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -35,7 +38,7 @@ const reducer = (state, action) => {
   }
 };
 
-const Tape = () => {
+const NewTapeReuse = () => {
   const navigate = useNavigate();
   const [tapeId, setTapeId] = useState(""); // Add state for tape ID
 
@@ -55,8 +58,8 @@ const Tape = () => {
   const [bStatus, setBStatus] = useState(""); // Add state for backup status
   const [mType, setMType] = useState(tapeType); // Add state for media type
   const [tStatus, setTStatus] = useState(""); // Add state for tape status
-  const [sDate, setSDate] = useState("YYYY-MM-DD"); // Add state for start date
-  const [eDate, setEDate] = useState("YYYY-MM-DD"); // Add state for end date
+  const [sDate, setSDate] = useState(""); // Add state for start date
+  const [eDate, setEDate] = useState(""); // Add state for end date
   const [lStatus, setLStatus] = useState(""); // Add state for label status
 
   useEffect(() => {
@@ -262,7 +265,7 @@ const Tape = () => {
                   id="bStatus" // Added id
                   onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
                 >
-                  <MenuItem value={"Completed"}>Completed</MenuItem>
+                  <MenuItem value={"Full"}>Full</MenuItem>
                   <MenuItem value={"Failed"}>Failed</MenuItem>
                   <MenuItem value={"In Progress"}>In Progress</MenuItem>
                   <MenuItem value={"Not Taken"}>Not Taken</MenuItem>
@@ -309,9 +312,9 @@ const Tape = () => {
             >
               <TextField
                 name="sDate"
-                label="Start Date" // Updated label
+                label="Start Date & Time" // Updated label
                 variant="outlined"
-                type="date" // Changed to datetime-local
+                type="datetime-local" // Changed to datetime-local
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -321,9 +324,9 @@ const Tape = () => {
 
               <TextField
                 name="eDate"
-                label="End Date" // Updated label
+                label="End Date & Time" // Updated label
                 variant="outlined"
-                type="date" // Changed to datetime-local
+                type="datetime-local" // Changed to datetime-local
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -392,4 +395,4 @@ const Tape = () => {
   );
 };
 
-export default Tape;
+export default NewTapeReuse;
