@@ -49,13 +49,14 @@ const ViewTape = () => {
       try {
         const response = await axios.get(`/api/tape/${tapeId}`);
         setTapeData(response.data[0]);
+        console.log(response.data);
 
         // Initialize update states with current values
         setBackupStatus(response.data[0].bStatus);
         setTapeStatus(response.data[0].tStatus);
         setLocationStatus(response.data[0].lStatus);
-        //setStartDate(response.data[0].sDate);
-        //setEndDate(response.data[0].eDate);
+        setStartDate(response.data[0].sDate);
+        setEndDate(response.data[0].eDate);
 
       } catch (err) {
         setError(err.message);
@@ -81,16 +82,6 @@ const ViewTape = () => {
     );
   }
 
-  // const formatDate = (dateString) => {
-  //   const date = new Date(dateString);
-  //   return date.toLocaleDateString("en-US", {
-  //     year: "numeric",
-  //     month: "long",
-  //     day: "numeric",
-  //     hour: "numeric",
-  //     minute: "numeric",
-  //   });
-  // };
   const formatDate = (isoString) => {
     if (!isoString) return '';
     const date = new Date(isoString);
@@ -99,7 +90,7 @@ const ViewTape = () => {
     const day = date.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
-  
+
 
   const handleUpdateStatus = async () => {
     try {
@@ -129,7 +120,7 @@ const ViewTape = () => {
       const response = await axios.put(`/api/tape/updateDateStatus/${tapeId}`, {
         sDate: startDate,
         eDate: endDate,
-        
+
       });
 
       // Assuming your API returns the updated data
@@ -522,7 +513,7 @@ const ViewTape = () => {
                       </Typography>
                     </Paper>
                   </Grid>
-                  
+
                   <Grid item xs={12} md={12}>
                     <Paper
                       elevation={1}
@@ -616,8 +607,8 @@ const ViewTape = () => {
         }}
       >
       </Box>
-      
-    {/* date update component */}
+
+      {/* date update component */}
       <Box>
         {/* Your other component goes here */}
         <Paper
@@ -644,36 +635,35 @@ const ViewTape = () => {
             }}
           >
             <Grid item xs={12} md={4}>
-              <Typography variant="subtitle1" gutterBottom>
-                Start Date:
-              </Typography>
-              <DatePicker
+              <TextField
+                name="sDate"
+                label="Start Date" // Updated label
+                variant="outlined"
+                type="date" // Changed to datetime-local
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                sx={textFieldStyles}
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                fullWidth
-                sx={{
-                  backgroundColor: colorPalette.black1[400],
-                  color: "#fff",
-                  border: "1px solid #ffe404",
-                }}
+              // aria-readonly
               />
             </Grid>
 
             <Grid item xs={12} md={4}>
-              <Typography variant="subtitle1" gutterBottom>
-                End Date:
-              </Typography>
-              <DatePicker
+              <TextField
+                name="eDate"
+                label="End Date" // Updated label
+                variant="outlined"
+                type="date" // Changed to datetime-local
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                sx={textFieldStyles}
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                fullWidth
-                sx={{
-                  backgroundColor: colorPalette.black1[400],
-                  color: "#fff",
-                  border: "1px solid #ffe404",
-                }}
+              // aria-readonly
               />
-              
             </Grid>
 
             <Grid
