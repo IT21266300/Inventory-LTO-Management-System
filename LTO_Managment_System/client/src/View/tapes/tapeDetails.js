@@ -23,6 +23,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddNewTapePopup from '../../components/TapeComponent/TapeDetailsAdd'; // Assuming your popup component is called AddNewTapePopup
 import TapeContent from 'components/TapeComponent/TapeContent';
 import { Store } from 'store';
+import textFieldStyles from 'styles/textFieldStyles';
 
 
 const ViewTape = () => {
