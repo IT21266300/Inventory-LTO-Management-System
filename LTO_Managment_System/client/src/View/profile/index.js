@@ -1,26 +1,15 @@
 import {
-  Avatar,
   Box,
-  Button,
-  Grid,
   IconButton,
-  Stack,
   TextField,
   Typography,
-  makeStyles,
 } from '@mui/material';
-import axios from 'axios';
-import FlexBetween from 'components/FlexBetween';
 import { colorPalette } from 'customTheme';
 import React from 'react';
-import { useEffect } from 'react';
-import { useReducer } from 'react';
 import { useContext } from 'react';
 import { Store } from 'store';
 import PersonIcon from '@mui/icons-material/Person';
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 
 const Profile = () => {
   const navigate = useNavigate();

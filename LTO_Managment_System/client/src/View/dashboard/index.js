@@ -2,17 +2,15 @@ import {
   Box,
   Button,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
   Grid,
-  TextField,
   Typography,
 } from '@mui/material';
 import { colorPalette } from 'customTheme';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
@@ -25,8 +23,6 @@ import i3 from '../../assets/3.jpg';
 import i4 from '../../assets/4.jpeg';
 import i5 from '../../assets/5.jpg';
 import i6 from '../../assets/image.jpeg';
-import i7 from '../../assets/7.jpg';
-import i8 from '../../assets/8.jpg';
 import i9 from '../../assets/9.webp';
 import i10 from '../../assets/10.jpg';
 import { Helmet } from 'react-helmet-async';
