@@ -87,9 +87,9 @@ const Tape = () => {
   useEffect(() => {
     const isoSDate = data.sDate;
     const isoEDate = data.eDate;
-    const stDate = new Date(isoSDate);
+    const startDate = new Date(isoSDate);
     const endDate = new Date(isoEDate);
-    const formattedSDate = stDate.toISOString().split('T')[0];
+    const formattedSDate = startDate.toISOString().split('T')[0];
     const formattedEDate = endDate.toISOString().split('T')[0];
     setSDate(formattedSDate);
     setEDate(formattedEDate);

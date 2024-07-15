@@ -39,8 +39,8 @@ const ViewTape = () => {
   const [backupStatus, setBackupStatus] = useState(null);
   const [tapeStatus, setTapeStatus] = useState(null);
   const [locationStatus, setLocationStatus] = useState(null);
-  const [sDate, setStartDate] = useState(null);
-  const [eDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   // State for the Add New Tape Popup
   const [addNewTapePopupOpen, setAddNewTapePopupOpen] = useState(false);
@@ -55,7 +55,9 @@ const ViewTape = () => {
         setBackupStatus(response.data[0].bStatus);
         setTapeStatus(response.data[0].tStatus);
         setLocationStatus(response.data[0].lStatus);
-        
+        //setStartDate(response.data[0].sDate);
+        //setEndDate(response.data[0].eDate);
+
       } catch (err) {
         setError(err.message);
         toast.error(err.message, {
@@ -126,8 +128,8 @@ const ViewTape = () => {
   const handleUpdateDateStatus = async () => {
     try {
       const response = await axios.put(`/api/tape/updateDateStatus/${tapeId}`, {
-        sDate: sDate,
-        eDate: eDate,
+        sDate: startDate,
+        eDate: endDate,
         
       });
 
@@ -586,7 +588,19 @@ const ViewTape = () => {
         </Box>
       </Box>
 
-{/* date update component */}
+      {/* title component */}
+      <Box
+        sx={{
+          width: "100%",
+          height: "15vh",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+      </Box>
+      
+    {/* date update component */}
       <Box>
         {/* Your other component goes here */}
         <Paper
@@ -617,7 +631,7 @@ const ViewTape = () => {
                 Start Date:
               </Typography>
               <DatePicker
-                value={sDate}
+                value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
                 fullWidth
                 sx={{
@@ -633,7 +647,7 @@ const ViewTape = () => {
                 End Date:
               </Typography>
               <DatePicker
-                value={eDate}
+                value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
                 fullWidth
                 sx={{
