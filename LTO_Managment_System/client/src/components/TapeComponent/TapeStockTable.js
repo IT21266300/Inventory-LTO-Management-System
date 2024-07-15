@@ -1,18 +1,32 @@
 // TapeStockTables.js
 import React, { useEffect, useState } from 'react';
-import { DataGrid, GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import {
   Alert,
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Menu,
+  MenuItem,
+  Skeleton,
+  Slide,
+  Stack,
   Typography,
 } from '@mui/material';
 import { colorPalette } from 'customTheme';
-import { useNavigate } from 'react-router-dom';
+
+
+
 import { useContext } from 'react';
 import { Store } from 'store';
+
 import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTwo';
 import DownloadActions from 'components/DownloadComponent/DownloadActions';
+
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AddNewStock from '../TapeComponent/AddTapeStock'; 
 
