@@ -15,6 +15,7 @@ import {
 import { LoadingAnimation } from "components/LoadingComponent/LoadingAnimationTwo";
 import { toast } from "react-toastify";
 import customTheme, { colorPalette } from "customTheme";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import AddNewTapePopup from "../../components/TapeComponent/TapeDetailsAdd"; // Assuming your popup component is called AddNewTapePopup
 
@@ -31,7 +32,6 @@ const ViewTape = () => {
   const [tapeData, setTapeData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const { state } = useContext(Store);
   const { userInfo } = state;
 
@@ -39,6 +39,8 @@ const ViewTape = () => {
   const [backupStatus, setBackupStatus] = useState(null);
   const [tapeStatus, setTapeStatus] = useState(null);
   const [locationStatus, setLocationStatus] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   // State for the Add New Tape Popup
   const [addNewTapePopupOpen, setAddNewTapePopupOpen] = useState(false);
@@ -53,6 +55,9 @@ const ViewTape = () => {
         setBackupStatus(response.data[0].bStatus);
         setTapeStatus(response.data[0].tStatus);
         setLocationStatus(response.data[0].lStatus);
+        //setStartDate(response.data[0].sDate);
+        //setEndDate(response.data[0].eDate);
+
       } catch (err) {
         setError(err.message);
         toast.error(err.message, {
@@ -77,16 +82,25 @@ const ViewTape = () => {
     );
   }
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-    });
+  // const formatDate = (dateString) => {
+  //   const date = new Date(dateString);
+  //   return date.toLocaleDateString("en-US", {
+  //     year: "numeric",
+  //     month: "long",
+  //     day: "numeric",
+  //     hour: "numeric",
+  //     minute: "numeric",
+  //   });
+  // };
+  const formatDate = (isoString) => {
+    if (!isoString) return '';
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
   };
+  
 
   const handleUpdateStatus = async () => {
     try {
@@ -100,6 +114,29 @@ const ViewTape = () => {
       setTapeData(response.data);
 
       toast.success("Status updated successfully!", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      window.location.reload();
+    } catch (err) {
+      toast.error(err.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      console.error(err);
+    }
+  };
+
+  const handleUpdateDateStatus = async () => {
+    try {
+      const response = await axios.put(`/api/tape/updateDateStatus/${tapeId}`, {
+        sDate: startDate,
+        eDate: endDate,
+        
+      });
+
+      // Assuming your API returns the updated data
+      setTapeData(response.data);
+
+      toast.success("Date Status updated successfully!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       window.location.reload();
@@ -203,8 +240,8 @@ const ViewTape = () => {
                   border: "1px solid #ffe404",
                 }}
               >
-                <MenuItem value="Completed">Full</MenuItem>
-                <MenuItem value="Ongoing">In Use</MenuItem>
+                <MenuItem value="Full">Full</MenuItem>
+                <MenuItem value="In Use">In Use</MenuItem>
               </Select>
             </Grid>
 
@@ -468,6 +505,7 @@ const ViewTape = () => {
                       </Typography>
                     </Paper>
                   </Grid>
+                  
                   <Grid item xs={12} md={12}>
                     <Paper
                       elevation={1}
@@ -548,6 +586,106 @@ const ViewTape = () => {
             <TapeContent tapeId={tapeData.tapeId} tapeDate={tapeData.eDate} />
           </Box>
         </Box>
+      </Box>
+
+      {/* title component */}
+      <Box
+        sx={{
+          width: "100%",
+          height: "15vh",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+      </Box>
+      
+    {/* date update component */}
+      <Box>
+        {/* Your other component goes here */}
+        <Paper
+          elevation={3}
+          sx={{
+            padding: "2rem",
+            marginBottom: "2rem",
+            borderRadius: "10px",
+            backgroundColor: colorPalette.black1[500],
+            color: "#fff",
+          }}
+        >
+          <Typography variant="h5" gutterBottom>
+            Update Date Status
+          </Typography>
+
+          <Grid
+            container
+            spacing={4}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle1" gutterBottom>
+                Start Date:
+              </Typography>
+              <DatePicker
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                fullWidth
+                sx={{
+                  backgroundColor: colorPalette.black1[400],
+                  color: "#fff",
+                  border: "1px solid #ffe404",
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle1" gutterBottom>
+                End Date:
+              </Typography>
+              <DatePicker
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                fullWidth
+                sx={{
+                  backgroundColor: colorPalette.black1[400],
+                  color: "#fff",
+                  border: "1px solid #ffe404",
+                }}
+              />
+              
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              md={2}
+              sx={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                variant="contained"
+                onClick={handleUpdateDateStatus}
+                sx={{
+                  backgroundColor: colorPalette.yellow[500],
+                  color: colorPalette.black[900],
+                  marginTop: "1.5rem",
+                  width: '200px'
+                }}
+              >
+                Update Date Status
+              </Button>
+            </Grid>
+          </Grid>
+        </Paper>
       </Box>
     </Box>
   );
