@@ -15,6 +15,10 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import axios from "axios";
 import { colorPalette } from "customTheme";
 import textFieldStyles from "styles/textFieldStyles";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from "state/searchSlicer";
+import state from "state";
+import { store } from "state/store";
 
 const ContainerStyled = styled(Container)(({ theme }) => ({
   marginTop: "2px",
@@ -51,6 +55,8 @@ const FooterStyled = styled(Typography)(({ theme }) => ({
 }));
 
 function Search({ onSearch }) {
+  const dispatch = useDispatch();
+  const searchData = useSelector(store.searchData);
   const [tapeId, setTapeId] = useState("");
   const [systemName, setSystemName] = useState("");
   const [applicationName, setApplicationName] = useState("");
@@ -74,22 +80,26 @@ function Search({ onSearch }) {
     const searchData = {
       tapeId,
       systemName,
-      applicationName,
+      subSysName,
       backupStatus,
       mediaType,
       tapeStatus,
-      startDate: startDate ? startDate.toISOString().slice(0, 10) : null,
-      endDate: endDate ? endDate.toISOString().slice(0, 10) : null,
+      startDate,
+      endDate,
       location,
-      subSysName,
     };
 
-    try {
-      const response = await axios.post("/api/tape/search", searchData);
-      onSearch(response.data);
-    } catch (error) {
-      console.error("Error during search:", error);
-    }
+    // try {
+    //   const response = await axios.post("/api/tapesearch/tapesearch/search", searchData);
+    //   // onSearch(response.data);
+    //   localStorage.setItem("searchData", response.data);
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.error("Error during search:", error);
+    // }
+
+    dispatch(fetchData(searchData));
+
   };
 
   useEffect(() => {
@@ -120,13 +130,15 @@ function Search({ onSearch }) {
     }
   }, [parentSystem.sysId]);
 
+  console.log(searchData);
+
   return (
     <ContainerStyled
       maxWidth="xl"
       sx={{ background: colorPalette.black1[500] }}
     >
       <HeaderStyled variant="h4"></HeaderStyled>
-      <SearchFormStyled onSubmit={handleSubmit}>
+      <SearchFormStyled>
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
             <TextField
@@ -263,7 +275,7 @@ function Search({ onSearch }) {
             </TextField>
           </Grid>
           <Grid item xs={15} sm={2} className={SearchInputGroupStyled} sx={{display: 'flex', justifyContent: 'center'}}>
-            <Button type="submit" variant="contained" color="primary" sx={{height: '50px'}}>
+            <Button type="submit" onClick={handleSubmit} variant="contained" color="primary" sx={{height: '50px'}}>
               Search Tape
             </Button>
           </Grid>

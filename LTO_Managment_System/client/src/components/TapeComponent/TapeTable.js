@@ -315,7 +315,7 @@ const TapeTable = () => {
 
       <Box sx={{ marginBottom: '1rem' }}>        
         <Box sx={{ marginBottom: '1rem' }}>
-        <Search/>
+        <Search/>    
       </Box>
       <Box
         sx={{

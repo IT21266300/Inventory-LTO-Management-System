@@ -17,6 +17,8 @@ import TapeRouter from '../routes/tapeRoutes/tape.js'
 
 import InventoryRouter from '../routes/inventoryRoutes/inventory.js'
 
+import TapeSearch from '../routes/tapeRoutes/tapeSearch.js'
+
 //log routes
 //import LogRouter from '../routes/logRoutes/log.js'
 
@@ -46,5 +48,7 @@ app.use('/tape', TapeRouter);
 app.use('/systems', SystemRouter);
 
 app.use('/inventory', InventoryRouter);
+
+app.use('/tapesearch', TapeSearch);
 
 export default app;
