@@ -17,14 +17,11 @@ import { toast } from "react-toastify";
 import customTheme, { colorPalette } from "customTheme";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-import AddNewTapePopup from "../../components/TapeComponent/TapeDetailsAdd"; // Assuming your popup component is called AddNewTapePopup
 
-import textFieldSubStyles from "styles/textFieldSubStyles";
-import textFieldStyles from "styles/textFieldStyles";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import TapeContent from "components/TapeComponent/TapeContent";
-import { Store } from "store";
+import AddNewTapePopup from '../../components/TapeComponent/TapeDetailsAdd'; // Assuming your popup component is called AddNewTapePopup
+import TapeContent from 'components/TapeComponent/TapeContent';
+import { Store } from 'store';
+
 
 const ViewTape = () => {
   const navigate = useNavigate();

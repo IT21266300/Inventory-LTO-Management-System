@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from 'components/Header';
 import Box from '@mui/material/Box';
 import {
   Button,
@@ -12,9 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import { colorPalette } from 'customTheme';
-import HttpsIcon from '@mui/icons-material/Https';
 import FlexBetween from 'components/FlexBetween';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
