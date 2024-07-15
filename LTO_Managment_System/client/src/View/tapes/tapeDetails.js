@@ -334,6 +334,23 @@ const ViewTape = () => {
 
       {/* bottom component */}
       <Box>
+      {tapeData && tapeData.isReUse === 1 && (
+          <Paper
+            elevation={3}
+            sx={{
+              padding: "1rem",
+              marginBottom: "1rem",
+              borderRadius: "10px",
+              backgroundColor: "red", // Red background color
+              color: "white", // White text color
+              textAlign: "center", // Center text
+            }}
+          >
+            <Typography variant="h6">This tape is marked for re-use.</Typography>
+          </Paper>
+        )}
+
+    
         <Box
           sx={{
             width: "100%",
@@ -346,6 +363,7 @@ const ViewTape = () => {
             },
           }}
         >
+          
           <Box sx={{ width: "100%" }}>
             {tapeData && (
               <Paper
