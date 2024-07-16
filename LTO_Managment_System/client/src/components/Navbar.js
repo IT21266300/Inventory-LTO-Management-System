@@ -1,22 +1,17 @@
 import React from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import FlexBetween from './FlexBetween';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import {
   AppBar,
-  Avatar,
   Box,
   Button,
   Divider,
   IconButton,
   MenuItem,
   Toolbar,
-  Typography,
 } from '@mui/material';
-import { Stack } from '@mui/system';
 import customTheme, { colorPalette } from 'customTheme';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import StyledMenu from './StyledMenu';
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';

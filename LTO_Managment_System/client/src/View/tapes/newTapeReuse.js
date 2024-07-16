@@ -265,7 +265,7 @@ const NewTapeReuse = () => {
                   id="bStatus" // Added id
                   onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
                 >
-                  <MenuItem value={"Completed"}>Completed</MenuItem>
+                  <MenuItem value={"Full"}>Full</MenuItem>
                   <MenuItem value={"Failed"}>Failed</MenuItem>
                   <MenuItem value={"In Progress"}>In Progress</MenuItem>
                   <MenuItem value={"Not Taken"}>Not Taken</MenuItem>
@@ -282,9 +282,11 @@ const NewTapeReuse = () => {
                   label="Media Type"
                   onChange={(e) => setMType(e.target.value)}
                 >
+                  <MenuItem value={"LTO5"}>LTO5</MenuItem>
                   <MenuItem value={"LTO6"}>LTO6</MenuItem>
                   <MenuItem value={"LTO7"}>LTO7</MenuItem>
                   <MenuItem value={"LTO8"}>LTO8</MenuItem>
+                  <MenuItem value={"LTO9"}>LTO9</MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -298,8 +300,8 @@ const NewTapeReuse = () => {
                 id="tStatus" // Added id
                 onChange={(e) => setTStatus(e.target.value)} // Corrected onChange handler
               >
-                <MenuItem value={"Completed"}>Completed</MenuItem>
-                <MenuItem value={"Ongoing"}>Ongoing</MenuItem>
+                <MenuItem value={"Full"}>Full</MenuItem>
+                <MenuItem value={"In Use"}>In Use</MenuItem>
               </Select>
             </FormControl>
 

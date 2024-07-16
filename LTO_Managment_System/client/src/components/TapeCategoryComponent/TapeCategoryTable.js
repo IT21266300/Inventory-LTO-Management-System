@@ -32,7 +32,6 @@ import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 import AddNewSystemPopup from './AddSystem';
 import TapeSubCategoryTable from 'components/TapeSubCategoryComponent/TapeSubCategoryTable';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const SystemTable = ({ result, loading, error }) => {

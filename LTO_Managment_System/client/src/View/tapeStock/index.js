@@ -2,17 +2,12 @@ import React, { useReducer, useEffect } from 'react';
 import Header from 'components/Header';
 import axios from 'axios';
 import {
-  Tabs,
-  Tab,
   Box,
-  tabsClasses,
-  Divider,
   IconButton,
 } from '@mui/material';
 import TapeTables from 'components/TapeComponent/TapeStockTable';
 import { Helmet } from 'react-helmet-async';
 import { colorPalette } from 'customTheme';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 

@@ -3,23 +3,18 @@ import Box from "@mui/material/Box";
 import {
   Button,
   FormControl,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
   TextField,
-  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import { colorPalette } from "customTheme";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import FlexBetween from "components/FlexBetween";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import textFieldStyles from "styles/textFieldStyles";
@@ -150,12 +145,11 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
                   autoWidth
                   label="Tape Type"
                 >
-                  <MenuItem value={"LTO1"}>LTO1</MenuItem>
-                  <MenuItem value={"LTO2"}>LTO2</MenuItem>
-                  <MenuItem value={"LTO3"}>LTO3</MenuItem>
-                  <MenuItem value={"LTO4"}>LTO4</MenuItem>
                   <MenuItem value={"LTO5"}>LTO5</MenuItem>
                   <MenuItem value={"LTO6"}>LTO6</MenuItem>
+                  <MenuItem value={"LTO7"}>LTO7</MenuItem>
+                  <MenuItem value={"LTO8"}>LTO8</MenuItem>
+                  <MenuItem value={"LTO9"}>LTO9</MenuItem>
                 </Select>
               </FormControl>
 

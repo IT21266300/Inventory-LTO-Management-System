@@ -1,6 +1,5 @@
 import { Box, CssBaseline, ThemeProvider } from '@mui/material';
 // import { themeSettings } from 'theme';
-import Typography from '@mui/material/Typography';
 import customTheme from 'customTheme';
 import {
   BrowserRouter,

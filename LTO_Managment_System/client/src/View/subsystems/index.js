@@ -1,12 +1,9 @@
 import React, { useReducer, useEffect } from 'react';
 import Header from 'components/Header';
 import axios from 'axios';
-import { Tabs, Tab, Box, tabsClasses, Divider } from '@mui/material';
-import StaffTables from 'components/StaffComponents/StaffTables';
+import { Box } from '@mui/material';
 import CategoryTable from 'components/TapeCategoryComponent/TapeCategoryTable'
 import { Helmet } from 'react-helmet-async';
-import { colorPalette } from 'customTheme';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const reducer = (state, action) => {
   switch (action.type) {

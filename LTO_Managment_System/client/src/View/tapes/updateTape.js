@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Header from 'components/Header';
 import Box from '@mui/material/Box';
 import {
   Button,
@@ -9,9 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import { colorPalette } from 'customTheme';
-import HttpsIcon from '@mui/icons-material/Https';
 import FlexBetween from 'components/FlexBetween';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -87,10 +84,10 @@ const Tape = () => {
   useEffect(() => {
     const isoSDate = data.sDate;
     const isoEDate = data.eDate;
-    const stDate = new Date(isoSDate);
+    const startDate = new Date(isoSDate);
     const endDate = new Date(isoEDate);
-    const formattedSDate = stDate.toISOString().slice(0, 16);
-    const formattedEDate = endDate.toISOString().slice(0, 16);
+    const formattedSDate = startDate.toISOString().split('T')[0];
+    const formattedEDate = endDate.toISOString().split('T')[0];
     setSDate(formattedSDate);
     setEDate(formattedEDate);
   }, []);
@@ -304,7 +301,7 @@ const Tape = () => {
                   id="bStatus" // Added id
                   onChange={(e) => setBStatus(e.target.value)} // Corrected onChange handler
                 >
-                  <MenuItem value={'Completed'}>Completed</MenuItem>
+                  <MenuItem value={'Full'}>Full</MenuItem>
                   <MenuItem value={'Failed'}>Failed</MenuItem>
                   <MenuItem value={'In Progress'}>In Progress</MenuItem>
                   <MenuItem value={'Not Taken'}>Not Taken</MenuItem>
@@ -321,9 +318,11 @@ const Tape = () => {
                   label="Media Type"
                   onChange={(e) => setMType(e.target.value)}
                 >
+                  <MenuItem value={'LTO5'}>LTO5</MenuItem>
                   <MenuItem value={'LTO6'}>LTO6</MenuItem>
                   <MenuItem value={'LTO7'}>LTO7</MenuItem>
                   <MenuItem value={'LTO8'}>LTO8</MenuItem>
+                  <MenuItem value={'LTO9'}>LTO9</MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -337,8 +336,8 @@ const Tape = () => {
                 id="tStatus" // Added id
                 onChange={(e) => setTStatus(e.target.value)} // Corrected onChange handler
               >
-                <MenuItem value={'Completed'}>Completed</MenuItem>
-                <MenuItem value={'Ongoing'}>Ongoing</MenuItem>
+                <MenuItem value={'Full'}>Full</MenuItem>
+                <MenuItem value={'In Use'}>In Use</MenuItem>
               </Select>
             </FormControl>
 
@@ -351,30 +350,30 @@ const Tape = () => {
             >
               <TextField
                 name="sDate"
-                label="Start Date & Time" // Updated label
+                label="Start Date" // Updated label
                 variant="outlined"
-                type="datetime-local" // Changed to datetime-local
+                type="date" // Changed to datetime-local
                 InputLabelProps={{
                   shrink: true,
                 }}
                 value={sDate}
                 sx={textFieldStyles}
                 onChange={(e) => setSDate(e.target.value)}
-                aria-readonly
+                // aria-readonly
               />
 
               <TextField
                 name="eDate"
-                label="End Date & Time" // Updated label
+                label="End Date" // Updated label
                 variant="outlined"
                 value={eDate}
-                type="datetime-local" // Changed to datetime-local
+                type="date" // Changed to datetime-local
                 InputLabelProps={{
                   shrink: true,
                 }}
                 sx={textFieldStyles}
                 onChange={(e) => setEDate(e.target.value)}
-                aria-readonly
+                // aria-readonly
               />
 
             </Box>
