@@ -129,7 +129,7 @@ router.route('/delete/:systemId').delete(async (req, res) => {
 router.route('/deleteSubSystem/:subSysId').delete(async (req, res) => {
   const { subSysId } = req.params;
 
-  const sql = 'DELETE FROM SubSystem WHERE subSysId = ?';
+  const sql = 'DELETE FROM SubSystems WHERE subSysId = ?';
   
   db.query(sql, [subSysId], (err, result) => {
     if (err) {
@@ -207,7 +207,7 @@ router.route('/updateSubSystem/:subSysId').put(async (req, res) => {
       return res.status(409).json({ message: 'Sub System name already in use' });
     }
 
-    const updateSql = 'UPDATE SubSystem SET subSysName = ?, parentSystemId = ? WHERE subSysId = ?';
+    const updateSql = 'UPDATE SubSystems SET subSysName = ?, parentSystemId = ? WHERE subSysId = ?';
     db.query(updateSql, [sanitizedSubSysName, parentSystemId, subSysId], (updateErr, updateResult) => {
       if (updateErr) {
         console.error(updateErr.message);
