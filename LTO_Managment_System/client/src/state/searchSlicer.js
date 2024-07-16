@@ -4,7 +4,21 @@ import axios from 'axios';
 const initialState = {
   loading: false,
   searchData: [],
+  error: null,
 };
+
+export const fetchData = createAsyncThunk(
+  'search/fetchData',
+  async (searchData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`/api/tapesearch/tapesearch/search`, searchData);
+      return response.data;
+    } catch (error) {
+      // Use rejectWithValue to pass a custom error payload
+      return rejectWithValue(error.response ? error.response.data : error.message);
+    }
+  }
+);
 
 const searchSlice = createSlice({
   name: 'search',
@@ -14,31 +28,17 @@ const searchSlice = createSlice({
     builder
       .addCase(fetchData.pending, (state) => {
         state.loading = true;
+        state.error = null; // Clear any previous errors
       })
       .addCase(fetchData.fulfilled, (state, action) => {
-        state.searchData = action.payload;
         state.loading = false;
+        state.searchData = action.payload;
       })
+      .addCase(fetchData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'An error occurred';
+      });
   },
 });
-
-export const fetchData = createAsyncThunk(
-  'product/fetchSingleProduct',
-  async (searchData) => {
-    try {
-      const response = await axios.post(
-        `api/tapesearch/tapesearch/search`,
-        {
-            data: searchData,
-        }
-      );
-      return response.data;
-    } catch (error) {
-      return error;
-    }
-  }
-);
-
-
 
 export default searchSlice.reducer;

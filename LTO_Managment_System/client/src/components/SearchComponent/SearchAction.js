@@ -54,12 +54,13 @@ const FooterStyled = styled(Typography)(({ theme }) => ({
   marginTop: "5px",
 }));
 
+const selectSearchData = (state) => state.searchData;
+
 function Search({ onSearch }) {
   const dispatch = useDispatch();
-  const searchData = useSelector(store.searchData);
+  const searchData = useSelector(selectSearchData);
   const [tapeId, setTapeId] = useState("");
   const [systemName, setSystemName] = useState("");
-  const [applicationName, setApplicationName] = useState("");
   const [backupStatus, setBackupStatus] = useState("");
   const [mediaType, setMediaType] = useState("");
   const [tapeStatus, setTapeStatus] = useState("");
@@ -79,7 +80,7 @@ function Search({ onSearch }) {
 
     const searchData = {
       tapeId,
-      systemName,
+      systemName: parentSystem.sysName,
       subSysName,
       backupStatus,
       mediaType,
@@ -130,7 +131,7 @@ function Search({ onSearch }) {
     }
   }, [parentSystem.sysId]);
 
-  console.log(searchData);
+  console.log('searchData', searchData);
 
   return (
     <ContainerStyled
