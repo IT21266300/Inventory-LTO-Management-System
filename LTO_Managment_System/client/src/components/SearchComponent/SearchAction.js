@@ -31,6 +31,8 @@ const ContainerStyled = styled(Container)(({ theme }) => ({
   boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
 }));
 
+
+
 const HeaderStyled = styled(Typography)(({ theme }) => ({
   textAlign: "center",
   marginBottom: "5px",
@@ -75,6 +77,21 @@ function Search({ onSearch }) {
   const [subSystems, setSubSystems] = useState([]);
   const [subSysName, setSubSysName] = useState("");
 
+  const handleClear = () => {
+    setTapeId("");
+    setParentSystem({ sysName: "", sysId: "" });
+    setSubSysName("");
+    setBackupStatus("");
+    setMediaType("");
+    setTapeStatus("");
+    setStartDate(null);
+    setEndDate(null);
+    setLocation("");
+
+    // Also dispatch an action to clear search data in Redux store if needed
+    dispatch({ type: 'CLEAR_SEARCH_DATA' }); // Assuming you have a CLEAR_SEARCH_DATA action
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -89,6 +106,8 @@ function Search({ onSearch }) {
       endDate,
       location,
     };
+
+    
 
     // try {
     //   const response = await axios.post("/api/tapesearch/tapesearch/search", searchData);
@@ -283,6 +302,13 @@ function Search({ onSearch }) {
             <Button type="submit" onClick={handleSubmit} variant="contained" color="primary" sx={{height: '50px'}}>
               Search Tape
             </Button>
+            
+          </Grid>
+          <Grid item xs={15} sm={2} className={SearchInputGroupStyled} sx={{display: 'flex', gap:'10'}}>
+          <Button variant="contained" color="secondary" onClick={handleClear} sx={{height: '50px'}}>
+              Clear
+            </Button>
+            
           </Grid>
         </Grid>
       </SearchFormStyled>
