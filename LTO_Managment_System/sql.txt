@@ -89,4 +89,14 @@ CREATE TABLE TapeInventory (
 );
 
 
+CREATE TABLE Locker (
+    lockerId VARCHAR(255) PRIMARY KEY,
+    capacity INT NOT NULL,
+    currentCount INT DEFAULT 0,
+    tLevels INT NOT NULL,
+    tColumns INT NOT NULL,
+    tDepth INT NOT NULL
+);
+
+
 npm install sanitize-html
