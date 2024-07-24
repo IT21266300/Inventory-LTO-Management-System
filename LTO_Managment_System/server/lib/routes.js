@@ -17,7 +17,14 @@ import TapeRouter from '../routes/tapeRoutes/tape.js'
 
 import InventoryRouter from '../routes/inventoryRoutes/inventory.js'
 
+
+
+// import TapeSearch from '../routes/tapeRoutes/tapeSearch.js'
+
+//locker routes
+import LockerRouter from '../routes/lockerRoutes/locker.js'
 import TapeSearch from '../routes/tapeRoutes/tapeSearch.js'
+
 
 //log routes
 //import LogRouter from '../routes/logRoutes/log.js'
@@ -41,6 +48,9 @@ app.use('/staffs', StaffR);
  
 //tape
 app.use('/tape', TapeRouter);
+
+//locker
+app.use('/locker', LockerRouter);
 
 //log
 //app.use('/log', LogRouter);
