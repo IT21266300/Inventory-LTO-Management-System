@@ -27,8 +27,14 @@ import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility'; // Import the icon for viewing
 import SelectTapeStock from './SelectTape';
+import { useSelector } from 'react-redux';
+
+
+const selectSearchData = (state) => state.searchData.searchData;
+
 
 const TapeTable = () => {
+  const searchData = useSelector(selectSearchData);
   const navigate = useNavigate();
   const { state } = useContext(Store);
   const { userInfo } = state;
@@ -262,7 +268,7 @@ const TapeTable = () => {
     pdfColumn = columns.slice(1);
   }
 
-  let rows = tapes.map((row, x) => ({
+  let rows = searchData.map((row, x) => ({
     id: x + 1,
     tapeId: row.tapeId,
     sysName: row.sysName,
@@ -299,7 +305,7 @@ const TapeTable = () => {
 
       <Box sx={{ marginBottom: '1rem' }}>        
         <Box sx={{ marginBottom: '1rem' }}>
-        <Search/>
+        <Search/>    
       </Box>
       <Box
         sx={{
@@ -334,7 +340,8 @@ const TapeTable = () => {
           />
         </Box>
       </Box>
-      <Box
+      {searchData.length > 0 ? (
+        <Box
         height="100vh"
         width="100%"
         sx={{
@@ -412,6 +419,9 @@ const TapeTable = () => {
         
         <SelectTapeStock open={openForm} handleClickClose={handleClickClose}/>
       </Box>
+      ): (
+        <h1>Data Not Found..!</h1>
+      )}
     </Box>
     </Box>
   );
