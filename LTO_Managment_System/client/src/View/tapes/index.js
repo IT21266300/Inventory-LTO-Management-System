@@ -51,7 +51,6 @@ const Tapes = () => {
     fetchData();
   }, []);
 
-  console.log('tapeData', tapeData);
   return (
     <Box m="1.5rem  2.5rem">
       <Helmet>

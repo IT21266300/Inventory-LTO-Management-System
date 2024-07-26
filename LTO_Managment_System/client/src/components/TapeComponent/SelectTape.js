@@ -145,12 +145,11 @@ const SelectTapeStock = ({ open, handleClickClose }) => {
                   autoWidth
                   label="Tape Type"
                 >
-                  <MenuItem value={"LTO1"}>LTO1</MenuItem>
-                  <MenuItem value={"LTO2"}>LTO2</MenuItem>
-                  <MenuItem value={"LTO3"}>LTO3</MenuItem>
-                  <MenuItem value={"LTO4"}>LTO4</MenuItem>
                   <MenuItem value={"LTO5"}>LTO5</MenuItem>
                   <MenuItem value={"LTO6"}>LTO6</MenuItem>
+                  <MenuItem value={"LTO7"}>LTO7</MenuItem>
+                  <MenuItem value={"LTO8"}>LTO8</MenuItem>
+                  <MenuItem value={"LTO9"}>LTO9</MenuItem>
                 </Select>
               </FormControl>
 

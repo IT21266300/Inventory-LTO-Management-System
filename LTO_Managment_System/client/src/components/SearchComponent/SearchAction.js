@@ -15,6 +15,10 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import axios from "axios";
 import { colorPalette } from "customTheme";
 import textFieldStyles from "styles/textFieldStyles";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from "state/searchSlicer";
+import state from "state";
+import { store } from "state/store";
 
 const ContainerStyled = styled(Container)(({ theme }) => ({
   marginTop: "2px",
@@ -26,6 +30,8 @@ const ContainerStyled = styled(Container)(({ theme }) => ({
   borderRadius: "5px",
   boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
 }));
+
+
 
 const HeaderStyled = styled(Typography)(({ theme }) => ({
   textAlign: "center",
@@ -50,10 +56,13 @@ const FooterStyled = styled(Typography)(({ theme }) => ({
   marginTop: "5px",
 }));
 
+const selectSearchData = (state) => state.searchData;
+
 function Search({ onSearch }) {
+  const dispatch = useDispatch();
+  const searchData = useSelector(selectSearchData);
   const [tapeId, setTapeId] = useState("");
   const [systemName, setSystemName] = useState("");
-  const [applicationName, setApplicationName] = useState("");
   const [backupStatus, setBackupStatus] = useState("");
   const [mediaType, setMediaType] = useState("");
   const [tapeStatus, setTapeStatus] = useState("");
@@ -68,28 +77,49 @@ function Search({ onSearch }) {
   const [subSystems, setSubSystems] = useState([]);
   const [subSysName, setSubSysName] = useState("");
 
+  const handleClear = () => {
+    setTapeId("");
+    setParentSystem({ sysName: "", sysId: "" });
+    setSubSysName("");
+    setBackupStatus("");
+    setMediaType("");
+    setTapeStatus("");
+    setStartDate(null);
+    setEndDate(null);
+    setLocation("");
+
+    // Also dispatch an action to clear search data in Redux store if needed
+    dispatch({ type: 'CLEAR_SEARCH_DATA' }); // Assuming you have a CLEAR_SEARCH_DATA action
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const searchData = {
       tapeId,
-      systemName,
-      applicationName,
+      systemName: parentSystem.sysName,
+      subSysName,
       backupStatus,
       mediaType,
       tapeStatus,
-      startDate: startDate ? startDate.toISOString().slice(0, 10) : null,
-      endDate: endDate ? endDate.toISOString().slice(0, 10) : null,
+      startDate,
+      endDate,
       location,
-      subSysName,
     };
 
-    try {
-      const response = await axios.post("/api/tape/search", searchData);
-      onSearch(response.data);
-    } catch (error) {
-      console.error("Error during search:", error);
-    }
+    
+
+    // try {
+    //   const response = await axios.post("/api/tapesearch/tapesearch/search", searchData);
+    //   // onSearch(response.data);
+    //   localStorage.setItem("searchData", response.data);
+    //   console.log(response.data);
+    // } catch (error) {
+    //   console.error("Error during search:", error);
+    // }
+
+    dispatch(fetchData(searchData));
+
   };
 
   useEffect(() => {
@@ -120,13 +150,15 @@ function Search({ onSearch }) {
     }
   }, [parentSystem.sysId]);
 
+  console.log('searchData', searchData);
+
   return (
     <ContainerStyled
       maxWidth="xl"
       sx={{ background: colorPalette.black1[500] }}
     >
       <HeaderStyled variant="h4"></HeaderStyled>
-      <SearchFormStyled onSubmit={handleSubmit}>
+      <SearchFormStyled>
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
             <TextField
@@ -208,7 +240,11 @@ function Search({ onSearch }) {
               fullWidth
               sx={textFieldStyles}
             >
-              <MenuItem value="LTO6">LTO6</MenuItem>
+              <MenuItem value={"LTO5"}>LTO5</MenuItem>
+              <MenuItem value={"LTO6"}>LTO6</MenuItem>
+              <MenuItem value={"LTO7"}>LTO7</MenuItem>
+              <MenuItem value={"LTO8"}>LTO8</MenuItem>
+              <MenuItem value={"LTO9"}>LTO9</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
@@ -263,9 +299,16 @@ function Search({ onSearch }) {
             </TextField>
           </Grid>
           <Grid item xs={15} sm={2} className={SearchInputGroupStyled} sx={{display: 'flex', justifyContent: 'center'}}>
-            <Button type="submit" variant="contained" color="primary" sx={{height: '50px'}}>
+            <Button type="submit" onClick={handleSubmit} variant="contained" color="primary" sx={{height: '50px'}}>
               Search Tape
             </Button>
+            
+          </Grid>
+          <Grid item xs={15} sm={2} className={SearchInputGroupStyled} sx={{display: 'flex', gap:'10'}}>
+          <Button variant="contained" color="secondary" onClick={handleClear} sx={{height: '50px'}}>
+              Clear
+            </Button>
+            
           </Grid>
         </Grid>
       </SearchFormStyled>
