@@ -420,7 +420,7 @@ const TapeTable = () => {
         <SelectTapeStock open={openForm} handleClickClose={handleClickClose}/>
       </Box>
       ): (
-        <h1>Data Not Found..!</h1>
+        <Alert severity="info">Tape Data Not Found..!</Alert>
       )}
     </Box>
     </Box>
