@@ -31,8 +31,6 @@ const ContainerStyled = styled(Container)(({ theme }) => ({
   boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
 }));
 
-
-
 const HeaderStyled = styled(Typography)(({ theme }) => ({
   textAlign: "center",
   marginBottom: "5px",
@@ -89,7 +87,7 @@ function Search({ onSearch }) {
     setLocation("");
 
     // Also dispatch an action to clear search data in Redux store if needed
-    dispatch({ type: 'CLEAR_SEARCH_DATA' }); // Assuming you have a CLEAR_SEARCH_DATA action
+    dispatch({ type: "CLEAR_SEARCH_DATA" }); // Assuming you have a CLEAR_SEARCH_DATA action
   };
 
   const handleSubmit = async (event) => {
@@ -107,8 +105,6 @@ function Search({ onSearch }) {
       location,
     };
 
-    
-
     // try {
     //   const response = await axios.post("/api/tapesearch/tapesearch/search", searchData);
     //   // onSearch(response.data);
@@ -119,7 +115,6 @@ function Search({ onSearch }) {
     // }
 
     dispatch(fetchData(searchData));
-
   };
 
   useEffect(() => {
@@ -150,7 +145,7 @@ function Search({ onSearch }) {
     }
   }, [parentSystem.sysId]);
 
-  console.log('searchData', searchData);
+  console.log("searchData", searchData);
 
   return (
     <ContainerStyled
@@ -298,17 +293,37 @@ function Search({ onSearch }) {
               <MenuItem value="DRM to HO">DRM to HO</MenuItem>
             </TextField>
           </Grid>
-          <Grid item xs={15} sm={2} className={SearchInputGroupStyled} sx={{display: 'flex', justifyContent: 'center'}}>
-            <Button type="submit" onClick={handleSubmit} variant="contained" color="primary" sx={{height: '50px'}}>
+          <Grid
+            item
+            xs={15}
+            sm={2}
+            className={SearchInputGroupStyled}
+            sx={{ display: "flex", justifyContent: "center" }}
+          >
+            <Button
+              type="submit"
+              onClick={handleSubmit}
+              variant="contained"
+              color="primary"
+              sx={{ height: "50px" }}
+            >
               Search Tape
             </Button>
-            
           </Grid>
-          <Grid item xs={15} sm={2} className={SearchInputGroupStyled} sx={{display: 'flex', gap:'10'}}>
-          <Button variant="contained" color="secondary" onClick={handleClear} sx={{height: '50px'}}>
+          <Grid
+            item
+            xs={15}
+            sm={2}
+            className={SearchInputGroupStyled}
+            sx={{ display: "flex", gap: "10" }}
+          >
+            <Button
+              variant="contained"
+              onClick={handleClear}
+              sx={{ height: "50px", width: "100px", background: "#f50057", color: "#fff" }}
+            >
               Clear
             </Button>
-            
           </Grid>
         </Grid>
       </SearchFormStyled>

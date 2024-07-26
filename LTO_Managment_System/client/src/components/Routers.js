@@ -34,6 +34,7 @@ import TapeStock from "View/tapeStock/index";
 import Log from "View/log";
 import UpdateLog from "View/log/updateLog";
 import NotFound from "View/NotFound";
+import Locker from "View/locker";
 
 const routesConfig = [
   {
@@ -200,9 +201,17 @@ const routesConfig = [
         ),
       },
       {
+        path: "/locker",
+        element: (
+          <RouteProtector>
+            <Locker />
+          </RouteProtector>
+        ),
+      },
+      {
         path: "/unauthorized",
         element: <NotFound />,
-      },
+      }
     ],
   },
 ];

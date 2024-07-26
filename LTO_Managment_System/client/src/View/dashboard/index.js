@@ -74,7 +74,7 @@ const Dashboard = () => {
       id: 2,
       name: 'Locker Management',
       para: 'From This function mange LTO Storage.',
-      link: '/financial',
+      link: '/locker',
       img: i2,
     },
     {
