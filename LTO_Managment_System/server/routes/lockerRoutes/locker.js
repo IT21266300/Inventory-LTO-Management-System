@@ -82,7 +82,7 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
   });
 
 
-  router.route('/deleteLoker/:lockerId').delete(async (req, res) => {
+  router.route('/deleteLocker/:lockerId').delete(async (req, res) => {
     const { lockerId } = req.params;
   
     const sql = 'DELETE FROM Locker WHERE lockerId = ?';
