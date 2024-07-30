@@ -1,9 +1,60 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import multer from 'multer';
+import XLSX from 'xlsx';
 import db from '../../dbConnection.js';
 
 const router = express.Router();
+
+// Set up multer for file uploads
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: (req, file, cb) => {
+    if (!file.originalname.match(/\.(xls|xlsx)$/)) {
+      return cb(new Error('Only Excel files are allowed!'), false);
+    }
+    cb(null, true);
+  }
+});
+
+// Import Excel file API
+router.post('/import_excel', upload.single('file'), (req, res) => {
+  const file = req.file;
+  if (!file) {
+    return res.status(400).json({ success: false, message: 'No file uploaded' });
+  }
+
+  try {
+    const workbook = XLSX.read(file.buffer, { type: 'buffer' });
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+    const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+    // Insert data into the Tape table
+    const insertSql = 'INSERT INTO Tape (tapeId, sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus) VALUES ?';
+    const values = jsonData.map(row => [
+      row.tapeId,
+      row.sysId,
+      row.sysName,
+      row.subSysName,
+      row.bStatus,
+      row.mType,
+      row.tStatus,
+      row.sDate,
+      row.eDate,
+      row.lStatus
+    ]);
+
+    db.query(insertSql, [values], (err, result) => {
+      if (err) {
+        return res.status(500).json({ success: false, message: 'Failed to import data', error: err.message });
+      }
+      res.json({ success: true, message: 'File imported successfully', importedRows: result.affectedRows });
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Error processing file', error: err.message });
+  }
+});
 
 // Function to validate input data 
 function validateTapeInput(tapeId, sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus) {

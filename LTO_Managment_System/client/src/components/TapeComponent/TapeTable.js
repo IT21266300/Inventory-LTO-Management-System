@@ -22,12 +22,14 @@ import Search from 'components/SearchComponent/SearchAction';
 import ActionButton from 'components/ActionsComponent/ActionButton';
 import { LoadingAnimation } from 'components/LoadingComponent/LoadingAnimationTwo';
 import DownloadActions from 'components/DownloadComponent/DownloadActions';
+import ImportExcel from 'components/ActionsComponent/ImportAction';
 import ActionsMenu from 'components/ActionsComponent/ActionsMenu';
 import DeleteAlertBox from 'components/ActionsComponent/DeleteAlertBox';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import VisibilityIcon from '@mui/icons-material/Visibility'; // Import the icon for viewing
 import SelectTapeStock from './SelectTape';
 import { useSelector } from 'react-redux';
+import FileUpload from './AddBulckTape';
 
 
 const selectSearchData = (state) => state.searchData.searchData;
@@ -315,6 +317,10 @@ const TapeTable = () => {
           m: '2rem 0',
         }}
       >
+        <Box sx={{ml: '1.5rem'}}>
+          <ImportExcel/>
+          {/* <FileUpload/> */}
+        </Box>
         <Button
           onClick={handleClickOpen}
           sx={{
