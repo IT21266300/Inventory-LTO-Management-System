@@ -55,6 +55,7 @@ const AddLocker = () => {
       navigate("/locker");
       window.location.reload();
     } catch (err) {
+      console.log(err);
       toast.error(err.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
       });

@@ -173,7 +173,7 @@ const LockerTable = ({ result, loading, error }) => {
       >
         <Button
           onClick={() => {
-            navigate('/addStaff');
+            navigate('/addLocker');
           }}
           sx={{
             backgroundColor: colorPalette.yellow[500],
