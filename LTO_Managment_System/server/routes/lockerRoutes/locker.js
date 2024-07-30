@@ -34,7 +34,7 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
     const { lockerId, capacity, currentCount, tLevels, tColumns, tDepth} = req.body;
   
     // Validate input data
-    if (!validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns, tDepth)) {
+    if (validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns, tDepth)) {
       return res.status(400).json({ message: 'Invalid input data' });
     }
   
