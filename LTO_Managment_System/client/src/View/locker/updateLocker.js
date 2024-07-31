@@ -23,7 +23,9 @@ const positions = ["Admin", "Operator", "Read Only"];
 const UpdateLocker = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
   const { data } = location.state; // Get locker data from location state
+console.log(data);
 
   const [lockerId, setLockerId] = useState(data?.lockerId || "");
   const [capacity, setCapacity] = useState(data?.capacity || "");
@@ -35,7 +37,7 @@ const UpdateLocker = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/locker/LockerUpdate/${lockerId}`, {
+      await axios.put(`/api/locker/LockerUpdate/${data.lockerId}`, {
         capacity,
         currentCount,
         tLevels,
