@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import { colorPalette } from 'customTheme';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -52,7 +52,7 @@ const LockerTable = ({ result, loading, error }) => {
   };
 
   const handleUpdate = () => {
-    navigate('/updateStaff', { state: { data: passValue } });
+    navigate('/LockerUpdate', { state: { data: passValue } });
   };
 
   const handleDelete = async () => {
@@ -128,7 +128,13 @@ const LockerTable = ({ result, loading, error }) => {
       filterable: false,
       renderCell: (params) => (
         <Box>
-          <ActionButton handleClick={handleClick} params={params} open={open} />
+          <ActionButton handleClick={handleClick}
+           params={params}
+            open={open} />
+        <Link
+          to={`/locker/${params.row.lockerId}`}
+          style={{ textDecoration: 'none' }}
+        ></Link>
         </Box>
       ),
     });
