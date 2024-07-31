@@ -105,9 +105,9 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
     const lockerId = req.params.lockerId;
     const { capacity, currentCount, tLevels, tColumns, tDepth} = req.body;
   
-    if (!validateLockerInput( lockerId, capacity, currentCount, tLevels, tColumns, tDepth)) {
-      return res.status(400).json({ message: 'Invalid input data' });
-    }
+    // if (validateLockerInput( lockerId, capacity, currentCount, tLevels, tColumns, tDepth)) {
+    //   return res.status(400).json({ message: 'Invalid input data' });
+    // }
 
     if(capacity < currentCount){
       return res.status(400).json({ message: 'Current cannot be exceed..!' });
