@@ -36,6 +36,7 @@ import UpdateLog from "View/log/updateLog";
 import NotFound from "View/NotFound";
 import Locker from "View/locker";
 import AddLocker from "View/locker/addLocker";
+import UpdateLocker from "View/locker/updateLocker";
 
 const routesConfig = [
   {
@@ -214,6 +215,14 @@ const routesConfig = [
         element: (
           <RouteProtector>
             <AddLocker />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/LockerUpdate",
+        element: (
+          <RouteProtector>
+            <UpdateLocker />
           </RouteProtector>
         ),
       },

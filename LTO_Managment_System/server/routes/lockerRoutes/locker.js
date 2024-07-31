@@ -102,10 +102,10 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
   });
 
   router.route('/LockerUpdate/:lockerId').put(async (req, res) => {
-    const lId = req.params.lockerId;
-    const { lockerId, capacity, currentCount, tLevels, tColumns, tDepth} = req.body;
+    const lockerId = req.params.lockerId;
+    const { capacity, currentCount, tLevels, tColumns, tDepth} = req.body;
   
-    if (!validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns, tDepth)) {
+    if (!validateLockerInput( lockerId, capacity, currentCount, tLevels, tColumns, tDepth)) {
       return res.status(400).json({ message: 'Invalid input data' });
     }
 
@@ -114,7 +114,7 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
     }
   
     // Sanitize input data
-    const sanitizedInput = sanitizeLockerInput(lockerId, capacity, currentCount, tLevels, tColumns, tDepth);
+    const sanitizedInput = sanitizeLockerInput( lockerId, capacity, currentCount, tLevels, tColumns, tDepth);
   
     // Check if the updated staffId already exists
     const checkSql = 'SELECT * FROM Locker WHERE lockerId = ?';
@@ -124,10 +124,9 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
         return res.status(500).json({ message: 'Error with checking user', error: checkErr.message });
       }
   
-  
       // Update the staff member
       const updateSql = 'UPDATE Locker SET capacity = ?, currentCount = ?, tLevels = ?, tColumns = ?, tDepth = ? WHERE lockerId = ?';
-      db.query(updateSql, [sanitizedInput.capacity, sanitizedInput.currentCount, sanitizedInput.tLevels, sanitizedInput.tColumns, sanitizedInput.tDepth, lId], (updateErr, updateResult) => {
+      db.query(updateSql, [sanitizedInput.capacity, sanitizedInput.currentCount, sanitizedInput.tLevels, sanitizedInput.tColumns, sanitizedInput.tDepth, lockerId], (updateErr, updateResult) => {
         if (updateErr) {
           console.error(updateErr.message);
           return res.status(400).json({ message: 'Error with updating Locker', error: updateErr.message });

@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import DownloadIcon from '@mui/icons-material/CloudDownload';
 import Typography from '@mui/material/Typography';
 import { colorPalette } from 'customTheme'; // Ensure this import path is correct
+import { toast } from 'react-toastify'; // Import toast
 
 const ImportExcel = () => {
   const [file, setFile] = useState(null);
@@ -11,31 +12,42 @@ const ImportExcel = () => {
     setFile(event.target.files[0]);
     importExcel(event.target.files[0]);
   };
-
-  const importExcel = (file) => {
+  
+  const importExcel = async (file) => {
     if (!file) {
-      alert('Please select a file first.');
+      toast.error("Please select a file first.", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return;
     }
-
+  
     const formData = new FormData();
     formData.append('file', file);
-
-    fetch('/api/tape/import_excel', {
-      method: 'POST',
-      body: formData
-    }).then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        alert('File imported successfully');
-      } else {
-        alert('Failed to import file');
+  
+    try {
+      const response = await fetch('/api/tape/import_excel', {
+        method: 'POST',
+        body: formData
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        toast.error(errorData.message || "Failed to import file", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+        return; 
       }
-    }).catch(error => {
-      console.error('Error:', error);
-    });
+  
+      toast.success("File imported successfully!", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    } catch (err) {
+      console.error('Error:', err);
+      toast.error("An error occurred during import", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    }
   };
-
   return (
     <>
       <input
