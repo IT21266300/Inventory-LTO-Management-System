@@ -24,6 +24,7 @@ import AddNewTapePopup from '../../components/TapeComponent/TapeDetailsAdd'; // 
 import TapeContent from 'components/TapeComponent/TapeContent';
 import { Store } from 'store';
 import textFieldStyles from 'styles/textFieldStyles';
+import QRCodeComponent from '../../components/QRCodeComponent/QRCodeComponent'
 
 
 const ViewTape = () => {
@@ -41,6 +42,9 @@ const ViewTape = () => {
   const [locationStatus, setLocationStatus] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  // State for showing QR Code
+  const [showQRCode, setShowQRCode] = useState(false);
 
   // State for the Add New Tape Popup
   const [addNewTapePopupOpen, setAddNewTapePopupOpen] = useState(false);
@@ -169,6 +173,21 @@ const ViewTape = () => {
         >
           <ArrowBackIcon />
         </IconButton>
+         {/* Add QR Code Generation Section */}
+      <Box sx={{ marginBottom: "2rem" }}>
+        <Button
+          variant="contained"
+          onClick={() => setShowQRCode(!showQRCode)}
+          sx={{
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[900],
+          }}
+        >
+          {showQRCode ? "Hide QR Code" : "Get QR Code"}
+        </Button>
+      </Box>
+      
+      {showQRCode && <QRCodeComponent tapeId={tapeId} />}
       </Box>
       {/* top component */}
       <Box>
