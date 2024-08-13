@@ -9,10 +9,13 @@ const ImportExcel = () => {
   const [file, setFile] = useState(null);
 
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-    importExcel(event.target.files[0]);
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      importExcel(selectedFile);
+    }
   };
-  
+
   const importExcel = async (file) => {
     if (!file) {
       toast.error("Please select a file first.", {
@@ -20,34 +23,34 @@ const ImportExcel = () => {
       });
       return;
     }
-  
+
     const formData = new FormData();
     formData.append('file', file);
-  
+
     try {
       const response = await fetch('/api/tape/import_excel', {
         method: 'POST',
-        body: formData
+        body: formData,
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         toast.error(errorData.message || "Failed to import file", {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
-        return; 
+        return;
       }
-  
+
       toast.success("File imported successfully!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
     } catch (err) {
-      console.error('Error:', err);
       toast.error("An error occurred during import", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
     }
   };
+
   return (
     <>
       <input
@@ -76,7 +79,7 @@ const ImportExcel = () => {
           },
         }}
       >
-        <DownloadIcon sx={{ mr: '10px'}} />
+        <DownloadIcon sx={{ mr: '10px' }} />
         <Typography fontSize="1rem">Import</Typography>
       </Button>
     </>

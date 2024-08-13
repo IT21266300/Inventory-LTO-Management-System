@@ -61,7 +61,7 @@ function validateTapeInput(tapeId, sysId, sysName, subSysName, bStatus, mType, t
   if (!tapeId || !sysId || !sysName || !subSysName || !bStatus || !mType || !tStatus || !sDate || !eDate || !lStatus) {
     return false;
   }
-  if (typeof tapeId !== 'string' || typeof sysId !== 'number' || typeof sysName !== 'string' || typeof subSysName !== 'string' || typeof bStatus !== 'string' || typeof mType !== 'string' || typeof tStatus !== 'string' || typeof sDate !== 'string' || typeof eDate !== 'string' || typeof lStatus !== 'string') {
+  if (typeof tapeId !== 'string' || typeof sysId !== 'string' || typeof sysName !== 'string' || typeof subSysName !== 'string' || typeof bStatus !== 'string' || typeof mType !== 'string' || typeof tStatus !== 'string' || typeof sDate !== 'string' || typeof eDate !== 'string' || typeof lStatus !== 'string') {
     return false;
   }
   return true; 
