@@ -1,5 +1,3 @@
-// components/QRCodeComponent/QRCodeComponent.js
-
 import React from "react";
 import { Box, Button, Paper, Typography } from "@mui/material";
 import QRCode from "qrcode.react";
@@ -37,7 +35,7 @@ const QRCodeComponent = ({ tapeId }) => {
         variant="contained"
         onClick={handlePrint}
         sx={{
-          backgroundColor: "#4CAF50",
+          backgroundColor: "#ffe404",
           color: "#fff",
         }}
       >

@@ -28,6 +28,8 @@ import TapeSubCategoryTable from "./TapeSubCategoryComponent/TapeSubCategoryTabl
 import System from "View/systems/addSystem";
 import AddSubSystem from "View/subsystems/addSubSystem";
 
+import TapeQRReader from "components/QRCodeComponent/QRCodeReaderComponent";	
+
 import TapeStock from "View/tapeStock/index";
 
 //log views
@@ -105,6 +107,14 @@ const routesConfig = [
         element: (
           <RouteProtector allowedPositions={["as"]}>
             <Tape />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/qrReader",
+        element: (
+          <RouteProtector>
+            <TapeQRReader />
           </RouteProtector>
         ),
       },
