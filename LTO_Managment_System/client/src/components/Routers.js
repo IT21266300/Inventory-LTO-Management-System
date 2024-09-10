@@ -29,6 +29,7 @@ import System from "View/systems/addSystem";
 import AddSubSystem from "View/subsystems/addSubSystem";
 
 import TapeQRReader from "components/QRCodeComponent/QRCodeReaderComponent";	
+import QrCodeReader from "../View/qrCheck";
 
 import TapeStock from "View/tapeStock/index";
 
@@ -114,7 +115,7 @@ const routesConfig = [
         path: "/qrReader",
         element: (
           <RouteProtector>
-            <TapeQRReader />
+            <QrCodeReader />
           </RouteProtector>
         ),
       },
