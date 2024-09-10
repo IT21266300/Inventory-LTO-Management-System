@@ -78,7 +78,7 @@ const navItems = [
     icon: <WorkHistoryIcon />,
   },
   {
-    text: 'LTO Transport',
+    text: 'Transport',
     op: 'LTO Transport',
     icon: <LocalShippingIcon />,
   },

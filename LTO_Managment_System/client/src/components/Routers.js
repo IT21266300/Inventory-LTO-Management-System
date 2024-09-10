@@ -40,6 +40,8 @@ import Locker from "View/locker";
 import AddLocker from "View/locker/addLocker";
 import UpdateLocker from "View/locker/updateLocker";
 
+import Transport from "View/transport";
+
 const routesConfig = [
   {
     path: "/",
@@ -239,6 +241,14 @@ const routesConfig = [
       {
         path: "/unauthorized",
         element: <NotFound />,
+      },
+      {
+        path: "/transport",
+        element: (
+          <RouteProtector>
+            <Transport/>
+          </RouteProtector>
+        ),
       }
     ],
   },

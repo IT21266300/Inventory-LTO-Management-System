@@ -81,7 +81,7 @@ const Dashboard = () => {
       id: 3,
       name: 'LTO Transport',
       para: 'From This function mange location changes of the LTO.',
-      link: '/contractors',
+      link: '/transport',
       img: i3,
     },
     {
