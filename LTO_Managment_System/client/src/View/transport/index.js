@@ -1,107 +1,181 @@
-import React, { useReducer, useEffect } from 'react';
-import Header from 'components/Header';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Box, IconButton } from '@mui/material';
-import CategoryTable from 'components/TapeCategoryComponent/TapeCategoryTable';
-import { Helmet } from 'react-helmet-async';
-import { colorPalette } from 'customTheme';
-import { useNavigate } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import {
+  Box,
+  Typography,
+  Grid,
+  Button,
+  Paper,
+  TextField,
+  Select,
+  MenuItem,
+  IconButton,
+  Chip,
+} from '@mui/material';
+import { toast } from 'react-toastify';
+import { jsPDF } from 'jspdf';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'FETCH_REQUEST':
-      return { ...state, loading: true };
-    case 'FETCH_SUCCESS':
-      return { ...state, systemData: action.payload, loading: false };
-    case 'FETCH_ERROR':
-      return { ...state, loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
+const UpdateTapeStatusComponent = () => {
+  const [locationStatus, setLocationStatus] = useState('');
+  const [tapeIds, setTapeIds] = useState([]);
+  const [inputTapeId, setInputTapeId] = useState('');
 
-const Transport = () => {
+  const handleAddTapeId = () => {
+    if (inputTapeId && !tapeIds.includes(inputTapeId)) {
+      setTapeIds([...tapeIds, inputTapeId]);
+      setInputTapeId('');
+    } else {
+      toast.error('Tape ID is either empty or already added.', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    }
+  };
 
-  const navigate = useNavigate();
+  const handleRemoveTapeId = (id) => {
+    setTapeIds(tapeIds.filter((tapeId) => tapeId !== id));
+  };
 
-  const tabs = [
-    {
-      id: '1',
-      label: 'Staff',
-      col: 'staff',
-    },
-    // {
-    //   id: '2',
-    //   label: '',
-    //   col: 'teams',
-    // },
-  ];
-  const [value, setValue] = React.useState(0);
-  const [site, setSite] = React.useState(null);
-  const [tabName, setTabName] = React.useState({
-    label: 'Staff',
-    col: 'staff',
-  });
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.put('/api/tape/updateTapeStatuses', {
+        tapeIds,
+        lStatus: locationStatus,
+      });
 
-  const [{ systemData, loading, error }, dispatch] = useReducer(reducer, {
-    systemData: [],
-    loading: true,
-    error: '',
-  });
-  useEffect(() => {
-    const fetchData = async () => {
-      dispatch({ type: 'FETCH_REQUEST' });
-      try {
-        const result = await axios.get('/api/systems/');
-        dispatch({
-          type: 'FETCH_SUCCESS',
-          payload: result.data,
-        });
-        dispatch({ type: 'FETCH_SITES', payload: result.data });
-      } catch (err) {
-        dispatch({ type: 'FETCH_ERROR', payload: err.message });
-      }
-    };
-    fetchData();
-  }, [tabName, site]);
+      // Download PDF after submission
+      const doc = new jsPDF();
+      doc.text('Tape Status Update', 20, 20);
+      doc.text(`Location Status: ${locationStatus}`, 20, 30);
+      doc.text('Tape IDs:', 20, 40);
+      tapeIds.forEach((tapeId, index) => {
+        doc.text(`${index + 1}. ${tapeId}`, 20, 50 + index * 10);
+      });
+      doc.save('TapeStatusUpdate.pdf');
 
-  console.log('SystemData', systemData);
+      toast.success('Tape statuses updated successfully!', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    } catch (err) {
+      toast.error(err.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    }
+  };
+
   return (
-    <Box m="1.5rem  2.5rem">
-      <Helmet>
-        <title>Transport Management</title>
-      </Helmet>
-      
-      <Box sx={{ width: '100%', display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        <IconButton
-          onClick={() => navigate(-1)}
+    <Box sx={{ padding: '2rem' }}>
+      <Paper
+        elevation={3}
+        sx={{
+          padding: '2rem',
+          borderRadius: '10px',
+          backgroundColor: '#333',
+          color: '#fff',
+        }}
+      >
+        <Typography variant="h5" gutterBottom>
+          Update Tape Status
+        </Typography>
+
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle1" gutterBottom>
+              Location Status:
+            </Typography>
+            <Select
+              value={locationStatus}
+              onChange={(e) => setLocationStatus(e.target.value)}
+              fullWidth
+              sx={{
+                backgroundColor: '#444',
+                color: '#fff',
+                border: '1px solid #ffe404',
+              }}
+            >
+              <MenuItem value={'HO'}>Head Office</MenuItem>
+              <MenuItem value={'DRN'}>DR Nugegoda</MenuItem>
+              <MenuItem value={'DRM'}>DR Maharagama</MenuItem>
+              <MenuItem value={'HO->DRN'}>HO to DRN</MenuItem>
+              <MenuItem value={'DRN->DRM'}>DRN to DRM</MenuItem>
+              <MenuItem value={'DRM->DRN'}>DRM to DRN</MenuItem>
+              <MenuItem value={'DRN->HO'}>DRN to HO</MenuItem>
+              <MenuItem value={'DRM->HO'}>DRM to HO</MenuItem>
+              <MenuItem value={'HO->DRM'}>HO to DRM</MenuItem>
+            </Select>
+          </Grid>
+
+          <Grid item xs={12} md={8}>
+            <Typography variant="subtitle1" gutterBottom>
+              Enter Tape IDs:
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <TextField
+                value={inputTapeId}
+                onChange={(e) => setInputTapeId(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    handleAddTapeId();
+                    e.preventDefault();
+                  }
+                }}
+                placeholder="Enter Tape ID and press Enter"
+                fullWidth
+                sx={{
+                  backgroundColor: '#444',
+                  color: '#fff',
+                  input: { color: '#fff' },
+                }}
+              />
+              <Button
+                variant="contained"
+                onClick={handleAddTapeId}
+                sx={{
+                  marginLeft: '10px',
+                  backgroundColor: '#ffe404',
+                  color: '#333',
+                }}
+              >
+                Add
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+
+        <Box sx={{ marginTop: '1rem' }}>
+          {tapeIds.map((tapeId, index) => (
+            <Chip
+              key={index}
+              label={tapeId}
+              onDelete={() => handleRemoveTapeId(tapeId)}
+              deleteIcon={<DeleteIcon />}
+              sx={{
+                backgroundColor: '#555',
+                color: '#fff',
+                margin: '5px',
+              }}
+            />
+          ))}
+        </Box>
+
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
           sx={{
-            backgroundColor: colorPalette.yellow[500],
-            color: colorPalette.black[500],
-            width: '40px',
-            height: '40px',
-            '&:hover': {
-              backgroundColor: colorPalette.yellow[400],
-              color: colorPalette.black[500],
-            },
+            marginTop: '2rem',
+            backgroundColor: '#ffe404',
+            color: '#333',
           }}
         >
-          <ArrowBackIcon />
-        </IconButton>
-        <Header title="Transport Management" subtitle="Manage Transports" />
-        
-      </Box>
-
-
-
-      
-
+          Submit and Download PDF
+        </Button>
+      </Paper>
     </Box>
   );
 };
 
-export default Transport;
+export default UpdateTapeStatusComponent;
+
 
 
 

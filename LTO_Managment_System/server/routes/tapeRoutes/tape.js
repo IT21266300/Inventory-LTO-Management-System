@@ -293,6 +293,40 @@ router.route('/updateDateStatus/:tapeId').put(async (req, res) => {
   });
 });
 
+
+//Update multiple tape location status
+router.route('/updateTapeStatuses').put(async (req, res) => {
+  const { tapeIds, lStatus } = req.body;
+
+  if (!Array.isArray(tapeIds) || tapeIds.length === 0) {
+    return res.status(400).json({ message: 'Invalid tape IDs' });
+  }
+
+  // Check if the tape IDs exist
+  const checkSql = 'SELECT tapeId FROM Tape WHERE tapeId IN (?)';
+  db.query(checkSql, [tapeIds], (checkErr, checkResult) => {
+    if (checkErr) {
+      console.error(checkErr.message);
+      return res.status(500).json({ message: 'Error with checking tapes', error: checkErr.message });
+    }
+
+    if (checkResult.length !== tapeIds.length) {
+      return res.status(404).json({ message: 'One or more tapes not found' });
+    }
+
+    // Update the tape status records
+    const updateSql = 'UPDATE Tape SET lStatus = ? WHERE tapeId IN (?)';
+    db.query(updateSql, [lStatus, tapeIds], (updateErr, updateResult) => {
+      if (updateErr) {
+        console.error(updateErr.message);
+        return res.status(400).json({ message: 'Error with updating tapes', error: updateErr.message });
+      }
+
+      return res.status(200).json({ message: 'Tape statuses updated successfully' });
+    });
+  });
+});
+
 // tape contents manage
 
 router.route('/addTapeDetails').post(async (req, res) => {
