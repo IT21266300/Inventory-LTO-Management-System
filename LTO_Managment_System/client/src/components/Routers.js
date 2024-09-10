@@ -41,6 +41,9 @@ import AddLocker from "View/locker/addLocker";
 import UpdateLocker from "View/locker/updateLocker";
 
 import Transport from "View/transport";
+import HeadOffice from "View/transport/headOffice";
+import Maharagama from "View/transport/maharagama";
+import Nugegoda from "View/transport/nugegoda";
 
 const routesConfig = [
   {
@@ -247,6 +250,30 @@ const routesConfig = [
         element: (
           <RouteProtector>
             <Transport/>
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/headoffice",
+        element: (
+          <RouteProtector>
+            <HeadOffice/>
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/maharagama",
+        element: (
+          <RouteProtector>
+            <Maharagama/>
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/nugegoda",
+        element: (
+          <RouteProtector>
+            <Nugegoda/>
           </RouteProtector>
         ),
       }

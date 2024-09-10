@@ -1,196 +1,146 @@
-import React, { useState } from 'react';
-import axios from 'axios';
 import {
   Box,
-  Typography,
-  Grid,
   Button,
-  Paper,
-  TextField,
-  Select,
-  MenuItem,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Grid,
   IconButton,
-  Chip,
-} from '@mui/material';
-import { toast } from 'react-toastify';
-import { jsPDF } from 'jspdf';
-import DeleteIcon from '@mui/icons-material/Delete';
+  Typography,
+} from "@mui/material";
+import UpdateTapeStatusComponent from "components/TransportComponent/UpdateTapeStatusComponent";
+import { colorPalette } from "customTheme";
+import React from "react";
+import { Helmet } from "react-helmet-async";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
+import Header from "components/Header";
+import main from "../../assets/main.jpeg";
+import nugegoda from "../../assets/nugegoda.jpeg";
+import maharagama from "../../assets/maharagama.jpeg";
 
-const UpdateTapeStatusComponent = () => {
-  const [locationStatus, setLocationStatus] = useState('');
-  const [tapeIds, setTapeIds] = useState([]);
-  const [inputTapeId, setInputTapeId] = useState('');
+export default function Transport() {
+  const navigate = useNavigate();
 
-  const handleAddTapeId = () => {
-    if (inputTapeId && !tapeIds.includes(inputTapeId)) {
-      setTapeIds([...tapeIds, inputTapeId]);
-      setInputTapeId('');
-    } else {
-      toast.error('Tape ID is either empty or already added.', {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-    }
-  };
-
-  const handleRemoveTapeId = (id) => {
-    setTapeIds(tapeIds.filter((tapeId) => tapeId !== id));
-  };
-
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.put('/api/tape/updateTapeStatuses', {
-        tapeIds,
-        lStatus: locationStatus,
-      });
-
-      // Download PDF after submission
-      const doc = new jsPDF();
-      doc.text('Tape Status Update', 20, 20);
-      doc.text(`Location Status: ${locationStatus}`, 20, 30);
-      doc.text('Tape IDs:', 20, 40);
-      tapeIds.forEach((tapeId, index) => {
-        doc.text(`${index + 1}. ${tapeId}`, 20, 50 + index * 10);
-      });
-      doc.save('TapeStatusUpdate.pdf');
-
-      toast.success('Tape statuses updated successfully!', {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-    } catch (err) {
-      toast.error(err.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-    }
-  };
+  const functionInfo = [
+    {
+      id: 1,
+      name: "Head Office",
+      para: "",
+      link: "/headoffice",
+      img: main,
+    },
+    {
+      id: 2,
+      name: "Nugegoda",
+      para: "",
+      link: "/nugegoda",
+      img: nugegoda,
+    },
+    {
+      id: 3,
+      name: "Maharagama",
+      para: "",
+      link: "/maharagama",
+      img: maharagama,
+    },
+  ];
 
   return (
-    <Box sx={{ padding: '2rem' }}>
-      <Paper
-        elevation={3}
+    <Box m="1.5rem  2.5rem">
+      <Helmet>
+        <title>Transport Management</title>
+      </Helmet>
+      <Box
         sx={{
-          padding: '2rem',
-          borderRadius: '10px',
-          backgroundColor: '#333',
-          color: '#fff',
+          width: "100%",
+          display: "flex",
+          gap: "1rem",
+          alignItems: "center",
         }}
       >
-        <Typography variant="h5" gutterBottom>
-          Update Tape Status
-        </Typography>
-
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle1" gutterBottom>
-              Location Status:
-            </Typography>
-            <Select
-              value={locationStatus}
-              onChange={(e) => setLocationStatus(e.target.value)}
-              fullWidth
-              sx={{
-                backgroundColor: '#444',
-                color: '#fff',
-                border: '1px solid #ffe404',
-              }}
-            >
-              <MenuItem value={'HO'}>Head Office</MenuItem>
-              <MenuItem value={'DRN'}>DR Nugegoda</MenuItem>
-              <MenuItem value={'DRM'}>DR Maharagama</MenuItem>
-              <MenuItem value={'HO->DRN'}>HO to DRN</MenuItem>
-              <MenuItem value={'DRN->DRM'}>DRN to DRM</MenuItem>
-              <MenuItem value={'DRM->DRN'}>DRM to DRN</MenuItem>
-              <MenuItem value={'DRN->HO'}>DRN to HO</MenuItem>
-              <MenuItem value={'DRM->HO'}>DRM to HO</MenuItem>
-              <MenuItem value={'HO->DRM'}>HO to DRM</MenuItem>
-            </Select>
-          </Grid>
-
-          <Grid item xs={12} md={8}>
-            <Typography variant="subtitle1" gutterBottom>
-              Enter Tape IDs:
-            </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <TextField
-                value={inputTapeId}
-                onChange={(e) => setInputTapeId(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    handleAddTapeId();
-                    e.preventDefault();
-                  }
-                }}
-                placeholder="Enter Tape ID and press Enter"
-                fullWidth
-                sx={{
-                  backgroundColor: '#444',
-                  color: '#fff',
-                  input: { color: '#fff' },
-                }}
-              />
-              <Button
-                variant="contained"
-                onClick={handleAddTapeId}
-                sx={{
-                  marginLeft: '10px',
-                  backgroundColor: '#ffe404',
-                  color: '#333',
-                }}
-              >
-                Add
-              </Button>
-            </Box>
-          </Grid>
-        </Grid>
-
-        <Box sx={{ marginTop: '1rem' }}>
-          {tapeIds.map((tapeId, index) => (
-            <Chip
-              key={index}
-              label={tapeId}
-              onDelete={() => handleRemoveTapeId(tapeId)}
-              deleteIcon={<DeleteIcon />}
-              sx={{
-                backgroundColor: '#555',
-                color: '#fff',
-                margin: '5px',
-              }}
-            />
-          ))}
-        </Box>
-
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
+        <IconButton
+          onClick={() => navigate(-1)}
           sx={{
-            marginTop: '2rem',
-            backgroundColor: '#ffe404',
-            color: '#333',
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[500],
+            width: "40px",
+            height: "40px",
+            "&:hover": {
+              backgroundColor: colorPalette.yellow[400],
+              color: colorPalette.black[500],
+            },
           }}
         >
-          Submit and Download PDF
-        </Button>
-      </Paper>
+          <ArrowBackIcon />
+        </IconButton>
+        <Header title="Transport Management" subtitle="Manage Transport" />
+      </Box>
+
+      <Box>
+        <Box sx={{ minWidth: "100%", paddingTop: "2rem" }}>
+          <Grid
+            container
+            rowSpacing={3}
+            columnSpacing={{ xs: 3 }}
+            columns={{ xs: 1, sm: 2, md: 10 }}
+          >
+            {functionInfo.map((func) => (
+              <Grid
+                key="func.id"
+                item
+                xs={1}
+                md={3}
+                sx={{ minHeight: "200px" }}
+              >
+                <Card
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    background: colorPalette.black1[500],
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    alt="green iguana"
+                    height="140"
+                    image={func.img}
+                  />
+                  <CardContent>
+                    <Typography
+                      variant="h6"
+                      sx={{ color: colorPalette.black1[100] }}
+                    >
+                      {func.name}
+                    </Typography>
+                  </CardContent>
+                  <CardActions sx={{ margin: "auto", marginRight: 0 }}>
+                    <Button
+                      size="small"
+                      sx={{
+                        color: colorPalette.black[500],
+                        background: colorPalette.yellow[500],
+                        "&:hover": {
+                          backgroundColor: colorPalette.yellow[400],
+                          color: colorPalette.black[500],
+                        },
+                      }}
+                      onClick={() => {
+                        navigate(func.link);
+                      }}
+                      variant="contained"
+                    //   endIcon={<ArrowForwardIcon />}
+                    >
+                      View More
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Box>
     </Box>
   );
-};
-
-export default UpdateTapeStatusComponent;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
