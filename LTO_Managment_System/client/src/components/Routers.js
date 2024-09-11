@@ -44,6 +44,7 @@ import Transport from "View/transport";
 import HeadOffice from "View/transport/headOffice";
 import Maharagama from "View/transport/maharagama";
 import Nugegoda from "View/transport/nugegoda";
+import Pitipana from "View/transport/pitipana";
 
 const routesConfig = [
   {
@@ -274,6 +275,14 @@ const routesConfig = [
         element: (
           <RouteProtector>
             <Nugegoda/>
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/pitipana",
+        element: (
+          <RouteProtector>
+            <Pitipana/>
           </RouteProtector>
         ),
       }

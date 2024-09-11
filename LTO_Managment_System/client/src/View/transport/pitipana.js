@@ -96,6 +96,7 @@ const Pitipana = () => {
               <MenuItem value={'HO'}>Head Office</MenuItem>
               <MenuItem value={'DRN'}>DR Nugegoda</MenuItem>
               <MenuItem value={'DRM'}>DR Maharagama</MenuItem>
+                
             </Select>
           </Grid>
 
