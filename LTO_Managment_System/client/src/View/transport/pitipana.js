@@ -93,10 +93,10 @@ const Pitipana = () => {
                 border: '1px solid #ffe404',
               }}
             >
-              <MenuItem value={'DRP->HO'}>Head Office</MenuItem>
-              <MenuItem value={'DRP->DRN'}>DR Nugegoda</MenuItem>
-              <MenuItem value={'DRP->DRM'}>DR Maharagama</MenuItem>
-                
+              <MenuItem value={'DRN->HO'}>Head Office</MenuItem>
+              <MenuItem value={'DRN->DRP'}>DR Pitipana</MenuItem>
+              <MenuItem value={'DRN->DRM'}>DR Maharagama</MenuItem>
+              
             </Select>
           </Grid>
 
@@ -169,5 +169,23 @@ const Pitipana = () => {
   );
 };
 
-export default Pitipana;
+export default Nugegoda;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
