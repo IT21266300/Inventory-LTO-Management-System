@@ -67,6 +67,7 @@ function Search({ onSearch }) {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [location, setLocation] = useState("");
+  const [special, setSpecial] = useState("");
   const [systemData, setSystemData] = useState([]);
   const [parentSystem, setParentSystem] = useState({
     sysName: "",
@@ -85,6 +86,7 @@ function Search({ onSearch }) {
     setStartDate(null);
     setEndDate(null);
     setLocation("");
+    setSpecial("");
 
     // Also dispatch an action to clear search data in Redux store if needed
     dispatch({ type: "CLEAR_SEARCH_DATA" }); // Assuming you have a CLEAR_SEARCH_DATA action
@@ -103,6 +105,7 @@ function Search({ onSearch }) {
       startDate,
       endDate,
       location,
+      special,
     };
 
     // try {
@@ -291,6 +294,21 @@ function Search({ onSearch }) {
               <MenuItem value="DRM to DRN">DRM to DRN</MenuItem>
               <MenuItem value="DRN to HO">DRN to HO</MenuItem>
               <MenuItem value="DRM to HO">DRM to HO</MenuItem>
+            </TextField>
+          </Grid>
+          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
+            <TextField
+              select
+              label="Special Status"
+              value={special}
+              onChange={(e) => setSpecial(e.target.value)}
+              fullWidth
+              sx={textFieldStyles}
+            >
+              <MenuItem value={"Permanent"}>Permanent</MenuItem>
+              <MenuItem value={"Entire System"}>Entire System</MenuItem>
+              <MenuItem value={"Weekly"}>Weekly</MenuItem>
+              <MenuItem value={"Monthly"}>Monthly</MenuItem>
             </TextField>
           </Grid>
           <Grid
