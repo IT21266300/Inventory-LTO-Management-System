@@ -52,14 +52,14 @@ const LockerTable = ({ result, loading, error }) => {
   };
 
   const handleUpdate = () => {
-    navigate('/LockerUpdate', { state: { data: passValue } });
+    navigate('/nugegodaLUpdate', { state: { data: passValue } });
   };
 
   const handleDelete = async () => {
     setAnchorEl(null);
     setOpenAlert(false);
     try {
-      axios.delete(`/api/locker/deleteLocker/${passValue.lockerId}`);
+      axios.delete(`/api/lockerN/deleteLocker/${passValue.lockerId}`);
       toast.success('Data successfully deleted!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
@@ -179,7 +179,7 @@ const LockerTable = ({ result, loading, error }) => {
       >
         <Button
           onClick={() => {
-            navigate('/addLocker');
+            navigate('/nugegodaLAdd');
           }}
           sx={{
             backgroundColor: colorPalette.yellow[500],
