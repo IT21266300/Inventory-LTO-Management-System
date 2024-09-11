@@ -93,9 +93,13 @@ const HeadOffice = () => {
                 border: '1px solid #ffe404',
               }}
             >
-              <MenuItem value={'DRP'}>DR Pitipana</MenuItem>
-              <MenuItem value={'DRN'}>DR Nugegoda</MenuItem>
-              <MenuItem value={'DRM'}>DR Maharagama</MenuItem>
+              <MenuItem value={'HO->DRN'}>HO to DR Nugegoda</MenuItem>
+              <MenuItem value={'HO->DRM'}>DR Maharagama</MenuItem>
+              <MenuItem value={'HO->DRP'}>DR Pitipana</MenuItem>
+              
+              
+
+
               
             </Select>
           </Grid>

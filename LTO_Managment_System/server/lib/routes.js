@@ -24,6 +24,10 @@ import InventoryRouter from '../routes/inventoryRoutes/inventory.js'
 //locker routes
 import LockerRouter from '../routes/lockerRoutes/locker.js'
 import TapeSearch from '../routes/tapeRoutes/tapeSearch.js'
+import LockerRouterH from '../routes/lockerRoutes/HOL/locker.js'
+import LockerRouterN from '../routes/lockerRoutes/DRNL/locker.js'
+import LockerRouterM from '../routes/lockerRoutes/maharagamaL/locker.js'
+import LockerRouterP from '../routes/lockerRoutes/DRPL/locker.js'
 
 
 //log routes
@@ -51,6 +55,11 @@ app.use('/tape', TapeRouter);
 
 //locker
 app.use('/locker', LockerRouter);
+app.use('/lockerH', LockerRouterH);
+app.use('/lockerN', LockerRouterN);
+app.use('/lockerM', LockerRouterM);
+app.use('/lockerP', LockerRouterP);
+
 
 //log
 //app.use('/log', LogRouter);

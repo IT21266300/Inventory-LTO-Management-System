@@ -93,6 +93,9 @@ const Maharagama = () => {
                 border: '1px solid #ffe404',
               }}
             >
+              <MenuItem value={'DRM->HO'}>Head Office</MenuItem>
+              <MenuItem value={'DRM->DRN'}>DR Nugegoda</MenuItem>
+              <MenuItem value={'DRM->DRP'}>DR Pitipana</MenuItem>
               <MenuItem value={'HO'}>Head Office</MenuItem>
               <MenuItem value={'DRN'}>DR Nugegoda</MenuItem>
               <MenuItem value={'DRP'}>DR Pitipana</MenuItem>

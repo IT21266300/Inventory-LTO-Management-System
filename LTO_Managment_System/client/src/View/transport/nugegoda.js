@@ -93,9 +93,9 @@ const Nugegoda = () => {
                 border: '1px solid #ffe404',
               }}
             >
-              <MenuItem value={'HO'}>Head Office</MenuItem>
-              <MenuItem value={'DRP'}>DR Pitipana</MenuItem>
-              <MenuItem value={'DRM'}>DR Maharagama</MenuItem>
+              <MenuItem value={'DRN->HO'}>Head Office</MenuItem>
+              <MenuItem value={'DRN->DRP'}>DR Pitipana</MenuItem>
+              <MenuItem value={'DRN->DRM'}>DR Maharagama</MenuItem>
               
             </Select>
           </Grid>
