@@ -93,15 +93,13 @@ const Maharagama = () => {
                 border: '1px solid #ffe404',
               }}
             >
+              <MenuItem value={'DRM->HO'}>Head Office</MenuItem>
+              <MenuItem value={'DRM->DRN'}>DR Nugegoda</MenuItem>
+              <MenuItem value={'DRM->DRP'}>DR Pitipana</MenuItem>
               <MenuItem value={'HO'}>Head Office</MenuItem>
               <MenuItem value={'DRN'}>DR Nugegoda</MenuItem>
-              <MenuItem value={'DRM'}>DR Maharagama</MenuItem>
-              <MenuItem value={'HO->DRN'}>HO to DRN</MenuItem>
-              <MenuItem value={'DRN->DRM'}>DRN to DRM</MenuItem>
-              <MenuItem value={'DRM->DRN'}>DRM to DRN</MenuItem>
-              <MenuItem value={'DRN->HO'}>DRN to HO</MenuItem>
-              <MenuItem value={'DRM->HO'}>DRM to HO</MenuItem>
-              <MenuItem value={'HO->DRM'}>HO to DRM</MenuItem>
+              <MenuItem value={'DRP'}>DR Pitipana</MenuItem>
+              
             </Select>
           </Grid>
 

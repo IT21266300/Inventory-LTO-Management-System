@@ -19,6 +19,7 @@ import Header from "components/Header";
 import main from "../../assets/main.jpeg";
 import nugegoda from "../../assets/nugegoda.jpeg";
 import maharagama from "../../assets/maharagama.jpeg";
+import pitipana from "../../assets/pitipana.jpg";
 
 export default function Transport() {
   const navigate = useNavigate();
@@ -44,6 +45,13 @@ export default function Transport() {
       para: "",
       link: "/maharagama",
       img: maharagama,
+    },
+    {
+      id: 4,
+      name: "Pitipana",
+      para: "",
+      link: "/pitipana",
+      img: pitipana,
     },
   ];
 
