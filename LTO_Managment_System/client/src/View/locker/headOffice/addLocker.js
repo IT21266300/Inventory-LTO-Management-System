@@ -52,7 +52,7 @@ const AddLocker = () => {
       toast.success("New locker has been added successfully!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-      navigate("/locker");
+      navigate("/headOfficeL");
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -167,7 +167,7 @@ const AddLocker = () => {
 
             <FlexBetween>
               <Button
-                onClick={() => navigate("/locker")}
+                onClick={() => navigate("/headOfficeL")}
                 sx={{
                   width: "45%",
                   color: colorPalette.secondary[100],
