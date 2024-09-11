@@ -19,6 +19,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useReducer } from "react";
 import textFieldStyles from "styles/textFieldStyles";
 import SdStorageIcon from "@mui/icons-material/SdStorage";
+import JulianDateConverter from '../../components/TapeComponent/JulianDateConverter';
 
 const positions = ["Admin", "Operator", "Read Only"];
 
@@ -376,6 +377,7 @@ const Tape = () => {
                 <MenuItem value={"Monthly"}>Monthly</MenuItem>
               </Select>
             </FormControl>
+            
 
             <FlexBetween>
               <Button
@@ -409,8 +411,11 @@ const Tape = () => {
             </FlexBetween>
           </Box>
         </form>
+        
       </Box>
+      <JulianDateConverter />
     </Box>
+    
   );
 };
 
