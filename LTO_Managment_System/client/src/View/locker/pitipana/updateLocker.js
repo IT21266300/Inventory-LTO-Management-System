@@ -47,7 +47,7 @@ console.log(data);
       toast.success("Locker has been updated successfully!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-      navigate("/locker");
+      navigate("/pitipanaL");
     } catch (err) {
       console.log(err);
       toast.error(err.message, {
@@ -198,7 +198,7 @@ console.log(data);
 
             <FlexBetween>
               <Button
-                onClick={() => navigate("/locker")}
+                onClick={() => navigate("/pitipanaL")}
                 sx={{
                   width: "45%",
                   color: colorPalette.secondary[100],
