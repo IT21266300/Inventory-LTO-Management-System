@@ -138,3 +138,6 @@ CREATE TABLE LockerP (
 
 
 npm install sanitize-html
+
+ALTER TABLE Tape
+ADD COLUMN sStatus VARCHAR(50) AFTER lStatus;
