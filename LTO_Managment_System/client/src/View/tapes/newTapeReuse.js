@@ -61,6 +61,7 @@ const NewTapeReuse = () => {
   const [sDate, setSDate] = useState(""); // Add state for start date
   const [eDate, setEDate] = useState(""); // Add state for end date
   const [lStatus, setLStatus] = useState(""); // Add state for label status
+  const [sStatus, setSStatus] = useState(""); // Add state for special status
 
   useEffect(() => {
     const fetchData = async () => {
@@ -112,6 +113,7 @@ const NewTapeReuse = () => {
         sDate,
         eDate,
         lStatus,
+        sStatus,
       });
 
       toast.success("New Tape has been created successfully!", {
@@ -126,7 +128,7 @@ const NewTapeReuse = () => {
       });
 
       navigate("/tape");
-      window.location.reload();
+      window.Special.reload();
     } catch (err) {
       toast.error(err.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -314,9 +316,9 @@ const NewTapeReuse = () => {
             >
               <TextField
                 name="sDate"
-                label="Start Date & Time" // Updated label
+                label="Start Date" // Updated label
                 variant="outlined"
-                type="datetime-local" // Changed to datetime-local
+                type="date" // Changed to datetime-local
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -326,9 +328,9 @@ const NewTapeReuse = () => {
 
               <TextField
                 name="eDate"
-                label="End Date & Time" // Updated label
+                label="End Date" // Updated label
                 variant="outlined"
-                type="datetime-local" // Changed to datetime-local
+                type="date" // Changed to datetime-local
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -357,6 +359,24 @@ const NewTapeReuse = () => {
                 <MenuItem value={"DRN->HO"}>DRN to HO</MenuItem>
                 <MenuItem value={"DRM->HO"}>DRM to HO</MenuItem>
                 <MenuItem value={"HO->DRM"}>HO to DRM</MenuItem>
+              </Select>
+            </FormControl>
+
+            <FormControl sx={textFieldStyles}>
+              <InputLabel id="demo-simple-select-label">
+                Special Status
+              </InputLabel>
+              <Select
+                name="sStatus"
+                value={sStatus}
+                label="Special Status"
+                id="sStatus"
+                onChange={(e) => setSStatus(e.target.value)} // Corrected onChange handler
+              >
+                <MenuItem value={"Permanent"}>Permanent</MenuItem>
+                <MenuItem value={"Entire System"}>Entire System</MenuItem>
+                <MenuItem value={"Weekly"}>Weekly</MenuItem>
+                <MenuItem value={"Monthly"}>Monthly</MenuItem>
               </Select>
             </FormControl>
 

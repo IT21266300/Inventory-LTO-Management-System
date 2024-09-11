@@ -224,6 +224,11 @@ const TapeTable = () => {
       headerName: 'Location Status',
       flex: 0.4,
     },
+    {
+      field: 'sStatus',
+      headerName: ' SpecialStatus',
+      flex: 0.4,
+    },
   ];
 
   columns.push({
@@ -282,6 +287,7 @@ const TapeTable = () => {
     sDate: row.sDate,
     eDate: row.eDate,
     lStatus: row.lStatus,
+    sStatus: row.sStatus,
   }));
 
   //=======================================================================
@@ -349,7 +355,7 @@ const TapeTable = () => {
       {searchData.length > 0 ? (
         <Box
         height="100vh"
-        width="100%"
+        width="100wh"
         sx={{
           '& .MuiDataGrid-cell': {
             borderBottom: 'none',

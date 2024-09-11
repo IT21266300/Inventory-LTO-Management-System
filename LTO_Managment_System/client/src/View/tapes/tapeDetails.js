@@ -41,6 +41,7 @@ const ViewTape = () => {
   const [backupStatus, setBackupStatus] = useState(null);
   const [tapeStatus, setTapeStatus] = useState(null);
   const [locationStatus, setLocationStatus] = useState(null);
+  const [specialStatus, setSpecialStatus] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -71,6 +72,7 @@ const ViewTape = () => {
         setBackupStatus(response.data[0].bStatus);
         setTapeStatus(response.data[0].tStatus);
         setLocationStatus(response.data[0].lStatus);
+        setSpecialStatus(response.data[0].sStatus);
         setStartDate(response.data[0].sDate);
         setEndDate(response.data[0].eDate);
 
@@ -114,6 +116,7 @@ const ViewTape = () => {
         bStatus: backupStatus,
         tStatus: tapeStatus,
         lStatus: locationStatus,
+        sStatus: specialStatus,
       });
 
       // Assuming your API returns the updated data
@@ -296,6 +299,28 @@ const ViewTape = () => {
                 <MenuItem value={"HO->DRM"}>HO to DRM</MenuItem>
               </Select>
             </Grid>
+
+            <Grid item xs={12} md={3}>
+              <Typography variant="subtitle1" gutterBottom>
+                Special Status:
+              </Typography>
+              <Select
+                value={specialStatus}
+                onChange={(e) => setSpecialStatus(e.target.value)}
+                fullWidth
+                sx={{
+                  backgroundColor: colorPalette.black1[400],
+                  color: "#fff",
+                  border: "1px solid #ffe404",
+                }}
+              >
+                <MenuItem value={"Permanent"}>Permanent</MenuItem>
+                <MenuItem value={"Entire System"}>Entire System</MenuItem>
+                <MenuItem value={"Weekly"}>Weekly</MenuItem>
+                <MenuItem value={"Monthly"}>Monthly</MenuItem>
+              </Select>
+            </Grid>
+
 
             <Grid
               item
@@ -619,6 +644,30 @@ const ViewTape = () => {
                       </Typography>
                       <Typography style={{ fontSize: "1.5rem", color: "#fff" }}>
                         {tapeData.lStatus}
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Paper
+                      elevation={1}
+                      sx={{
+                        padding: "1rem",
+                        backgroundColor: "transparent",
+                        display: "flex",
+                        alignItems: "center",
+                        borderBottom: "1px solid #ffe404",
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          color: colorPalette.yellow[200],
+                          width: "170px",
+                        }}
+                      >
+                        Special Status :
+                      </Typography>
+                      <Typography style={{ fontSize: "1.5rem", color: "#fff" }}>
+                        {tapeData.sStatus}
                       </Typography>
                     </Paper>
                   </Grid>
