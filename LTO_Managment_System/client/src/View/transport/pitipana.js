@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 import { jsPDF } from 'jspdf';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const HeadOffice = () => {
+const Pitipana = () => {
   const [locationStatus, setLocationStatus] = useState('');
   const [tapeIds, setTapeIds] = useState([]);
   const [inputTapeId, setInputTapeId] = useState('');
@@ -93,10 +93,9 @@ const HeadOffice = () => {
                 border: '1px solid #ffe404',
               }}
             >
-              <MenuItem value={'DRP'}>DR Pitipana</MenuItem>
+              <MenuItem value={'HO'}>Head Office</MenuItem>
               <MenuItem value={'DRN'}>DR Nugegoda</MenuItem>
               <MenuItem value={'DRM'}>DR Maharagama</MenuItem>
-              
             </Select>
           </Grid>
 
@@ -169,23 +168,5 @@ const HeadOffice = () => {
   );
 };
 
-export default HeadOffice;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default Pitipana;
 
