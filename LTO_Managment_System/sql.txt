@@ -99,4 +99,41 @@ CREATE TABLE Locker (
 );
 
 
+CREATE TABLE LockerH (
+    lockerId VARCHAR(255) PRIMARY KEY,
+    capacity INT NOT NULL,
+    currentCount INT DEFAULT 0,
+    tLevels INT NOT NULL,
+    tColumns INT NOT NULL,
+    tDepth INT NOT NULL
+);
+
+CREATE TABLE LockerN (
+    lockerId VARCHAR(255) PRIMARY KEY,
+    capacity INT NOT NULL,
+    currentCount INT DEFAULT 0,
+    tLevels INT NOT NULL,
+    tColumns INT NOT NULL,
+    tDepth INT NOT NULL
+);
+
+CREATE TABLE LockerM (
+    lockerId VARCHAR(255) PRIMARY KEY,
+    capacity INT NOT NULL,
+    currentCount INT DEFAULT 0,
+    tLevels INT NOT NULL,
+    tColumns INT NOT NULL,
+    tDepth INT NOT NULL
+);
+
+CREATE TABLE LockerP (
+    lockerId VARCHAR(255) PRIMARY KEY,
+    capacity INT NOT NULL,
+    currentCount INT DEFAULT 0,
+    tLevels INT NOT NULL,
+    tColumns INT NOT NULL,
+    tDepth INT NOT NULL
+);
+
+
 npm install sanitize-html
