@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 import {
   Box,
   Typography,
@@ -11,22 +11,46 @@ import {
   MenuItem,
   IconButton,
   Chip,
-} from '@mui/material';
-import { toast } from 'react-toastify';
-import { jsPDF } from 'jspdf';
-import DeleteIcon from '@mui/icons-material/Delete';
+} from "@mui/material";
+import { toast } from "react-toastify";
+import { jsPDF } from "jspdf";
+import DeleteIcon from "@mui/icons-material/Delete";
+import logo from "../../assets/logo.png";
+import autoTable from "jspdf-autotable";
+import SubSystem from "View/subsystems";
 
 const HeadOffice = () => {
-  const [locationStatus, setLocationStatus] = useState('');
+  const [locationStatus, setLocationStatus] = useState("");
   const [tapeIds, setTapeIds] = useState([]);
-  const [inputTapeId, setInputTapeId] = useState('');
+  const [sysName, setSysName] = useState("");
+  const [subSysName, setSubSysName] = useState("");
+  const [inputTapeId, setInputTapeId] = useState("");
+
+  const currentDate = new Date();
+
+  // Format the date as YYYY-MM-DD
+  const formattedDate =
+    currentDate.getFullYear() +
+    "-" +
+    ("0" + (currentDate.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + currentDate.getDate()).slice(-2);
+
+  // Format the time as HH:MM
+  const formattedTime =
+    ("0" + currentDate.getHours()).slice(-2) +
+    ":" +
+    ("0" + currentDate.getMinutes()).slice(-2);
+
+  // Combine date and time
+  const formattedDateTime = formattedDate + " - " + formattedTime;
 
   const handleAddTapeId = () => {
     if (inputTapeId && !tapeIds.includes(inputTapeId)) {
       setTapeIds([...tapeIds, inputTapeId]);
-      setInputTapeId('');
+      setInputTapeId("");
     } else {
-      toast.error('Tape ID is either empty or already added.', {
+      toast.error("Tape ID is either empty or already added.", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
     }
@@ -38,22 +62,72 @@ const HeadOffice = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.put('/api/tape/updateTapeStatuses', {
+      const response = await axios.put("/api/tape/updateTapeStatuses", {
         tapeIds,
         lStatus: locationStatus,
+        sysName,
+        subSysName
       });
+
+      const resData = response.data.checkResult;
+      resData.map((i) => {
+        console.log(i.sysName);
+      })
 
       // Download PDF after submission
       const doc = new jsPDF();
-      doc.text('Tape Status Update', 20, 20);
-      doc.text(`Location Status: ${locationStatus}`, 20, 30);
-      doc.text('Tape IDs:', 20, 40);
-      tapeIds.forEach((tapeId, index) => {
-        doc.text(`${index + 1}. ${tapeId}`, 20, 50 + index * 10);
-      });
-      doc.save('TapeStatusUpdate.pdf');
+      doc.rect(5, 5, 200, 287, "S");
 
-      toast.success('Tape statuses updated successfully!', {
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(12);
+      doc.text("Tape Status Update", 15, 20);
+      doc.addImage(logo, "PNG", 170, 15, 20, 18);
+      doc.text(`From: ${locationStatus}`, 15, 40);
+      doc.text(`To: ${locationStatus}`, 170, 40);
+      doc.text(`Date: ${formattedDateTime}`, 15, 50);
+      autoTable(doc, {
+        columns: [
+          {
+            header: "No.",
+            dataKey: "no",
+          },
+          {
+            header: "Tape ID",
+            dataKey: "tapeid",
+          },
+          {
+            header: "System",
+            dataKey: "system",
+          },
+          {
+            header: "Sub System",
+            dataKey: "Sub System",
+          },
+        ],
+        styles: { fontSize: 10 },
+        body: resData.map((dataSet, index) => [
+          index + 1, // First column: index
+          dataSet.tapeId, // Second column: tapeId
+          dataSet.sysName,
+          dataSet.subSysName,
+        ]),
+        startY: 55,
+        margin: { top: 10 },
+      });
+
+      doc.text(
+        `Name of the IT Officer: ................................`,
+        15,
+        250
+      );
+
+      doc.text(`User ID: ................................`, 15, 265);
+
+      doc.text(`Signature: ................................`, 15, 280);
+
+      doc.save("TapeStatusUpdate.pdf");
+
+      toast.success("Tape statuses updated successfully!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
     } catch (err) {
@@ -64,14 +138,14 @@ const HeadOffice = () => {
   };
 
   return (
-    <Box sx={{ padding: '2rem' }}>
+    <Box sx={{ padding: "2rem" }}>
       <Paper
         elevation={3}
         sx={{
-          padding: '2rem',
-          borderRadius: '10px',
-          backgroundColor: '#333',
-          color: '#fff',
+          padding: "2rem",
+          borderRadius: "10px",
+          backgroundColor: "#333",
+          color: "#fff",
         }}
       >
         <Typography variant="h5" gutterBottom>
@@ -88,12 +162,13 @@ const HeadOffice = () => {
               onChange={(e) => setLocationStatus(e.target.value)}
               fullWidth
               sx={{
-                backgroundColor: '#444',
-                color: '#fff',
-                border: '1px solid #ffe404',
+                backgroundColor: "#444",
+                color: "#fff",
+                border: "1px solid #ffe404",
               }}
             >
-              <MenuItem value={'HO->DRN'}>HO to DR Nugegoda</MenuItem>
+
+              <MenuItem value={'HO->DRN'}>DR Nugegoda</MenuItem>
               <MenuItem value={'HO->DRM'}>DR Maharagama</MenuItem>
               <MenuItem value={'HO->DRP'}>DR Pitipana</MenuItem>
               
@@ -101,6 +176,7 @@ const HeadOffice = () => {
 
 
               
+
             </Select>
           </Grid>
 
@@ -108,12 +184,12 @@ const HeadOffice = () => {
             <Typography variant="subtitle1" gutterBottom>
               Enter Tape IDs:
             </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
               <TextField
                 value={inputTapeId}
                 onChange={(e) => setInputTapeId(e.target.value)}
                 onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
+                  if (e.key === "Enter") {
                     handleAddTapeId();
                     e.preventDefault();
                   }
@@ -121,18 +197,18 @@ const HeadOffice = () => {
                 placeholder="Enter Tape ID and press Enter"
                 fullWidth
                 sx={{
-                  backgroundColor: '#444',
-                  color: '#fff',
-                  input: { color: '#fff' },
+                  backgroundColor: "#444",
+                  color: "#fff",
+                  input: { color: "#fff" },
                 }}
               />
               <Button
                 variant="contained"
                 onClick={handleAddTapeId}
                 sx={{
-                  marginLeft: '10px',
-                  backgroundColor: '#ffe404',
-                  color: '#333',
+                  marginLeft: "10px",
+                  backgroundColor: "#ffe404",
+                  color: "#333",
                 }}
               >
                 Add
@@ -141,7 +217,7 @@ const HeadOffice = () => {
           </Grid>
         </Grid>
 
-        <Box sx={{ marginTop: '1rem' }}>
+        <Box sx={{ marginTop: "1rem" }}>
           {tapeIds.map((tapeId, index) => (
             <Chip
               key={index}
@@ -149,9 +225,9 @@ const HeadOffice = () => {
               onDelete={() => handleRemoveTapeId(tapeId)}
               deleteIcon={<DeleteIcon />}
               sx={{
-                backgroundColor: '#555',
-                color: '#fff',
-                margin: '5px',
+                backgroundColor: "#555",
+                color: "#fff",
+                margin: "5px",
               }}
             />
           ))}
@@ -161,9 +237,9 @@ const HeadOffice = () => {
           variant="contained"
           onClick={handleSubmit}
           sx={{
-            marginTop: '2rem',
-            backgroundColor: '#ffe404',
-            color: '#333',
+            marginTop: "2rem",
+            backgroundColor: "#ffe404",
+            color: "#333",
           }}
         >
           Submit and Download PDF
@@ -174,22 +250,3 @@ const HeadOffice = () => {
 };
 
 export default HeadOffice;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

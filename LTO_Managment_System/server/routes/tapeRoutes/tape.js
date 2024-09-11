@@ -251,7 +251,7 @@ router.route('/updateTapeStatus/:tapeId').put(async (req, res) => {
         return res.status(404).json({ message: 'Tape not found' });
       }
 
-      return res.status(200).json({ message: 'Tape Updated' });
+      return res.status(200).json({ message: 'Tape Updated', checkResult });
     });
     
   });
@@ -303,7 +303,7 @@ router.route('/updateTapeStatuses').put(async (req, res) => {
   }
 
   // Check if the tape IDs exist
-  const checkSql = 'SELECT tapeId FROM Tape WHERE tapeId IN (?)';
+  const checkSql = 'SELECT tapeId, sysName, subSysName FROM Tape WHERE tapeId IN (?)';
   db.query(checkSql, [tapeIds], (checkErr, checkResult) => {
     if (checkErr) {
       console.error(checkErr.message);
@@ -322,7 +322,7 @@ router.route('/updateTapeStatuses').put(async (req, res) => {
         return res.status(400).json({ message: 'Error with updating tapes', error: updateErr.message });
       }
 
-      return res.status(200).json({ message: 'Tape statuses updated successfully' });
+      return res.status(200).json({ message: 'Tape statuses updated successfully', checkResult});
     });
   });
 });
