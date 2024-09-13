@@ -13,6 +13,7 @@ try {
     tapeId,
     systemName,
     subSysName,
+    dayoftheweek,
     // applicationName,
     backupStatus,
     mediaType,
@@ -23,9 +24,9 @@ try {
     special,
   } = req.body;
 
-  let sql = 'SELECT * FROM Tape WHERE tapeId = ? OR sysName = ? OR subSysName = ? OR bStatus = ? OR mType = ? OR tStatus = ? OR sDate = ? OR eDate = ? OR lStatus = ? OR sStatus = ?'; // Start with a base query
+  let sql = 'SELECT * FROM Tape WHERE tapeId = ? OR sysName = ? OR subSysName = ? OR dayoftheweek = ? OR bStatus = ? OR mType = ? OR tStatus = ? OR sDate = ? OR eDate = ? OR lStatus = ? OR sStatus = ?'; // Start with a base query
 
-  db.query(sql, [tapeId, systemName, subSysName, backupStatus, mediaType, tapeStatus, startDate, endDate, location, special], (err, data) => {
+  db.query(sql, [tapeId, systemName, subSysName, dayoftheweek, backupStatus, mediaType, tapeStatus, startDate, endDate, location, special], (err, data) => {
     if (err) return res.status(500).json({ error: err.message });
 
     if (data.length === 0) {

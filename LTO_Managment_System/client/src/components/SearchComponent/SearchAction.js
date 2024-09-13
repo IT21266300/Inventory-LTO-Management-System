@@ -61,6 +61,7 @@ function Search({ onSearch }) {
   const searchData = useSelector(selectSearchData);
   const [tapeId, setTapeId] = useState("");
   const [systemName, setSystemName] = useState("");
+  const [dayoftheweek, setDayoftheWeek] = useState("");
   const [backupStatus, setBackupStatus] = useState("");
   const [mediaType, setMediaType] = useState("");
   const [tapeStatus, setTapeStatus] = useState("");
@@ -80,6 +81,7 @@ function Search({ onSearch }) {
     setTapeId("");
     setParentSystem({ sysName: "", sysId: "" });
     setSubSysName("");
+    setDayoftheWeek("");
     setBackupStatus("");
     setMediaType("");
     setTapeStatus("");
@@ -99,6 +101,7 @@ function Search({ onSearch }) {
       tapeId,
       systemName: parentSystem.sysName,
       subSysName,
+      dayoftheweek,
       backupStatus,
       mediaType,
       tapeStatus,
@@ -158,7 +161,7 @@ function Search({ onSearch }) {
       <HeaderStyled variant="h4"></HeaderStyled>
       <SearchFormStyled>
         <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
+          <Grid item xs={12} sm={2} className={SearchInputGroupStyled}>
             <TextField
               label="Tape ID"
               value={tapeId}
@@ -167,7 +170,7 @@ function Search({ onSearch }) {
               sx={textFieldStyles}
             />
           </Grid>
-          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
+          <Grid item xs={12} sm={2} className={SearchInputGroupStyled}>
             <FormControl fullWidth sx={textFieldStyles}>
               <InputLabel id="system-select-label">System</InputLabel>
               <Select
@@ -192,7 +195,7 @@ function Search({ onSearch }) {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
+          <Grid item xs={12} sm={2} className={SearchInputGroupStyled}>
             <FormControl fullWidth sx={textFieldStyles}>
               <InputLabel id="subsystem-select-label">Sub System</InputLabel>
               <Select
@@ -215,7 +218,26 @@ function Search({ onSearch }) {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
+          <Grid item xs={12} sm={2} className={SearchInputGroupStyled}>
+            <TextField
+              select
+              label="Day of the Week"
+              value={dayoftheweek}
+              onChange={(e) => setDayoftheWeek(e.target.value)}
+              fullWidth
+              sx={textFieldStyles}
+            >
+              <MenuItem value="Sunday">Sunday</MenuItem>
+              <MenuItem value="Monday">Monday</MenuItem>
+              <MenuItem value="Tuesday">Tuesday</MenuItem>
+              <MenuItem value="Webnesday">Webnesday</MenuItem>
+              <MenuItem value="Thursday">Thurssday</MenuItem>
+              <MenuItem value="Friday">Friday</MenuItem>
+              <MenuItem value="Saturday">Saturday</MenuItem>
+            
+            </TextField>
+          </Grid>
+          <Grid item xs={12} sm={2} className={SearchInputGroupStyled}>
             <TextField
               select
               label="Backup Status"
@@ -229,7 +251,7 @@ function Search({ onSearch }) {
               <MenuItem value="Not Taken">Not Taken</MenuItem>
             </TextField>
           </Grid>
-          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
+          <Grid item xs={12} sm={2} className={SearchInputGroupStyled}>
             <TextField
               select
               label="Media Type"
@@ -245,7 +267,7 @@ function Search({ onSearch }) {
               <MenuItem value={"LTO9"}>LTO9</MenuItem>
             </TextField>
           </Grid>
-          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
+          <Grid item xs={12} sm={2} className={SearchInputGroupStyled}>
             <TextField
               select
               label="Tape Status"
@@ -255,10 +277,10 @@ function Search({ onSearch }) {
               sx={textFieldStyles}
             >
               <MenuItem value="Full">Full</MenuItem>
-              <MenuItem value="In Use">IN Use</MenuItem>
+              <MenuItem value="In Use">In Use</MenuItem>
             </TextField>
           </Grid>
-          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
+          <Grid item xs={12} sm={2} className={SearchInputGroupStyled}>
             <DatePicker
               label="Start Date"
               value={startDate}
@@ -267,7 +289,7 @@ function Search({ onSearch }) {
               sx={textFieldStyles}
             />
           </Grid>
-          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
+          <Grid item xs={12} sm={2} className={SearchInputGroupStyled}>
             <DatePicker
               label="End Date"
               value={endDate}
@@ -276,7 +298,7 @@ function Search({ onSearch }) {
               sx={textFieldStyles}
             />
           </Grid>
-          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
+          <Grid item xs={12} sm={2} className={SearchInputGroupStyled}>
             <TextField
               select
               label="Location"
@@ -296,7 +318,7 @@ function Search({ onSearch }) {
               <MenuItem value="DRM to HO">DRM to HO</MenuItem>
             </TextField>
           </Grid>
-          <Grid item xs={15} sm={2} className={SearchInputGroupStyled}>
+          <Grid item xs={12} sm={2} className={SearchInputGroupStyled}>
             <TextField
               select
               label="Special Status"
@@ -313,7 +335,7 @@ function Search({ onSearch }) {
           </Grid>
           <Grid
             item
-            xs={15}
+            xs={12}
             sm={2}
             className={SearchInputGroupStyled}
             sx={{ display: "flex", justifyContent: "center" }}
@@ -327,10 +349,17 @@ function Search({ onSearch }) {
             >
               Search Tape
             </Button>
+            <Button
+              variant="contained"
+              onClick={handleClear}
+              sx={{ height: "50px", width: "100px", background: "#f50057", color: "#fff",  ml: '1.5rem' }}
+            >
+              Clear
+            </Button>
           </Grid>
-          <Grid
+          {/* <Grid
             item
-            xs={15}
+            xs={12}
             sm={2}
             className={SearchInputGroupStyled}
             sx={{ display: "flex", gap: "10" }}
@@ -342,7 +371,7 @@ function Search({ onSearch }) {
             >
               Clear
             </Button>
-          </Grid>
+          </Grid> */}
         </Grid>
       </SearchFormStyled>
     </ContainerStyled>

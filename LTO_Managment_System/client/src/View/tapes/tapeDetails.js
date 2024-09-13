@@ -38,6 +38,7 @@ const ViewTape = () => {
   const { userInfo } = state;
 
   // State for updating status
+  const [dayoftheweek, setDayoftheWeek] = useState(null);
   const [backupStatus, setBackupStatus] = useState(null);
   const [tapeStatus, setTapeStatus] = useState(null);
   const [locationStatus, setLocationStatus] = useState(null);
@@ -69,6 +70,7 @@ const ViewTape = () => {
         console.log(response.data);
 
         // Initialize update states with current values
+        setDayoftheWeek(response.data[0].dayoftheweek);
         setBackupStatus(response.data[0].bStatus);
         setTapeStatus(response.data[0].tStatus);
         setLocationStatus(response.data[0].lStatus);
@@ -113,6 +115,7 @@ const ViewTape = () => {
   const handleUpdateStatus = async () => {
     try {
       const response = await axios.put(`/api/tape/updateTapeStatus/${tapeId}`, {
+        dayoftheweek: dayoftheweek,
         bStatus: backupStatus,
         tStatus: tapeStatus,
         lStatus: locationStatus,
@@ -234,7 +237,31 @@ const ViewTape = () => {
               justifyContent: "center",
             }}
           >
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={2}>
+              <Typography variant="subtitle1" gutterBottom>
+                Day of the Week:
+              </Typography>
+              <Select
+                value={dayoftheweek}
+                onChange={(e) => setDayoftheWeek(e.target.value)}
+                fullWidth
+                sx={{
+                  backgroundColor: colorPalette.black1[400],
+                  color: "#fff",
+                  border: "1px solid #ffe404",
+                }}
+              >
+                  <MenuItem value="Sunday">Sunday</MenuItem>
+                  <MenuItem value="Monday">Monday</MenuItem>
+                  <MenuItem value="Tuesday">Tuesday</MenuItem>
+                  <MenuItem value="Webnesday">Webnesday</MenuItem>
+                  <MenuItem value="Thursday">Thurssday</MenuItem>
+                  <MenuItem value="Friday">Friday</MenuItem>
+                  <MenuItem value="Saturday">Saturday</MenuItem>
+              </Select>
+            </Grid>
+
+            <Grid item xs={12} md={2}>
               <Typography variant="subtitle1" gutterBottom>
                 Backup Status:
               </Typography>
@@ -255,7 +282,7 @@ const ViewTape = () => {
               </Select>
             </Grid>
 
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={2}>
               <Typography variant="subtitle1" gutterBottom>
                 Tape Status:
               </Typography>
@@ -274,7 +301,7 @@ const ViewTape = () => {
               </Select>
             </Grid>
 
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={2}>
               <Typography variant="subtitle1" gutterBottom>
                 Location Status:
               </Typography>
@@ -300,7 +327,7 @@ const ViewTape = () => {
               </Select>
             </Grid>
 
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={2}>
               <Typography variant="subtitle1" gutterBottom>
                 Special Status:
               </Typography>
@@ -355,7 +382,7 @@ const ViewTape = () => {
       <Box
         sx={{
           width: "100%",
-          height: "15vh",
+          height: "12vh",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -499,6 +526,30 @@ const ViewTape = () => {
                       </Typography>
                       <Typography style={{ fontSize: "1.5rem", color: "#fff" }}>
                         {tapeData.subSysName}
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Paper
+                      elevation={1}
+                      sx={{
+                        padding: "1rem",
+                        backgroundColor: "transparent",
+                        display: "flex",
+                        alignItems: "center",
+                        borderBottom: "1px solid #ffe404",
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          color: colorPalette.yellow[200],
+                          width: "170px",
+                        }}
+                      >
+                        Day of the Week:
+                      </Typography>
+                      <Typography style={{ fontSize: "1.5rem", color: "#fff" }}>
+                        {tapeData.dayoftheweek}
                       </Typography>
                     </Paper>
                   </Grid>
@@ -685,7 +736,7 @@ const ViewTape = () => {
       <Box
         sx={{
           width: "100%",
-          height: "15vh",
+          height: "12vh",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
