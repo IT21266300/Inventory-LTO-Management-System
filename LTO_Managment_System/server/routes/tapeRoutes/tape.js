@@ -31,12 +31,13 @@ router.post('/import_excel', upload.single('file'), (req, res) => {
     const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
     // Insert data into the Tape table
-    const insertSql = 'INSERT INTO Tape (tapeId, sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus) VALUES ?';
+    const insertSql = 'INSERT INTO Tape (tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus) VALUES ?';
     const values = jsonData.map(row => [
       row.tapeId,
       row.sysId,
       row.sysName,
       row.subSysName,
+      row.dayoftheweek,
       row.bStatus,
       row.mType,
       row.tStatus,
@@ -58,23 +59,24 @@ router.post('/import_excel', upload.single('file'), (req, res) => {
 });
 
 // Function to validate input data 
-function validateTapeInput(tapeId, sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus) {
-  if (!tapeId || !sysId || !sysName || !subSysName || !bStatus || !mType || !tStatus || !sDate || !eDate || !lStatus || !sStatus) {
+function validateTapeInput(tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus) {
+  if (!tapeId || !sysId || !sysName || !subSysName || !dayoftheweek || !bStatus || !mType || !tStatus || !sDate || !eDate || !lStatus || !sStatus) {
     return false;
   }
-  if (typeof tapeId !== 'string' || typeof sysId !== 'number' || typeof sysName !== 'string' || typeof subSysName !== 'string' || typeof bStatus !== 'string' || typeof mType !== 'string' || typeof tStatus !== 'string' || typeof sDate !== 'string' || typeof eDate !== 'string' || typeof lStatus !== 'string' || typeof sStatus !== 'string') {
+  if (typeof tapeId !== 'string' || typeof sysId !== 'number' || typeof sysName !== 'string' || typeof subSysName !== 'string' || typeof dayoftheweek !== 'string' || typeof mType !== 'string' || typeof tStatus !== 'string' || typeof sDate !== 'string' || typeof eDate !== 'string' || typeof lStatus !== 'string' || typeof sStatus !== 'string') {
     return false;
   }
   return true; 
 }
 
 // Function to sanitize input data
-function sanitizeTapeInput(tapeId, sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus) {
+function sanitizeTapeInput(tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus) {
   return {
     tapeId: tapeId.trim(),
     sysId, 
     sysName: sysName.trim(),
     subSysName: subSysName.trim(),
+    dayoftheweek: dayoftheweek.trim(),
     bStatus: bStatus.trim(),
     mType: mType.trim(),
     tStatus: tStatus.trim(),
@@ -86,15 +88,15 @@ function sanitizeTapeInput(tapeId, sysId, sysName, subSysName, bStatus, mType, t
 }
 
 router.route('/addTape').post(async (req, res) => {
-  const { tapeId, sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus } = req.body;
+  const { tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus } = req.body;
 
   // Validate input data
-  if (!validateTapeInput(tapeId, sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus)) {
+  if (!validateTapeInput(tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus)) {
     return res.status(400).json({ message: 'Invalid input data' });
   }
 
   // Sanitize input data
-  const sanitizedInput = sanitizeTapeInput(tapeId, sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus);
+  const sanitizedInput = sanitizeTapeInput(tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus);
 
   // Check if the tapeId already exists
   const checkSql = 'SELECT * FROM Tape WHERE tapeId = ?';
@@ -106,12 +108,13 @@ router.route('/addTape').post(async (req, res) => {
     }
 
     // Insert the new tape
-    const insertSql = 'INSERT INTO Tape (tapeId, sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)';
+    const insertSql = 'INSERT INTO Tape (tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
     db.query(insertSql, [
       sanitizedInput.tapeId,
       sanitizedInput.sysId,
       sanitizedInput.sysName,
       sanitizedInput.subSysName,
+      sanitizedInput.dayoftheweek,
       sanitizedInput.bStatus,
       sanitizedInput.mType,
       sanitizedInput.tStatus,
@@ -192,7 +195,7 @@ router.route('/delete/:tapeId').delete(async (req, res) => {
 
 router.route('/updateTape/:tapeId').put(async (req, res) => {
   const tapeId = req.params.tapeId;
-  const { sysId, sysName, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus } = req.body;
+  const { sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus } = req.body;
 
   // Check if the tape ID exists
   const checkSql = 'SELECT * FROM Tape WHERE tapeId = ?';
@@ -207,8 +210,8 @@ router.route('/updateTape/:tapeId').put(async (req, res) => {
     }
 
     // Update the tape record
-    const updateSql = 'UPDATE Tape SET sysName = ?, sysId = ?, subSysName = ?, bStatus = ?, mType = ?, tStatus = ?, sDate = ?, eDate = ?, lStatus = ?, sStatus = ? WHERE tapeId = ?';
-    db.query(updateSql, [sysName, sysId, subSysName, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus, tapeId], (updateErr, updateResult) => {
+    const updateSql = 'UPDATE Tape SET sysName = ?, sysId = ?, subSysName = ?, dayoftheweek = ?, bStatus = ?, mType = ?, tStatus = ?, sDate = ?, eDate = ?, lStatus = ?, sStatus = ? WHERE tapeId = ?';
+    db.query(updateSql, [sysName, sysId, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus, tapeId], (updateErr, updateResult) => {
       if (updateErr) {
         console.error(updateErr.message);
         return res.status(400).json({ message: 'Error with updating tape', error: updateErr.message });
@@ -228,7 +231,7 @@ router.route('/updateTape/:tapeId').put(async (req, res) => {
 
 router.route('/updateTapeStatus/:tapeId').put(async (req, res) => {
   const tapeId = req.params.tapeId;
-  const { bStatus, tStatus, lStatus, sStatus } = req.body;
+  const { dayoftheweek, bStatus, tStatus, lStatus, sStatus } = req.body;
 
   // Check if the tape ID exists
   const checkSql = 'SELECT * FROM Tape WHERE tapeId = ?';
@@ -243,8 +246,8 @@ router.route('/updateTapeStatus/:tapeId').put(async (req, res) => {
     }
 
     // Update the tape status record
-    const updateSql = 'UPDATE Tape SET bStatus = ?, tStatus = ?, lStatus = ?, sStatus = ? WHERE tapeId = ?';
-    db.query(updateSql, [bStatus, tStatus, lStatus, sStatus, tapeId], (updateErr, updateResult) => {
+    const updateSql = 'UPDATE Tape SET dayoftheweek = ?, bStatus = ?, tStatus = ?, lStatus = ?, sStatus = ? WHERE tapeId = ?';
+    db.query(updateSql, [dayoftheweek, bStatus, tStatus, lStatus, sStatus, tapeId], (updateErr, updateResult) => {
       if (updateErr) {
         console.error(updateErr.message);
         return res.status(400).json({ message: 'Error with updating tape', error: updateErr.message });

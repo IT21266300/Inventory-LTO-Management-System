@@ -136,7 +136,7 @@ const TapeTable = () => {
     {
       field: 'tapeId',
       headerName: 'Tape ID',
-      flex: 0.4,
+      flex: 0.3,
     },
     {
       field: 'sysName',
@@ -151,12 +151,17 @@ const TapeTable = () => {
     {
       field: 'subSysName',
       headerName: 'Application Name',
-      flex: 0.5,
+      flex: 0.4,
+    },
+    {
+      field: 'dayoftheweek',
+      headerName: 'Day of the Week',
+      flex: 0.4,
     },
     {
       field: 'bStatus',
       headerName: 'Backup Status',
-      flex: 0.5,
+      flex: 0.3,
       renderCell: (params) => {
         const status = params.value;
         return (
@@ -185,12 +190,12 @@ const TapeTable = () => {
     {
       field: 'mType',
       headerName: 'Media Type',
-      flex: 0.4,
+      flex: 0.3,
     },
     {
       field: 'tStatus',
       headerName: 'Tape Status',
-      flex: 0.5,
+      flex: 0.3,
       renderCell: (params) => {
         const status = params.value;
         return (
@@ -212,29 +217,29 @@ const TapeTable = () => {
     {
       field: 'sDate',
       headerName: 'Start Date',
-      flex: 0.4,
+      flex: 0.3,
     },
     {
       field: 'eDate',
       headerName: 'End Date',
-      flex: 0.4,
+      flex: 0.3,
     },
     {
       field: 'lStatus',
       headerName: 'Location Status',
-      flex: 0.4,
+      flex: 0.3,
     },
     {
       field: 'sStatus',
       headerName: ' SpecialStatus',
-      flex: 0.4,
+      flex: 0.3,
     },
   ];
 
   columns.push({
     field: 'action',
     headerName: 'Actions',
-    flex: userInfo.position === 'Admin' ? 0.5 : 0.3,
+    flex: userInfo.position === 'Admin' ? 0.5 : 0.2,
     sortable: false,
     filterable: false,
     textAlign: 'center',
@@ -281,6 +286,7 @@ const TapeTable = () => {
     sysName: row.sysName,
     sysId: row.sysId,
     subSysName: row.subSysName,
+    dayoftheweek : row.dayoftheweek,
     bStatus: row.bStatus,
     mType: row.mType,
     tStatus: row.tStatus,

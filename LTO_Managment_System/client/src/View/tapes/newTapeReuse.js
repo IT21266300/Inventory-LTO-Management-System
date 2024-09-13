@@ -55,6 +55,7 @@ const NewTapeReuse = () => {
     sysId: "",
   });
   const [subSysName, setSubSysName] = useState(""); // Add state for subsystem name
+  const [dayoftheweek, setDayoftheWeek] = useState("")
   const [bStatus, setBStatus] = useState(""); // Add state for backup status
   const [mType, setMType] = useState(tapeType); // Add state for media type
   const [tStatus, setTStatus] = useState(""); // Add state for tape status
@@ -107,6 +108,7 @@ const NewTapeReuse = () => {
         sysName: parentSystem.sysName,
         sysId: parentSystem.sysId,
         subSysName,
+        dayoftheweek,
         bStatus,
         mType,
         tStatus,
@@ -247,6 +249,28 @@ const NewTapeReuse = () => {
                   </Select>
                 </FormControl>
               )}
+            </Box>
+            <Box>
+            <FormControl sx={textFieldStyles}>
+                <InputLabel id="demo-simple-select-label">
+                  Day of the Week
+                </InputLabel>
+                <Select
+                  name="dayoftheweek"
+                  value={dayoftheweek}
+                  label="Day of the Week"
+                  id="dayoftheweek" // Added id
+                  onChange={(e) => setDayoftheWeek(e.target.value)} // Corrected onChange handler
+                >
+                  <MenuItem value="Sunday">Sunday</MenuItem>
+                  <MenuItem value="Monday">Monday</MenuItem>
+                  <MenuItem value="Tuesday">Tuesday</MenuItem>
+                  <MenuItem value="Webnesday">Webnesday</MenuItem>
+                  <MenuItem value="Thursday">Thurssday</MenuItem>
+                  <MenuItem value="Friday">Friday</MenuItem>
+                  <MenuItem value="Saturday">Saturday</MenuItem>
+                </Select>
+              </FormControl>
             </Box>
 
             <Box
