@@ -40,4 +40,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For any inquiries or support, please contact us at [email protected]
+For any inquiries or support, please contact us at vihiitsolutions@gmail.com
