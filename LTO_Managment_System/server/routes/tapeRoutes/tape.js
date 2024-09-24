@@ -322,7 +322,7 @@ router.route('/updateTapeStatuses').put(async (req, res) => {
     }
 
     // Update the tape status records
-    const updateSql = 'UPDATE Tape SET lStatus = ?, sStatus = ? WHERE tapeId IN (?)';
+    const updateSql = 'UPDATE Tape SET lStatus = ? WHERE tapeId IN (?)';
     db.query(updateSql, [lStatus, tapeIds], (updateErr, updateResult) => {
       if (updateErr) {
         console.error(updateErr.message);
@@ -485,7 +485,7 @@ router.route('/tapestock').get((req, res) => {
 
 
 
-//     // Build your SQL query based on the search criteria 
+
 
 //     let sql = 'SELECT * FROM Tape WHERE 1=1'; // Start with 'WHERE 1=1' for easy appending
 //     const params = [];

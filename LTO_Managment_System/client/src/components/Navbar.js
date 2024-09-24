@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import FlexBetween from './FlexBetween';
 import {
@@ -35,6 +35,32 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
+  
+  // Timer functionality
+  const timerId = useRef(null);
+
+  const resetTimer = () => {
+    clearTimeout(timerId.current);
+    timerId.current = setTimeout(() => {
+      signoutHandler(); 
+    }, 10 * 60 * 1000); // 10 minutes in milliseconds
+  };
+
+  useEffect(() => {
+    // Start timer on component mount
+    resetTimer();
+
+    // Attach event listeners for user activity
+    window.addEventListener('mousemove', resetTimer);
+    window.addEventListener('keydown', resetTimer);
+
+    // Clean up timer and event listeners on component unmount
+    return () => {
+      clearTimeout(timerId.current);
+      window.removeEventListener('mousemove', resetTimer);
+      window.removeEventListener('keydown', resetTimer);
+    };
+  }, []);
 
   const signoutHandler = () => {
     setAnchorEl(null);
