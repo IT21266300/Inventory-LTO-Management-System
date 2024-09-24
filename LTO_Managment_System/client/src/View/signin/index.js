@@ -71,6 +71,7 @@ const SignIn = () => {
       });
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data));
+      localStorage.setItem('staffId', data.staffId);
       toast.success('Sign in successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });

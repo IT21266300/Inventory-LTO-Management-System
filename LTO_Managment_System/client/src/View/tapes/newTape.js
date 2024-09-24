@@ -61,6 +61,8 @@ const Tape = () => {
   const [lStatus, setLStatus] = useState(""); // Add state for label status
   const [sStatus, setSStatus] = useState(""); // Add state for special status
 
+  console.log("id", localStorage.getItem('staffId'));
+
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: "FETCH_REQUEST" });
@@ -113,7 +115,10 @@ const Tape = () => {
         eDate,
         lStatus,
         sStatus,
+        lastUpdate:localStorage.getItem('staffId')
       });
+
+      console.log('id', localStorage.getItem.staffId);
 
       toast.success("New Tape has been created successfully!", {
         position: toast.POSITION.BOTTOM_RIGHT,

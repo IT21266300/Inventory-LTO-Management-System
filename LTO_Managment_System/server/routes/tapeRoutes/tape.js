@@ -88,15 +88,15 @@ function sanitizeTapeInput(tapeId, sysId, sysName, subSysName, dayoftheweek, bSt
 }
 
 router.route('/addTape').post(async (req, res) => {
-  const { tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus } = req.body;
+  const { tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus, lastUpdate} = req.body;
 
   // Validate input data
-  if (!validateTapeInput(tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus)) {
+  if (!validateTapeInput(tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus, lastUpdate)) {
     return res.status(400).json({ message: 'Invalid input data' });
   }
 
   // Sanitize input data
-  const sanitizedInput = sanitizeTapeInput(tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus);
+  const sanitizedInput = sanitizeTapeInput(tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus, lastUpdate);
 
   // Check if the tapeId already exists
   const checkSql = 'SELECT * FROM Tape WHERE tapeId = ?';
@@ -108,7 +108,7 @@ router.route('/addTape').post(async (req, res) => {
     }
 
     // Insert the new tape
-    const insertSql = 'INSERT INTO Tape (tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const insertSql = 'INSERT INTO Tape (tapeId, sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus, lastUpdate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
     db.query(insertSql, [
       sanitizedInput.tapeId,
       sanitizedInput.sysId,
@@ -122,6 +122,7 @@ router.route('/addTape').post(async (req, res) => {
       sanitizedInput.eDate,
       sanitizedInput.lStatus,
       sanitizedInput.sStatus,
+      req.body.lastUpdate
     ], (err, result) => {
       if (err) return res.status(400).json({ message: err.message });
       return res.json({ message: 'New Tape added..!' });

@@ -40,6 +40,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
     setAnchorEl(null);
     ctxDispatch({ type: 'USER_SIGNOUT' });
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('staffId');
     navigate('/signin');
   };
 
