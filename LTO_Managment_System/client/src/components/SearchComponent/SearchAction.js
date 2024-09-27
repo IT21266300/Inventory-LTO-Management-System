@@ -231,7 +231,7 @@ function Search({ onSearch }) {
               <MenuItem value="Monday">Monday</MenuItem>
               <MenuItem value="Tuesday">Tuesday</MenuItem>
               <MenuItem value="Webnesday">Webnesday</MenuItem>
-              <MenuItem value="Thursday">Thurssday</MenuItem>
+              <MenuItem value="Thursday">Thursday</MenuItem>
               <MenuItem value="Friday">Friday</MenuItem>
               <MenuItem value="Saturday">Saturday</MenuItem>
             
@@ -307,15 +307,15 @@ function Search({ onSearch }) {
               fullWidth
               sx={textFieldStyles}
             >
-              <MenuItem value="Head Office">Head Office</MenuItem>
-              <MenuItem value="DR Nugegoda">DR Nugegoda</MenuItem>
-              <MenuItem value="DR Maharagama">DR Maharagama</MenuItem>
-              <MenuItem value="HO to DRN">HO to DRN</MenuItem>
-              <MenuItem value="HO to DRM">HO to DRM</MenuItem>
-              <MenuItem value="DRN to DRM">DRN to DRM</MenuItem>
-              <MenuItem value="DRM to DRN">DRM to DRN</MenuItem>
-              <MenuItem value="DRN to HO">DRN to HO</MenuItem>
-              <MenuItem value="DRM to HO">DRM to HO</MenuItem>
+              <MenuItem value={'HO'}>Head Office</MenuItem>
+              <MenuItem value={'DRN'}>DR Nugegoda</MenuItem>
+              <MenuItem value={'DRM'}>DR Maharagama</MenuItem>
+              <MenuItem value={'HO->DRN'}>HO to DRN</MenuItem>
+              <MenuItem value={'DRN->DRM'}>DRN to DRM</MenuItem>
+              <MenuItem value={'DRM->DRN'}>DRM to DRN</MenuItem>
+              <MenuItem value={'DRN->HO'}>DRN to HO</MenuItem>
+              <MenuItem value={'DRM->HO'}>DRM to HO</MenuItem>
+              <MenuItem value={'HO->DRM'}>HO to DRM</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={12} sm={2} className={SearchInputGroupStyled}>

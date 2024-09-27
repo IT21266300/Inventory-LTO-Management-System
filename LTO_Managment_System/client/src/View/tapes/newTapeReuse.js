@@ -266,7 +266,7 @@ const NewTapeReuse = () => {
                   <MenuItem value="Monday">Monday</MenuItem>
                   <MenuItem value="Tuesday">Tuesday</MenuItem>
                   <MenuItem value="Webnesday">Webnesday</MenuItem>
-                  <MenuItem value="Thursday">Thurssday</MenuItem>
+                  <MenuItem value="Thursday">Thursday</MenuItem>
                   <MenuItem value="Friday">Friday</MenuItem>
                   <MenuItem value="Saturday">Saturday</MenuItem>
                 </Select>
