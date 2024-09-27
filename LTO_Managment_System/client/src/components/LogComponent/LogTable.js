@@ -1,4 +1,3 @@
-// frontend/src/components/LogComponent/LogTable.js
 import React, { useEffect, useState, useContext } from 'react';
 import { DataGrid, GridToolbarContainer, GridToolbarFilterButton, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import {
@@ -19,7 +18,10 @@ const LogTable = () => {
   const { state } = useContext(Store);
   const { userInfo } = state;
 
+  // State to manage Log Files
   const [logFiles, setLogFiles] = useState([]);
+  // State to manage recent files (for DataGrid)
+  const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -37,6 +39,21 @@ const LogTable = () => {
     };
     fetchLogFiles();
   }, []);
+
+  // Fetch recent files for the DataGrid (only run once)
+  useEffect(() => {
+    const fetchRecentFiles = async () => {
+      try {
+        const response = await fetch('/api/logs/recent-files');
+        const data = await response.json();
+        setRows(data);
+      } catch (err) {
+        // Handle errors from fetching recent files
+        console.error("Error fetching recent files:", err);
+      }
+    };
+    fetchRecentFiles();
+  }, []); // Empty dependency array ensures this runs only once
 
   const handleDownload = (fileName) => {
     axios.get(`/api/logs/download/${fileName}`, { responseType: 'blob' }) // Replace with your server endpoint
@@ -96,12 +113,6 @@ const LogTable = () => {
     });
   }
 
-  const rows = logFiles.map((file, index) => ({
-    id: index + 1,
-    fileName: file.fileName,
-    createdAt: file.createdAt,
-  }));
-
   return loading ? (
     <Box width="100%">
       <LoadingAnimation />
@@ -135,7 +146,7 @@ const LogTable = () => {
       >
         <Box width="100%" sx={{ color: '#fff' }}>
           <DataGrid
-            rows={rows}
+            rows={rows} // Use the 'rows' state for the DataGrid
             rowHeight={60}
             columns={columns}
             initialState={{

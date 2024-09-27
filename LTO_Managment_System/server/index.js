@@ -83,26 +83,26 @@ app.use((req, res, next) => {
 });
 
 // Route to get currently active staff IDs 
-app.get('/active-staff', async (req, res) => {
-  try {
-    // Create MySQL connection (promise-based)
-    const connection = await mysql.createConnection(db);
+// app.get('/active-staff', async (req, res) => {
+//   try {
+//     // Create MySQL connection (promise-based)
+//     const connection = await mysql.createConnection(db);
 
-    // Replace with your actual query to fetch staff IDs from your staff table
-    const [rows] = await connection.execute('SELECT staffId FROM staff WHERE isActive = 1'); // Example: assumes an 'isActive' column
+//     // Replace with your actual query to fetch staff IDs from your staff table
+//     const [rows] = await connection.execute('SELECT staffId FROM staff WHERE isActive = 1'); // Example: assumes an 'isActive' column
 
-    // Extract staff IDs from the results
-    const staffIds = rows.map(row => row.staffId); 
+//     // Extract staff IDs from the results
+//     const staffIds = rows.map(row => row.staffId); 
 
-    res.json({ staffIds }); 
+//     res.json({ staffIds }); 
 
-    // Close the connection
-    await connection.end();
-  } catch (error) {
-    console.error('Error fetching active staff:', error.message);
-    res.status(500).send('Error fetching active staff');
-  }
-});
+//     // Close the connection
+//     await connection.end();
+//   } catch (error) {
+//     console.error('Error fetching active staff:', error.message);
+//     res.status(500).send('Error fetching active staff');
+//   }
+// });
 
 // Route to retrieve log entries and combine them with staff details
 app.get('/logs', async (req, res) => {
@@ -165,6 +165,36 @@ app.get('/download-log/:date', (req, res) => {
   });
 });
 
+// Route to get a list of recent 30 log files
+app.get('/api/logs/recent-files', (req, res) => {
+  fs.readdir(logDir, (err, files) => {
+    if (err) {
+      logger.error('Error reading log files:', err); // Log the error
+      res.status(500).send('Error reading log files');
+      return;
+    }
+
+    // Sort files by creation time (most recent first)
+    const sortedFiles = files.sort((a, b) => {
+      const statA = fs.statSync(path.join(logDir, a));
+      const statB = fs.statSync(path.join(logDir, b));
+      return statB.birthtimeMs - statA.birthtimeMs;
+    });
+
+    // Get the 30 most recent files
+    const recentFiles = sortedFiles.slice(0, 30); // Take the first 30
+
+    // Create an array of log file objects
+    const logFiles = recentFiles.map((file, index) => ({
+      id: index + 1, // Assign a unique ID using the index
+      fileName: file,
+      createdAt: fs.statSync(path.join(logDir, file)).birthtime
+    }));
+
+
+    res.json(logFiles); // Send the filtered log files as JSON
+  });
+});
 
 // Route to get a list of log files
 app.get('/api/logs', (req, res) => {
@@ -174,7 +204,8 @@ app.get('/api/logs', (req, res) => {
       res.status(500).send('Error reading log files');
       return;
     }
-    const logFiles = files.map(file => ({
+    const logFiles = files.map((file, index) => ({
+      id: index + 1, // Assign a unique ID using the index
       fileName: file,
       createdAt: fs.statSync(path.join(logDir, file)).birthtime
     }));

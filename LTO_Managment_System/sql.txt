@@ -146,6 +146,8 @@ ADD COLUMN sStatus VARCHAR(50) AFTER lStatus;
 ALTER TABLE Tape
 ADD COLUMN dayoftheweek VARCHAR(20) AFTER subSysName;
 
+
 ALTER TABLE Tape
 ADD COLUMN lastUpdate VARCHAR(20);
+
 
