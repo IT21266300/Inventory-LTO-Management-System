@@ -196,7 +196,7 @@ router.route('/delete/:tapeId').delete(async (req, res) => {
 
 router.route('/updateTape/:tapeId').put(async (req, res) => {
   const tapeId = req.params.tapeId;
-  const { sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus } = req.body;
+  const { sysId, sysName, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus, lastUpdate } = req.body;
 
   // Check if the tape ID exists
   const checkSql = 'SELECT * FROM Tape WHERE tapeId = ?';
@@ -211,8 +211,8 @@ router.route('/updateTape/:tapeId').put(async (req, res) => {
     }
 
     // Update the tape record
-    const updateSql = 'UPDATE Tape SET sysName = ?, sysId = ?, subSysName = ?, dayoftheweek = ?, bStatus = ?, mType = ?, tStatus = ?, sDate = ?, eDate = ?, lStatus = ?, sStatus = ? WHERE tapeId = ?';
-    db.query(updateSql, [sysName, sysId, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus, tapeId], (updateErr, updateResult) => {
+    const updateSql = 'UPDATE Tape SET sysName = ?, sysId = ?, subSysName = ?, dayoftheweek = ?, bStatus = ?, mType = ?, tStatus = ?, sDate = ?, eDate = ?, lStatus = ?, sStatus = ?, lastUpdate = ? WHERE tapeId = ?';
+    db.query(updateSql, [sysName, sysId, subSysName, dayoftheweek, bStatus, mType, tStatus, sDate, eDate, lStatus, sStatus, lastUpdate, tapeId], (updateErr, updateResult) => {
       if (updateErr) {
         console.error(updateErr.message);
         return res.status(400).json({ message: 'Error with updating tape', error: updateErr.message });
@@ -232,7 +232,7 @@ router.route('/updateTape/:tapeId').put(async (req, res) => {
 
 router.route('/updateTapeStatus/:tapeId').put(async (req, res) => {
   const tapeId = req.params.tapeId;
-  const { dayoftheweek, bStatus, tStatus, lStatus, sStatus } = req.body;
+  const { dayoftheweek, bStatus, tStatus, lStatus, sStatus, lastUpdate } = req.body;
 
   // Check if the tape ID exists
   const checkSql = 'SELECT * FROM Tape WHERE tapeId = ?';
@@ -247,8 +247,8 @@ router.route('/updateTapeStatus/:tapeId').put(async (req, res) => {
     }
 
     // Update the tape status record
-    const updateSql = 'UPDATE Tape SET dayoftheweek = ?, bStatus = ?, tStatus = ?, lStatus = ?, sStatus = ? WHERE tapeId = ?';
-    db.query(updateSql, [dayoftheweek, bStatus, tStatus, lStatus, sStatus, tapeId], (updateErr, updateResult) => {
+    const updateSql = 'UPDATE Tape SET dayoftheweek = ?, bStatus = ?, tStatus = ?, lStatus = ?, sStatus = ?, lastUpdate = ? WHERE tapeId = ?';
+    db.query(updateSql, [dayoftheweek, bStatus, tStatus, lStatus, sStatus, lastUpdate, tapeId], (updateErr, updateResult) => {
       if (updateErr) {
         console.error(updateErr.message);
         return res.status(400).json({ message: 'Error with updating tape', error: updateErr.message });
@@ -268,7 +268,7 @@ router.route('/updateTapeStatus/:tapeId').put(async (req, res) => {
 
 router.route('/updateDateStatus/:tapeId').put(async (req, res) => {
   const tapeId = req.params.tapeId;
-  const { sDate, eDate } = req.body;
+  const { sDate, eDate, lastUpdate } = req.body;
 
   // Check if the tape ID exists
   const checkSql = 'SELECT * FROM Tape WHERE tapeId = ?';
@@ -283,8 +283,8 @@ router.route('/updateDateStatus/:tapeId').put(async (req, res) => {
     }
 
     // Update the tape status record
-    const updateSql = 'UPDATE Tape SET sDate = ?, edate = ? WHERE tapeId = ?';
-    db.query(updateSql, [sDate, eDate, tapeId], (updateErr, updateResult) => {
+    const updateSql = 'UPDATE Tape SET sDate = ?, edate = ?, lastUpdate = ? WHERE tapeId = ?';
+    db.query(updateSql, [sDate, eDate, lastUpdate, tapeId], (updateErr, updateResult) => {
       if (updateErr) {
         console.error(updateErr.message);
         return res.status(400).json({ message: 'Error with updating date', error: updateErr.message });
@@ -303,7 +303,7 @@ router.route('/updateDateStatus/:tapeId').put(async (req, res) => {
 
 //Update multiple tape location status
 router.route('/updateTapeStatuses').put(async (req, res) => {
-  const { tapeIds, lStatus, sStatus } = req.body;
+  const { tapeIds, lStatus, sStatus, lastUpdate } = req.body;
 
   if (!Array.isArray(tapeIds) || tapeIds.length === 0) {
     return res.status(400).json({ message: 'Invalid tape IDs' });
@@ -322,8 +322,8 @@ router.route('/updateTapeStatuses').put(async (req, res) => {
     }
 
     // Update the tape status records
-    const updateSql = 'UPDATE Tape SET lStatus = ? WHERE tapeId IN (?)';
-    db.query(updateSql, [lStatus, tapeIds], (updateErr, updateResult) => {
+    const updateSql = 'UPDATE Tape SET lStatus = ? lastUpdate = ? WHERE tapeId IN (?)';
+    db.query(updateSql, [lStatus, lastUpdate, tapeIds], (updateErr, updateResult) => {
       if (updateErr) {
         console.error(updateErr.message);
         return res.status(400).json({ message: 'Error with updating tapes', error: updateErr.message });

@@ -120,6 +120,7 @@ const ViewTape = () => {
         tStatus: tapeStatus,
         lStatus: locationStatus,
         sStatus: specialStatus,
+        lastUpdate:localStorage.getItem('staffId')
       });
 
       // Assuming your API returns the updated data
@@ -142,7 +143,7 @@ const ViewTape = () => {
       const response = await axios.put(`/api/tape/updateDateStatus/${tapeId}`, {
         sDate: startDate,
         eDate: endDate,
-
+        lastUpdate:localStorage.getItem('staffId')
       });
 
       // Assuming your API returns the updated data
