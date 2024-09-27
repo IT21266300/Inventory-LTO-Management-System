@@ -150,6 +150,7 @@ const Tape = () => {
         eDate,
         lStatus,
         sStatus,
+        lastUpdate:localStorage.getItem('staffId')
       });
 
       toast.success('New Tape has been created successfully!', {
