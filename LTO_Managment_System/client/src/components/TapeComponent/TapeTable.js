@@ -333,7 +333,7 @@ const TapeTable = () => {
           <ImportExcel/>
           {/* <FileUpload/> */}
         </Box>
-        <Button
+        {/* <Button
           onClick={handleClickOpen}
           sx={{
             backgroundColor: colorPalette.yellow[500],
@@ -349,7 +349,7 @@ const TapeTable = () => {
         >
           <AddCircleIcon sx={{ mr: '10px' }} />
           <Typography fontSize="0.9rem">Add New Tape</Typography>
-        </Button>
+        </Button> */}
         <Box sx={{ ml: '1.5rem' }}>
           <DownloadActions
             pdfColumn={pdfColumn}

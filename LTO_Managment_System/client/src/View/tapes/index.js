@@ -4,12 +4,16 @@ import axios from 'axios';
 import {
   Box,
   IconButton,
+Typography,
+Button,
 } from '@mui/material';
 import TapeTables from 'components/TapeComponent/TapeTable';
 import { Helmet } from 'react-helmet-async';
 import { colorPalette } from 'customTheme';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useNavigate } from 'react-router-dom';
+import SelectTapeStock from '../../components/TapeComponent/SelectTape';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -51,6 +55,16 @@ const Tapes = () => {
     fetchData();
   }, []);
 
+  const [openForm, setOpenForm] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenForm(true);
+  };
+
+  const handleClickClose = () => {
+    setOpenForm(false);
+  };
+
   return (
     <Box m="1.5rem  2.5rem">
       <Helmet>
@@ -74,6 +88,25 @@ const Tapes = () => {
         </IconButton>
         <Header title="Tape Management" subtitle="Manage Tapes" />
       </Box>
+      <Button
+          onClick={handleClickOpen}
+          sx={{
+            backgroundColor: colorPalette.yellow[500],
+            color: colorPalette.black[500],
+            fontSize: '14px',
+            fontWeight: 'bold',
+            padding: '10px 20px',
+            '&:hover': {
+              backgroundColor: colorPalette.black[400],
+              color: colorPalette.secondary[100],
+            },
+          }}
+        >
+          <AddCircleIcon sx={{ mr: '10px' }} />
+          <Typography fontSize="0.9rem">Add New Tape</Typography>
+        </Button>
+
+        <SelectTapeStock open={openForm} handleClickClose={handleClickClose}/>
 
       <TapeTables result={tapeData} loading={loading} error={error} />
     </Box>
