@@ -116,8 +116,11 @@ const NewTapeReuse = () => {
         eDate,
         lStatus,
         sStatus,
+        lastUpdate:localStorage.getItem('staffId')
       });
 
+      console.log('id', localStorage.getItem.staffId);
+      
       toast.success("New Tape has been created successfully!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });

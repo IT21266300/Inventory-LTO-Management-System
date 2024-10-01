@@ -63,7 +63,7 @@ const PORT = process.env.PORT || 3306;
 app.use((req, res, next) => {
   if (req.method !== 'GET') {
     // Get staff ID from request (assuming you have staff authentication)
-    const staffId = req.user ? req.user.staffId : "";
+    const staffId = req.body ? req.body.lastUpdate : "";
 
     // Add a success flag to log object based on the response status
     let success = false; // Initialize success as false

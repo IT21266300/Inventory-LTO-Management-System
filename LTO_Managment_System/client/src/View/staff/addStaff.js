@@ -64,6 +64,7 @@ const Profile = () => {
         phone,
         position,
         password,
+        
       });
       toast.success('New data has been created successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,

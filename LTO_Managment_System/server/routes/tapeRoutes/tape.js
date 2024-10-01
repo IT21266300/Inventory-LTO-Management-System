@@ -173,11 +173,11 @@ router.route('/subsystems/:systemId').get(async (req, res) => {
 
 // delete system
 router.route('/delete/:tapeId').delete(async (req, res) => {
-  const { tapeId } = req.params;
+  const { tapeId, lastUpdate } = req.params;
 
   const sql = 'DELETE FROM Tape WHERE tapeId = ?';
   
-  db.query(sql, [tapeId], (err, result) => {
+  db.query(sql, [tapeId, lastUpdate], (err, result) => {
     if (err) {
       console.error(err.message);
       return res.status(500).send({ status: 'Error with deleting tape', error: err.message });
