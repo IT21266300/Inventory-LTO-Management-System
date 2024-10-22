@@ -22,13 +22,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const positions = ['Admin', 'Operator', 'Read Only'];
 
-// const teams = [
-//   'Project Team',
-//   'Revanue & Commercial Team',
-//   'Warehouse Operation Team',
-//   'Rollout Team',
-//   'Document Team',
-// ];
 
 const UpdateStaff = () => {
   const navigate = useNavigate();
