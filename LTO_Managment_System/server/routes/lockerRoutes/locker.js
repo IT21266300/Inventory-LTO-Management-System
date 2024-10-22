@@ -31,15 +31,15 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
   }
   
   router.route('/addLocker').post(async (req, res) => {
-    const { lockerId, capacity, currentCount, tLevels, tColumns, tDepth} = req.body;
+    const { lockerId, capacity, currentCount, tLevels, tColumns, tDepth, lastUpdate} = req.body;
   
     // Validate input data
-    if (validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns, tDepth)) {
+    if (validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns, tDepth, lastUpdate)) {
       return res.status(400).json({ message: 'Invalid input data' });
     }
   
     // Sanitize input data
-    const sanitizedInput = sanitizeLockerInput(lockerId, capacity, currentCount, tLevels, tColumns, tDepth);
+    const sanitizedInput = sanitizeLockerInput(lockerId, capacity, currentCount, tLevels, tColumns, tDepth, lastUpdate);
   
     // Check if the lockerId already exists
     const checkSql = 'SELECT * FROM Locker WHERE lockerId = ?';
@@ -56,7 +56,7 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
       }
   
       // Insert the new Locker
-      const insertSql = 'INSERT INTO Locker (lockerId, capacity, currentCount, tLevels, tColumns, tDepth) VALUES (?, ?, ?, ?, ?, ?)';
+      const insertSql = 'INSERT INTO Locker (lockerId, capacity, currentCount, tLevels, tColumns, tDepth, lastUpdate) VALUES (?, ?, ?, ?, ?, ?, ?)';
       db.query(insertSql, [
         sanitizedInput.lockerId,
         sanitizedInput.capacity,
@@ -64,7 +64,8 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
         sanitizedInput.tLevels,
         sanitizedInput.tColumns,
         sanitizedInput.tDepth,
-      
+        req.body.lastUpdate
+
       ], (err, result) => {
         if (err) return res.status(400).json({ message: err.message });
         console.log(res);
