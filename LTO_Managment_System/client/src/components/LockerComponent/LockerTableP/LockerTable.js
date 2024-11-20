@@ -200,7 +200,7 @@ const LockerTable = ({ result, loading, error }) => {
           <DownloadActions
             pdfColumn={pdfColumn}
             rows={rows}
-            funcName={'Staff Management'}
+            funcName={'Locker Management'}
           />
         </Box>
       </Box>
