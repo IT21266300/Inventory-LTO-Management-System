@@ -1,4 +1,4 @@
-# -Inventory-LTO-Management-System# Inventory LTO Management System
+# Inventory-LTO-Management-System# Inventory LTO Management System
 
 Welcome to the Inventory LTO Management System! This project aims to provide a comprehensive solution for managing inventory and tracking LTO (Linear Tape-Open) media.
 
