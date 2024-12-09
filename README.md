@@ -1,5 +1,3 @@
-Here's an improved version of your `README.md` file:
-
 ---
 
 # Inventory LTO Management System
