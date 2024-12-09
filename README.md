@@ -36,7 +36,6 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
 This repository is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3 [LICENSE](LICENSE). Unauthorized use or distribution may result in legal action. For inquiries, contact vihiitsolutions@gmail.com .
 
 ## Contact
