@@ -64,8 +64,11 @@ const Profile = () => {
         phone,
         position,
         password,
-        
+        lastUpdate:localStorage.getItem('staffId')
       });
+
+      console.log('id', localStorage.getItem.staffId);
+      
       toast.success('New data has been created successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });

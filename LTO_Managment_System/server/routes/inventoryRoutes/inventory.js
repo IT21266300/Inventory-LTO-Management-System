@@ -49,10 +49,10 @@ router.route("/tapeStock/:tapeType").get((req, res) => {
 
 // Route to add new tape stock
 router.route('/addStock').post((req, res) => {
-  const { tapeName, tapeQuantity } = req.body;
-  const insertSql = 'INSERT INTO TapeInventory (tapeName, tapeQuantity) VALUES (?, ?) ON DUPLICATE KEY UPDATE tapeQuantity = tapeQuantity + ?';
+  const { tapeName, tapeQuantity,lastUpdate } = req.body;
+  const insertSql = 'INSERT INTO TapeInventory (tapeName, tapeQuantity, lastUpdate) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE tapeQuantity = tapeQuantity + ?';
 
-  db.query(insertSql, [tapeName, tapeQuantity, tapeQuantity], (err, data) => {
+  db.query(insertSql, [tapeName, tapeQuantity, tapeQuantity, lastUpdate], (err, data) => {
     if (err) return res.json({ error: err.message });
     return res.json({ message: 'New stock added successfully', data });
   });

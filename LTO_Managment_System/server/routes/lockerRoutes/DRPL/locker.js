@@ -31,15 +31,15 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
   }
   
   router.route('/addLocker').post(async (req, res) => {
-    const { lockerId, capacity, currentCount, tLevels, tColumns, tDepth} = req.body;
+    const { lockerId, capacity, currentCount, tLevels, tColumns, tDepth, lastUpdate} = req.body;
   
     // Validate input data
-    if (validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns, tDepth)) {
+    if (validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns, tDepth, lastUpdate)) {
       return res.status(400).json({ message: 'Invalid input data' });
     }
   
     // Sanitize input data
-    const sanitizedInput = sanitizeLockerInput(lockerId, capacity, currentCount, tLevels, tColumns, tDepth);
+    const sanitizedInput = sanitizeLockerInput(lockerId, capacity, currentCount, tLevels, tColumns, tDepth, lastUpdate);
   
     // Check if the lockerId already exists
     const checkSql = 'SELECT * FROM LockerP WHERE lockerId = ?';
@@ -56,7 +56,7 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
       }
   
       // Insert the new Locker
-      const insertSql = 'INSERT INTO LockerP (lockerId, capacity, currentCount, tLevels, tColumns, tDepth) VALUES (?, ?, ?, ?, ?, ?)';
+      const insertSql = 'INSERT INTO LockerP (lockerId, capacity, currentCount, tLevels, tColumns, tDepth, lastUpdate) VALUES (?, ?, ?, ?, ?, ?, ?)';
       db.query(insertSql, [
         sanitizedInput.lockerId,
         sanitizedInput.capacity,
@@ -64,6 +64,7 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
         sanitizedInput.tLevels,
         sanitizedInput.tColumns,
         sanitizedInput.tDepth,
+        req.body.lastUpdate
       
       ], (err, result) => {
         if (err) return res.status(400).json({ message: err.message });
@@ -103,7 +104,7 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
 
   router.route('/LockerUpdate/:lockerId').put(async (req, res) => {
     const lockerId = req.params.lockerId;
-    const { capacity, currentCount, tLevels, tColumns, tDepth} = req.body;
+    const { capacity, currentCount, tLevels, tColumns, tDepth, lastUpdate} = req.body;
   
     // if (validateLockerInput( lockerId, capacity, currentCount, tLevels, tColumns, tDepth)) {
     //   return res.status(400).json({ message: 'Invalid input data' });
@@ -114,7 +115,7 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
     }
   
     // Sanitize input data
-    const sanitizedInput = sanitizeLockerInput( lockerId, capacity, currentCount, tLevels, tColumns, tDepth);
+    const sanitizedInput = sanitizeLockerInput( lockerId, capacity, currentCount, tLevels, tColumns, tDepth, lastUpdate);
   
     // Check if the updated staffId already exists
     const checkSql = 'SELECT * FROM LockerP WHERE lockerId = ?';
@@ -125,8 +126,8 @@ function validateLockerInput(lockerId, capacity, currentCount, tLevels, tColumns
       }
   
       // Update the staff member
-      const updateSql = 'UPDATE LockerP SET capacity = ?, currentCount = ?, tLevels = ?, tColumns = ?, tDepth = ? WHERE lockerId = ?';
-      db.query(updateSql, [sanitizedInput.capacity, sanitizedInput.currentCount, sanitizedInput.tLevels, sanitizedInput.tColumns, sanitizedInput.tDepth, lockerId], (updateErr, updateResult) => {
+      const updateSql = 'UPDATE LockerP SET capacity = ?, currentCount = ?, tLevels = ?, tColumns = ?, tDepth = ?, lastUpdate = ? WHERE lockerId = ?';
+      db.query(updateSql, [sanitizedInput.capacity, sanitizedInput.currentCount, sanitizedInput.tLevels, sanitizedInput.tColumns, sanitizedInput.tDepth, req.body.update, lockerId], (updateErr, updateResult) => {
         if (updateErr) {
           console.error(updateErr.message);
           return res.status(400).json({ message: 'Error with updating Locker', error: updateErr.message });

@@ -27,14 +27,14 @@ function sanitizeInput(staffId, name, phone, position, password) {
 }
 
 router.route('/addStaff').post(async (req, res) => {
-  const { staffId, name, phone, position, password } = req.body;
+  const { staffId, name, phone, position, password, lastUpdate } = req.body;
 
-  if (!validateInput(staffId, name, phone, position, password)) {
+  if (!validateInput(staffId, name, phone, position, password, lastUpdate)) {
     return res.status(400).json({ message: 'Invalid input data' });
   }
 
   // Sanitize input data
-  const sanitizedInput = sanitizeInput(staffId, name, phone, position, password);
+  const sanitizedInput = sanitizeInput(staffId, name, phone, position, password, lastUpdate);
 
   const hashedPassword = bcrypt.hashSync(sanitizedInput.password, 10);
 
@@ -48,8 +48,8 @@ router.route('/addStaff').post(async (req, res) => {
     }
 
     // Insert the new staff member
-    const insertSql = 'INSERT INTO Staff (staffId, name, phone, position, password) VALUES (?, ?, ?, ?, ?)';
-    db.query(insertSql, [sanitizedInput.staffId, sanitizedInput.name, sanitizedInput.phone, sanitizedInput.position, hashedPassword], (err, result) => {
+    const insertSql = 'INSERT INTO Staff (staffId, name, phone, position, password, lastUpdate) VALUES (?, ?, ?, ?, ?, ?)';
+    db.query(insertSql, [sanitizedInput.staffId, sanitizedInput.name, sanitizedInput.phone, sanitizedInput.position, req.body.lastUpdate, hashedPassword], (err, result) => {
       if (err) return res.status(400).json({ message: err.message });
       return res.json({ message: 'Staff Added' });
     });

@@ -43,7 +43,11 @@ console.log(data);
         tLevels,
         tColumns,
         tDepth,
+        lastUpdate:localStorage.getItem('staffId')
       });
+
+      console.log('id', localStorage.getItem.staffId);
+      
       toast.success("Locker has been updated successfully!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });

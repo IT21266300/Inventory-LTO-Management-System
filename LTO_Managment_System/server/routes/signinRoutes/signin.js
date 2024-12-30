@@ -7,7 +7,7 @@ import db from '../../dbConnection.js';
 const signRouter = express.Router();
 
 signRouter.post('/signin', expressAsyncHandler(async (req, res) => {
-    const { staffId, password } = req.body;
+    const { staffId, password, lastUpdate } = req.body;
 
     // Input validation
     if (!staffId || !password) {
@@ -40,6 +40,7 @@ signRouter.post('/signin', expressAsyncHandler(async (req, res) => {
                     staffId: member.staffId,
                     position: member.position,
                     phone: member.phone,
+                    lastUpdate,
                     token: generateToken(member)
                 });
                 return;

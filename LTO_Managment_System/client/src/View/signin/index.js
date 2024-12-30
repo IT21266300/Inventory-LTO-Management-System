@@ -68,10 +68,15 @@ const SignIn = () => {
       const { data } = await axios.post('/api/signroute/signin', {
         staffId,
         password,
+        lastUpdate:localStorage.getItem('staffId')
       });
+
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
       localStorage.setItem('userInfo', JSON.stringify(data));
       localStorage.setItem('staffId', data.staffId);
+
+      console.log('id', localStorage.getItem.staffId);
+      
       toast.success('Sign in successfully!', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });

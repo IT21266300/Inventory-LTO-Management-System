@@ -27,8 +27,11 @@ const AddNewStock = () => {
       const response = await axios.post('/api/inventory/addstock', {
         tapeName,
         tapeQuantity: parseInt(tapeQuantity, 10), // Ensure quantity is an integer
+        lastUpdate:localStorage.getItem('staffId')
       });
 
+      console.log('id', localStorage.getItem.staffId);
+      
       if (response.status === 200) {
         toast.success('New stock added successfully!', {
           position: toast.POSITION.BOTTOM_RIGHT,

@@ -47,8 +47,12 @@ const AddLocker = () => {
         currentCount,
         tLevels,
         tColumns,
-        tDepth
+        tDepth,
+        lastUpdate:localStorage.getItem('staffId')
       });
+
+      console.log('id', localStorage.getItem.staffId);
+      
       toast.success("New locker has been added successfully!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
