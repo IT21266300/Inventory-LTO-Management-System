@@ -28,7 +28,7 @@ import TapeSubCategoryTable from "./TapeSubCategoryComponent/TapeSubCategoryTabl
 import System from "View/systems/addSystem";
 import AddSubSystem from "View/subsystems/addSubSystem";
 
-import TapeQRReader from "components/QRCodeComponent/QRCodeReaderComponent";	
+import TapeQRReader from "components/QRCodeComponent/QRCodeReaderComponent";
 
 import TapeStock from "View/tapeStock/index";
 
@@ -55,12 +55,12 @@ import PitipanaLAdd from "View/locker/pitipana/addLocker";
 import NugegodaLAdd from "View/locker/nugegoda/addLocker";
 import HeadOfficeLAdd from "View/locker/headOffice/addLocker";
 
-
 import Transport from "View/transport";
 import HeadOffice from "View/transport/headOffice";
 import Maharagama from "View/transport/maharagama";
 import Nugegoda from "View/transport/nugegoda";
 import Pitipana from "View/transport/pitipana";
+import AdminPanel from "View/AdminPanel/AdminPanel";
 
 const routesConfig = [
   {
@@ -241,7 +241,6 @@ const routesConfig = [
             <LockerL />
           </RouteProtector>
         ),
-
       },
       {
         path: "/locker",
@@ -283,93 +282,87 @@ const routesConfig = [
           </RouteProtector>
         ),
       },
-        {
-          path: "/pitipanaL", 
-          element: (
-            <RouteProtector>
-              <PitipanaL />
-            </RouteProtector>
-          ),
-        },
-        {
-path: "/nugegodaL",  
-element: (
-  <RouteProtector>
-    <NugegodaL />
-  </RouteProtector>
-),
-        },
-        {
-          path: "/headofficeLUpdate",
-          element: (
-            <RouteProtector>
-              <HeadOfficeLUpdate />
-            </RouteProtector>
-          ),
+      {
+        path: "/pitipanaL",
+        element: (
+          <RouteProtector>
+            <PitipanaL />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/nugegodaL",
+        element: (
+          <RouteProtector>
+            <NugegodaL />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/headofficeLUpdate",
+        element: (
+          <RouteProtector>
+            <HeadOfficeLUpdate />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/maharagamaLUpdate",
+        element: (
+          <RouteProtector>
+            <MaharagamaLUpdate />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/pitipanaLUpdate",
+        element: (
+          <RouteProtector>
+            <PitipanaLUpdate />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/nugegodaLUpdate",
+        element: (
+          <RouteProtector>
+            <NugegodaLUpdate />
+          </RouteProtector>
+        ),
+      },
 
-        },
-        {
-          path: "/maharagamaLUpdate",
-          element: (
-            <RouteProtector>
-              <MaharagamaLUpdate />
-            </RouteProtector>
-          ),
-
-        },
-        {
-          path: "/pitipanaLUpdate",
-          element: (
-            <RouteProtector>
-              <PitipanaLUpdate />
-            </RouteProtector>
-          ),
-
-        },
-        {
-          path: "/nugegodaLUpdate",
-          element: (
-            <RouteProtector>
-              <NugegodaLUpdate />
-            </RouteProtector>
-          ),
-
-        },
-
-        {
-          path: "/headofficeLAdd",
-          element: (
-            <RouteProtector>
-              <HeadOfficeLAdd />
-            </RouteProtector>
-          ),
-        },
-          {
-            path: "/maharagamaLAdd",
-            element: (
-              <RouteProtector>
-                <MaharagamaLAdd />
-              </RouteProtector>
-            ),
-          },
-          {
-            path: "/pitipanaLAdd",
-            element: (
-              <RouteProtector>
-                <PitipanaLAdd />
-              </RouteProtector>
-            ),
-          },
-          {
-            path: "/nugegodaLAdd",
-            element: (
-              <RouteProtector>
-                <NugegodaLAdd />
-              </RouteProtector>
-            ),
-
-          },
-          
+      {
+        path: "/headofficeLAdd",
+        element: (
+          <RouteProtector>
+            <HeadOfficeLAdd />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/maharagamaLAdd",
+        element: (
+          <RouteProtector>
+            <MaharagamaLAdd />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/pitipanaLAdd",
+        element: (
+          <RouteProtector>
+            <PitipanaLAdd />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/nugegodaLAdd",
+        element: (
+          <RouteProtector>
+            <NugegodaLAdd />
+          </RouteProtector>
+        ),
+      },
 
       {
         path: "/unauthorized",
@@ -379,7 +372,7 @@ element: (
         path: "/transport",
         element: (
           <RouteProtector>
-            <Transport/>
+            <Transport />
           </RouteProtector>
         ),
       },
@@ -387,7 +380,7 @@ element: (
         path: "/headoffice",
         element: (
           <RouteProtector>
-            <HeadOffice/>
+            <HeadOffice />
           </RouteProtector>
         ),
       },
@@ -395,7 +388,7 @@ element: (
         path: "/maharagama",
         element: (
           <RouteProtector>
-            <Maharagama/>
+            <Maharagama />
           </RouteProtector>
         ),
       },
@@ -403,7 +396,7 @@ element: (
         path: "/nugegoda",
         element: (
           <RouteProtector>
-            <Nugegoda/>
+            <Nugegoda />
           </RouteProtector>
         ),
       },
@@ -411,10 +404,18 @@ element: (
         path: "/pitipana",
         element: (
           <RouteProtector>
-            <Pitipana/>
+            <Pitipana />
           </RouteProtector>
         ),
-      }
+      },
+      {
+        path: "/admin",
+        element: (
+          <RouteProtector>
+            <AdminPanel />
+          </RouteProtector>
+        ),
+      },
     ],
   },
 ];
