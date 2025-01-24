@@ -322,8 +322,8 @@ router.route('/updateTapeStatuses').put(async (req, res) => {
     }
 
     // Update the tape status records
-    const updateSql = 'UPDATE Tape SET lStatus = ? lastUpdate = ? WHERE tapeId IN (?)';
-    db.query(updateSql, [lStatus, lastUpdate, tapeIds], (updateErr, updateResult) => {
+    const updateSql = 'UPDATE Tape SET lStatus = ? WHERE tapeId IN (?)';
+    db.query(updateSql, [lStatus, tapeIds], (updateErr, updateResult) => {
       if (updateErr) {
         console.error(updateErr.message);
         return res.status(400).json({ message: 'Error with updating tapes', error: updateErr.message });
