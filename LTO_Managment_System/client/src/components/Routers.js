@@ -61,6 +61,7 @@ import Maharagama from "View/transport/maharagama";
 import Nugegoda from "View/transport/nugegoda";
 import Pitipana from "View/transport/pitipana";
 import AdminPanel from "View/AdminPanel/AdminPanel";
+import Restoration from "View/restoration/restoration"
 
 const routesConfig = [
   {
@@ -413,6 +414,14 @@ const routesConfig = [
         element: (
           <RouteProtector>
             <AdminPanel />
+          </RouteProtector>
+        ),
+      },
+      {
+        path: "/restoration",
+        element: (
+          <RouteProtector>
+            <Restoration />
           </RouteProtector>
         ),
       },

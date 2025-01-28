@@ -25,6 +25,7 @@ import i5 from '../../assets/5.jpg';
 import i6 from '../../assets/image.jpeg';
 import i9 from '../../assets/9.webp';
 import i10 from '../../assets/10.jpg';
+import i11 from '../../assets/11.jpg';
 import { Helmet } from 'react-helmet-async';
 
 
@@ -119,6 +120,13 @@ const Dashboard = () => {
       link: '/log',
       img: i6,
     },
+    {
+      id: 8,
+      name: 'Restoration Management',
+      para: 'From This function manage restoration.',
+      link: '/restoration',
+      img: i11,
+    }
   ];
 
   return loading ? (
