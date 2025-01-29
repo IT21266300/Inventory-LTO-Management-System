@@ -8,6 +8,8 @@ import { colorPalette } from "customTheme";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 
+import RestorationDetailsForm from "./RestorationDetailsForm";
+
 const Restoration = () => {
 
    const navigate = useNavigate();
@@ -15,7 +17,7 @@ const Restoration = () => {
   return (
    <Box m="1.5rem  2.5rem">
    <Helmet>
-     <title>Admin Panel</title>
+     <title>Restoration Management</title>
    </Helmet>
    <Box
      sx={{
@@ -41,7 +43,9 @@ const Restoration = () => {
        <ArrowBackIcon />
      </IconButton>
      <Header title="Restoration Management" subtitle="Manage Restoration functions" />
+     <RestorationDetailsForm/>
    </Box>
+   
  </Box>
   )
 }
