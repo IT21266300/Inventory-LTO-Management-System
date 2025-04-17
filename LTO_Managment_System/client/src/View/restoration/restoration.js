@@ -1,14 +1,11 @@
 import React from "react";
 import Header from "components/Header";
-import axios from "axios";
 import { Box, IconButton } from "@mui/material";
-import StaffTables from "components/StaffComponents/StaffTables";
 import { Helmet } from "react-helmet-async";
 import { colorPalette } from "customTheme";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
-
-import RestorationDetailsForm from "./RestorationDetailsForm";
+import RestorationTable from "./RestorationTable";
 
 const Restoration = () => {
   const navigate = useNavigate();
@@ -46,7 +43,7 @@ const Restoration = () => {
           subtitle="Manage Restoration functions"
         />
       </Box>
-      <RestorationDetailsForm />
+      <RestorationTable />
     </Box>
   );
 };

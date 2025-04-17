@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   Box, Button, IconButton, TextField, Typography, FormControl, 
   InputLabel, Select, MenuItem, Grid 
 } from "@mui/material";
 import { colorPalette } from "customTheme";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import textFieldStyles from "styles/textFieldStyles";
@@ -12,6 +12,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const RestorationDetailsForm = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const isEditMode = Boolean(id);
   
   const [formData, setFormData] = useState({
     date: "",
@@ -35,6 +37,23 @@ const RestorationDetailsForm = () => {
     removedBySignature: "",
   });
 
+  useEffect(() => {
+    if (isEditMode) {
+      const fetchRestorationData = async () => {
+        try {
+          const response = await axios.get(`/api/restoration/${id}`);
+          setFormData(response.data);
+        } catch (err) {
+          console.error(err);
+          toast.error("Failed to fetch restoration data", {
+            position: toast.POSITION.BOTTOM_RIGHT,
+          });
+        }
+      };
+      fetchRestorationData();
+    }
+  }, [id, isEditMode]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -42,20 +61,27 @@ const RestorationDetailsForm = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/restoration/addRestoration", {
-        ...formData,
-        lastUpdate: localStorage.getItem("staffId"),
-      });
-
-      toast.success("Restoration details added successfully!", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-
+      if (isEditMode) {
+        await axios.put(`/api/restoration/updateRestoration/${id}`, {
+          ...formData,
+          lastUpdate: localStorage.getItem("staffId"),
+        });
+        toast.success("Restoration details updated successfully!", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      } else {
+        await axios.post("/api/restoration/addRestoration", {
+          ...formData,
+          lastUpdate: localStorage.getItem("staffId"),
+        });
+        toast.success("Restoration details added successfully!", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      }
       navigate("/restoration");
-      window.location.reload();
     } catch (err) {
       console.error(err);
-      toast.error(err.message, {
+      toast.error(err.response?.data?.message || err.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
     }
@@ -83,7 +109,7 @@ const RestorationDetailsForm = () => {
             <AccountCircleIcon />
           </IconButton>
           <Typography variant="h5" sx={{ mt: "1rem", color: "yellow" }}>
-            Add Restoration Details
+            {isEditMode ? "Edit Restoration Details" : "Add Restoration Details"}
           </Typography>
         </Box>
 
@@ -91,50 +117,224 @@ const RestorationDetailsForm = () => {
           <Grid container spacing={2}>
             {/* Left Side */}
             <Grid item xs={6}>
-              <TextField label="Date" type="date" name="date" InputLabelProps={{ shrink: true }} sx={textFieldStyles} onChange={handleChange} required fullWidth />
-              <TextField label="Requester Name" name="requesterName" sx={textFieldStyles} onChange={handleChange} required fullWidth />
-              <TextField label="Department" name="department" sx={textFieldStyles} onChange={handleChange} required fullWidth />
-              <TextField label="Contact No" type="number" name="contactNo" sx={textFieldStyles} onChange={handleChange} required fullWidth />
-              <TextField label="Object" name="object" sx={textFieldStyles} onChange={handleChange} required fullWidth />
-              <TextField label="Library" name="library" sx={textFieldStyles} onChange={handleChange} required fullWidth />
-              <TextField label="Tape Date" type="date" name="tapeDate" InputLabelProps={{ shrink: true }} sx={textFieldStyles} onChange={handleChange} required fullWidth />
-              <TextField label="BE or AF" name="tapeType" sx={textFieldStyles} onChange={handleChange} required fullWidth />
+              <TextField 
+                label="Date" 
+                type="date" 
+                name="date" 
+                value={formData.date}
+                InputLabelProps={{ shrink: true }} 
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                required 
+                fullWidth 
+              />
+              <TextField 
+                label="Requester Name" 
+                name="requesterName" 
+                value={formData.requesterName}
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                required 
+                fullWidth 
+              />
+              <TextField 
+                label="Department" 
+                name="department" 
+                value={formData.department}
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                required 
+                fullWidth 
+              />
+              <TextField 
+                label="Contact No" 
+                type="number" 
+                name="contactNo" 
+                value={formData.contactNo}
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                required 
+                fullWidth 
+              />
+              <TextField 
+                label="Object" 
+                name="object" 
+                value={formData.object}
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                required 
+                fullWidth 
+              />
+              <TextField 
+                label="Library" 
+                name="library" 
+                value={formData.library}
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                required 
+                fullWidth 
+              />
+              <TextField 
+                label="Tape Date" 
+                type="date" 
+                name="tapeDate" 
+                value={formData.tapeDate}
+                InputLabelProps={{ shrink: true }} 
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                required 
+                fullWidth 
+              />
+              <TextField 
+                label="BE or AF" 
+                name="tapeType" 
+                value={formData.tapeType}
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                required 
+                fullWidth 
+              />
             </Grid>
 
             {/* Right Side */}
             <Grid item xs={6}>
               <FormControl sx={textFieldStyles} fullWidth>
                 <InputLabel>System</InputLabel>
-                <Select name="destinationSystem" value={formData.destinationSystem} onChange={handleChange} required>
+                <Select 
+                  name="destinationSystem" 
+                  value={formData.destinationSystem} 
+                  onChange={handleChange} 
+                  required
+                >
                   <MenuItem value="Backup">Backup</MenuItem>
                   <MenuItem value="Oracle">Oracle</MenuItem>
                 </Select>
               </FormControl>
-              <TextField label="Library" name="destinationLibrary" sx={textFieldStyles} onChange={handleChange} required fullWidth />
-              <TextField label="ASP Before" type="number" name="aspBefore" sx={textFieldStyles} onChange={handleChange} required fullWidth />
-              <TextField label="ASP After" type="number" name="aspAfter" sx={textFieldStyles} onChange={handleChange} required fullWidth />
-              <TextField label="Remarks" name="remarks" multiline rows={2} sx={textFieldStyles} onChange={handleChange} fullWidth />
-              <TextField label="Object Renamed As" name="objectRenamedAs" sx={textFieldStyles} onChange={handleChange} fullWidth />
-              <TextField label="Days Retained" type="number" name="daysRetained" sx={textFieldStyles} onChange={handleChange} required fullWidth />
+              <TextField 
+                label="Library" 
+                name="destinationLibrary" 
+                value={formData.destinationLibrary}
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                required 
+                fullWidth 
+              />
+              <TextField 
+                label="ASP Before" 
+                type="number" 
+                name="aspBefore" 
+                value={formData.aspBefore}
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                required 
+                fullWidth 
+              />
+              <TextField 
+                label="ASP After" 
+                type="number" 
+                name="aspAfter" 
+                value={formData.aspAfter}
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                required 
+                fullWidth 
+              />
+              <TextField 
+                label="Remarks" 
+                name="remarks" 
+                value={formData.remarks}
+                multiline 
+                rows={2} 
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                fullWidth 
+              />
+              <TextField 
+                label="Object Renamed As" 
+                name="objectRenamedAs" 
+                value={formData.objectRenamedAs}
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                fullWidth 
+              />
+              <TextField 
+                label="Days Retained" 
+                type="number" 
+                name="daysRetained" 
+                value={formData.daysRetained}
+                sx={textFieldStyles} 
+                onChange={handleChange} 
+                required 
+                fullWidth 
+              />
             </Grid>
           </Grid>
 
           {/* Additional Fields - Full Width */}
-          <TextField label="Restored By (Name & Signature)" name="restoredBy" sx={textFieldStyles} onChange={handleChange} required fullWidth />
-          <TextField label="Restored By Signature" name="restoredSignature" sx={textFieldStyles} onChange={handleChange} required fullWidth />
-          <TextField label="Date Removed" type="date" name="removalDate" InputLabelProps={{ shrink: true }} sx={textFieldStyles} onChange={handleChange} required fullWidth />
-          <TextField label="Removed By Signature" name="removedBySignature" sx={textFieldStyles} onChange={handleChange} required fullWidth />
+          <TextField 
+            label="Restored By (Name & Signature)" 
+            name="restoredBy" 
+            value={formData.restoredBy}
+            sx={textFieldStyles} 
+            onChange={handleChange} 
+            required 
+            fullWidth 
+          />
+          <TextField 
+            label="Restored By Signature" 
+            name="restoredSignature" 
+            value={formData.restoredSignature}
+            sx={textFieldStyles} 
+            onChange={handleChange} 
+            required 
+            fullWidth 
+          />
+          <TextField 
+            label="Date Removed" 
+            type="date" 
+            name="removalDate" 
+            value={formData.removalDate}
+            InputLabelProps={{ shrink: true }} 
+            sx={textFieldStyles} 
+            onChange={handleChange} 
+            required 
+            fullWidth 
+          />
+          <TextField 
+            label="Removed By Signature" 
+            name="removedBySignature" 
+            value={formData.removedBySignature}
+            sx={textFieldStyles} 
+            onChange={handleChange} 
+            required 
+            fullWidth 
+          />
 
           {/* Buttons */}
           <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
-            <Button onClick={() => navigate("/restoration")} sx={{ width: "45%", color: colorPalette.secondary[100], borderColor: "#fff" }} variant="outlined">
+            <Button 
+              onClick={() => navigate("/restoration")} 
+              sx={{ 
+                width: "45%", 
+                color: colorPalette.secondary[100], 
+                borderColor: "#fff" 
+              }} 
+              variant="outlined"
+            >
               Cancel
             </Button>
-            <Button type="submit" sx={{ width: "45%", backgroundColor: colorPalette.yellow[500], color: colorPalette.black2[500], "&:hover": { backgroundColor: colorPalette.yellow[400] } }}>
-              Submit
+            <Button 
+              type="submit" 
+              sx={{ 
+                width: "45%", 
+                backgroundColor: colorPalette.yellow[500], 
+                color: colorPalette.black2[500], 
+                "&:hover": { backgroundColor: colorPalette.yellow[400] } 
+              }}
+            >
+              {isEditMode ? "Update" : "Submit"}
             </Button>
           </Box>
-
         </form>
       </Box>
     </Box>

@@ -8,6 +8,8 @@ import SignRouter from '../routes/signinRoutes/signin.js';
 // import Staff routes
 
 import StaffR from '../routes/staffRouteMysql/staffRoute.js';
+import restorationRoutes from '../routes/restorationRoutes/restorationRoutes.js';
+
 
 // system routes
 import SystemRouter from '../routes/tapeRoutes/tapeCategory.js'
@@ -43,6 +45,9 @@ const app = express.Router();
 
 // sign in
 app.use('/signroute', SignRouter);
+
+
+app.use('/api/restoration', restorationRoutes);
 
 
 
